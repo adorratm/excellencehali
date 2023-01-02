@@ -1,0 +1,214 @@
+/*
+ Theme Name: Ulina
+ Theme URI: https://uiuxom.com/ulina/html/
+ Author: uiuxom
+ Author URI: https://themeforest.net/user/uiuxom
+ Description: Ulina - Fashion Ecommerce Responsive HTML Template
+ Version: 1.0
+ License:
+ License URI: 
+*/
+
+/*-----------------------------------------
+/  Ignore For WP CSS
+/-----------------------------------------*/
+.featureSection{
+    position: relative;
+    padding: 71px 0 110px;
+}
+.latestArrivalSection{
+    padding: 0 0 117px;
+}
+.latestArrivalSection p.secDesc{
+    margin: 0 0 46px;
+}
+.lookbookSection{
+    position: relative;
+    padding: 0 0 96px;
+}
+.dealProductSection{
+    padding: 44px 0 14px;
+    background: #f6f8fa;
+}
+.popularProductsSection{
+    position: relative;
+    padding: 111px 0 72px;
+}
+.popularProductsSection .secDesc{
+    margin: 0 0 46px;
+}
+.lookbookSection2{
+    position: relative;
+    padding: 0 0 87px;
+}
+.categorySection{
+    position: relative;
+    padding: 0 0 100px;
+}
+.categorySection .secDesc{
+    margin: 0 0 46px;
+}
+.testimonialSection{
+    position: relative;
+    padding: 70px 0 80px;
+    background: url(../images/bg/1.jpg) no-repeat left center / cover;
+}
+.blogSection{
+    padding: 112px 0 88px;
+}
+.pdt34{
+    padding-top: 34px;
+}
+.blogSection .secDesc{
+    margin: 0 0 46px;
+}
+.instagramSection{
+    position: relative;
+    padding: 0 0 120px;
+}
+.instagramSection .secTitle{
+    margin: 0 0 45px;
+}
+.brandSection{
+    position: relative;
+    padding: 0 0 72px;
+}
+.brandSection2{
+    padding: 72px 0 110px;
+}
+.popularProductsSection2{
+    position: relative;
+    padding: 0 0 72px;
+}
+.popularProductsSection2 .secDesc{
+    margin: 0 0 45px;
+}
+.popularProductsSection2 .productTabs ul.productTabsNav li{
+    margin-left: 38px;
+}
+.popularProductsSection2 .productTabs ul.productTabsNav li:first-child{
+    margin-left: 0;
+}
+.categorySection2{
+    padding: 110px 0 118px;
+    background: #ecf5f4;
+}
+.categorySection2 .secDesc{
+    margin: 0 0 46px;
+}
+.lookbookSection3{
+    position: relative;
+    padding: 120px 0 88px;
+}
+.ctaSection{
+    position: relative;
+    background: url(../images/bg/3.jpg) no-repeat left top / cover;
+    padding: 71px 0 74px;
+}
+.testimonialSection2{
+    padding: 112px 0 122px;
+}
+.testimonialSection2 .secDesc{
+    margin: 0 0 46px;
+}
+.blogSection2{
+    position: relative;
+    padding: 0 0 117px;
+}
+.blogSection2 .secDesc{
+    margin: 0 0 46px;
+}
+.instagramSection.is02{
+    padding-bottom: 112px;
+}
+.featureSection2{
+    background: #7b9496;
+    padding: 71px 0 70px;
+}
+.subscribSection{
+    position: relative;
+    background: #ebf3f2;
+    padding: 88px 0 0;
+}
+.subscribSection .secSubTitle{
+    margin: 0 0 9px;
+}
+.subscribSection .secTitle{
+    margin: 0 0 37px;
+}
+.collectionsSections{
+    position: relative;
+    padding: 112px 0 56px;
+}
+.collectionRow .ulinaBTN2{
+    border-color: #9ebbbd;
+    line-height: 42px;
+}
+.collectionRow .ulinaBTN2:hover{
+    border-color: #9ebbbd;
+    color: #9ebbbd;
+}
+.collectionRow .secDesc{
+    margin: 0 0 46px;
+}
+.collectionProductRow{
+    margin-bottom: 61px;
+}
+.stayConnected{
+    padding: 112px 0 120px;
+}
+.stayConnected p.secDesc{
+    margin: 0 0 46px;
+}
+.ulinaMapSection{
+    padding: 0 0 120px;
+}
+.testimonialPage{
+    position: relative;
+    padding: 120px 0 96px;
+}
+.testimonialPage .testimonialItem01{
+    margin: 0 0 24px;
+}
+.faqSection{
+    position: relative;
+    padding: 109px 0 120px;
+}
+.faqSection .secDesc{
+    margin: 0 0 46px;
+}
+.faqSection2{
+    position: relative;
+    padding: 109px 0 102px;
+    background: #f6f8fa;
+}
+.faqSection2 .secDesc{
+    margin: 0 0 46px;
+}
+.teamMembersPageSection{
+    position: relative;
+    padding: 120px 0 96px;
+}
+.teamMembersPageSection .teamMember01{
+    margin: 0 0 24px;
+}
+.aboutPageSection01{
+    padding: 120px 0 0;
+}
+.mb117{
+    margin-bottom: 117px;
+}
+.aboutPageSection02{
+    padding: 225px 0 114px;
+    background: #F7F8FC;
+}
+.aboutPageSection03{
+    position: relative;
+    padding: 109px 0 120px;
+}
+.aboutPageSection03 .secDesc{
+    margin: 0 0 46px;
+}
+.instagramSection.is03{
+    padding: 109px 0 120px;
+}

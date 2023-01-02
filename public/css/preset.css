@@ -1,0 +1,209 @@
+/*
+ Theme Name: Ulina
+ Theme URI: https://uiuxom.com/ulina/html/
+ Author: uiuxom
+ Author URI: https://themeforest.net/user/uiuxom
+ Description: Ulina - Fashion Ecommerce Responsive HTML Template
+ Version: 1.0
+ License:
+ License URI: 
+*/
+
+/*==================================
+    [Table of contents]
+===================================
+    01. Theme Fonts
+    02. Basic Typography
+    03. Custom Helper Class
+    04. Links & Buttons
+    05. Section Settings
+*/
+
+/*-----------------------------------------
+/  01. Theme Fonts
+/-----------------------------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/*-----------------------------------------
+/  02. Basic Typography
+/-----------------------------------------*/
+body, html{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #7f8495;
+    letter-spacing: 0;
+    font-weight: 400;
+}
+p{
+    margin: 0 0 15px;
+}
+h1, h2, h3, h4, h5, h6{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    line-height: 1.1;
+    color: #52586d;
+    margin: 0 0 15px;
+}
+a{
+    color: #9ebbbd;
+    text-decoration: none;
+
+    transition: all ease 350ms;
+    -moz-transition: all ease 350ms;
+    -webkit-transition: all ease 350ms;
+}
+a:hover, a:focus{
+    color: #52586d;
+    text-decoration: none;
+    outline: 0;
+}
+button, input[type="submit"]{
+    transition: all ease 350ms;
+    -moz-transition: all ease 350ms;
+    -webkit-transition: all ease 350ms;
+}
+input:focus, select:focus, textarea:focus, button:focus{
+    outline: 0;
+}
+
+/*-----------------------------------------
+/  03. Custom Helper Class
+/-----------------------------------------*/
+.fixOverflow{
+    overflow: hidden;
+}
+.noPaddingLeft{
+    padding-left: 0;
+}
+.noPaddingRight{
+    padding-right: 0;
+}
+
+/*-----------------------------------------
+/  04. Links & Buttons
+/-----------------------------------------*/
+.ulinaLink{
+    font-family: 'Roboto', sans-serif;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 1;
+    color: #52586d;
+    font-weight: 500;
+    margin: 0;
+}
+.ulinaLink i{
+    color: #7b9496;
+    font-size: 12px;
+    position: relative;
+    top: -1px;
+    margin: 0 7px 0 0px;
+    
+    transition: all ease 350ms;
+    -moz-transition: all ease 350ms;
+    -webkit-transition: all ease 350ms;
+}
+.ulinaLink:hover{
+    color: #7b9496;
+}
+.ulinaLink:hover i{
+    margin-right: 10px;
+}
+.ulinaBTN{
+    font-family: 'Roboto', sans-serif;
+    display: inline-block;
+    position: relative;
+    height: 48px;
+    min-width: 155px;
+    background: transparent;
+    border-radius: 48px;
+    font-size: 16px;
+    line-height: 50px;
+    color: #FFF;
+    font-weight: 500;
+    text-align: center;
+    overflow: hidden;
+    border: none;
+}
+.ulinaBTN span{
+    position: relative;
+    z-index: 3;
+}
+.ulinaBTN:after{
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #9ebbbd;
+    border-radius: inherit;
+}
+.ulinaBTN:before{
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 0%;
+    height: 100%;
+    background: #52586d;
+    border-radius: inherit;
+    opacity: 1;
+    z-index: 2;
+    
+    transition: all ease 350ms;
+    -moz-transition: all ease 350ms;
+    -webkit-transition: all ease 350ms;
+}
+.ulinaBTN:hover:before{
+    width: 100%;
+    right: auto;
+    left: 0;
+}
+.ulinaBTN:hover{
+    color: #FFF;
+}
+.ulinaBTN2{
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    display: inline-block;
+    min-width: 111px;
+    height: 42px;
+    border: 1px solid #c5d0cf;
+    border-radius: 42px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: #52586d;
+    line-height: 40px;
+}
+.ulinaBTN2:hover{
+    color: #52586d;
+    border-color: #52586d;
+}
+
+/*-----------------------------------------
+/  05. Section Settings
+/-----------------------------------------*/
+.secTitle{
+    font-size: 36px;
+    line-height: 48px;
+    margin: 0 0 6px;
+}
+.secDesc{
+    margin: 0;
+}
+.secSubTitle{
+    font-size: 18px;
+    line-height: 1;
+    color: #7b9496;
+    font-weight: 500;
+    margin: 0;
+}
+.noPaddingRight{
+    padding-right: 0;
+}
