@@ -1,30 +1,29 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 #[AllowDynamicProperties]
-class Product_category_dimension_model extends CI_Model
+class Product_pattern_model extends CI_Model
 {
-    public $tableName = "product_category_dimensions";
+    public $tableName = "product_patterns";
     public function __construct()
     {
         parent::__construct();
-        $this->column_order = ['rank', 'id', 'id', 'title', 'width', 'height', 'depth', 'lang', 'isActive', 'createdAt', 'updatedAt'];
+        $this->column_order = ['rank', 'id', 'id', 'codes_id', 'title', 'lang', 'isActive', 'createdAt', 'updatedAt'];
         // Set searchable column fields
-        $this->column_search = ['rank', 'id', 'id', 'title', 'width', 'height', 'depth', 'lang', 'isActive', 'createdAt', 'updatedAt'];
+        $this->column_search = ['rank', 'id', 'id', 'codes_id', 'title', 'lang', 'isActive', 'createdAt', 'updatedAt'];
         // Set default order
         $this->order = ['rank' => 'ASC'];
+    }
+    public function get_all($where = [], $order = "id ASC")
+    {
+        return $this->db->where($where)->order_by($order)->get($this->tableName)->result();;
+    }
+    public function add($data = [])
+    {
+        return $this->db->insert($this->tableName, $data);
     }
     public function get($where = [])
     {
         return $this->db->where($where)->get($this->tableName)->row();
-    }
-    public function get_all($where = [], $order = "id ASC")
-    {
-        return $this->db->where($where)->order_by($order)->get($this->tableName)->result();
-    }
-    public function add($data = [])
-    {
-        $this->db->insert($this->tableName, $data);
-        return $this->db->insert_id();
     }
     public function update($where = [], $data = [])
     {
@@ -48,6 +47,7 @@ class Product_category_dimension_model extends CI_Model
     private function _get_datatables_query($postData = [])
     {
         $this->db->where(["id!=" => null]);
+        $this->db->select('*',    false);
         $this->db->from($this->tableName);
         $i = 0;
         // loop searchable columns

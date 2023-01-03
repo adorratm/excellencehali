@@ -4393,19 +4393,19 @@
     margin: 0 0 42px;
 }
 
-.shopPagination {
+.pagination {
     position: relative;
     display: flex;
     justify-content: flex-start;
 }
 
-.shopPagination a,
-.shopPagination span {
+.pagination a,
+.pagination li {
     width: 48px;
     height: 48px;
     border: 1px solid #c5d0cf;
     text-align: center;
-    line-height: 48px;
+    line-height: 35px;
     font-size: 16px;
     border-radius: 50%;
     margin-right: 6px;
@@ -4414,11 +4414,26 @@
     -webkit-transition: all ease 350ms;
 }
 
-.shopPagination a:hover,
-.shopPagination span.current {
+.page-item:first-child .page-link,
+.page-item:last-child .page-link {
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.page-link {
+    color: unset;
+}
+
+.pagination a:hover,
+.pagination a.active,
+.page-link:focus,
+.pagination li.active {
     background: #7b9496;
     color: #fff;
     border-color: #7b9496;
+    border-radius: 50%;
 }
 
 .shopDetailsPageSection {

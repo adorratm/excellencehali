@@ -13,42 +13,109 @@
 </section>
 <!-- END: Page Banner Section -->
 
+<?php if (!empty($product_categories)) : ?>
+    <!-- END: Collections Section -->
+    <section class="collectionsSections">
+        <div class="container">
+            <div class="row collectionProductRow">
+                <?php foreach ($product_categories as $k => $v) : ?>
+                    <div class="col-sm-6 col-lg-4 col-xl-3">
+                        <div class="productItem01">
+                            <div class="pi01Thumb">
+                                <img data-src="<?= get_picture("product_categories_v", $v->img_url) ?>" class="img-fluid lazyload" alt="<?= $v->title ?>" title="<?= $v->title ?>" />
+                                <img data-src="<?= get_picture("product_categories_v", $v->img_url) ?>" class="img-fluid lazyload" alt="<?= $v->title ?>" title="<?= $v->title ?>" />
+                                <div class="pi01Actions">
+                                    <a href="<?= base_url(lang("routes_products") . "/" . $v->seo_url) ?>" rel="dofollow" title="<?= lang("viewProducts") ?>"><i class="fa-solid fa-arrows-up-down-left-right"></i></a>
+                                </div>
+                            </div>
+                            <div class="pi01Details">
+                                <h3 class="secTitle text-center"><a href="<?= base_url(lang("routes_products") . "/" . $v->seo_url) ?>" rel="dofollow" title="<?= lang("viewProducts") ?>"><?= $v->title ?></a></h3>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach ?>
+            </div>
+            <?= @$links ?>
+        </div>
+    </section>
+    <!-- END: Collections Section -->
+<?php endif ?>
 
-<!-- Shop section -->
-<section class="shop-section">
-    <div class="auto-container">
-        <div class="row align-items-stretch align-self-stretch align-content-stretch">
-            <?php $j = 0 ?>
-            <?php foreach ($product_categories as $k => $v) : ?>
-                <div class="col-lg-12 justify-content-center text-center">
-                    <h2 class="font-weight-bold text-center mx-auto mb-5 p-3" <?= $j % 2 == 0 ? 'style="width: fit-content;border:3px solid #e10018;border-top:unset;border-right:unset"' : 'style="width: fit-content;border:3px solid #e10018;border-top:unset;border-left:unset"' ?>><?= $v->title ?></h2>
+
+<?php if (!empty($products)) : ?>
+    <!-- BEGIN: Shop Page Section -->
+    <section class="shopPageSection">
+        <div class="container">
+            <div class="row shopAccessRow">
+                <div class="col-sm-6 col-xl-4">
+                    <div class="productCount">Showing <strong>1 - 16</strong> of <strong>220</strong> items</div>
                 </div>
-                <?php if (!empty($products)) : ?>
-                    <?php foreach ($products as $key => $value) : ?>
-                        <?php if (strtotime($value->sharedAt) <= strtotime("now")) : ?>
-                            <div class="col-lg-3 col-md-6 shop-block mb-4">
-                                <div class="inner-box mb-0 h-100 shadow-sm p-3 border rounded">
-                                    <div class="image"><a rel="dofollow" href="<?= base_url(lang("routes_products") . "/" . lang("routes_product") . "/{$value->url}") ?>" title="<?= $value->title ?>"> <img width="1920" height="1280" loading="lazy" data-src="<?= get_picture("products_v", $value->img_url) ?>" title="<?= $value->title ?>" alt="<?= $value->title ?>" class="img-fluid lazyload"></a></div>
-                                    <div class="content-upper mb-0 border-0">
-                                        <h3><a class="text-dark" rel="dofollow" href="<?= base_url(lang("routes_products") . "/" . lang("routes_product") . "/{$value->url}") ?>" title="<?= $value->title ?>"><?= $value->title ?></a></h3>
+                <div class="d-none col-lg-4 col-xl-4 d-xl-flex">
+                    <ul class="filterUL">
+                        <li class="active">All</li>
+                        <li>Men</li>
+                        <li>Women</li>
+                        <li>Kids</li>
+                        <li>Accesories</li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 col-xl-4">
+                    <div class="shopAccessBar">
+                        <div class="filterNav">
+                            <a href="javascript:void(0);">Filter<i class="fa-solid fa-sliders"></i></a>
+                        </div>
+                        <div class="sortNav">
+                            <form method="post" action="#">
+                                <label>Sort By</label>
+                                <select name="productFilter">
+                                    <option value="">Default</option>
+                                    <option value="1">High to low</option>
+                                    <option value="2">Low to high</option>
+                                    <option value="3">Top rated</option>
+                                    <option value="4">Recently viewed</option>
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row shopProductRow">
+                <?php foreach ($products as $key => $value) : ?>
+                    <?php if (strtotime($value->sharedAt) <= strtotime("now")) : ?>
+                        <div class="col-sm-6 col-lg-4 col-xl-3">
+                            <div class="productItem01">
+                                <div class="pi01Thumb">
+                                    <img loading="lazy" width="1000" height="1000" data-src="<?= get_picture("products_v", $value->img_url) ?>" alt="<?= $value->title ?>" title="<?= $value->title ?>" class="img-fluid lazyload" />
+                                    <?php $secondaryImage = get_secondary_image($value->id, $lang) ?>
+                                    <?php if (!empty($secondaryImage)) : ?>
+                                        <img loading="lazy" width="1000" height="1000" data-src="<?= get_picture("products_v", $secondaryImage) ?>" alt="<?= $value->title ?>" title="<?= $value->title ?>" class="img-fluid lazyload">
+                                    <?php endif ?>
+                                    <div class="pi01Actions">
+                                        <a href="<?= base_url(lang("routes_products") . "/" . lang("routes_product") . "/" . $value->url) ?>" rel="dofollow" title="<?= $value->title ?>"><i class="fa-solid fa-arrows-up-down-left-right"></i></a>
                                     </div>
-                                    <div class="w-100 px-3">
-                                        <a class="btn rounded-0 btn-block border technicalInformationButton" rel="dofollow" href="<?= base_url(lang("routes_products") . "/" . lang("routes_product") . "/{$value->url}") ?>" title="<?= $value->title ?>"><?= lang("viewTechnicalInformation") ?></a>
+                                    <div class="productLabels clearfix">
+                                        <span class="plDis">- $29</span>
+                                        <span class="plSale">Sale</span>
+                                    </div>
+                                </div>
+                                <div class="pi01Details">
+                                    <h3><a href="<?= base_url(lang("routes_products") . "/" . lang("routes_product") . "/" . $value->url) ?>" rel="dofollow" title="<?= $value->title ?>"><?= $value->title ?></a></h3>
+                                    <div class="pi01Price">
+                                        <ins>$29</ins>
+                                        <del>$56</del>
                                     </div>
                                 </div>
                             </div>
-                        <?php endif ?>
-                    <?php endforeach ?>
-                <?php else : ?>
-                    <div class="alert alert-danger col-12" role="alert">
-                        <h4 class="alert-heading"><?= lang("warning") ?>!</h4>
-                        <hr>
-                        <p><?= lang("categoryEmpty") ?></p>
-                    </div>
-                <?php endif ?>
-                <?php $j++ ?>
-            <?php endforeach ?>
+                        </div>
+                    <?php endif ?>
+                <?php endforeach ?>
+            </div>
+            <div class="row shopPaginationRow">
+                <div class="col-lg-12 text-center">
+                    <?= @$links ?>
+                </div>
+            </div>
         </div>
-        <?= @$links ?>
-    </div>
-</section>
+    </section>
+    <!-- END: Shop Page Section -->
+<?php endif ?>

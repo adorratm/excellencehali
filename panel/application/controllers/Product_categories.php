@@ -278,5 +278,6 @@ class Product_categories extends MY_Controller
                 }
             }
         }
+        echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Kaliteleri Başarıyla Eşitlendi."]);
     }
 }

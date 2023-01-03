@@ -923,3 +923,13 @@ function in_parenttheader($in_parent = null, $lang = null, $store_all_id = null)
     endif;
     return $html;
 }
+
+function get_secondary_image($product_id = null, $lang = "tr")
+{
+    $t = &get_instance();
+    $result = $t->general_model->get_all("product_images", "url", "rank ASC", ["product_id" => $product_id, "isActive" => 1, "isCover" => 0, "lang" => $lang]);
+    if (!empty($result[0])) :
+        return $result[0]->url;
+    endif;
+    return null;
+}

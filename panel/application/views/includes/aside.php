@@ -161,6 +161,12 @@
                                     <li class="nav-item  <?= ($this->uri->segment(1) == "products") ? "active" : "" ?>">
                                         <a class="nav-link <?= ($this->uri->segment(1) == "products") ? "active" : "" ?>" href="<?= base_url("products"); ?>">Ürünler</a>
                                     </li>
+                                    <li class="nav-item  <?= ($this->uri->segment(1) == "product_patterns") ? "active" : "" ?>">
+                                        <a class="nav-link <?= ($this->uri->segment(1) == "product_patterns") ? "active" : "" ?>" href="<?= base_url("product_patterns"); ?>">Ürün Desenleri</a>
+                                    </li>
+                                    <li class="nav-item  <?= ($this->uri->segment(1) == "product_dimensions") ? "active" : "" ?>">
+                                        <a class="nav-link <?= ($this->uri->segment(1) == "product_dimensions") ? "active" : "" ?>" href="<?= base_url("product_dimensions"); ?>">Ürün Ebatları</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>

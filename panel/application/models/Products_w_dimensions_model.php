@@ -1,15 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 #[AllowDynamicProperties]
-class Product_dimension_model extends CI_Model
+class Products_w_dimensions_model extends CI_Model
 {
-    public $tableName = "product_dimensions";
+    public $tableName = "products_w_dimensions";
     public function __construct()
     {
         parent::__construct();
-        $this->column_order = ['rank', 'id', 'id', 'codes_id', 'title', 'codes', 'isActive', 'createdAt', 'updatedAt'];
+        $this->column_order = ['rank', 'id', 'id', 'title', 'isActive', 'createdAt', 'updatedAt'];
         // Set searchable column fields
-        $this->column_search = ['rank', 'id', 'id', 'codes_id', 'title', 'codes', 'isActive', 'createdAt', 'updatedAt'];
+        $this->column_search = ['rank', 'id', 'id', 'title', 'isActive', 'createdAt', 'updatedAt'];
         // Set default order
         $this->order = ['rank' => 'ASC'];
     }
