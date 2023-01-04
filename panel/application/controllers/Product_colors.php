@@ -69,7 +69,7 @@ class Product_colors extends MY_Controller
         $data = rClean($this->input->post());
         if (checkEmpty($data)["error"] && checkEmpty($data)["key"] != "top_id" && checkEmpty($data)["key"] != "img_url" && checkEmpty($data)["key"] != "home_url" && checkEmpty($data)["key"] != "banner_url") :
             $key = checkEmpty($data)["key"];
-            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Güncelleştirilirken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Rengi Güncelleştirilirken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
         else :
             $product_color = $this->product_color_model->get(["id" => $id]);
             if (!empty($product_color->img_url)) :
@@ -85,7 +85,7 @@ class Product_colors extends MY_Controller
                         endif;
                     endif;
                 else :
-                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Güncelleştirilirken Hata Oluştu. Ürün Kategorisi Görseli Seçtiğinizden Emin Olup Tekrar Deneyin."]);
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Rengi Güncelleştirilirken Hata Oluştu. Ürün Rengi Görseli Seçtiğinizden Emin Olup Tekrar Deneyin."]);
                     die();
                 endif;
             endif;
@@ -102,7 +102,7 @@ class Product_colors extends MY_Controller
                         endif;
                     endif;
                 else :
-                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Güncelleştirilirken Hata Oluştu. Ürün Kategorisi Anasayfa Yatay Görseli Seçtiğinizden Emin Olup Tekrar Deneyin."]);
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Rengi Güncelleştirilirken Hata Oluştu. Ürün Rengi Anasayfa Yatay Görseli Seçtiğinizden Emin Olup Tekrar Deneyin."]);
                     die();
                 endif;
             endif;
@@ -119,7 +119,7 @@ class Product_colors extends MY_Controller
                         endif;
                     endif;
                 else :
-                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Güncelleştirilirken Hata Oluştu. Ürün Kategorisi Banner Görseli Seçtiğinizden Emin Olup Tekrar Deneyin."]);
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Rengi Güncelleştirilirken Hata Oluştu. Ürün Rengi Banner Görseli Seçtiğinizden Emin Olup Tekrar Deneyin."]);
                     die();
                 endif;
             endif;
@@ -127,9 +127,9 @@ class Product_colors extends MY_Controller
             $data["seo_url"] = seo($data["title"]);
             $update = $this->product_color_model->update(["id" => $id], $data);
             if ($update) :
-                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Kategorisi Başarıyla Güncelleştirildi."]);
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Rengi Başarıyla Güncelleştirildi."]);
             else :
-                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Güncelleştirilirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Rengi Güncelleştirilirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
             endif;
         endif;
     }
@@ -185,6 +185,6 @@ class Product_colors extends MY_Controller
                 }
             }
         }
-        echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Desenleri Codes İle Başarıyla Eşitlendi."]);
+        echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Renkleri Codes İle Başarıyla Eşitlendi."]);
     }
 }

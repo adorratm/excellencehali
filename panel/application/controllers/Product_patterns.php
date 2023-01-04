@@ -69,7 +69,7 @@ class Product_patterns extends MY_Controller
         $data = rClean($this->input->post());
         if (checkEmpty($data)["error"] && checkEmpty($data)["key"] != "top_id" && checkEmpty($data)["key"] != "img_url" && checkEmpty($data)["key"] != "home_url" && checkEmpty($data)["key"] != "banner_url") :
             $key = checkEmpty($data)["key"];
-            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Güncelleştirilirken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Deseni Güncelleştirilirken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
         else :
             $product_pattern = $this->product_pattern_model->get(["id" => $id]);
             if (!empty($product_pattern->img_url)) :
@@ -85,7 +85,7 @@ class Product_patterns extends MY_Controller
                         endif;
                     endif;
                 else :
-                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Güncelleştirilirken Hata Oluştu. Ürün Kategorisi Görseli Seçtiğinizden Emin Olup Tekrar Deneyin."]);
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Deseni Güncelleştirilirken Hata Oluştu. Ürün Deseni Görseli Seçtiğinizden Emin Olup Tekrar Deneyin."]);
                     die();
                 endif;
             endif;
@@ -102,7 +102,7 @@ class Product_patterns extends MY_Controller
                         endif;
                     endif;
                 else :
-                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Güncelleştirilirken Hata Oluştu. Ürün Kategorisi Anasayfa Yatay Görseli Seçtiğinizden Emin Olup Tekrar Deneyin."]);
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Deseni Güncelleştirilirken Hata Oluştu. Ürün Deseni Anasayfa Yatay Görseli Seçtiğinizden Emin Olup Tekrar Deneyin."]);
                     die();
                 endif;
             endif;
@@ -119,7 +119,7 @@ class Product_patterns extends MY_Controller
                         endif;
                     endif;
                 else :
-                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Güncelleştirilirken Hata Oluştu. Ürün Kategorisi Banner Görseli Seçtiğinizden Emin Olup Tekrar Deneyin."]);
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Deseni Güncelleştirilirken Hata Oluştu. Ürün Deseni Banner Görseli Seçtiğinizden Emin Olup Tekrar Deneyin."]);
                     die();
                 endif;
             endif;
@@ -127,9 +127,9 @@ class Product_patterns extends MY_Controller
             $data["seo_url"] = seo($data["title"]);
             $update = $this->product_pattern_model->update(["id" => $id], $data);
             if ($update) :
-                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Kategorisi Başarıyla Güncelleştirildi."]);
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Deseni Başarıyla Güncelleştirildi."]);
             else :
-                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Güncelleştirilirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Deseni Güncelleştirilirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
             endif;
         endif;
     }
