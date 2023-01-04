@@ -12,7 +12,6 @@ class Product_categories extends MY_Controller
         $this->load->model("products_w_categories_model");
         $this->load->model("product_image_model");
         $this->load->model("product_model");
-        $this->load->model("product_category_dimension_model");
         if (!get_active_user()) :
             redirect(base_url("login"));
         endif;
@@ -41,11 +40,10 @@ class Product_categories extends MY_Controller
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item updateProductCategoryBtn" href="javascript:void(0)" data-url="' . base_url("product_categories/update_form/$item->category_id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
-                    <a class="dropdown-item remove-btn d-none" href="javascript:void(0)" data-table="productCategoryTable" data-url="' . base_url("product_categories/delete/$item->category_id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
                 </div>
             </div>';
                 $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->category_id . '" data-url="' . base_url("product_categories/isActiveSetter/{$item->category_id}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch' . $i . '"></label></div>';
-                $data[] = [$item->rank, '<i class="fa fa-arrows" data-id="' . $item->category_id . '"></i>', $item->category_id, $item->title, (!empty($item->product_category) ? $item->product_category : "<strong class='text-danger'>Ana Kategori</strong>"), $item->lang, $checkbox, turkishDate("d F Y, l H:i:s", $item->createdAt), turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing];
+                $data[] = [$item->rank, '<i class="fa fa-arrows" data-id="' . $item->category_id . '"></i>', $item->category_id, $item->codes_id, $item->title, (!empty($item->product_category) ? $item->product_category : "<strong class='text-danger'>Ana Kategori</strong>"), $item->codes, $checkbox, turkishDate("d F Y, l H:i:s", $item->createdAt), turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing];
             endforeach;
         endif;
         $output = [
@@ -56,64 +54,6 @@ class Product_categories extends MY_Controller
         ];
         // Output to JSON format
         echo json_encode($output);
-    }
-    public function new_form()
-    {
-        $viewData = new stdClass();
-        $viewData->categories = $this->product_category_model->get_all();
-        $viewData->viewFolder = $this->viewFolder;
-        $viewData->subViewFolder = "add";
-        $viewData->settings = $this->general_model->get_all("settings", null, null, ["isActive" => 1]);
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
-    }
-    public function save()
-    {
-        $data = rClean($this->input->post());
-        if (checkEmpty($data)["error"] && checkEmpty($data)["key"] != "top_id") :
-            $key = checkEmpty($data)["key"];
-            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Kaydı Yapılırken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
-        else :
-            $getRank = $this->product_category_model->rowCount();
-            if (!empty($_FILES)) :
-                if (!empty($_FILES["img_url"]["name"])) :
-                    $image = upload_picture("img_url", "uploads/$this->viewFolder", [], "*");
-                    if ($image["success"]) :
-                        $data["img_url"] = $image["file_name"];
-                    else :
-                        echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Kaydı Yapılırken Hata Oluştu. Ürün Kategorisi Görseli Seçtiğinizden Emin Olup Tekrar Deneyin."]);
-                        die();
-                    endif;
-                endif;
-                if (!empty($_FILES["home_url"]["name"])) :
-                    $image = upload_picture("home_url", "uploads/$this->viewFolder", [], "*");
-                    if ($image["success"]) :
-                        $data["home_url"] = $image["file_name"];
-                    else :
-                        echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Kaydı Yapılırken Hata Oluştu. Ürün Kategorisi Anasayfa Yatay Görseli Seçtiğinizden Emin Olup Tekrar Deneyin."]);
-                        die();
-                    endif;
-                endif;
-                if (!empty($_FILES["banner_url"]["name"])) :
-                    $image = upload_picture("banner_url", "uploads/$this->viewFolder", [], "*");
-                    if ($image["success"]) :
-                        $data["banner_url"] = $image["file_name"];
-                    else :
-                        echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Kaydı Yapılırken Hata Oluştu. Ürün Kategorisi Banner Görseli Seçtiğinizden Emin Olup Tekrar Deneyin."]);
-                        die();
-                    endif;
-                endif;
-            endif;
-            $data["seo_url"] = seo($data["title"]);
-            $data["top_id"] = !empty($data["top_id"]) ? $data["top_id"] : 0;
-            $data["isActive"] = 1;
-            $data["rank"] = $getRank + 1;
-            $insert = $this->product_category_model->add($data);
-            if ($insert) :
-                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Kategorisi Başarıyla Eklendi."]);
-            else :
-                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Eklenirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
-            endif;
-        endif;
     }
     public function update_form($id)
     {
@@ -195,38 +135,6 @@ class Product_categories extends MY_Controller
             endif;
         endif;
     }
-    public function delete($id)
-    {
-        $product_category = $this->product_category_model->get(["id" => $id]);
-        if (!empty($product_category)) :
-            $delete = $this->product_category_model->delete(["id"    => $id]);
-            if ($delete) :
-                /**
-                 * Remove Category Image
-                 */
-                $url = FCPATH . "uploads/{$this->viewFolder}/{$product_category->img_url}";
-                if (!is_dir($url) && file_exists($url)) :
-                    unlink($url);
-                endif;
-                $url = FCPATH . "uploads/{$this->viewFolder}/{$product_category->home_url}";
-                if (!is_dir($url) && file_exists($url)) :
-                    unlink($url);
-                endif;
-                $url = FCPATH . "uploads/{$this->viewFolder}/{$product_category->banner_url}";
-                if (!is_dir($url) && file_exists($url)) :
-                    unlink($url);
-                endif;
-                /**
-                 * Remove Category From Product
-                 */
-                $this->general_model->delete("product_category_dimensions", ["category_id" => $id]);
-                $this->products_w_categories_model->delete(["category_id" => $id]);
-                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Kategorisi Başarıyla Silindi."]);
-            else :
-                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Silinirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
-            endif;
-        endif;
-    }
     public function rankSetter()
     {
         $rows = $this->input->post("rows");
@@ -278,6 +186,6 @@ class Product_categories extends MY_Controller
                 }
             }
         }
-        echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Kaliteleri Başarıyla Eşitlendi."]);
+        echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Kategorileri Codes İle Başarıyla Eşitlendi."]);
     }
 }

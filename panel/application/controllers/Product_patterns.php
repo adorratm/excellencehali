@@ -37,12 +37,11 @@ class Product_patterns extends MY_Controller
                     İşlemler
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item updateProductPatternBtn" href="javascript:void(0)" data-url="' . base_url("product_patterns/update_form/$item->pattern_id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
-                    <a class="dropdown-item remove-btn d-none" href="javascript:void(0)" data-table="productPatternTable" data-url="' . base_url("product_patterns/delete/$item->pattern_id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    <a class="dropdown-item updateProductPatternBtn" href="javascript:void(0)" data-url="' . base_url("product_patterns/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
                 </div>
             </div>';
-                $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->pattern_id . '" data-url="' . base_url("product_patterns/isActiveSetter/{$item->pattern_id}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch' . $i . '"></label></div>';
-                $data[] = [$item->rank, '<i class="fa fa-arrows" data-id="' . $item->pattern_id . '"></i>', $item->pattern_id, $item->title, (!empty($item->product_pattern) ? $item->product_pattern : "<strong class='text-danger'>Ana Kategori</strong>"), $item->lang, $checkbox, turkishDate("d F Y, l H:i:s", $item->createdAt), turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing];
+                $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->id . '" data-url="' . base_url("product_patterns/isActiveSetter/{$item->id}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch' . $i . '"></label></div>';
+                $data[] = [$item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->codes_id, $item->title, $item->codes, $checkbox, turkishDate("d F Y, l H:i:s", $item->createdAt), turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing];
             endforeach;
         endif;
         $output = [
@@ -134,38 +133,6 @@ class Product_patterns extends MY_Controller
             endif;
         endif;
     }
-    public function delete($id)
-    {
-        $product_pattern = $this->product_pattern_model->get(["id" => $id]);
-        if (!empty($product_pattern)) :
-            $delete = $this->product_pattern_model->delete(["id"    => $id]);
-            if ($delete) :
-                /**
-                 * Remove Pattern Image
-                 */
-                $url = FCPATH . "uploads/{$this->viewFolder}/{$product_pattern->img_url}";
-                if (!is_dir($url) && file_exists($url)) :
-                    unlink($url);
-                endif;
-                $url = FCPATH . "uploads/{$this->viewFolder}/{$product_pattern->home_url}";
-                if (!is_dir($url) && file_exists($url)) :
-                    unlink($url);
-                endif;
-                $url = FCPATH . "uploads/{$this->viewFolder}/{$product_pattern->banner_url}";
-                if (!is_dir($url) && file_exists($url)) :
-                    unlink($url);
-                endif;
-                /**
-                 * Remove Pattern From Product
-                 */
-                $this->general_model->delete("product_pattern_dimensions", ["pattern_id" => $id]);
-                $this->products_w_patterns_model->delete(["pattern_id" => $id]);
-                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Kategorisi Başarıyla Silindi."]);
-            else :
-                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Silinirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
-            endif;
-        endif;
-    }
     public function rankSetter()
     {
         $rows = $this->input->post("rows");
@@ -192,10 +159,11 @@ class Product_patterns extends MY_Controller
         endif;
     }
 
-    public function getPatterns(){
+    public function getPatterns()
+    {
         set_time_limit(0);
         ini_set('memory_limit', '-1');
-        $codesConnections = $this->general_model->get_all("codes",null, null, ["isActive" => 1]);
+        $codesConnections = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
 
         if (!empty($codesConnections)) {
             $rank = 1;
@@ -203,7 +171,7 @@ class Product_patterns extends MY_Controller
                 $data = @curl_request($codesConnectionsValue->host, $codesConnectionsValue->port, "desen", [], ['Content-Type: application/json', 'Accept: application/json', 'X-TOKEN: ' . $codesConnectionsValue->token])->data;
                 if (!empty($data)) {
                     foreach ($data as $returnKey => $returnValue) {
-                        $this->general_model->replace("product_patterns",[
+                        $this->general_model->replace("product_patterns", [
                             'id' => $rank,
                             'codes_id' => intval(clean($returnValue->Id)) ?? NULL,
                             'title' => clean($returnValue->Kod) ?? NULL,
@@ -217,6 +185,6 @@ class Product_patterns extends MY_Controller
                 }
             }
         }
-        echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Desenleri Başarıyla Eşitlendi."]);
+        echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Desenleri Codes İle Başarıyla Eşitlendi."]);
     }
 }

@@ -3,24 +3,24 @@
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="mb-3">
-                Ürün Ebatları
-                <a href="javascript:void(0)" data-url="<?= base_url("product_dimensions/getDimensions"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right syncProductDimensionBtn"> <i class="fa fa-rotate"></i> Ürün Ebatlarını Codes İle Eşitle</a>
+                Ürün Renkleri
+                <a href="javascript:void(0)" data-url="<?= base_url("product_colors/getColors"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right syncProductColorBtn"> <i class="fa fa-rotate"></i> Ürün Renklerini Codes İle Eşitle</a>
             </h4>
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <form id="filter_form" onsubmit="return false">
                 <div class="d-flex flex-wrap">
                     <label for="search" class="flex-fill mx-1">
-                        <input class="form-control form-control-sm rounded-0" placeholder="Arama Yapmak İçin Metin Girin." type="text" onkeypress="return runScript(event,'productDimensionTable')" name="search">
+                        <input class="form-control form-control-sm rounded-0" placeholder="Arama Yapmak İçin Metin Girin." type="text" onkeypress="return runScript(event,'productColorTable')" name="search">
                     </label>
                     <label for="clear_button" class="mx-1">
-                        <button class="btn btn-sm btn-outline-danger rounded-0 " onclick="clearFilter('filter_form','productDimensionTable')" id="clear_button" data-toggle="tooltip" data-placement="top" data-title="Filtreyi Temizle" data-original-title="" title=""><i class="fa fa-eraser"></i></button>
+                        <button class="btn btn-sm btn-outline-danger rounded-0 " onclick="clearFilter('filter_form','productColorTable')" id="clear_button" data-toggle="tooltip" data-placement="top" data-title="Filtreyi Temizle" data-original-title="" title=""><i class="fa fa-eraser"></i></button>
                     </label>
                     <label for="search_button" class="mx-1">
-                        <button class="btn btn-sm btn-outline-success rounded-0 " onclick="reloadTable('productDimensionTable')" id="search_button" data-toggle="tooltip" data-placement="top" data-title="Ürün Kategorisi Ara"><i class="fa fa-search"></i></button>
+                        <button class="btn btn-sm btn-outline-success rounded-0 " onclick="reloadTable('productColorTable')" id="search_button" data-toggle="tooltip" data-placement="top" data-title="Ürün Kategorisi Ara"><i class="fa fa-search"></i></button>
                 </div>
             </form>
-            <table class="table table-hover table-striped table-bordered content-container productDimensionTable">
+            <table class="table table-hover table-striped table-bordered content-container productColorTable">
                 <thead>
                     <th class="order"><i class="fa fa-reorder"></i></th>
                     <th class="order"><i class="fa fa-reorder"></i></th>
@@ -46,7 +46,7 @@
                     return d;
                 }
                 $(document).ready(function() {
-                    TableInitializerV2("productDimensionTable", obj, {}, "<?= base_url("product_dimensions/datatable") ?>", "<?= base_url("product_dimensions/rankSetter") ?>", true);
+                    TableInitializerV2("productColorTable", obj, {}, "<?= base_url("product_colors/datatable") ?>", "<?= base_url("product_colors/rankSetter") ?>", true);
 
                 });
             </script>
@@ -55,11 +55,11 @@
 </div>
 </div>
 
-<div id="productDimensionModal"></div>
+<div id="productColorModal"></div>
 
 <script>
     $(document).ready(function() {
-        $(document).on("click", ".syncProductDimensionBtn", function(e) {
+        $(document).on("click", ".syncProductColorBtn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let url = $(this).data("url");
@@ -74,38 +74,38 @@
             button.text("Eşitleme İşlemi Yapılıyor Lütfen Bekleyin...");
             button.prop("disabled", true);
             createAjax(url, formData, function() {
-                reloadTable("productDimensionTable");
+                reloadTable("productColorTable");
                 button.text("Eşitleme İşlemi Tamamlandı");
                 setTimeout(function() {
-                    button.text("Ürün Ebatlarını Codes İle Eşitle");
+                    button.text("Ürün Renklerini Codes İle Eşitle");
                     button.prop("disabled", false);
                 }, 1000);
             });
         });
-        $(document).on("click", ".updateProductDimensionBtn", function(e) {
+        $(document).on("click", ".updateProductColorBtn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
-            $('#productDimensionModal').iziModal('destroy');
+            $('#productColorModal').iziModal('destroy');
             let url = $(this).data("url");
-            createModal("#productDimensionModal", "Ürün Kategorisi Düzenle", "Ürün Kategorisi Düzenle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+            createModal("#productColorModal", "Ürün Kategorisi Düzenle", "Ürün Kategorisi Düzenle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
                 $.post(url, {}, function(response) {
-                    $("#productDimensionModal .iziModal-content").html(response);
+                    $("#productColorModal .iziModal-content").html(response);
                     TinyMCEInit();
                     flatPickrInit();
                 });
             });
-            openModal("#productDimensionModal");
-            $("#productDimensionModal").iziModal("setFullscreen", false);
+            openModal("#productColorModal");
+            $("#productColorModal").iziModal("setFullscreen", false);
         });
         $(document).on("click", ".btnUpdate", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let url = $(this).data("url");
-            let formData = new FormData(document.getElementById("updateProductDimension"));
+            let formData = new FormData(document.getElementById("updateProductColor"));
             createAjax(url, formData, function() {
-                closeModal("#productDimensionModal");
-                $("#productDimensionModal").iziModal("setFullscreen", false);
-                reloadTable("productDimensionTable");
+                closeModal("#productColorModal");
+                $("#productColorModal").iziModal("setFullscreen", false);
+                reloadTable("productColorTable");
             });
         });
     });

@@ -82,7 +82,7 @@
                 $wheres["p.lang"] = $this->viewData->lang;
                 $joins = ["technical_informations_w_categories pwc" => ["p.id = pwc.technical_information_id", "left"], "technical_information_categories pc" => ["pwc.category_id = pc.id", "left"], "technical_information_images pi" => ["pi.technical_information_id = p.id", "left"]];
 
-                $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.url,pi.url img_url,p.isActive,p.sharedAt";
+                $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,p.isActive,p.sharedAt";
                 $distinct = true;
                 $groupBy = ["p.id", "pwc.technical_information_id"];
                 $technical_informations = $this->general_model->get_all("technical_informations p", $select, $order, $wheres, $likes, $joins, [], [], $distinct, $groupBy);

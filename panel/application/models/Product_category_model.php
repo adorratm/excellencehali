@@ -7,9 +7,9 @@ class Product_category_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
-        $this->column_order = ['product_categories.rank', 'product_categories.id', 'product_categories.id', 'product_categories.title', 'pc.title','product_categories.lang', 'product_categories.isActive', 'product_categories.createdAt', 'updatedAt'];
+        $this->column_order = ['product_categories.rank', 'product_categories.id', 'product_categories.id', 'product_categories.codes_id', 'product_categories.title', 'pc.title', 'product_categories.codes', 'product_categories.isActive', 'product_categories.createdAt', 'updatedAt'];
         // Set searchable column fields
-        $this->column_search = ['product_categories.rank', 'product_categories.id', 'product_categories.id', 'product_categories.title', 'pc.title','product_categories.lang', 'product_categories.isActive', 'product_categories.createdAt', 'product_categories.updatedAt'];
+        $this->column_search = ['product_categories.rank', 'product_categories.id', 'product_categories.id', 'product_categories.codes_id', 'product_categories.title', 'pc.title', 'product_categories.codes', 'product_categories.isActive', 'product_categories.createdAt', 'product_categories.updatedAt'];
         // Set default order
         $this->order = ['product_categories.rank' => 'ASC'];
     }
@@ -48,6 +48,8 @@ class Product_category_model extends CI_Model
     {
         $this->db->where(["product_categories.id!=" => null]);
         $this->db->select('
+        product_categories.codes_id codes_id,
+        product_categories.codes codes,
         product_categories.title title,
 		product_categories.rank rank,
 		product_categories.id category_id,

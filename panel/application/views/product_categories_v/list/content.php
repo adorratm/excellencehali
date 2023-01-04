@@ -4,7 +4,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="mb-3">
                 Ürün Kategorileri
-                <a href="javascript:void(0)" data-url="<?= base_url("product_categories/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right createProductCategoryBtn"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+                <a href="javascript:void(0)" data-url="<?= base_url("product_categories/getCollections"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right syncProductCategoryBtn"> <i class="fa fa-sync"></i> Ürün Kategorilerini Codes İle Eşitle</a>
             </h4>
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -25,9 +25,10 @@
                     <th class="order"><i class="fa fa-reorder"></i></th>
                     <th class="order"><i class="fa fa-reorder"></i></th>
                     <th class="w50">#id</th>
+                    <th class="w50">Codes ID</th>
                     <th>Başlık</th>
                     <th>Üst Kategori</th>
-                    <th>Dil</th>
+                    <th>Codes Sunucusu</th>
                     <th>Durumu</th>
                     <th>Oluşturulma Tarihi</th>
                     <th>Güncelleme Tarihi</th>
@@ -59,30 +60,27 @@
 
 <script>
     $(document).ready(function() {
-        $(document).on("click", ".createProductCategoryBtn", function(e) {
+        $(document).on("click", ".syncProductCategoryBtn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let url = $(this).data("url");
-            $('#productCategoryModal').iziModal('destroy');
-            createModal("#productCategoryModal", "Yeni Ürün Kategorisi Ekle", "Yeni Ürün Kategorisi Ekle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
-                $.post(url, {}, function(response) {
-                    $("#productCategoryModal .iziModal-content").html(response);
-                    TinyMCEInit();
-                    flatPickrInit();
-                });
+            let formData = new FormData();
+            let button = $(this);
+            iziToast.info({
+                title: 'Bilgi!',
+                message: 'Eşitleme İşlemi Başlatıldı Lütfen Sayfayı Kapatmadan Bekleyiniz...',
+                position: "topCenter",
+                displayMode: 'once',
             });
-            openModal("#productCategoryModal");
-            $("#productCategoryModal").iziModal("setFullscreen", false);
-        });
-        $(document).on("click", ".btnSave", function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            let url = $(this).data("url");
-            let formData = new FormData(document.getElementById("createProductCategory"));
+            button.text("Eşitleme İşlemi Yapılıyor Lütfen Bekleyin...");
+            button.prop("disabled", true);
             createAjax(url, formData, function() {
-                closeModal("#productCategoryModal");
-                $("#productCategoryModal").iziModal("setFullscreen", false);
                 reloadTable("productCategoryTable");
+                button.text("Eşitleme İşlemi Tamamlandı");
+                setTimeout(function() {
+                    button.text("Ürün Kategorilerini Codes İle Eşitle");
+                    button.prop("disabled", false);
+                }, 1000);
             });
         });
         $(document).on("click", ".updateProductCategoryBtn", function(e) {

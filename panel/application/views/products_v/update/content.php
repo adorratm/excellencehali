@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <form id="updateProduct" onsubmit="return false" method="post" enctype="multipart/form-data">
     <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="form-group">
                 <label>Başlık</label>
                 <input class="form-control form-control-sm rounded-0" placeholder="Başlık" name="title" value="<?= !empty($item->title) ? $item->title : null; ?>" required>
@@ -76,23 +76,6 @@
                             <?= $category->id ?> - <?= $category->title; ?>
                         </option>
                     <?php endforeach ?>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <div class="form-group">
-                <label>Teknik Bilgi</label>
-                <select class="rounded-0 tagsInput" name="technical_information_id" required>
-                    <option value="">Teknik Bilgi Seçiniz.</option>
-                    <?php if (!empty($technical_informations)) : ?>
-                        <?php foreach ($technical_informations as $technical_information) : ?>
-                            <option value="<?= $technical_information->id; ?>" <?= $item->technical_information_id == $technical_information->id ? "selected" : null ?>>
-                                <?= $technical_information->title; ?>
-                            </option>
-                        <?php endforeach ?>
-                    <?php endif; ?>
                 </select>
             </div>
         </div>

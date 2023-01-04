@@ -857,7 +857,7 @@ class Home extends MY_Controller
         $wheres["p.lang"] = $this->viewData->lang;
         $joins = ["products_w_categories pwc" => ["p.id = pwc.product_id", "left"], "product_categories pc" => ["pwc.category_id = pc.id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
 
-        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.url,pi.url img_url,p.isActive,p.sharedAt";
+        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,p.isActive,p.sharedAt";
         $distinct = true;
         $groupBy = ["p.id", "pwc.product_id"];
         /**
@@ -942,10 +942,10 @@ class Home extends MY_Controller
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
         $joins = ["products_w_categories pwc" => ["p.id = pwc.product_id", "left"], "product_categories pc" => ["pwc.category_id = pc.id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
-        $select = "p.technical_information_id,GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.url,pi.url img_url,p.img_url cover_url, p.description,p.content,p.features,p.isActive,p.sharedAt";
+        $select = "p.technical_information_id,GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,p.img_url cover_url, p.description,p.content,p.features,p.isActive,p.sharedAt";
         $distinct = true;
         $groupBy = ["p.id", "pwc.product_id"];
-        $wheres['p.url'] =  $seo_url;
+        $wheres['p.seo_url'] =  $seo_url;
         /**
          * Get Product Detail
          */
@@ -1064,7 +1064,7 @@ class Home extends MY_Controller
         $wheres["p.lang"] = $this->viewData->lang;
         $joins = ["technical_informations_w_categories pwc" => ["p.id = pwc.technical_information_id", "left"], "technical_information_categories pc" => ["pwc.category_id = pc.id", "left"], "technical_information_images pi" => ["pi.technical_information_id = p.id", "left"]];
 
-        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.url,pi.url img_url,p.isActive,p.sharedAt";
+        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,p.isActive,p.sharedAt";
         $distinct = true;
         $groupBy = ["p.id", "pwc.technical_information_id"];
         /**
@@ -1150,10 +1150,10 @@ class Home extends MY_Controller
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
         $joins = ["technical_informations_w_categories pwc" => ["p.id = pwc.technical_information_id", "left"], "technical_information_categories pc" => ["pwc.category_id = pc.id", "left"], "technical_information_images pi" => ["pi.technical_information_id = p.id", "left"]];
-        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.url,pi.url img_url,p.description,p.content,p.features,p.isActive,p.sharedAt";
+        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,p.description,p.content,p.features,p.isActive,p.sharedAt";
         $distinct = true;
         $groupBy = ["p.id", "pwc.technical_information_id"];
-        $wheres['p.url'] =  $seo_url;
+        $wheres['p.seo_url'] =  $seo_url;
         /**
          * Get Technical Information Detail
          */
@@ -1481,7 +1481,7 @@ class Home extends MY_Controller
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
         $joins = ["products_w_categories pwc" => ["p.id = pwc.product_id", "left"], "product_categories pc" => ["pwc.category_id = pc.id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
-        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.url,pi.url img_url,p.sharedAt";
+        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,p.sharedAt";
         $distinct = true;
         $groupBy = ["p.id", "pwc.product_id"];
         $products = $this->general_model->get_all("products p", $select, "p.id DESC", $wheres, [], $joins, [], [], $distinct, $groupBy);
@@ -1593,7 +1593,7 @@ class Home extends MY_Controller
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
         $joins = ["products_w_categories pwc" => ["p.id = pwc.product_id", "left"], "product_categories pc" => ["pwc.category_id = pc.id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
-        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.url,pi.url img_url,p.sharedAt";
+        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,p.sharedAt";
         $distinct = true;
         $groupBy = ["p.id", "pwc.product_id"];
         $products = $this->general_model->get_all("products p", $select, "p.id DESC", $wheres, [], $joins, [], [], $distinct, $groupBy);
@@ -1668,7 +1668,7 @@ class Home extends MY_Controller
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
         $joins = ["products_w_categories pwc" => ["p.id = pwc.product_id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
-        $select = "p.id,p.title,p.url,pi.url img_url,p.description description,p.isActive,p.sharedAt";
+        $select = "p.id,p.title,p.seo_url,pi.url img_url,p.description description,p.isActive,p.sharedAt";
         $distinct = true;
         $groupBy = ["pwc.product_id"];
         /** 

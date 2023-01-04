@@ -147,13 +147,13 @@
                     </li>
                 <?php } ?>
                 <?php if (isAllowedViewModule("products")) { ?>
-                    <li class="nav-item <?= ($this->uri->segment(1) == "products") || ($this->uri->segment(1) == "product_categories") ? "active" : "" ?>">
-                        <a class="nav-link <?= ($this->uri->segment(1) == "products") || ($this->uri->segment(1) == "product_categories") ? "active" : "" ?>" href="javascript:void(0);" data-toggle="collapse" data-target="#products_nav">
+                    <li class="nav-item <?= ($this->uri->segment(1) == "products") || ($this->uri->segment(1) == "product_categories") || ($this->uri->segment(1) == "product_dimensions") || ($this->uri->segment(1) == "product_patterns") || ($this->uri->segment(1) == "product_colors") ? "active" : "" ?>">
+                        <a class="nav-link <?= ($this->uri->segment(1) == "products") || ($this->uri->segment(1) == "product_categories") || ($this->uri->segment(1) == "product_dimensions") || ($this->uri->segment(1) == "product_patterns") || ($this->uri->segment(1) == "product_colors") ? "active" : "" ?>" href="javascript:void(0);" data-toggle="collapse" data-target="#products_nav">
                             <i class="fa fa-dropbox"></i>
                             <span class="nav-link-text">Ürün İşlemleri</span>
                         </a>
-                        <ul id="products_nav" class="nav flex-column collapse  <?= ($this->uri->segment(1) == "products") || ($this->uri->segment(1) == "product_categories") ? "show" : "" ?> collapse-level-1">
-                            <li class="nav-item <?= ($this->uri->segment(1) == "products") || ($this->uri->segment(1) == "products_categories") ? "active" : "" ?>">
+                        <ul id="products_nav" class="nav flex-column collapse  <?= ($this->uri->segment(1) == "products") || ($this->uri->segment(1) == "product_categories") || ($this->uri->segment(1) == "product_dimensions") || ($this->uri->segment(1) == "product_patterns") || ($this->uri->segment(1) == "product_colors") ? "show" : "" ?> collapse-level-1">
+                            <li class="nav-item <?= ($this->uri->segment(1) == "products") || ($this->uri->segment(1) == "products_categories") || ($this->uri->segment(1) == "product_dimensions") || ($this->uri->segment(1) == "product_patterns") || ($this->uri->segment(1) == "product_colors") ? "active" : "" ?>">
                                 <ul class="nav flex-column">
                                     <li class="nav-item  <?= ($this->uri->segment(1) == "product_categories") ? "active" : "" ?>">
                                         <a class="nav-link <?= ($this->uri->segment(1) == "product_categories") ? "active" : "" ?>" href="<?= base_url("product_categories"); ?>">Ürün Kategorileri</a>
@@ -166,6 +166,9 @@
                                     </li>
                                     <li class="nav-item  <?= ($this->uri->segment(1) == "product_dimensions") ? "active" : "" ?>">
                                         <a class="nav-link <?= ($this->uri->segment(1) == "product_dimensions") ? "active" : "" ?>" href="<?= base_url("product_dimensions"); ?>">Ürün Ebatları</a>
+                                    </li>
+                                    <li class="nav-item  <?= ($this->uri->segment(1) == "product_colors") ? "active" : "" ?>">
+                                        <a class="nav-link <?= ($this->uri->segment(1) == "product_colors") ? "active" : "" ?>" href="<?= base_url("product_colors"); ?>">Ürün Renkleri</a>
                                     </li>
                                 </ul>
                             </li>

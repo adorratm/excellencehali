@@ -7,9 +7,9 @@ class Product_pattern_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
-        $this->column_order = ['rank', 'id', 'id', 'codes_id', 'title', 'lang', 'isActive', 'createdAt', 'updatedAt'];
+        $this->column_order = ['rank', 'id', 'id', 'codes_id', 'title', 'codes', 'isActive', 'createdAt', 'updatedAt'];
         // Set searchable column fields
-        $this->column_search = ['rank', 'id', 'id', 'codes_id', 'title', 'lang', 'isActive', 'createdAt', 'updatedAt'];
+        $this->column_search = ['rank', 'id', 'id', 'codes_id', 'title', 'codes', 'isActive', 'createdAt', 'updatedAt'];
         // Set default order
         $this->order = ['rank' => 'ASC'];
     }
