@@ -12,9 +12,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes, shrink-to-fit=no,minimal-ui">
     <meta name="description" content="<?= clean(@$meta_desc) ?>">
-    <?php /*
-    <meta name="keywords" content="<?= clean(@$meta_keyw) ?>">
-	*/ ?>
     <meta name="subject" content="<?= clean(@$meta_desc) ?>">
     <meta name="copyright" content="<?= $settings->company_name ?>">
     <meta name="language" content="<?= strto("lower|upper", $lang) ?>">
@@ -158,7 +155,6 @@
     <!-- SCRIPTS -->
     <?= $settings->analytics ?>
     <?= $settings->metrica ?>
-    <?= $settings->live_support ?>
     <script>
         let base_url = "<?= asset_url() ?>";
         let menu = [];

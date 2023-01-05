@@ -164,12 +164,8 @@ class Settings extends MY_Controller
                 endforeach;
                 $data["map"] = json_encode($maps);
             endif;
-            $data["mission"] = $this->input->post("mission");
-            $data["vision"] = $this->input->post("vision");
-            $data["motto"] = $this->input->post("motto");
             $data["metrica"] = $this->input->post("metrica");
             $data["analytics"] = $this->input->post("analytics");
-            $data["live_support"] = $this->input->post("live_support");
             $insert = $this->settings_model->add($data);
             if ($insert) :
                 echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ayar Başarıyla Eklendi."]);
@@ -358,10 +354,6 @@ class Settings extends MY_Controller
                 endif;
                 $data["company_name"] = strip_slashes($data["company_name"]);
                 $data["slogan"] = strip_slashes($data["slogan"]);
-                $data["mission"] = $this->input->post("mission");
-                $data["vision"] = $this->input->post("vision");
-                $data["motto"] = $this->input->post("motto");
-                $data["live_support"] = $this->input->post("live_support");
                 $data["metrica"] = $this->input->post("metrica");
                 $data["analytics"] = $this->input->post("analytics");
                 $update = $this->general_model->update("settings", ["id" => $id], $data);

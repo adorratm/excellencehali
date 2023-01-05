@@ -440,9 +440,9 @@
         body = $("body, html");
     $(window).on('scroll', function () {
         if ($(window).scrollTop() > $(window).height()) {
-            back.css({ bottom: '30px', opacity: '1', visibility: 'visible' });
+            back.css({ bottom: '25px', opacity: '1', visibility: 'visible' });
         } else {
-            back.css({ bottom: '-30px', opacity: '0', visibility: 'hidden' });
+            back.css({ bottom: '-25px', opacity: '0', visibility: 'hidden' });
         }
     });
     body.on("click", "#backtotop", function (e) {
@@ -544,8 +544,8 @@
             gridwidth: [1320, 1140, 720],
             jsFileLocation: "js/",
             sliderLayout: "fullwidth",
-            gridheight:[750, 650, 576, 480],
-            minHeight: '200',
+            gridheight:[750, 650, 576, 320],
+            minHeight: '150',
             navigation: {
                 keyboardNavigation: "off",
                 keyboard_direction: "horizontal",
@@ -727,16 +727,22 @@
     $(window).on('scroll', function () {
         var heights = $(window).height();
         var header_height = $(".isSticky").height();
-        if ($(window).scrollTop() > heights) {
+        if ($(window).scrollTop() > 100) {
             if($(".isSticky").hasClass('h01Mode2')){
                 $('.blanks').css('height', header_height);
+                $(".triggerFixed").addClass("fixed-top");
+				$(".triggerFixed").css("top", header_height);
             }
             $(".isSticky").addClass('fixedHeader animated slideInDown');
+            $(".triggerFixed").addClass('fixedHeader animated slideInDown');
         } else {
             if($(".isSticky").hasClass('h01Mode2')){
                 $('.blanks').css('height', '0');
+                $(".triggerFixed").removeClass("fixed-top");
+				$(".triggerFixed").css("top", '0');
             }
             $(".isSticky").removeClass('fixedHeader animated slideInDown');
+            $(".triggerFixed").removeClass('fixedHeader animated slideInDown');
         }
     });
     
@@ -759,57 +765,6 @@
         if (preload.length > 0) {
             preload.delay(500).fadeOut('slow');
         }
-    });
-
-    /*----------------------------------------------------------
-    / 19. Contact Form Submission
-    /----------------------------------------------------------*/
-    $('#contact_form').on('submit', function (e) {
-        e.preventDefault();
-        var $this = $(this);
-
-        $('button[type="submit"]', this).attr('disabled', 'disabled').val('Processing...');
-        var form_data = $this.serialize();
-        var required = 0;
-        $(".required", this).each(function () {
-            if ($(this).val() === ''){
-                $(this).addClass('reqError');
-                required += 1;
-            } else{
-                if ($(this).hasClass('reqError'))
-                {
-                    $(this).removeClass('reqError');
-                    if (required > 0)
-                    {
-                        required -= 1;
-                    }
-                }
-            }
-        });
-        if (required === 0) {
-            $.ajax({
-                type: 'POST',
-                url: 'ajax/mail.php',
-                data: {form_data: form_data},
-                success: function (data) {
-                    $('button[type="submit"]', $this).removeAttr('disabled').val('Message');
-
-                    $('.con_message', $this).fadeIn().html('<strong>Congratulations!</strong> Your query successfully sent to site admin.').removeClass('alert-warning').addClass('alert-success');
-                    setTimeout(function () {
-                        $('.con_message', $this).fadeOut().html('').removeClass('alert-success alert-warning');
-                    }, 5000);
-                }
-            });
-        } else {
-            $('button[type="submit"]', $this).removeAttr('disabled').val('Message');
-            $('.con_message', $this).fadeIn().html('<strong>Opps!</strong> Errpr found. Please fix those and re submit.').removeClass('alert-success').addClass('alert-warning');
-            setTimeout(function () {
-                $('.con_message', $this).fadeOut().html('').removeClass('alert-success alert-warning');
-            }, 5000);
-        }
-    });
-    $(".required").on('keyup', function () {
-        $(this).removeClass('reqError');
     });
 
     /*--------------------------------------------------------

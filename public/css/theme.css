@@ -57,7 +57,7 @@
     top: 0;
     width: 100%;
     background: #ecf5f4;
-    z-index: 999;
+    z-index: 1040;
     box-shadow: 0 0 50px 0 rgba(29, 35, 58, .08);
 }
 
@@ -3221,7 +3221,7 @@
 /-----------------------------------------*/
 .footer {
     position: relative;
-    padding: 90px 0 0;
+    padding: 25px 0 0;
     background: #4a5556;
 }
 
@@ -3255,7 +3255,6 @@
 }
 
 .footerLogo img {
-    height: 48px;
     display: inline-block;
     width: auto;
 }
@@ -3336,8 +3335,8 @@
 .footer .widget .widgetTitle {
     font-size: 24px;
     line-height: 1;
-    color: #FFF;
-    margin: 17px 0 35px;
+    color: #fff;
+    margin: 0 0 25px;
 }
 
 .footerMode2 .widget .widgetTitle {
@@ -3447,7 +3446,7 @@
 
 .footerSocial a:hover,
 .footerMode2 .footerSocial a:hover {
-    background: #9ebbbd;
+    background: #18142e;
     color: #FFF;
 }
 
@@ -3481,15 +3480,15 @@
 }
 
 .footerPayments a:hover {
-    color: #9ebbbd;
+    color: #18142e;
 }
 
 .footerMode2 .footerPayments a:hover {
-    color: #9ebbbd;
+    color: #18142e;
 }
 
 .footerAccessRow {
-    padding: 70px 0 36px;
+    padding: 20px 0 20px;
 }
 
 .footerMode2 .footerAccessRow {
@@ -3525,7 +3524,7 @@
 
 .siteInfo {
     color: #bbbdc4;
-    padding: 31px 0 46px;
+    padding: 15px 0 15px;
 }
 
 .sisMode2 .siteInfo {
@@ -3549,7 +3548,6 @@
     display: flex;
     justify-content: flex-end;
     position: relative;
-    padding: 31px 0 46px;
 }
 
 .footerNav ul {
@@ -3588,20 +3586,19 @@
 #backtotop {
     position: fixed;
     letter-spacing: 0;
-    right: 25px;
-    bottom: -25px;
-    width: 45px;
-    height: 45px;
+    right: 16px;
+    bottom: -30px;
+    width: 50px;
+    height: 50px;
     background: #9ebbbd;
     color: #fff;
     font-size: 14px;
     text-align: center;
-    line-height: 45px;
+    line-height: 50px;
     padding: 0;
     opacity: 0;
     visibility: hidden;
     z-index: 999;
-    border-radius: 0;
     border-radius: 50%;
 }
 
@@ -6297,6 +6294,8 @@
 .blogItem04 img {
     width: 100%;
     height: auto;
+    max-height: 500px;
+    object-fit: cover;
     display: block;
     border-radius: 5px 5px 0 0;
 }
@@ -6894,13 +6893,13 @@
     position: relative;
     border-radius: 5px;
     border: 1px solid #dbdfe3;
-    padding: 41px 41px 35px 197px;
+    padding: 41px 41px 35px 315px;
     margin: 72px 0 0;
 }
 
 .postAuthorBox img {
     position: absolute;
-    width: 120px;
+    width: 250px;
     height: 120px;
     border-radius: 5px;
     left: 41px;
@@ -6968,10 +6967,6 @@
 .pabSocial a:hover {
     background: #9ebbbd;
     color: #FFF;
-}
-
-.postAuthorBox p {
-    margin: 0 0 27px;
 }
 
 .postAuthorBox .ulinaLink {

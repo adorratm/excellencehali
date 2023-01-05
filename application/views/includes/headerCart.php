@@ -79,14 +79,6 @@ $subTotalPrice = 0;
 
 $totalPrice = (float)$this->cart->total();
 $subTotalPrice = (float)$this->cart->total() - (float)$totalVat;
-/**
- * Calculate Shipping
- */
-$shipping = ($totalPrice >= (float)$settings->shippingMinPrice ? 0 : (float)$settings->shippingPrice);
-if ($totalPrice == 0) :
-    $shipping = 0;
-endif;
-$totalPrice += (float)$shipping;
 if ((empty($items["options"]["mainQuantity"]) || (bool)$items["options"]["mainQuantity"] == FALSE)) :
     $subTotalPrice -= $mainQuantity;
     $totalPrice -= $mainQuantity;
@@ -97,9 +89,6 @@ endif;
 <?php endif ?>
 <?php if ($totalVat > 0) : ?>
     <div class="totalPrice"><?= lang("vat") ?>: <span class="price"><span><?= $symbol . $this->cart->format_number($totalVat); ?></span></div>
-<?php endif ?>
-<?php if ($shipping > 0) : ?>
-    <div class="totalPrice"><?= lang("shipping") ?>: <span class="price"><span><?= $symbol . $this->cart->format_number($shipping); ?></span></div>
 <?php endif ?>
 <?php if ($totalPrice > 0) : ?>
     <div class="totalPrice"><?= lang("total") ?>: <span class="price"><span><?= $symbol . $this->cart->format_number($totalPrice); ?></span></div>

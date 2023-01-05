@@ -70,7 +70,7 @@
             <div class="logo">
                 <a rel="dofollow" href="<?= base_url() ?>" title="<?= $settings->company_name ?>">
                     <picture>
-                        <img width="300" height="90" data-src="<?= get_picture("settings_v", $settings->logo) ?>" alt="<?= $settings->company_name ?>" class="lazyload img-fluid">
+                        <img width="300" height="90" data-src="<?= get_picture("settings_v", $settings->logo) ?>" alt="<?= $settings->company_name ?>" class="lazyload img-fluid rounded">
                     </picture>
                 </a>
             </div>

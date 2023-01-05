@@ -6,9 +6,6 @@
                 <a class="nav-link active" id="site-informations-tab" data-toggle="tab" href="#site-informations" role="tab" aria-controls="site-informations" aria-selected="true">Site Bilgileri</a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="about-informations-tab" data-toggle="tab" href="#about-informations" role="tab" aria-controls="about-informations" aria-selected="false">Hakkımızda Bilgisi</a>
-            </li>
-            <li class="nav-item" role="presentation">
                 <a class="nav-link" id="address-informations-tab" data-toggle="tab" href="#address-informations" role="tab" aria-controls="address-informations" aria-selected="false">Adres Bilgisi</a>
             </li>
             <li class="nav-item" role="presentation">
@@ -23,20 +20,15 @@
             <li class="nav-item" role="presentation">
                 <a class="nav-link" id="site-analysis-tab" data-toggle="tab" href="#site-analysis" role="tab" aria-controls="site-analysis" aria-selected="false">Site Analysis</a>
             </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="live-support-tab" data-toggle="tab" href="#live-support" role="tab" aria-controls="live-support" aria-selected="false">Live Support</a>
-            </li>
 
         </ul>
         <div class="tab-content" id="myTabContent">
             <?php $this->load->view("$viewFolder/$subViewFolder/tabs/site_info"); ?>
-            <?php $this->load->view("$viewFolder/$subViewFolder/tabs/about"); ?>
             <?php $this->load->view("$viewFolder/$subViewFolder/tabs/address"); ?>
             <?php $this->load->view("$viewFolder/$subViewFolder/tabs/social_media"); ?>
             <?php $this->load->view("$viewFolder/$subViewFolder/tabs/logo"); ?>
             <?php $this->load->view("$viewFolder/$subViewFolder/tabs/site_meta"); ?>
             <?php $this->load->view("$viewFolder/$subViewFolder/tabs/site_analysis"); ?>
-            <?php $this->load->view("$viewFolder/$subViewFolder/tabs/live_support"); ?>
         </div>
     </div>
     <div class="row">

@@ -166,8 +166,7 @@ class Home extends MY_Controller
 
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("home"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-        $this->viewData->meta_keyw  = clean($this->viewData->settings->meta_keywords);
-
+        
         $this->viewData->og_url                 = clean(base_url());
         $this->viewData->og_image           = clean(get_picture("settings_v", $this->viewData->settings->logo));
         $this->viewData->og_type          = "website";
@@ -300,7 +299,6 @@ class Home extends MY_Controller
         $this->viewData->testimonials = $this->general_model->get_all("testimonials", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang]);
         $this->viewData->meta_title = strto("lower|ucwords", $this->viewData->item->title) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = clean(str_replace("”", "\"", @stripslashes($this->viewData->item->content)));
-        $this->viewData->meta_keyw  = clean($this->viewData->settings->meta_keywords);
         $this->viewData->og_url                 = clean(base_url(lang("routes_page") . "/" . $seo_url));
         $this->viewData->og_image           = clean(get_picture("pages_v", $this->viewData->item->img_url));
         $this->viewData->og_type          = "article";
@@ -392,7 +390,6 @@ class Home extends MY_Controller
 
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("routes_blog"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-        $this->viewData->meta_keyw  = clean($this->viewData->settings->meta_keywords);
 
         $this->viewData->og_url                 = clean(base_url(lang("routes_blog")));
         $this->viewData->og_image           = clean(get_picture("settings_v", $this->viewData->settings->logo));
@@ -419,7 +416,6 @@ class Home extends MY_Controller
         $this->viewData->categories = $this->general_model->get_all("blog_categories", null, "id DESC", ["isActive" => 1, "lang" => $this->viewData->lang]);
         $this->viewData->meta_title = strto("lower|ucwords", $this->viewData->blog->title) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = clean(str_replace("”", "\"", @stripslashes($this->viewData->blog->content)));
-        $this->viewData->meta_keyw  = clean($this->viewData->settings->meta_keywords);
         $this->viewData->og_url                 = clean(base_url(lang("routes_blog") . "/" . lang("routes_blog_detail") . "/" . $seo_url));
         $this->viewData->og_image           = clean(get_picture("blogs_v", $this->viewData->blog->img_url));
         $this->viewData->og_type          = "article";
@@ -512,7 +508,6 @@ class Home extends MY_Controller
 
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("sectors"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-        $this->viewData->meta_keyw  = clean($this->viewData->settings->meta_keywords);
 
         $this->viewData->og_url                 = clean(base_url(lang("routes_services")));
         $this->viewData->og_image           = clean(get_picture("settings_v", $this->viewData->settings->logo));
@@ -543,7 +538,6 @@ class Home extends MY_Controller
 
         $this->viewData->meta_title = strto("lower|ucwords", @$this->viewData->service->title) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = clean(str_replace("”", "\"", @stripslashes($this->viewData->service->content)));
-        $this->viewData->meta_keyw  = clean($this->viewData->settings->meta_keywords);
         $this->viewData->og_url                 = clean(base_url(lang("routes_services") . "/" . lang("routes_service_detail") . "/" . $seo_url));
         $this->viewData->og_image           = clean(get_picture("services_v", @$this->viewData->service->img_url));
         $this->viewData->og_type          = "article";
@@ -635,7 +629,6 @@ class Home extends MY_Controller
 
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("sectors"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-        $this->viewData->meta_keyw  = clean($this->viewData->settings->meta_keywords);
 
         $this->viewData->og_url                 = clean(base_url(lang("routes_sectors")));
         $this->viewData->og_image           = clean(get_picture("settings_v", $this->viewData->settings->logo));
@@ -664,7 +657,6 @@ class Home extends MY_Controller
         $this->viewData->categories = $this->general_model->get_all("sector_categories", null, "id DESC", ["isActive" => 1, "lang" => $this->viewData->lang]);
         $this->viewData->meta_title = strto("lower|ucwords", @$this->viewData->sector->title) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = clean(str_replace("”", "\"", @stripslashes($this->viewData->sector->content)));
-        $this->viewData->meta_keyw  = clean($this->viewData->settings->meta_keywords);
         $this->viewData->og_url                 = clean(base_url(lang("routes_sectors") . "/" . lang("routes_sector_detail") . "/" . $seo_url));
         $this->viewData->og_image           = clean(get_picture("sectors_v", @$this->viewData->sector->img_url));
         $this->viewData->og_type          = "article";
@@ -795,7 +787,6 @@ class Home extends MY_Controller
         $this->viewData->page_title = (!empty($category) ? $category->title : lang("products"));
         $this->viewData->meta_title = strto("lower|ucwords", (!empty($category) ? $category->title : lang("products"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-        $this->viewData->meta_keyw  = clean($this->viewData->settings->meta_keywords);
         $this->viewData->og_url                 = clean(base_url(lang("routes_products")));
         $this->viewData->og_image           = clean(get_picture("settings_v", $this->viewData->settings->logo));
         $this->viewData->og_type          = "product";
@@ -920,7 +911,6 @@ class Home extends MY_Controller
         $this->viewData->page_title = (!empty($category) ? $category->title : lang("products"));
         $this->viewData->meta_title = strto("lower|ucwords", (!empty($category) ? $category->title : lang("products"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-        $this->viewData->meta_keyw  = clean($this->viewData->settings->meta_keywords);
         $this->viewData->og_url                 = clean(base_url(lang("routes_products")));
         $this->viewData->og_image           = clean(get_picture("settings_v", $this->viewData->settings->logo));
         $this->viewData->og_type          = "product";
@@ -993,7 +983,6 @@ class Home extends MY_Controller
              */
             $this->viewData->meta_title = strto("lower|ucwords", $this->viewData->product->title) . " - " . $this->viewData->settings->company_name;
             $this->viewData->meta_desc  = !empty($this->viewData->product->content) ? str_replace("”", "\"", @stripslashes($this->viewData->product->content)) : str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-            $this->viewData->meta_keyw  = clean($this->viewData->settings->meta_keywords);
             $this->viewData->og_url                 = clean(base_url(lang("routes_products") . "/" . lang("routes_product") . "/" . $seo_url));
             $this->viewData->og_image           = clean(get_picture("products_v", $imgURL));
             $this->viewData->og_type          = "product.item";
@@ -1128,7 +1117,6 @@ class Home extends MY_Controller
         $this->viewData->page_title = (!empty($category) ? $category->title : lang("technicalInformations"));
         $this->viewData->meta_title = strto("lower|ucwords", (!empty($category) ? $category->title : lang("technicalInformations"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-        $this->viewData->meta_keyw  = clean($this->viewData->settings->meta_keywords);
         $this->viewData->og_url                 = clean(base_url(lang("routes_technical_informations")));
         $this->viewData->og_image           = clean(get_picture("settings_v", $this->viewData->settings->logo));
         $this->viewData->og_type          = "article";
@@ -1201,7 +1189,6 @@ class Home extends MY_Controller
              */
             $this->viewData->meta_title = strto("lower|ucwords", $this->viewData->technical_information->title) . " - " . $this->viewData->settings->company_name;
             $this->viewData->meta_desc  = !empty($this->viewData->technical_information->content) ? str_replace("”", "\"", @stripslashes($this->viewData->technical_information->content)) : str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-            $this->viewData->meta_keyw  = clean($this->viewData->settings->meta_keywords);
             $this->viewData->og_url                 = clean(base_url(lang("routes_technical_informations") . "/" . lang("routes_technical_information") . "/" . $seo_url));
             $this->viewData->og_image           = clean(get_picture("technical_informations_v", $imgURL));
             $this->viewData->og_type          = "article";
@@ -1278,7 +1265,6 @@ class Home extends MY_Controller
         $this->viewData->links = $this->pagination->create_links();
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("galleries"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-        $this->viewData->meta_keyw  = clean($this->viewData->settings->meta_keywords);
 
         $this->viewData->og_url                 = clean(base_url(lang("routes_galleries")));
         $this->viewData->og_image           = clean(get_picture("settings_v", $this->viewData->settings->logo));
@@ -1302,7 +1288,6 @@ class Home extends MY_Controller
 
         $this->viewData->meta_title = strto("lower|ucwords", $this->viewData->gallery->title) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-        $this->viewData->meta_keyw  = clean($this->viewData->settings->meta_keywords);
 
         $this->viewData->og_url                 = clean(base_url(lang("routes_galleries") . "/" . lang("routes_gallery") . "/" . $seo_url));
         $this->viewData->og_image           = clean(get_picture("settings_v", $this->viewData->settings->logo));
@@ -1336,7 +1321,6 @@ class Home extends MY_Controller
 
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("contact"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-        $this->viewData->meta_keyw  = clean($this->viewData->settings->meta_keywords);
 
         $this->viewData->og_url                 = clean(base_url(lang("routes_contact")));
         $this->viewData->og_image           = clean(get_picture("settings_v", $this->viewData->settings->logo));

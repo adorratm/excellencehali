@@ -1,161 +1,135 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
-<!--Main Footer-->
-<footer class="main-footer">
-    <div class="upper-box">
-        <div class="auto-container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="widget about-widget links-widget">
-                        <?php if (!empty($settings->mobile_logo)) : ?>
-                            <div class="logo text-center">
-                                <a rel="dofollow" href="<?= base_url() ?>" title="<?= $settings->company_name ?>">
-                                    <picture>
-                                        <img loading="lazy" width="250" height="250" data-src="<?= get_picture("settings_v", $settings->mobile_logo) ?>" alt="<?= $settings->company_name ?>" class="lazyload img-fluid">
-                                    </picture>
-                                </a>
-                            </div>
-                        <?php endif ?>
-                        <ul class="social-links text-center">
-                            <?php if (!empty($settings->facebook)) : ?>
-                                <li>
-                                    <a rel="nofollow" href="<?= $settings->facebook ?>" title="Facebook" target="_blank">
-                                        <i class='fa fa-facebook color'></i>
-                                    </a>
-                                </li>
-                            <?php endif ?>
-                            <?php if (!empty($settings->twitter)) : ?>
-                                <li>
-                                    <a rel="nofollow" href="<?= $settings->twitter ?>" title="Twitter" target="_blank">
-                                        <i class='fa fa-twitter color'></i>
-                                    </a>
-                                </li>
-                            <?php endif ?>
-                            <?php if (!empty($settings->instagram)) : ?>
-                                <li>
-                                    <a rel="nofollow" href="<?= $settings->instagram ?>" title="Instagram" target="_blank">
-                                        <i class='fa fa-instagram color'></i>
-                                    </a>
-                                </li>
-                            <?php endif ?>
-                            <?php if (!empty($settings->linkedin)) : ?>
-                                <li>
-                                    <a rel="nofollow" href="<?= $settings->linkedin ?>" title="Linkedin" target="_blank">
-                                        <i class='fa fa-linkedin color'></i>
-                                    </a>
-                                </li>
-                            <?php endif ?>
-                            <?php if (!empty($settings->youtube)) : ?>
-                                <li>
-                                    <a rel="nofollow" href="<?= $settings->youtube ?>" title="Youtube" target="_blank">
-                                        <i class='fa fa-youtube color'></i>
-                                    </a>
-                                </li>
-                            <?php endif ?>
-                            <?php if (!empty($settings->medium)) : ?>
-                                <li>
-                                    <a rel="nofollow" href="<?= $settings->medium ?>" title="Medium" target="_blank">
-                                        <i class='fa fa-medium color'></i>
-                                    </a>
-                                </li>
-                            <?php endif ?>
-                            <?php if (!empty($settings->pinterest)) : ?>
-                                <li>
-                                    <a rel="nofollow" href="<?= $settings->pinterest ?>" title="Pinterest" target="_blank">
-                                        <i class='fa fa-pinterest color'></i>
-                                    </a>
-                                </li>
-                            <?php endif ?>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-9 col-md-6">
-                    <div class="row justify-content-lg-between">
+<!-- BEGIN: Footer Section -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <aside class="widget aboutWidget">
+                    <?php if (!empty($settings->mobile_logo)) : ?>
+                        <div class="footerLogo">
+                            <a rel="dofollow" href="<?= base_url() ?>" title="<?= $settings->company_name ?>">
+                                <picture>
+                                    <img loading="lazy" width="300" height="90" data-src="<?= get_picture("settings_v", $settings->mobile_logo) ?>" alt="<?= $settings->company_name ?>" class="lazyload img-fluid rounded">
+                                </picture>
+                            </a>
+                        </div>
+                    <?php endif ?>
+                </aside>
+            </div>
+            <div class="col-lg-8 col-md-6">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
                         <?php if (!empty($footer_menus)) : ?>
-                            <div class="col-lg-2 col-md-6">
-                                <div class="widget links-widget">
-                                    <h3 class="widget_title"><?= lang("corporate") ?></h3>
-                                    <div class="widget-content">
-                                        <?= $footer_menus ?>
-                                    </div>
-                                </div>
-                            </div>
+                            <aside class="widget">
+                                <h3 class="widgetTitle"><?= lang("corporate") ?></h3>
+                                <?= $footer_menus ?>
+                            </aside>
                         <?php endif ?>
-                        <?php if (!empty($footer_product_categories)) : ?>
-                            <div class="col-lg-2 col-md-6">
-                                <div class="widget links-widget">
-                                    <h3 class="widget_title"><?= strto("lower|ucwords",lang("products")) ?></h3>
-                                    <div class="widget-content">
-                                        <ul class="list">
-                                            <?php foreach ($footer_product_categories as $key => $value) : ?>
-                                                <li><a rel="dofollow" href="<?= base_url(lang("routes_products") . "/" . $value->seo_url) ?>" title="<?= $value->title ?>"><?= $value->title ?></a></li>
-                                            <?php endforeach ?>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endif ?>
-                        <?php if (!empty($footer_technical_information_categories)) : ?>
-                            <div class="col-lg-2 col-md-6">
-                                <div class="widget links-widget">
-                                    <h3 class="widget_title"><?= strto("lower|ucwords",lang("technicalInformations")) ?></h3>
-                                    <div class="widget-content">
-                                        <ul class="list">
-                                            <?php foreach ($footer_technical_information_categories as $key => $value) : ?>
-                                                <li><a rel="dofollow" href="<?= base_url(lang("routes_technical_informations") . "/" . $value->seo_url) ?>" title="<?= $value->title ?>"><?= $value->title ?></a></li>
-                                            <?php endforeach ?>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endif ?>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
                         <?php if (!empty($footer_menus2)) : ?>
-                            <div class="col-lg-2 col-md-6">
-                                <div class="widget links-widget">
-                                    <h3 class="widget_title"><?= lang("sustainability") ?></h3>
-                                    <?= $footer_menus2 ?>
-                                </div>
-                            </div>
+                            <aside class="widget">
+                                <h3 class="widgetTitle"><?= lang("corporate") ?></h3>
+                                <?= $footer_menus2 ?>
+                            </aside>
                         <?php endif ?>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
                         <?php if (!empty($footer_menus3)) : ?>
-                            <div class="col-lg-2 col-md-6">
-                                <div class="widget links-widget">
-                                    <h3 class="widget_title"><?= lang("menus") ?></h3>
-                                    <?= $footer_menus3 ?>
-                                </div>
-                            </div>
+                            <aside class="widget">
+                                <h3 class="widgetTitle"><?= lang("menus") ?></h3>
+                                <?= $footer_menus3 ?>
+                            </aside>
                         <?php endif ?>
                     </div>
                 </div>
+            </div>
 
+        </div>
+        <div class="row footerAccessRow">
+            <div class="col-md-6">
+                <div class="footerSocial">
+                    <?php if (!empty($settings->facebook)) : ?>
+                        <a rel="nofollow" href="<?= $settings->facebook ?>" title="Facebook" target="_blank">
+                            <i class='fa fa-facebook'></i>
+                        </a>
+                    <?php endif ?>
+                    <?php if (!empty($settings->twitter)) : ?>
+                        <a rel="nofollow" href="<?= $settings->twitter ?>" title="Twitter" target="_blank">
+                            <i class='fa fa-twitter'></i>
+                        </a>
+                    <?php endif ?>
+                    <?php if (!empty($settings->instagram)) : ?>
+                        <a rel="nofollow" href="<?= $settings->instagram ?>" title="Instagram" target="_blank">
+                            <i class='fa fa-instagram'></i>
+                        </a>
+                    <?php endif ?>
+                    <?php if (!empty($settings->linkedin)) : ?>
+                        <a rel="nofollow" href="<?= $settings->linkedin ?>" title="Linkedin" target="_blank">
+                            <i class='fa fa-linkedin'></i>
+                        </a>
+                    <?php endif ?>
+                    <?php if (!empty($settings->youtube)) : ?>
+                        <a rel="nofollow" href="<?= $settings->youtube ?>" title="Youtube" target="_blank">
+                            <i class='fa fa-youtube'></i>
+                        </a>
+                    <?php endif ?>
+                    <?php if (!empty($settings->medium)) : ?>
+                        <a rel="nofollow" href="<?= $settings->medium ?>" title="Medium" target="_blank">
+                            <i class='fa fa-medium'></i>
+                        </a>
+                    <?php endif ?>
+                    <?php if (!empty($settings->pinterest)) : ?>
+                        <a rel="nofollow" href="<?= $settings->pinterest ?>" title="Pinterest" target="_blank">
+                            <i class='fa fa-pinterest'></i>
+                        </a>
+                    <?php endif ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="footerPayments">
+                    <a rel="dofollow" href="<?= base_url() ?>" title="<?= $settings->company_name ?>"><i class="fa-brands fa-cc-visa"></i></a>
+                    <a rel="dofollow" href="<?= base_url() ?>" title="<?= $settings->company_name ?>"><i class="fa-brands fa-cc-mastercard"></i></a>
+                    <a rel="dofollow" href="<?= base_url() ?>" title="<?= $settings->company_name ?>"><i class="fa fa-lock"></i></a>
+                    <a rel="dofollow" href="<?= base_url() ?>" title="<?= $settings->company_name ?>"><i class="fa fa-shield-halved"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="footerBar"></div>
             </div>
         </div>
     </div>
 </footer>
-<!--End Main Footer-->
+<!-- END: Footer Section -->
 
-<div class="footer-bottom">
-    <div class="auto-container">
-        <div class="wrapper-box">
-            <div class="row m-0 align-items-center justify-content-between">
-                <div class="copyright-text">© 2022 <a rel="dofollow" class="text-white" href="<?= base_url() ?>" title="<?= $settings->company_name ?>"><?= $settings->company_name ?></a> <?= lang("allRightsReserved") ?></div>
-                <ul class="menu">
-                    <li><a rel="nofollow" href="https://mutfakyapim.com" target="_blank" title="Mutfak Yapım Dijital Reklam Ajansı"><img loading="lazy" data-src="https://mutfakyapim.com/images/mutfak/logo.png" class="lazyload" height="40" width="176" alt="Mutfak Yapım Dijital Reklam Ajansı"></a></li>
-                </ul>
+<!-- BEGIN: Site Info Section -->
+<section class="siteInfoSection">
+    <div class="container">
+        <div class="row align-items-center align-self-center align-content-center">
+            <div class="col-md-6">
+                <div class="siteInfo">
+                    © 2022 <a rel="dofollow" class="text-white" href="<?= base_url() ?>" title="<?= $settings->company_name ?>"><?= $settings->company_name ?></a> <?= lang("allRightsReserved") ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="footerNav">
+                    <ul>
+                        <li><a rel="nofollow" href="https://mutfakyapim.com" target="_blank" title="Mutfak Yapım Dijital Reklam Ajansı"><img loading="lazy" data-src="https://mutfakyapim.com/images/mutfak/logo.png" class="lazyload" height="40" width="176" alt="Mutfak Yapım Dijital Reklam Ajansı"></a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+<!-- END: Site Info Section -->
 
+<!-- BEGIN: Back To Top -->
+<a href="javascript:void(0);" id="backtotop"><i class="fa-solid fa-angles-up"></i></a>
+<!-- END: Back To Top -->
 
-<!--================= Wrapper End Here =================-->
-</div>
-<!--================= Footer Section End Here =================-->
-
-<!--================= Scroll to Top Start =================-->
-<div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-arrow-left"></span></div>
-
-<!--================= Scroll to Top End =================-->
 <!-- Jquery -->
 
 <script src="<?= asset_url("public/js/jquery.min.js") ?>"></script>
