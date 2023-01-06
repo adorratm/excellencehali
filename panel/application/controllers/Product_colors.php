@@ -9,7 +9,6 @@ class Product_colors extends MY_Controller
         parent::__construct();
         $this->viewFolder = "product_colors_v";
         $this->load->model("product_color_model");
-        $this->load->model("products_w_colors_model");
         if (!get_active_user()) :
             redirect(base_url("login"));
         endif;

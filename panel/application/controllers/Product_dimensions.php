@@ -9,7 +9,6 @@ class Product_dimensions extends MY_Controller
         parent::__construct();
         $this->viewFolder = "product_dimensions_v";
         $this->load->model("product_dimension_model");
-        $this->load->model("products_w_dimensions_model");
         if (!get_active_user()) :
             redirect(base_url("login"));
         endif;

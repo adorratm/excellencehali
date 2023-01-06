@@ -81,33 +81,31 @@
             </div>
             <div class="row shopProductRow">
                 <?php foreach ($products as $key => $value) : ?>
-                    <?php if (strtotime($value->sharedAt) <= strtotime("now")) : ?>
-                        <div class="col-sm-6 col-lg-4 col-xl-3">
-                            <div class="productItem01">
-                                <div class="pi01Thumb">
-                                    <img loading="lazy" width="1000" height="1000" data-src="<?= get_picture("products_v", $value->img_url) ?>" alt="<?= $value->title ?>" title="<?= $value->title ?>" class="img-fluid lazyload" />
-                                    <?php $secondaryImage = get_secondary_image($value->id, $lang) ?>
-                                    <?php if (!empty($secondaryImage)) : ?>
-                                        <img loading="lazy" width="1000" height="1000" data-src="<?= get_picture("products_v", $secondaryImage) ?>" alt="<?= $value->title ?>" title="<?= $value->title ?>" class="img-fluid lazyload">
-                                    <?php endif ?>
-                                    <div class="pi01Actions">
-                                        <a href="<?= base_url(lang("routes_products") . "/" . lang("routes_product") . "/" . $value->url) ?>" rel="dofollow" title="<?= $value->title ?>"><i class="fa-solid fa-arrows-up-down-left-right"></i></a>
-                                    </div>
-                                    <div class="productLabels clearfix">
-                                        <span class="plDis">- $29</span>
-                                        <span class="plSale">Sale</span>
-                                    </div>
+                    <div class="col-sm-6 col-lg-4 col-xl-3">
+                        <div class="productItem01">
+                            <div class="pi01Thumb">
+                                <img loading="lazy" width="1000" height="1000" data-src="<?= get_picture("products_v", $value->img_url) ?>" alt="<?= $value->title ?>" title="<?= $value->title ?>" class="img-fluid lazyload" />
+                                <?php $secondaryImage = get_secondary_image($value->id, $lang) ?>
+                                <?php if (!empty($secondaryImage)) : ?>
+                                    <img loading="lazy" width="1000" height="1000" data-src="<?= get_picture("products_v", $secondaryImage) ?>" alt="<?= $value->title ?>" title="<?= $value->title ?>" class="img-fluid lazyload">
+                                <?php endif ?>
+                                <div class="pi01Actions">
+                                    <a href="<?= base_url(lang("routes_products") . "/" . lang("routes_product") . "/" . $value->url) ?>" rel="dofollow" title="<?= $value->title ?>"><i class="fa-solid fa-arrows-up-down-left-right"></i></a>
                                 </div>
-                                <div class="pi01Details">
-                                    <h3><a href="<?= base_url(lang("routes_products") . "/" . lang("routes_product") . "/" . $value->url) ?>" rel="dofollow" title="<?= $value->title ?>"><?= $value->title ?></a></h3>
-                                    <div class="pi01Price">
-                                        <ins>$29</ins>
-                                        <del>$56</del>
-                                    </div>
+                                <div class="productLabels clearfix">
+                                    <span class="plDis">- $29</span>
+                                    <span class="plSale">Sale</span>
+                                </div>
+                            </div>
+                            <div class="pi01Details">
+                                <h3><a href="<?= base_url(lang("routes_products") . "/" . lang("routes_product") . "/" . $value->url) ?>" rel="dofollow" title="<?= $value->title ?>"><?= $value->title ?></a></h3>
+                                <div class="pi01Price">
+                                    <ins>$29</ins>
+                                    <del>$56</del>
                                 </div>
                             </div>
                         </div>
-                    <?php endif ?>
+                    </div>
                 <?php endforeach ?>
             </div>
             <div class="row shopPaginationRow">

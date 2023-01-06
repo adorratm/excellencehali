@@ -9,7 +9,6 @@ class Product_categories extends MY_Controller
         parent::__construct();
         $this->viewFolder = "product_categories_v";
         $this->load->model("product_category_model");
-        $this->load->model("products_w_categories_model");
         $this->load->model("product_image_model");
         $this->load->model("product_model");
         if (!get_active_user()) :

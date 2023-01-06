@@ -10,7 +10,6 @@ class Products extends MY_Controller
         $this->viewFolder = "products_v";
         $this->load->model("product_model");
         $this->load->model("product_category_model");
-        $this->load->model("products_w_categories_model");
         $this->load->model("product_image_model");
         $this->load->model("product_dimension_model");
         if (!get_active_user()) :
@@ -63,7 +62,6 @@ class Products extends MY_Controller
         $viewData->item = $this->product_model->get(["id" => $id]);
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
-        $viewData->selectedCategories = $this->products_w_categories_model->get_all(["product_id" => $id]);
         $viewData->categories = $this->product_category_model->get_all();
         $viewData->settings = $this->general_model->get_all("settings", null, null, ["isActive" => 1]);
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
@@ -71,7 +69,7 @@ class Products extends MY_Controller
     public function update($id)
     {
         $data = $this->input->post();
-        if (checkEmpty($data)["error"] && checkEmpty($data)["key"] !== "content") :
+        if (checkEmpty($data)["error"] && checkEmpty($data)["key"] !== "content" && checkEmpty($data)["key"] !== "description" && checkEmpty($data)["key"] !== "features") :
             $key = checkEmpty($data)["key"];
             echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Güncelleştirilirken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
         else :
@@ -87,20 +85,11 @@ class Products extends MY_Controller
                     endif;
                 endif;
             endif;
-            $data["title"] = stripslashes($data["title"]);
-            $data["url"] = seo($data["title"]);
             $data["content"] = $_POST["content"];
             $data["description"] = $_POST["description"];
             $data["features"] = $_POST["features"];
-            unset($data["category_id"]);
             $update = $this->product_model->update(["id" => $id], $data);
             if ($update) :
-                if (!empty($_POST["category_id"])) :
-                    $this->products_w_categories_model->delete(["product_id" => $id]);
-                    foreach (array_unique($_POST["category_id"]) as $key => $value) :
-                        $this->products_w_categories_model->add(["product_id" => $id, "category_id" => $value]);
-                    endforeach;
-                endif;
                 echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Başarıyla Güncelleştirildi."]);
             else :
                 echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Güncelleştirilirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
@@ -286,7 +275,16 @@ class Products extends MY_Controller
                             'title' => clean($returnValue->Baslik) ?? NULL,
                             'seo_url' => clean(seo($returnValue->Baslik)) ?? NULL,
                             'barcode' => clean($returnValue->barcode) ?? NULL,
-                            'brand' => clean($returnValue->Marka) ?? NULL,
+                            'category_id' => clean($returnValue->Ok1Id) ?? NULL,
+                            'category' => clean($returnValue->Ozelkod1) ?? NULL,
+                            'pattern_id' => clean($returnValue->Ok2Id) ?? NULL,
+                            'pattern' => clean($returnValue->Ozelkod2) ?? NULL,
+                            'color_id' => clean($returnValue->Ok3Id) ?? NULL,
+                            'color' => clean($returnValue->Ozelkod3) ?? NULL,
+                            'dimension_id' => clean($returnValue->Ok4Id) ?? NULL,
+                            'dimension' => clean($returnValue->Ozelkod4) ?? NULL,
+                            'brand_id' => clean($returnValue->Ok8Id) ?? NULL,
+                            'brand' => clean($returnValue->Ozelkod8) ?? NULL,
                             'price' => clean($returnValue->Fiyat1) ?? NULL,
                             'vat' => clean($returnValue->KDV) ?? NULL,
                             'stock' => clean($returnValue->stok) ?? NULL,

@@ -11,57 +11,18 @@
     $wheres["pi.isCover"] = 1;
     $wheres["p.id"] = $items["id"];
     $wheres["p.lang"] = $lang;
-    if (!empty($items["options"]) && !empty($items["options"]["pvgId"])) :
-        $wheres["pvg.id"] = $items["options"]["pvgId"];
-    else :
-        if (array_key_exists("pvg.id", $wheres)) :
-            unset($wheres["pvg.id"]);
-        endif;
-    endif;
-    $joins = ["products_w_categories pwc" => ["p.id = pwc.product_id", "left"], "product_variation_groups pvg" => ["p.id = pvg.product_id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
-    $select = "p.id,p.title,p.seo_url,pi.url img_url,IFNULL(pvg.price,p.price) price,IFNULL(pvg.discount,p.discount) discount,p.vat vat,p.vatRate vatRate,IFNULL(pvg.stock,p.stock) stock,IFNULL(pvg.stockStatus,p.stockStatus) stockStatus,p.isActive,p.isDiscount isDiscount,p.sharedAt,IFNULL(pvg.price,p.price) AS newPrice,CAST(IFNULL(pvg.price,p.price) AS FLOAT) - (CAST(IFNULL(pvg.price,p.price) AS FLOAT)*CAST(IFNULL(pvg.discount,p.discount) AS FLOAT) / 100) AS discountedPrice";
+    $joins = ["product_images pi" => ["pi.product_id = p.id", "left"]];
+    $select = "p.id,p.title,p.seo_url,pi.url img_url,p.price price,p.vat vat,p.stock stock,p.stockStatus stockStatus,p.isActive";
     $distinct = null;
-    $groupBy = ["pwc.product_id", "pvg.id"];
+    $groupBy = ["p.product_id"];
     $product = $this->general_model->get("products p", $select, $wheres, $joins, [], [], $distinct, $groupBy);
-    if (!empty($items["options"]["pvgId"])) :
-        $product_variation_group = $this->general_model->get("product_variation_groups", null, ["isActive" => 1, "id" => $items["options"]["pvgId"], "lang" => $lang]);
-        $product_variation_group_in_group = explode(",", $product_variation_group->category_id);
-        $product_variation_in_group = explode(",", $product_variation_group->variation_id);
-        $product_variations = [];
-        $product_variation_categories = [];
-        if (!empty($product_variation_in_group)) :
-            foreach ($product_variation_in_group as $key => $value) :
-                $product_variation = $this->general_model->get("product_variations", null, ["isActive" => 1, "id" => $value, "lang" => $lang]);
-                $product_variation_group = $this->general_model->get("product_variation_categories", null, ["isActive" => 1, "id" => $product_variation_group_in_group[$key], "lang" => $lang]);
-                array_push($product_variation_categories, $product_variation_group->title);
-                array_push($product_variations, $product_variation->title);
-            endforeach;
-        endif;
-    endif;
     ?>
     <?php if (!empty($product)) : ?>
         <?php ((bool)$product->vat ? $vat =  ((float)$items['price'] * (float)$items["qty"]) - ((float)$items["qty"] * ($product->isDiscount ? (float)$product->discountedPrice : (float)$product->price)) : 0) ?>
         <?php ($product->vat ? $totalVat +=  ((float)$items['price'] * (float)$items["qty"]) - ((float)$items["qty"] * ($product->isDiscount ? (float)$product->discountedPrice : (float)$product->price)) : 0) ?>
         <div class="cartWidgetProduct">
             <a rel="dofollow" href="<?= base_url(lang("routes_products") . "/" . lang("routes_product") . "/{$product->url}") ?>" title="<?= stripslashes($items["name"]) ?>"><img width="1920" height="1280" loading="lazy" data-src="<?= get_picture("products_v", $product->img_url) ?>" alt="<?= $items['name']; ?>" class="img-fluid lazyload"></a>
-            <a rel="dofollow" href="<?= base_url(lang("routes_products") . "/" . lang("routes_product") . "/{$product->url}") ?>" title="<?= stripslashes($items["name"]) ?>"><?= stripslashes($items["name"]) ?>
-                <?php if (!empty($items["options"]["pvgId"])) : ?>
-                    <?php if (!empty($product_variation_categories) && !empty($product_variations)) : ?>
-                        <?php $count = count($product_variation_categories) ?>
-                        <?php $i = 1; ?>
-                        (
-                        <?php foreach ($product_variation_categories as $key => $value) : ?>
-                            <?php if ($i < $count) : ?>
-                                <?= $value ?> : <?= $product_variations[$key] ?>,
-                            <?php else : ?>
-                                <?= $value ?> : <?= $product_variations[$key] ?>
-                            <?php endif ?>
-                            <?php $i++ ?>
-                        <?php endforeach ?>
-                        )
-                    <?php endif ?>
-                <?php endif ?>
-            </a>
+            <a rel="dofollow" href="<?= base_url(lang("routes_products") . "/" . lang("routes_product") . "/{$product->url}") ?>" title="<?= stripslashes($items["name"]) ?>"><?= stripslashes($items["name"]) ?></a>
             <div class="cartProductPrice clearfix">
                 <span class="price"><span><?= $items['qty'] ?> x <?= $symbol . $this->cart->format_number((empty($items["options"]["mainQuantity"]) || (bool)$items["options"]["mainQuantity"] == FALSE ? $items["price"] - ($product->isDiscount ? (float)$product->discountedPrice : (float)$product->price) : $items['price'])); ?> <?= ((bool)$product->vat ? ("+" . $symbol . $this->cart->format_number($vat) . " (KDV)") : null) ?></span><span>= <?= $symbol . $this->cart->format_number((empty($items["options"]["mainQuantity"]) || (bool)$items["options"]["mainQuantity"] == FALSE ? $items["subtotal"] - ($product->isDiscount ? (float)$product->discountedPrice : (float)$product->price) * $items["qty"] : $items['subtotal'])); ?></span></span>
             </div>

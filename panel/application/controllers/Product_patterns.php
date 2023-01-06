@@ -9,7 +9,6 @@ class Product_patterns extends MY_Controller
         parent::__construct();
         $this->viewFolder = "product_patterns_v";
         $this->load->model("product_pattern_model");
-        $this->load->model("products_w_patterns_model");
         if (!get_active_user()) :
             redirect(base_url("login"));
         endif;

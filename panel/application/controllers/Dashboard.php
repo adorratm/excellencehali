@@ -29,8 +29,8 @@ class Dashboard extends CI_Controller
         $order = "stock ASC";
         $likes = [];
         $wheres["p.isActive"] = 1;
-        $joins = ["products_w_categories pwc" => ["p.id = pwc.product_id", "left"], "product_categories pc" => ["pc.id=pwc.category_id", "left"]];
-        $select = "SUM(CAST(IFNULL(pvg.stock,p.stock) AS FLOAT)) AS stock,pc.title AS category ";
+        $joins = ["product_categories pc" => ["pc.id=p.category_id", "left"]];
+        $select = "SUM(CAST(p.stock AS FLOAT)) AS stock,pc.title AS category ";
         $distinct = false;
         $groupBy = ["category"];
         $this->viewData->products = $this->general_model->get_all("products p", $select, $order, $wheres, $likes, $joins, [], [], $distinct, $groupBy);

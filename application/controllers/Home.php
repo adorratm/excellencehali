@@ -439,7 +439,7 @@ class Home extends MY_Controller
         endif;
         $wheres = [];
         if (!empty($category_id)) :
-            $wheres["pwc.category_id"] = $category_id;
+            $wheres["p.category_id"] = $category_id;
         endif;
         /**
          * Wheres
@@ -562,7 +562,7 @@ class Home extends MY_Controller
         endif;
         $wheres = [];
         if (!empty($category_id)) :
-            $wheres["pwc.category_id"] = $category_id;
+            $wheres["p.category_id"] = $category_id;
         endif;
         /**
          * Wheres
@@ -571,11 +571,11 @@ class Home extends MY_Controller
         $wheres["pi.isCover"] = 1;
 
         $wheres["p.lang"] = $this->viewData->lang;
-        $joins = ["products_w_categories pwc" => ["p.id = pwc.product_id", "left"], "product_categories pc" => ["pwc.category_id = pc.id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
+        $joins = ["product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
 
-        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,p.isActive,p.sharedAt";
+        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,p.isActive";
         $distinct = true;
-        $groupBy = ["p.id", "pwc.product_id"];
+        $groupBy = ["p.id"];
         /**
          * Pagination
          */
@@ -656,10 +656,10 @@ class Home extends MY_Controller
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
-        $joins = ["products_w_categories pwc" => ["p.id = pwc.product_id", "left"], "product_categories pc" => ["pwc.category_id = pc.id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
-        $select = "p.technical_information_id,GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,p.img_url cover_url, p.description,p.content,p.features,p.isActive,p.sharedAt";
+        $joins = ["product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
+        $select = "p.technical_information_id,GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,p.img_url cover_url, p.description,p.content,p.features,p.isActive";
         $distinct = true;
-        $groupBy = ["p.id", "pwc.product_id"];
+        $groupBy = ["p.id"];
         $wheres['p.seo_url'] =  $seo_url;
         /**
          * Get Product Detail
@@ -690,19 +690,6 @@ class Home extends MY_Controller
              * Get All Cover Product Images
              */
             $this->viewData->product_images = $this->general_model->get_all("product_images", null, "rank ASC", ["isActive" => 1, "isCover" => 1, "lang" => $this->viewData->lang]);
-            /**
-             * Selected Categories 
-             */
-            $pselecteds = [];
-            $pselectedCategories = $this->general_model->get_all("products_w_categories", null, null, ["product_id" => $this->viewData->product->id]);
-            if (!empty($pselectedCategories)) :
-                foreach ($pselectedCategories as $key => $value) :
-                    if (!in_array($value->category_id, $pselecteds)) :
-                        array_push($pselecteds, $value->category_id);
-                    endif;
-                endforeach;
-            endif;
-            $this->viewData->pselecteds = $pselecteds;
             /**
              * Meta
              */
@@ -961,10 +948,10 @@ class Home extends MY_Controller
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
-        $joins = ["products_w_categories pwc" => ["p.id = pwc.product_id", "left"], "product_categories pc" => ["pwc.category_id = pc.id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
-        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,p.sharedAt";
+        $joins = ["product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
+        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url";
         $distinct = true;
-        $groupBy = ["p.id", "pwc.product_id"];
+        $groupBy = ["p.id"];
         $products = $this->general_model->get_all("products p", $select, "p.id DESC", $wheres, [], $joins, [], [], $distinct, $groupBy);
         if (!empty($products)) :
             foreach ($products as $k => $v) :
@@ -1051,10 +1038,10 @@ class Home extends MY_Controller
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
-        $joins = ["products_w_categories pwc" => ["p.id = pwc.product_id", "left"], "product_categories pc" => ["pwc.category_id = pc.id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
-        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,p.sharedAt";
+        $joins = ["product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
+        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url";
         $distinct = true;
-        $groupBy = ["p.id", "pwc.product_id"];
+        $groupBy = ["p.id"];
         $products = $this->general_model->get_all("products p", $select, "p.id DESC", $wheres, [], $joins, [], [], $distinct, $groupBy);
         if (!empty($products)) :
             foreach ($products as $k => $v) :
@@ -1126,10 +1113,10 @@ class Home extends MY_Controller
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
-        $joins = ["products_w_categories pwc" => ["p.id = pwc.product_id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
-        $select = "p.id,p.title,p.seo_url,pi.url img_url,p.description description,p.isActive,p.sharedAt";
+        $joins = ["product_images pi" => ["pi.product_id = p.id", "left"]];
+        $select = "p.id,p.title,p.seo_url,pi.url img_url,p.description description,p.isActive";
         $distinct = true;
-        $groupBy = ["pwc.product_id"];
+        $groupBy = ["p.product_id"];
         /** 
          * Get Products
          */
@@ -1154,27 +1141,10 @@ class Home extends MY_Controller
                  * Get All Categories
                  */
                 $categories = $this->general_model->get_all("product_categories", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang], [], [], []);
-
-                $pselecteds = [];
-                $pselectedCategories = $this->general_model->get_all("products_w_categories", null, null, ["product_id" => $prod->id]);
-                if (!empty($pselectedCategories)) :
-                    foreach ($pselectedCategories as $key => $value) :
-                        if (!in_array($value->category_id, $pselecteds)) :
-                            array_push($pselecteds, $value->category_id);
-                        endif;
-                    endforeach;
-                endif;
                 $category = null;
-                $count = count($pselecteds);
-                $i = 1;
                 foreach ($categories as $k => $v) :
-                    if (in_array($v->id, $pselecteds)) :
-                        if ($i < $count) :
-                            $category .= $v->title . ',';
-                        else :
-                            $category .= $v->title;
-                        endif;
-                        $i++;
+                    if ($v->id == $prod->category_id) :
+                        $category = $v->title;
                     endif;
                 endforeach;
                 xml_add_child($item, 'g:google_product_category', strto("lower|ucwords", $category));
