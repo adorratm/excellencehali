@@ -53,9 +53,6 @@
                                 <div class="col-lg-6">
                                     <?= $product->description ?>
                                 </div>
-                                <div class="col-lg-6">
-                                    <img data-src="<?= get_picture("products_v", $product->cover_url) ?>" alt="<?= $product->title ?>" class="lazyload img-fluid">
-                                </div>
                             </div>
 
                             <blockquote class="p-3 font-weight-bold border shadow-sm text-center h3"><cite><?= clean($product->features) ?></cite></blockquote>
@@ -70,7 +67,7 @@
                                 <?php $i = 0 ?>
                                 <?php if (!empty($product_own_images)) : ?>
                                     <?php foreach ($product_own_images as $k => $v) : ?>
-                                        <?php if ($v->product_id == $product->id) : ?>
+                                        <?php if ($v->codes_id == $product->codes_id && $v->codes == $product->codes) : ?>
                                             <div class="carousel-item item <?= $i == 0 ? "active" : null ?>" data-index="<?= $i ?>">
                                                 <a rel="dofollow" title="<?= $product->title ?>" data-exthumbimage="<?= get_picture("products_v", $v->url) ?>" href="<?= get_picture("products_v", $v->url) ?>" data-index="<?= $i ?>" class="d-block fancyboximg top-img product-simple-preview-image lightimg">
                                                     <img width="1920" height="1280" loading="lazy" data-src="<?= get_picture("products_v", $v->url) ?>" title="<?= $product->title ?>" alt="<?= $product->title ?>" data-zoom-image="<?= get_picture("products_v", $v->url) ?>" class="product-zoom rounded img-fluid product-simple-preview-image-zoom lazyload">
@@ -94,7 +91,7 @@
                                     <?php $i = 0 ?>
                                     <?php if (!empty($product_own_images)) : ?>
                                         <?php foreach ($product_own_images as $k => $v) : ?>
-                                            <?php if ($v->product_id == $product->id) : ?>
+                                            <?php if ($v->codes_id == $product->codes_id && $v->codes == $product->codes) : ?>
                                                 <div data-target="#carouselExampleCaptions" style="max-width: 135px;" class="owl-thumb-item border mx-0 mx-xxl-0 single-product-thumbb <?= ($i == 0 ? "active" : null) ?>" data-touch="true" data-slide-to="<?= $i ?>" data-image="<?= get_picture("products_v", $v->url) ?>">
                                                     <div class="top-img">
                                                         <img width="1920" height="1280" loading="lazy" data-src="<?= get_picture("products_v", $v->url) ?>" title="<?= $product->title ?>" alt="<?= $product->title ?>" class="lazyload img-fluid">
@@ -156,7 +153,7 @@
                 loop: !0,
                 thumbnail: !0,
                 exThumbImage: 'data-exthumbimage',
-                download:false,
+                download: false,
             })
         }
         if (($('#lightgallery2, .lightgallery2').length > 0)) {
@@ -165,7 +162,7 @@
                 loop: !0,
                 thumbnail: !0,
                 exThumbImage: 'data-exthumbimage2',
-                download:false
+                download: false
             })
         }
         $(".carousel").on("slid.bs.carousel", function(event) {

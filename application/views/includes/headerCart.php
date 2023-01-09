@@ -11,10 +11,10 @@
     $wheres["pi.isCover"] = 1;
     $wheres["p.id"] = $items["id"];
     $wheres["p.lang"] = $lang;
-    $joins = ["product_images pi" => ["pi.product_id = p.id", "left"]];
+    $joins = ["product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
     $select = "p.id,p.title,p.seo_url,pi.url img_url,p.price price,p.vat vat,p.stock stock,p.stockStatus stockStatus,p.isActive";
     $distinct = null;
-    $groupBy = ["p.product_id"];
+    $groupBy = ["p.id"];
     $product = $this->general_model->get("products p", $select, $wheres, $joins, [], [], $distinct, $groupBy);
     ?>
     <?php if (!empty($product)) : ?>

@@ -44,7 +44,8 @@ class Product_image_model extends CI_Model
         $this->db->select('
             product_images.rank,
             product_images.id,
-            product_images.product_id,
+            product_images.codes_id,
+            product_images.codes,
             product_images.title,
 			product_images.description,
             product_images.url,
@@ -68,7 +69,8 @@ class Product_image_model extends CI_Model
         $this->db->select('
 		product_images.rank,
 		product_images.id,
-        product_images.product_id,
+        product_images.codes_id,
+        product_images.codes,
         product_images.title,
 		product_images.description,
 		product_images.url,

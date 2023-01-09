@@ -865,22 +865,6 @@ function split_name($name = null)
         return array($firstname, $lastname);
     endif;
 }
-/**
- * Increase Viewer
- */
-function increaseViewer($product_id = 0)
-{
-    $t = &get_instance();
-    $ip_address = $t->input->ip_address();
-    $countResult = $t->general_model->rowCount("product_views", ["ip_address" => $ip_address, "product_id" => $product_id]);
-    if ($countResult == 0) :
-        $t->general_model->add("product_views", ["ip_address" => $ip_address, "visits" => 1, "product_id" => $product_id]);
-    else :
-        $t->db->where(["ip_address" => $ip_address, "product_id" => $product_id]);
-        $t->db->set("visits", "visits+1", FALSE);
-        $t->db->update("product_views");
-    endif;
-}
 
 function show_header_categories($lang = 'tr')
 {
@@ -924,12 +908,15 @@ function in_parenttheader($in_parent = null, $lang = null, $store_all_id = null)
     return $html;
 }
 
-function get_secondary_image($product_id = null, $lang = "tr")
+function get_secondary_image($codes_id = null, $codes = null, $cover_url = null, $lang = "tr")
 {
     $t = &get_instance();
-    $result = $t->general_model->get_all("product_images", "url", "rank ASC", ["product_id" => $product_id, "isActive" => 1, "isCover" => 0, "lang" => $lang]);
-    if (!empty($result[0])) :
-        return $result[0]->url;
+    $result = $t->general_model->get("product_images", "url", ["codes_id" => $codes_id, "codes" => $codes, "isActive" => 1, "isCover" => 0, "lang" => $lang]);
+    if (!empty($result)) :
+        return $result->url;
+    endif;
+    if (!empty($cover_url)) :
+        return $cover_url;
     endif;
     return null;
 }

@@ -156,7 +156,7 @@ class Home extends MY_Controller
 
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("home"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-        
+
         $this->viewData->og_url                 = clean(base_url());
         $this->viewData->og_image           = clean(get_picture("settings_v", $this->viewData->settings->logo));
         $this->viewData->og_type          = "website";
@@ -557,8 +557,9 @@ class Home extends MY_Controller
             $likes["p.content"] = $search;
             $likes["p.createdAt"] = $search;
             $likes["p.updatedAt"] = $search;
-            $likes["p.description"] = $search;
-            $likes["p.features"] = $search;
+            $likes["pd.description"] = $search;
+            $likes["pd.features"] = $search;
+            $likes["pd.content"] = $search;
         endif;
         $wheres = [];
         if (!empty($category_id)) :
@@ -571,9 +572,9 @@ class Home extends MY_Controller
         $wheres["pi.isCover"] = 1;
 
         $wheres["p.lang"] = $this->viewData->lang;
-        $joins = ["product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
+        $joins = ["product_details pd" => ["pd.codes = p.codes_id AND pd.codes = p.codes", "left"], "product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
 
-        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,p.isActive";
+        $select = "p.codes_id,p.codes,p.price,p.discounted_price,GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,p.isActive";
         $distinct = true;
         $groupBy = ["p.id"];
         /**
@@ -656,8 +657,8 @@ class Home extends MY_Controller
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
-        $joins = ["product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
-        $select = "p.technical_information_id,GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,p.img_url cover_url, p.description,p.content,p.features,p.isActive";
+        $joins = ["product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"], "product_details pd" => ["pd.codes_id = p.codes_id AND pd.codes = p.codes", "left"]];
+        $select = "p.codes_id,p.codes,GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,pd.description,pd.content,pd.features,p.isActive";
         $distinct = true;
         $groupBy = ["p.id"];
         $wheres['p.seo_url'] =  $seo_url;
@@ -667,17 +668,13 @@ class Home extends MY_Controller
         $this->viewData->product = $this->general_model->get("products p", $select, $wheres, $joins, [], [], $distinct, $groupBy);
         if (!empty($this->viewData->product)) :
             /**
-             * Product Dimensions
-             */
-            $this->viewData->productDimensions = $this->general_model->get_all("product_dimensions", null, "rank ASC", ["isActive" => 1, "product_id" => $this->viewData->product->id, "lang" => $this->viewData->lang]);
-            /**
              * Get All Categories
              */
             $this->viewData->categories = $this->general_model->get_all("product_categories", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang]);
             /**
              * Get Product Images
              */
-            $this->viewData->product_own_images = $this->general_model->get_all("product_images", null, "isCover DESC,rank ASC", ["isActive" => 1, "product_id" => $this->viewData->product->id, "lang" => $this->viewData->lang]);
+            $this->viewData->product_own_images = $this->general_model->get_all("product_images", null, "isCover DESC,rank ASC", ["isActive" => 1, "codes_id" => $this->viewData->product->codes_id, "codes" => $this->viewData->product->codes, "lang" => $this->viewData->lang]);
             $imgURL = null;
             if (!empty($this->viewData->product_own_images)) :
                 foreach ($this->viewData->product_own_images as $key => $value) :
@@ -948,7 +945,7 @@ class Home extends MY_Controller
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
-        $joins = ["product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
+        $joins = ["product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
         $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url";
         $distinct = true;
         $groupBy = ["p.id"];
@@ -1038,7 +1035,7 @@ class Home extends MY_Controller
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
-        $joins = ["product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.product_id = p.id", "left"]];
+        $joins = ["product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
         $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url";
         $distinct = true;
         $groupBy = ["p.id"];
@@ -1113,10 +1110,10 @@ class Home extends MY_Controller
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
-        $joins = ["product_images pi" => ["pi.product_id = p.id", "left"]];
+        $joins = ["product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
         $select = "p.id,p.title,p.seo_url,pi.url img_url,p.description description,p.isActive";
         $distinct = true;
-        $groupBy = ["p.product_id"];
+        $groupBy = ["p.id"];
         /** 
          * Get Products
          */

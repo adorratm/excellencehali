@@ -12,6 +12,7 @@ class Products extends MY_Controller
         $this->load->model("product_category_model");
         $this->load->model("product_image_model");
         $this->load->model("product_dimension_model");
+        $this->load->model("product_detail_model");
         if (!get_active_user()) :
             redirect(base_url("login"));
         endif;
@@ -39,12 +40,12 @@ class Products extends MY_Controller
                         İşlemler
                     </button>
                     <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item updateProductBtn" href="javascript:void(0)" data-url="' . base_url("products/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
-                        <a class="dropdown-item" href="' . base_url("products/upload_form/$item->id") . '"><i class="fa fa-image mr-2"></i>Resimler</a>
+                        <a class="dropdown-item updateProductBtn" href="javascript:void(0)" data-url="' . base_url("products/update_form/$item->codes_id/$item->codes") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
+                        <a class="dropdown-item" href="' . base_url("products/upload_form/$item->codes_id/$item->codes") . '"><i class="fa fa-image mr-2"></i>Resimler</a>
                     </div>
                 </div>';
                 $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->id . '" data-url="' . base_url("products/isActiveSetter/{$item->id}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch4' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch4' . $i . '"></label></div>';
-                $data[] = [$item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->codes_id, $item->title, $item->codes, $checkbox, turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing];
+                $data[] = [$item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->codes_id, $item->title, $item->brand, $item->category, $item->pattern, $item->color, $item->dimension, $item->codes, $checkbox, turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing];
             endforeach;
         endif;
         $output = [
@@ -56,39 +57,35 @@ class Products extends MY_Controller
         // Output to JSON format
         echo json_encode($output);
     }
-    public function update_form($id)
+    public function update_form($codes_id, $codes)
     {
         $viewData = new stdClass();
-        $viewData->item = $this->product_model->get(["id" => $id]);
+        $viewData->item = $this->general_model->get("products p", "p.*,pd.features features, pd.content content,pd.description description", ["p.codes_id" => $codes_id, "p.codes" => $codes], ["product_details pd" => ["pd.codes = p.codes_id AND pd.codes = p.codes", "left"]],[],[],true,"p.codes_id");
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
         $viewData->categories = $this->product_category_model->get_all();
         $viewData->settings = $this->general_model->get_all("settings", null, null, ["isActive" => 1]);
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
-    public function update($id)
+    public function update($codes_id, $codes)
     {
         $data = $this->input->post();
         if (checkEmpty($data)["error"] && checkEmpty($data)["key"] !== "content" && checkEmpty($data)["key"] !== "description" && checkEmpty($data)["key"] !== "features") :
             $key = checkEmpty($data)["key"];
             echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Güncelleştirilirken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
         else :
-            if (!empty($_FILES)) :
-                if (!empty($_FILES["img_url"]["name"])) :
-                    $resize = ['height' => 1280, 'width' => 1920, 'maintain_ratio' => FALSE, 'master_dim' => 'height'];
-                    $image = upload_picture("img_url", "uploads/$this->viewFolder", $resize, "*");
-                    if ($image["success"]) :
-                        $data["img_url"] = $image["file_name"];
-                    else :
-                        echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Güncelleştirilirken Hata Oluştu. Ürün Kullanım Alanı Görseli Seçtiğinizden Emin Olup Tekrar Deneyin."]);
-                        die();
-                    endif;
-                endif;
+            $data["content"] = clean($_POST["content"]) ? $_POST["content"] : NULL;
+            $data["description"] = clean($_POST["description"]) ? $_POST["description"] : NULL;
+            $data["features"] = clean($_POST["features"]) ? $_POST["features"] : NULL;
+            $update = false;
+            if ($this->product_detail_model->rowCount(["codes_id" => $codes_id, "codes" => $codes])) :
+                $update = $this->product_detail_model->update(["codes_id" => $codes_id, "codes" => $codes], $data);
             endif;
-            $data["content"] = $_POST["content"];
-            $data["description"] = $_POST["description"];
-            $data["features"] = $_POST["features"];
-            $update = $this->product_model->update(["id" => $id], $data);
+            if (!$this->product_detail_model->rowCount(["codes_id" => $codes_id, "codes" => $codes])) :
+                $data["codes_id"] = $codes_id;
+                $data["codes"] = $codes;
+                $update = $this->product_detail_model->add($data);
+            endif;
             if ($update) :
                 echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Başarıyla Güncelleştirildi."]);
             else :
@@ -121,10 +118,10 @@ class Products extends MY_Controller
             endif;
         endif;
     }
-    public function detailDatatable($product_id)
+    public function detailDatatable($codes_id, $codes)
     {
         $items = $this->product_image_model->getRows(
-            ["product_id" => $product_id],
+            ["codes_id" => $codes_id, "codes" => $codes],
             $_POST
         );
         $data = [];
@@ -138,55 +135,35 @@ class Products extends MY_Controller
                         İşlemler
                     </button>
                     <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item updateSkuBtn" href="javascript:void(0)" data-table="detailTable" data-url="' . base_url("products/fileUpdate/{$item->id}/{$product_id}") . '"><i class="fa fa-barcode mr-2"></i>SKU Kodu Ekle</a>
                         <a class="dropdown-item remove-btn" href="javascript:void(0)" data-table="detailTable" data-url="' . base_url("products/fileDelete/{$item->id}") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
                         </div>
                 </div>';
                 $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->id . '" data-url="' . base_url("products/fileIsActiveSetter/{$item->id}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch' . $i . '"></label></div>';
-                $checkbox2 = '<div class="custom-control custom-switch"><input data-id="' . $item->id . '" data-table="detailTable" data-url="' . base_url("products/fileIsCoverSetter/{$item->id}/$item->product_id/$item->lang") . '" data-status="' . ($item->isCover == 1 ? "checked" : null) . '" id="customSwitch2' . $i . '" type="checkbox" ' . ($item->isCover == 1 ? "checked" : null) . ' class="isCover custom-control-input" >  <label class="custom-control-label" for="customSwitch2' . $i . '"></label></div>';
+                $checkbox2 = '<div class="custom-control custom-switch"><input data-id="' . $item->id . '" data-table="detailTable" data-url="' . base_url("products/fileIsCoverSetter/{$item->id}/$item->codes_id/$item->codes/$item->lang") . '" data-status="' . ($item->isCover == 1 ? "checked" : null) . '" id="customSwitch2' . $i . '" type="checkbox" ' . ($item->isCover == 1 ? "checked" : null) . ' class="isCover custom-control-input" >  <label class="custom-control-label" for="customSwitch2' . $i . '"></label></div>';
                 $image = '<img src="' . base_url("uploads/{$this->viewFolder}/{$item->url}") . '" width="75">';
                 $data[] = [$item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $image, $item->url, $item->lang, $checkbox2, $checkbox, turkishDate("d F Y, l H:i:s", $item->createdAt), turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing];
             endforeach;
         endif;
         $output = [
             "draw" => (!empty($_POST['draw']) ? $_POST['draw'] : 0),
-            "recordsTotal" => $this->product_image_model->rowCount(["product_id" => $product_id]),
-            "recordsFiltered" => $this->product_image_model->countFiltered(["product_id" => $product_id], (!empty($_POST) ? $_POST : [])),
+            "recordsTotal" => $this->product_image_model->rowCount(["codes_id" => $codes_id, "codes" => $codes]),
+            "recordsFiltered" => $this->product_image_model->countFiltered(["codes_id" => $codes_id, "codes" => $codes], (!empty($_POST) ? $_POST : [])),
             "data" => $data,
         ];
         // Output to JSON format
         echo json_encode($output);
     }
-    public function upload_form($id)
+    public function upload_form($codes_id, $codes)
     {
         $viewData = new stdClass();
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "image";
-        $viewData->item = $this->product_model->get(["id" => $id]);
+        $viewData->item = $this->product_model->get(["codes_id" => $codes_id, "codes" => $codes]);
         $viewData->settings = $this->general_model->get_all("settings", null, null, ["isActive" => 1]);
-        $viewData->items = $this->product_image_model->get_all(["product_id" => $id], "rank ASC");
+        $viewData->items = $this->product_image_model->get_all(["codes_id" => $codes_id, "codes" => $codes], "rank ASC");
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
-    public function fileUpdate($id, $product_id)
-    {
-        $viewData = new stdClass();
-        $viewData->product_id =  $product_id;
-        $viewData->item = $this->product_image_model->get(["id" => $id, "product_id" => $product_id]);
-        $viewData->viewFolder = $this->viewFolder;
-        $viewData->subViewFolder = "file_update";
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
-    }
-    public function file_update($id, $product_id)
-    {
-        $data = rClean($this->input->post());
-        $update = $this->product_image_model->update(["id" => $id, "product_id" => $product_id], $data);
-        if ($update) :
-            echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Görseli Varyasyon Grupları Başarıyla Güncelleştirildi."]);
-        else :
-            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Görseli Varyasyon Grupları Güncelleştirilirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
-        endif;
-    }
-    public function file_upload($product_id, $lang)
+    public function file_upload($codes_id, $codes, $lang)
     {
         $resize = ['height' => 1280, 'width' => 1920, 'maintain_ratio' => FALSE, 'master_dim' => 'height'];
         $image = upload_picture("file", "uploads/$this->viewFolder/", $resize, "*");
@@ -196,7 +173,8 @@ class Products extends MY_Controller
                 [
                     "url"           => $image["file_name"],
                     "rank"          => $getRank + 1,
-                    "product_id"    => $product_id,
+                    "codes_id"      => $codes_id,
+                    "codes"         => $codes,
                     "isActive"      => 1,
                     "lang"          => $lang
                 ]
@@ -230,7 +208,7 @@ class Products extends MY_Controller
             endif;
         endif;
     }
-    public function fileRankSetter($product_id)
+    public function fileRankSetter($codes_id, $codes)
     {
         $rows = $this->input->post("rows");
         if (!empty($rows)) :
@@ -238,19 +216,20 @@ class Products extends MY_Controller
                 $this->product_image_model->update(
                     [
                         "id" => $row["id"],
-                        "product_id" => $product_id
+                        "codes_id" => $codes_id,
+                        "codes" => $codes
                     ],
                     ["rank" => $row["position"]]
                 );
             endforeach;
         endif;
     }
-    public function fileIsCoverSetter($id, $product_id, $lang)
+    public function fileIsCoverSetter($id, $codes_id, $codes, $lang)
     {
         if (!empty($id) && !empty($lang)) :
             $isCover = (intval($this->input->post("data")) === 1) ? 1 : 0;
-            if ($this->product_image_model->update(["id" => $id, "product_id" => $product_id], ["isCover" => $isCover, "lang" => $lang])) :
-                $this->product_image_model->update(["id!=" => $id, "product_id" => $product_id], ["isCover" => 0, "lang" => $lang]);
+            if ($this->product_image_model->update(["id" => $id, "codes_id" => $codes_id, "codes" => $codes], ["isCover" => $isCover, "lang" => $lang])) :
+                $this->product_image_model->update(["id!=" => $id, "codes_id" => $codes_id, "codes" => $codes], ["isCover" => 0, "lang" => $lang]);
                 echo json_encode(["success" => True, "title" => "İşlem Başarıyla Gerçekleşti", "msg" => "Güncelleme İşlemi Yapıldı"]);
             else :
                 echo json_encode(["success" => False, "title" => "İşlem Başarısız Oldu", "msg" => "Güncelleme İşlemi Yapılamadı"]);
@@ -286,6 +265,7 @@ class Products extends MY_Controller
                             'brand_id' => clean($returnValue->Ok8Id) ?? NULL,
                             'brand' => clean($returnValue->Ozelkod8) ?? NULL,
                             'price' => clean($returnValue->Fiyat1) ?? NULL,
+                            'discounted_price' => clean($returnValue->Fiyat2) ?? NULL,
                             'vat' => clean($returnValue->KDV) ?? NULL,
                             'stock' => clean($returnValue->stok) ?? NULL,
                             'isActive' => clean($returnValue->Durum) == 1 ? 1 : 0,

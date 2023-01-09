@@ -84,7 +84,7 @@
     </div>
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <button role="button" data-url="<?= base_url("products/update/$item->id"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btnUpdate">Güncelle</button>
+            <button role="button" data-url="<?= base_url("products/update/$item->codes_id/$item->codes"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btnUpdate">Güncelle</button>
             <a href="javascript:void(0)" onclick="closeModal('#productModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
         </div>
     </div>

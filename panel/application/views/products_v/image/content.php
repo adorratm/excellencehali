@@ -2,7 +2,7 @@
 <div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <form data-table="detailTable" action="<?= base_url("products/file_upload/$item->id/$item->lang"); ?>" id="dropzone<?= $item->lang ?>" class="dropzone" data-plugin="dropzone" data-options="{ url: '<?= base_url("products/file_upload/$item->id/$item->lang"); ?>'}">
+            <form data-table="detailTable" action="<?= base_url("products/file_upload/$item->codes_id/$item->codes/$item->lang"); ?>" id="dropzone<?= $item->lang ?>" class="dropzone" data-plugin="dropzone" data-options="{ url: '<?= base_url("products/file_upload/$item->codes_id/$item->codes/$item->lang"); ?>'}">
                 <div class="dz-message">
                     <h3 class="m-h-lg">Yüklemek istediğiniz dosyaları buraya sürükleyiniz</h3>
                     <p class="mb-3 text-muted">(Yüklemek için dosyalarınızı sürükleyiniz yada buraya tıklayınız)</p>
@@ -57,59 +57,9 @@
                     return d;
                 }
                 $(document).ready(function() {
-                    TableInitializerV2("detailTable", obj, {}, "<?= base_url("products/detailDatatable/{$item->id}") ?>", "<?= base_url("products/fileRankSetter/{$item->id}") ?>", true);
+                    TableInitializerV2("detailTable", obj, {}, "<?= base_url("products/detailDatatable/{$item->codes_id}/{$item->codes}") ?>", "<?= base_url("products/fileRankSetter/{$item->codes_id}/{$item->codes}") ?>", true);
                 });
             </script>
         </div><!-- END column -->
     </div>
 </div>
-
-<div id="productSkuModal"></div>
-
-<script>
-    $(document).ready(function() {
-        $(document).on("click", ".updateSkuBtn", function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            $('#productSkuModal').iziModal('destroy');
-            let url = $(this).data("url");
-            createModal("#productSkuModal", "Görsele SKU Kodu Ekle", "Görsele SKU Kodu Ekle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
-                $.post(url, {}, function(response) {
-                    $("#productSkuModal .iziModal-content").html(response);
-                    TinyMCEInit();
-                    flatPickrInit();
-                    $(".tagsInput").select2({
-                        placeholder: 'Varyasyon Kategorisi / Kategorileri Seçiniz.',
-                        width: 'resolve',
-                        theme: "classic",
-                        tags: false,
-                        tokenSeparators: [',', ' '],
-                        multiple: true
-                    });
-
-                    $(".tagsInput2").select2({
-                        placeholder: 'Varyasyon / Varyasyonları Seçiniz.',
-                        width: 'resolve',
-                        theme: "classic",
-                        tags: false,
-                        tokenSeparators: [',', ' '],
-                        multiple: true
-                    });
-                });
-            });
-            openModal("#productSkuModal");
-            $("#productSkuModal").iziModal("setFullscreen", false);
-        });
-        $(document).on("click", ".btnUpdate", function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            let url = $(this).data("url");
-            let formData = new FormData(document.getElementById("updateSku"));
-            createAjax(url, formData, function() {
-                closeModal("#productSkuModal");
-                $("#productSkuModal").iziModal("setFullscreen", false);
-                reloadTable("detailTable");
-            });
-        });
-    });
-</script>

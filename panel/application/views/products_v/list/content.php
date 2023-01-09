@@ -31,6 +31,11 @@
 					<th class="w50">#id</th>
 					<th class="w50">Codes ID</th>
 					<th>Başlık</th>
+					<th>Marka</th>
+					<th>Kategori</th>
+					<th>Desen</th>
+					<th>Renk</th>
+					<th>Ebat</th>
 					<th>Codes Sunucusu</th>
 					<th>Durumu</th>
 					<th>Güncelleme Tarihi</th>
