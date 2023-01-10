@@ -1,6 +1,6 @@
 <?php if (!empty($slides)) : ?>
     <!-- BEGIN: Slider Section -->
-    <section class="sliderSection02">
+    <section class="sliderSection02 mb117">
         <div class="rev_slider_wrapper">
             <div id="rev_slider_2" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.4.1">
                 <ul>
@@ -63,21 +63,25 @@
 <?php if (!empty($pages[array_keys($pages)[0]])) : ?>
     <?php $aboutPage = $pages[array_keys($pages)[0]] ?>
     <?php if ($aboutPage->id == 1) : ?>
-        <section class="about-us-section">
-            <div class="auto-container">
-                <div class="row align-items-center align-content-center align-self-center">
-                    <div class="col-lg-6">
-                        <div class="text-block">
-                            <div class="sec-title mb-30">
-                                <h2><?= $settings->company_name ?></h2>
-                            </div>
-                            <div class="text"><?= strip_tags(mb_word_wrap($aboutPage->content, 775, "...")) ?></div>
-                            <div class="link-btn rounded"><a href="<?= base_url(lang("routes_page") . "/" . $aboutPage->url) ?>" rel="dofollow" title="<?= $aboutPage->title ?>" class="theme-btn rounded"><span><?= lang("aboutUs") ?></span></a></div>
+        <section class="aboutPageSection01">
+            <div class="container">
+                <div class="row mb117">
+                    <div class="col-xl-6 noPaddingRight">
+                        <div class="aboutImage">
+                            <img width="1000" height="1000" data-src="<?= get_picture("pages_v", $aboutPage->img_url) ?>" title="<?= $aboutPage->title ?>" alt="<?= $aboutPage->title ?>" class="lazyload img-fluid" loading="lazy">
                         </div>
                     </div>
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-5">
-                        <div class="image"><img width="1000" height="1000" data-src="<?= get_picture("pages_v", $aboutPage->img_url) ?>" title="<?= $aboutPage->title ?>" alt="<?= $aboutPage->title ?>" class="lazyload img-fluid" loading="lazy"></div>
+                    <div class="col-xl-6">
+                        <div class="aboutContent">
+                            <h3 class="secSubTitle text-capitalize"><?= $settings->company_name ?></h3>
+                            <h2 class="secTitle"><?= $aboutPage->title ?></h2>
+                            <div class="abDesc">
+                                <?= strip_tags(mb_word_wrap($aboutPage->content, 775, "...")) ?>
+                            </div>
+                            <a class="ulinaBTN" href="<?= base_url(lang("routes_page") . "/" . $aboutPage->url) ?>" rel="dofollow" title="<?= $aboutPage->title ?>">
+                                <span><?= $aboutPage->title ?></span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -87,146 +91,49 @@
 <!--================= About Section End Here ================= -->
 
 <!-- Our Facts section -->
-<section class="our-facts-section py-3">
-    <div class="auto-container">
-        <div class="swiper-container facts-slider">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide column facts-block">
-                    <div class="inner wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
-                        <div class="content d-flex text-center justify-content-center flex-column">
-                            <div class="text-danger position-relative"><i class="fa fa-city fa-2x mx-auto"></i></div>
-                            <div class="text-dark">
-                                <span class="h2 font-weight-bold">40.000 m<sup>2</sup></span>
-                            </div>
-                            <div class="text-dark">
-                                <span class="h6 font-weight-bold"><?= lang("factoryArea") ?></span>
-                            </div>
-                        </div>
-                    </div>
+<section class="featureSection2 mb117">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-xl-3">
+                <div class="iconBox01 ib01LightMode">
+                    <i class="fa fa-city fa-2x mx-auto"></i>
+                    <h3>Free Shipping</h3>
+                    <p>
+                        Ut enim ad minim veniam liquip ami tomader
+                    </p>
                 </div>
-                <div class="swiper-slide column facts-block">
-                    <div class="inner wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
-                        <div class="content d-flex text-center justify-content-center flex-column">
-                            <div class="text-danger position-relative"><i class="fa fa-weight-hanging fa-2x mx-auto"></i></div>
-                            <div class="text-dark">
-                                <span class="h2 font-weight-bold">250.000 Ton/<?= lang("year") ?></span>
-                            </div>
-                            <div class="text-dark">
-                                <span class="h6 font-weight-bold"><?= lang("installedCapacity") ?></span>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+                <div class="iconBox01 ib01LightMode">
+                    <i class="fa fa-city fa-2x mx-auto"></i>
+                    <h3>Secure Payments</h3>
+                    <p>
+                        Eonim ad minim veniam liquip tomader
+                    </p>
                 </div>
-                <div class="swiper-slide column facts-block">
-                    <div class="inner wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
-                        <div class="content d-flex text-center justify-content-center flex-column">
-                            <div class="text-danger position-relative"><i class="fa fa-globe fa-2x mx-auto"></i></div>
-                            <div class="text-dark">
-                                <span class="h2 font-weight-bold">6 <?= lang("continent") ?> 80+</span>
-                            </div>
-                            <div class="text-dark">
-                                <span class="h6 font-weight-bold"><?= lang("moreCountryTransport") ?></span>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+                <div class="iconBox01 ib01LightMode">
+                    <i class="fa fa-city fa-2x mx-auto"></i>
+                    <h3>Easy Returns</h3>
+                    <p>
+                        Be enim ad minim veniam liquipa ami tomader
+                    </p>
                 </div>
-                <div class="swiper-slide column facts-block">
-                    <div class="inner wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
-                        <div class="content d-flex text-center justify-content-center flex-column">
-                            <div class="text-danger position-relative"><i class="fa fa-industry fa-2x mx-auto"></i></div>
-                            <div class="text-dark">
-                                <span class="h2 font-weight-bold">3 <?= lang("differentSteel") ?></span>
-                            </div>
-                            <div class="text-dark">
-                                <span class="h6 font-weight-bold"><?= lang("differentFactory") ?></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide column facts-block">
-                    <div class="inner wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
-                        <div class="content d-flex text-center justify-content-center flex-column">
-                            <div class="text-danger position-relative"><i class="fa fa-truck-ramp-box fa-2x mx-auto"></i></div>
-                            <div class="text-dark">
-                                <span class="h2 font-weight-bold"><?= lang("productType") ?></span>
-                            </div>
-                            <div class="text-dark">
-                                <span class="h6 font-weight-bold"><?= lang("differentMeasures") ?></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide column facts-block">
-                    <div class="inner wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
-                        <div class="content d-flex text-center justify-content-center flex-column">
-                            <div class="text-danger position-relative"><i class="fa fa-solar-panel fa-2x mx-auto"></i></div>
-                            <div class="text-dark">
-                                <span class="h2 font-weight-bold">5 <?= lang("million") ?> kWh/<?= lang("year") ?> </span>
-                            </div>
-                            <div class="text-dark">
-                                <span class="h6 font-weight-bold"><?= lang("recycleableEnergy") ?></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide column facts-block">
-                    <div class="inner wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
-                        <div class="content d-flex text-center justify-content-center flex-column">
-                            <div class="text-danger position-relative"><i class="fa fa-medal fa-2x mx-auto"></i></div>
-                            <div class="text-dark">
-                                <span class="h2 font-weight-bold"><?= (date("Y") - 1988) - ((date("Y") - 1988) % 10) ?>+</span>
-                            </div>
-                            <div class="text-dark">
-                                <span class="h6 font-weight-bold"><?= lang("yearsOfExperience") ?></span>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+                <div class="iconBox01 ib01LightMode">
+                    <i class="fa fa-city fa-2x mx-auto"></i>
+                    <h3>24/7 Support</h3>
+                    <p>
+                        Ut enim ad minim veniam liquip ami tomader
+                    </p>
                 </div>
             </div>
         </div>
-        <div class="facts-slider-nav">
-            <div class="facts-slider-control facts-slider-button-prev"><span><i class="fa fa-chevron-left"></i></span></div>
-            <div class="facts-slider-control facts-slider-button-next"><span><i class="fa fa-chevron-left"></i></span> </div>
-        </div>
-
     </div>
 </section>
 
-<?php if (!empty($sectors)) : ?>
-    <section class="banner-section banner-section2 mb-3">
-
-        <div class="auto-container">
-            <div class="sec-title text-center my-4">
-                <h2 class="my-3"><?= lang("sectorsWhereWeCreateValueAndDifference") ?></h2>
-                <?php foreach ($sectors as $k => $v) : ?>
-                    <script>
-                        menu.push("<?= $v->title ?>")
-                    </script>
-                <?php endforeach ?>
-                <div class="banner-slider-pagination overflowable"></div>
-            </div>
-            <div class="swiper-container banner-slider" style="border-radius: 50px;">
-                <div class="swiper-wrapper" style="border-radius: 50px;">
-                    <?php $j = 0 ?>
-                    <?php foreach ($sectors as $key => $value) : ?>
-                        <!-- Slide Item -->
-                        <div class="swiper-slide" style="border-radius: 50px;">
-                            <img style="border-radius: 50px;" width="1920" height="1280" loading="lazy" data-src="<?= get_picture("sectors_v", $value->img_url) ?>" title="<?= $value->title ?>" alt="<?= $value->title ?>" class="lazyload img-fluid h-100 w-100">
-                        </div>
-                        <!-- Slide Item -->
-                        <?php $j++ ?>
-                    <?php endforeach ?>
-                </div>
-            </div>
-            <div class="banner-slider-nav d-flex text-center justify-content-center my-3" style="top:unset">
-                <div class="banner-slider-control banner-slider-button-prev border text-white mr-3"><span><i class="fa fa-arrow-left"></i></span></div>
-                <div class="banner-slider-control banner-slider-button-next border text-white ml-3"><span><i class="fa fa-arrow-left"></i></span> </div>
-            </div>
-        </div>
-
-
-    </section>
-<?php endif ?>
 
 <?php if (empty($homeitems)) : ?>
     <!--=================  Popular Topics Section Start Here ================= -->
@@ -278,4 +185,33 @@
         </div>
     </div>
     <!--=================  Popular Topics Section End Here ================= -->
+<?php endif ?>
+
+<?php if (!empty($settings->instagram)) : ?>
+    <?php $userName = str_replace("/", "", (str_replace("https://www.instagram.com/", "", str_replace("https://instagram.com/", "", $settings->instagram)))); ?>
+    <?php
+    $this->instastory->login($settings->crawler_email, $settings->crawler_password);
+    $this->instastory->getProfile($userName);
+    $medias = $this->instastory->getMedias();
+    $downloadMedias = $this->instastory->downloadMedias();
+    ?>
+    <section class="instagramSection is02">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="secTitle"><?= lang("followUsOnInstagram") ?> <a rel="nofollow" href="<?= $settings->instagram ?>" target="_blank" title="Instagram">@<?= $userName ?></a></h2>
+                </div>
+            </div>
+            <div class="row">
+                <?php foreach ($medias as $mediaKey => $mediaValue) : ?>
+                    <?php $url = substr(str_replace('/', '-', parse_url($mediaValue->getDisplaySrc(), PHP_URL_PATH)), 1); ?>
+                    <div class="col-lg-3 mb-3">
+                        <a rel="nofollow" title="<?= $settings->company_name ?>" href="<?= $mediaValue->getLink() ?>" target="_blank" class="instagramPhoto imgPopup">
+                            <img data-src="<?= get_picture("instastory", $url) ?>" style="max-height:250px;object-fit:cover" class="img-fluid lazyload" alt="<?= $settings->company_name ?>">
+                        </a>
+                    </div>
+                <?php endforeach ?>
+            </div>
+        </div>
+    </section>
 <?php endif ?>

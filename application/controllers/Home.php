@@ -262,7 +262,6 @@ class Home extends MY_Controller
     {
         $seo_url = $this->uri->segment(3);
         $this->viewData->item = $this->general_model->get("pages", null, ["isActive" => 1, "lang" => $this->viewData->lang, 'url' =>  $seo_url]);
-        $this->viewData->testimonials = $this->general_model->get_all("testimonials", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang]);
         $this->viewData->meta_title = strto("lower|ucwords", $this->viewData->item->title) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = clean(str_replace("”", "\"", @stripslashes($this->viewData->item->content)));
         $this->viewData->og_url                 = clean(base_url(lang("routes_page") . "/" . $seo_url));
@@ -449,7 +448,7 @@ class Home extends MY_Controller
         $wheres["pc.lang"] = $this->viewData->lang;
         $joins = [];
 
-        $select = "pc.id,pc.title,pc.seo_url,pc.img_url,pc.isActive";
+        $select = "pc.codes_id,pc.codes,pc.id,pc.title,pc.seo_url,pc.img_url,pc.isActive";
         $distinct = true;
         $groupBy = ["pc.id"];
         /**
@@ -652,7 +651,7 @@ class Home extends MY_Controller
     /**
      * Product Detail
      */
-    public function product_detail($seo_url)
+    public function product_detail($codes,$seo_url)
     {
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
@@ -662,6 +661,7 @@ class Home extends MY_Controller
         $distinct = true;
         $groupBy = ["p.id"];
         $wheres['p.seo_url'] =  $seo_url;
+        $wheres['p.codes'] =  $codes;
         /**
          * Get Product Detail
          */

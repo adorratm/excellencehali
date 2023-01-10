@@ -41,10 +41,11 @@
     /*------------------------------------------------------
     /  01. Variables
     /------------------------------------------------------*/
-    var $anSelect = $('.anSelect select'), 
-        $sortNavSelect = $('.sortNav select'), 
-        $singleVariationSelect = $('.singleVariation select'), 
+    var $anSelect = $('.anSelect select'),
+        $sortNavSelect = $('.sortNav select'),
+        $singleVariationSelect = $('.singleVariation select'),
         $productCarousel = $('.productCarousel'),
+        $contactCarousel = $('.contactCarousel'),
         $ulinaCountDown = $('.ulinaCountDown'),
         $masonryGrid = $('#masonryGrid'),
         $masonryGrid2 = $('#masonryGrid2'),
@@ -64,32 +65,32 @@
         $shippingFormElementsSelect = $('.shippingFormElements select'),
         $checkoutForm = $('.checkoutForm select'),
         $teamCarousel = $('.teamCarousel');
-    
+
     /*------------------------------------------------------
     /  02. Nice Selects
     /------------------------------------------------------*/
-    if($anSelect.length > 0){
+    if ($anSelect.length > 0) {
         $anSelect.niceSelect();
     };
-    if($sortNavSelect.length > 0){
+    if ($sortNavSelect.length > 0) {
         $sortNavSelect.niceSelect();
     };
-    if($singleVariationSelect.length > 0){
+    if ($singleVariationSelect.length > 0) {
         $singleVariationSelect.niceSelect();
     };
-    if($shippingFormElementsSelect.length > 0){
+    if ($shippingFormElementsSelect.length > 0) {
         $shippingFormElementsSelect.niceSelect();
     };
-    if($checkoutForm.length > 0){
+    if ($checkoutForm.length > 0) {
         $checkoutForm.niceSelect();
     };
-    
+
     /*------------------------------------------------------
     /  03. Owl Carousels and Slick
     /------------------------------------------------------*/
 
     // Owl Carousel For teamCarousel
-    if($teamCarousel.length > 0){
+    if ($teamCarousel.length > 0) {
         var $teamCarousel_obj = $teamCarousel.owlCarousel({
             autoplay: false,
             margin: 24,
@@ -120,7 +121,7 @@
     };
 
     // Owl Carousel For productCarousel
-    if($productCarousel.length > 0){
+    if ($productCarousel.length > 0) {
         var $productCarousel_obj = $productCarousel.owlCarousel({
             autoplay: false,
             margin: 24,
@@ -150,8 +151,40 @@
         });
     };
 
+    // Owl Carousel For contactCarousel
+    if ($contactCarousel.length > 0) {
+        var $contactCarousel_obj = $contactCarousel.owlCarousel({
+            autoplay: false,
+            margin: 24,
+            loop: false,
+            nav: true,
+            center: true,
+            navText: ['<i class="fa-solid fa-angle-left"></i>', '<i class="fa-solid fa-angle-right"></i>'],
+            dots: false,
+            items: 3,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                576: {
+                    items: 2
+                },
+                768: {
+                    items: 2
+                },
+                992: {
+                    items: 3
+                },
+                1200: {
+                    items: 3
+                }
+            }
+        });
+    };
+
     // Owl Carousel For categoryCarousel
-    if($categoryCarousel.length > 0){
+    if ($categoryCarousel.length > 0) {
         var $categoryCarousel_obj = $categoryCarousel.owlCarousel({
             autoplay: false,
             margin: 24,
@@ -182,7 +215,7 @@
     };
 
     // Owl Carousel For categoryCarousel2
-    if($categoryCarousel2.length > 0){
+    if ($categoryCarousel2.length > 0) {
         var $categoryCarousel2_obj = $categoryCarousel2.owlCarousel({
             autoplay: false,
             margin: 24,
@@ -211,9 +244,9 @@
             }
         });
     };
-    
+
     // Owl Carousel For testimonialCarousel2
-    if($testimonialCarousel2.length > 0){
+    if ($testimonialCarousel2.length > 0) {
         var $testimonialCarousel2_obj = $testimonialCarousel2.owlCarousel({
             autoplay: false,
             margin: 24,
@@ -243,7 +276,7 @@
             }
         });
     };
-    
+
     // Owl Carousel For testimonialCarousel
     if ($testimonialCarousel.length > 0) {
         var $testimonialCarousel_obj = $testimonialCarousel.owlCarousel({
@@ -270,16 +303,16 @@
                 }
             }
         });
-        $('.tnext').on('click', function() {
+        $('.tnext').on('click', function () {
             $testimonialCarousel_obj.trigger('next.owl.carousel');
         });
-        $('.tprev').on('click', function() {
+        $('.tprev').on('click', function () {
             $testimonialCarousel_obj.trigger('prev.owl.carousel');
         });
     }
 
     // Owl Carousel For instagramSlider
-    if($instagramSlider.length > 0){
+    if ($instagramSlider.length > 0) {
         var $instagramSlider_obj = $instagramSlider.owlCarousel({
             autoplay: false,
             margin: 0,
@@ -309,7 +342,7 @@
     };
 
     // Owl Carousel For clientLogoSlider
-    if($clientLogoSlider.length > 0){
+    if ($clientLogoSlider.length > 0) {
         var $clientLogoSlider_obj = $clientLogoSlider.owlCarousel({
             autoplay: false,
             margin: 0,
@@ -337,7 +370,7 @@
             }
         });
     };
-    
+
     // Slick For productGallery
     $productGallery.slick({
         slidesToShow: 1,
@@ -359,7 +392,7 @@
         prevArrow: '<button type="button" class="slick-prev"><i class="fa-solid fa-angle-left"></i></button>',
         nextArrow: '<button type="button" class="slick-next"><i class="fa-solid fa-angle-right"></i></button>'
     });
-    
+
     // Slick For productGallery2
     $productGallery2.slick({
         slidesToShow: 1,
@@ -378,7 +411,7 @@
         arrows: false,
         vertical: true,
         focusOnSelect: true,
-        verticalSwiping:true,
+        verticalSwiping: true,
         responsive: [
             {
                 breakpoint: 575,
@@ -389,7 +422,7 @@
             }
         ]
     });
-    
+
     /*--------------------------------------------------------
     / 04. Masonry Grid
     /---------------------------------------------------------*/
@@ -417,7 +450,7 @@
             sizer: sizer
         });
     }
-    
+
     /*--------------------------------------------------------
     / 05. Count Down
     /----------------------------------------------------------*/
@@ -432,10 +465,10 @@
             labels: ['Yrs', 'Mths', 'Weks', 'Days', 'Hrs', 'Mins', 'Secs']
         });
     }
-    
-   /*--------------------------------------------------------
-    /   07. Back To Top
-    /--------------------------------------------------------*/
+
+    /*--------------------------------------------------------
+     /   07. Back To Top
+     /--------------------------------------------------------*/
     var back = $("#backtotop"),
         body = $("body, html");
     $(window).on('scroll', function () {
@@ -450,18 +483,18 @@
         body.animate({ scrollTop: 0 });
         return false;
     });
-    
-   /*--------------------------------------------------------
-    /   08. Pointer Image
-    /--------------------------------------------------------*/
-    $pointerImage.each(function(){
+
+    /*--------------------------------------------------------
+     /   08. Pointer Image
+     /--------------------------------------------------------*/
+    $pointerImage.each(function () {
         let $pointerWrap = $(this);
-        $('.cpAchor', $pointerWrap).on('click', function(e){
+        $('.cpAchor', $pointerWrap).on('click', function (e) {
             e.preventDefault();
             let $cpAchor = $(this);
-            if($cpAchor.parent('.clickPoint').hasClass('active')){
+            if ($cpAchor.parent('.clickPoint').hasClass('active')) {
                 $('.clickPoint', $pointerWrap).removeClass('active');
-            }else{
+            } else {
                 $('.clickPoint', $pointerWrap).removeClass('active');
                 $cpAchor.parent('.clickPoint').addClass('active');
             }
@@ -478,7 +511,7 @@
             gridwidth: [1320, 1140, 720],
             jsFileLocation: "js/",
             sliderLayout: "fullwidth",
-            gridheight:[750, 650, 576, 480],
+            gridheight: [750, 650, 576, 480],
             minHeight: '200',
             navigation: {
                 keyboardNavigation: "off",
@@ -544,7 +577,7 @@
             gridwidth: [1320, 1140, 720],
             jsFileLocation: "js/",
             sliderLayout: "fullwidth",
-            gridheight:[750, 650, 576, 320],
+            gridheight: [750, 650, 576, 320],
             minHeight: '150',
             navigation: {
                 keyboardNavigation: "off",
@@ -603,11 +636,11 @@
             }
         });
     }
-    
+
     /*--------------------------------------------------------
     /   10. Sidebar Toggle
     /--------------------------------------------------------*/
-    $('.shopSidebar ul li.menu-item-has-children > a').on('click', function(e){
+    $('.shopSidebar ul li.menu-item-has-children > a').on('click', function (e) {
         e.preventDefault();
         $(this).siblings('ul').slideToggle();
         $(this).parent('li.menu-item-has-children').toggleClass('active');
@@ -623,24 +656,24 @@
             max: 10000,
             values: [0, 2000],
             slide: function (event, ui) {
-                $("#amount").html("$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ]);
+                $("#amount").html("$" + ui.values[0] + " - $" + ui.values[1]);
             }
         });
         $("#amount").html("$" + $sliderRange.slider("values", 0) + " - $" + $sliderRange.slider("values", 1));
     }
-    
+
     /*--------------------------------------------------------
     / 12. Payment Method Toggle
     /----------------------------------------------------------*/
-    $('.wc_payment_methods li > label').on('click', function(){
-       if(!$(this).parent('li').hasClass('active')){
-           $('.wc_payment_methods li').removeClass('active');
-           $('.wc_payment_methods li .paymentDesc').slideUp();
-           $(this).parent('li').addClass('active');
-           $(this).siblings('.paymentDesc').slideDown();
-       }
+    $('.wc_payment_methods li > label').on('click', function () {
+        if (!$(this).parent('li').hasClass('active')) {
+            $('.wc_payment_methods li').removeClass('active');
+            $('.wc_payment_methods li .paymentDesc').slideUp();
+            $(this).parent('li').addClass('active');
+            $(this).siblings('.paymentDesc').slideDown();
+        }
     });
-    
+
     /*------------------------------------------------------
     /  13. Cirle Progress
     /------------------------------------------------------*/
@@ -654,14 +687,14 @@
                     var decs = pint * 100;
                     var efill = $(this).attr('data-emptyfill');
                     var fill = $(this).attr('data-fills');
-                    
+
                     $(this).circleProgress({
                         value: pint,
                         startAngle: -Math.PI / 2 * 1,
                         fill: { color: fill },
                         lineCap: 'square',
                         thickness: 6,
-                        animation: {duration: 1800},
+                        animation: { duration: 1800 },
                         size: 96,
                         emptyFill: efill
                     }).on('circle-animation-progress', function (event, progress) {
@@ -672,7 +705,7 @@
             }
         });
     }
-    
+
     /*--------------------------------------------------------
     / 14. Skill Bar
     /----------------------------------------------------------*/
@@ -704,11 +737,11 @@
     / 15. Counter
     /---------------------------------------------------------*/
     $('.timer').appear();
-    $(document.body).on('appear', '.timer', function(e, $affected) {
-        $affected.each(function() {
+    $(document.body).on('appear', '.timer', function (e, $affected) {
+        $affected.each(function () {
             var $this = $(this);
-            if(!$this.hasClass('appeared')){
-                jQuery({Counter: 0}).animate({Counter: $this.attr('data-count')}, {
+            if (!$this.hasClass('appeared')) {
+                jQuery({ Counter: 0 }).animate({ Counter: $this.attr('data-count') }, {
                     duration: 3000,
                     easing: 'swing',
                     step: function () {
@@ -720,7 +753,7 @@
             }
         });
     });
-    
+
     /*--------------------------------------------------------
     /  16. Sticky Header
     /---------------------------------------------------------*/
@@ -728,24 +761,24 @@
         var heights = $(window).height();
         var header_height = $(".isSticky").height();
         if ($(window).scrollTop() > 100) {
-            if($(".isSticky").hasClass('h01Mode2')){
+            if ($(".isSticky").hasClass('h01Mode2')) {
                 $('.blanks').css('height', header_height);
                 $(".triggerFixed").addClass("fixed-top");
-				$(".triggerFixed").css("top", header_height);
+                $(".triggerFixed").css("top", header_height);
             }
             $(".isSticky").addClass('fixedHeader animated slideInDown');
             $(".triggerFixed").addClass('fixedHeader animated slideInDown');
         } else {
-            if($(".isSticky").hasClass('h01Mode2')){
+            if ($(".isSticky").hasClass('h01Mode2')) {
                 $('.blanks').css('height', '0');
                 $(".triggerFixed").removeClass("fixed-top");
-				$(".triggerFixed").css("top", '0');
+                $(".triggerFixed").css("top", '0');
             }
             $(".isSticky").removeClass('fixedHeader animated slideInDown');
             $(".triggerFixed").removeClass('fixedHeader animated slideInDown');
         }
     });
-    
+
     /*--------------------------------------------------------
     / 17. Popup Search
     /----------------------------------------------------------*/
@@ -756,7 +789,7 @@
     $('.popup_search_overlay, #search_Closer').on('click', function () {
         $('.popup_search_sec').removeClass('active');
     });
-    
+
     /*--------------------------------------------------------
     /  18. Preloader
     /---------------------------------------------------------*/
@@ -770,20 +803,20 @@
     /*--------------------------------------------------------
     /  21. Social Toggle Menu
     /---------------------------------------------------------*/
-    $('.anSocial a.tog').on('click', function(){
+    $('.anSocial a.tog').on('click', function () {
         $(this).parent('.anSocial').toggleClass('active');
     });
 
     /*--------------------------------------------------------
     /  22. Mobile Menu
     /---------------------------------------------------------*/
-    $('.mainMenu ul li.menu-item-has-children > a').on('click', function(e){
+    $('.mainMenu ul li.menu-item-has-children > a').on('click', function (e) {
         e.preventDefault();
-        if($(window).width() < 1366){
+        if ($(window).width() < 1366) {
             $(this).siblings('ul, .megaMenu').slideToggle();
         }
     });
-    $('.menuToggler').on('click', function(e){
+    $('.menuToggler').on('click', function (e) {
         e.preventDefault();
         $('.mainMenu').slideToggle();
         $(this).toggleClass('active');
@@ -792,12 +825,12 @@
     /*--------------------------------------------------------
     /  23. Product QuickView
     /---------------------------------------------------------*/
-    $('.pi01QuickView').on('click', function(e){
+    $('.pi01QuickView').on('click', function (e) {
         e.preventDefault();
         const myModal = new bootstrap.Modal('#productQuickView', {
             keyboard: false
         })
-        const productQuickView = document.getElementById('productQuickView'); 
+        const productQuickView = document.getElementById('productQuickView');
         myModal.show(productQuickView);
         productQuickView.addEventListener('shown.bs.modal', event => {
             // Slick For productGallery
@@ -823,5 +856,5 @@
             });
         })
     })
-    
+
 })(jQuery)

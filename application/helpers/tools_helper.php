@@ -920,3 +920,15 @@ function get_secondary_image($codes_id = null, $codes = null, $cover_url = null,
     endif;
     return null;
 }
+
+function encodeimg($url)
+{
+    $r = get_headers($url, 1);
+    if (isset($r['Content-Type'])) {
+        $imageData = base64_encode(file_get_contents($url));
+        $src = 'data: ' . $r['Content-Type'] . ';base64,' . $imageData;
+    } else {
+        $src = $url;
+    }
+    return $src;
+}

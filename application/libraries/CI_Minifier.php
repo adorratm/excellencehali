@@ -317,7 +317,7 @@ class CI_Minifier
         );
 
         // Minify inline CSS declaration(s)
-        if (strpos($input, ' style=') !== false) {
+        if (@strpos($input, ' style=') !== false) {
             $input = preg_replace_callback(
                 '#<([^<]+?)\s+style=([\'"])(.*?)\2(?=[\/\s>])#s',
                 function ($matches) {
@@ -326,7 +326,7 @@ class CI_Minifier
                 $input
             );
         }
-        return preg_replace(
+        return @preg_replace(
             array(
                 // t = text
                 // o = tag open

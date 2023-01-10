@@ -1,4 +1,8 @@
 <?php
+$lang["followUsOnInstagram"] = "Bizi Instagram'da Takip Edin";
+$lang["whatsapp"] = "Whatsapp";
+$lang["fax"] = "Faks";
+$lang["mail"] = "E-mail";
 $lang["discountedProduct"] = "İndirimli Ürün";
 $lang["kvkkMessage"] = "Paylaşmış olduğum bilgilerin @companyName@ güvencesinde, incelediğim ve kabul ettiğim @securityPolicy@'na , @kvkk@'ne ve yasalara uygun şekilde saklanarak işlenmesini, paylaşılmasını ve kullanım amacına bağlı olarak aktarılmasını kabul edip onaylıyorum.";
 $lang["sustainability"] = "Sürdürülebilirlik";
@@ -40,14 +44,13 @@ $lang['searchDesc'] = 'Lütfen Aramak İstediğiniz Kelimeyi Giriniz.';
 $lang['searchProduct'] = 'Ürün Arayın';
 $lang['searchTechnicalInformation'] = 'Teknik Bilgi Arayın';
 $lang['searchAllCategories'] = 'Tüm Kategorilerde Ara';
-$lang['testimonials'] = 'Ziyaretçi Notları';
 $lang['menus'] = 'Menüler';
 $lang['productCategories'] = 'Ürün Kategorileri';
 $lang['technicalInformationCategories'] = 'Teknik Bilgi Kategorileri';
 $lang['social'] = 'Sosyal Medya';
 $lang['visitLink'] = 'Devamını Görüntüle';
 $lang['galleries'] = 'Galeriler';
-$lang['contact'] = 'iletişim';
+$lang['contact'] = 'İletişim';
 $lang['contactUs'] = 'İletişime Geçin';
 $lang['contactInformation'] = 'İletişim Bilgileri';
 $lang['sameProducts'] = 'Aynı Kategorideki Benzer Ürünler';
