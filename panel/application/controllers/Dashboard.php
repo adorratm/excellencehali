@@ -17,12 +17,12 @@ class Dashboard extends CI_Controller
         if (!get_active_user()) :
             redirect(base_url("login"));
         endif;
+        $this->viewData->settings = get_settings();
     }
     public function index()
     {
-        redirect(base_url("settings"));
-        $whereOrder["status"] = 'Tamamlandı.';
-        $items = $this->general_model->get_all("orders", [], [], $whereOrder);
+        //$whereOrder["status"] = 'Tamamlandı.';
+        $items = $this->general_model->get_all("orders", [], [], []) ?? [];
         $this->viewData->viewFolder = $this->viewFolder;
         $this->viewData->subViewFolder = "list";
         $this->viewData->items = $items;
@@ -37,6 +37,31 @@ class Dashboard extends CI_Controller
         $this->viewData->total_products_count = $this->general_model->rowCount("products");
         $this->load->view("{$this->viewData->viewFolder}/{$this->viewData->subViewFolder}/index", $this->viewData);
     }
+
+    public function syncInstagramPosts()
+    {
+        $userName = str_replace("/", "", (str_replace("https://www.instagram.com/", "", str_replace("https://instagram.com/", "", $this->viewData->settings->instagram))));
+        if (!empty($userName)) {
+            $files = glob(__DIR__ . '/../../../panel/uploads/instastory/*'); // get all file names
+            foreach ($files as $file) { // iterate files
+                if (is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
+            $this->instastory->login($this->viewData->settings->crawler_email, $this->viewData->settings->crawler_password);
+            $this->instastory->getProfile($userName);
+            $medias = $this->instastory->getMedias();
+            $i = 1;
+            foreach ($medias as $mediaKey => $mediaValue) :
+                $url = substr(str_replace('/', '-', parse_url($mediaValue->getDisplaySrc(), PHP_URL_PATH)), 1);
+                $this->general_model->replace("instagram_posts", ["id" => $i, "img_url" => $url, "link" => $mediaValue->getLink()]);
+                $i++;
+            endforeach;
+            $this->instastory->downloadMedias();
+        }
+        echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Instagram Paylaşımları Senkronize Edildi"]);
+    }
+
     public function makeWebp()
     {
         rWebp2(str_replace("panel\\", "", FCPATH) . "public/images");
@@ -51,12 +76,14 @@ class Dashboard extends CI_Controller
         if (!empty($_POST["year"])) :
             $year = $_POST["year"];
         endif;
-        $status = "Tamamlandı.";
+        //$status = "Tamamlandı.";
+        $status = null;
         if (!empty($_POST["status"])) :
             $status = $_POST["status"];
         endif;
-        $whereOrder["status"] = $status;
-        $items = $this->general_model->get_all("orders", [], "updatedAt ASC", $whereOrder,);
+        //$whereOrder["status"] = $status;
+        $whereOrder = [];
+        $items = $this->general_model->get_all("orders", [], "updatedAt ASC", $whereOrder);
         $monthArray = [];
         $beforeMonth = null;
         foreach ($items as $key => $value) :
@@ -80,15 +107,18 @@ class Dashboard extends CI_Controller
                 $beforeMonth = $month;
             endif;
         endforeach;
+        $monthArray = [];
         echo json_encode(["data" => $monthArray]);
     }
     public function orderTotalYear()
     {
-        $status = "Tamamlandı.";
+        //$status = "Tamamlandı.";
+        $status = null;
         if (!empty($_POST["status"])) :
             $status = $_POST["status"];
         endif;
-        $whereOrder["status"] = $status;
+        $whereOrder = [];
+        //$whereOrder["status"] = $status;
         $items = $this->general_model->get_all("orders", [], "updatedAt ASC", $whereOrder);
         $yearArray = [];
         $total_order = 0;
@@ -112,6 +142,7 @@ class Dashboard extends CI_Controller
             endif;
             $beforeYear = $year;
         endforeach;
+        $yearArray = [];
         echo json_encode(["data" => $yearArray]);
     }
     public function findObjectById($array = [], $id = null)
@@ -135,7 +166,8 @@ class Dashboard extends CI_Controller
         return false;
     }
 
-    public function language($language='', $file='', $action=''){
+    public function language($language = '', $file = '', $action = '')
+    {
         //Load library
         $this->load->library('linguo');
         $this->linguo->render($language, $file, $action);

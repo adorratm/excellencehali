@@ -800,7 +800,7 @@ return [
         ],
         'PHP' => [
             0 => '₱',
-            1 => 'Philippine Piso',
+            1 => 'Philippine Peso',
         ],
         'PKR' => [
             0 => 'PKR',
@@ -824,7 +824,7 @@ return [
         ],
         'QAR' => [
             0 => 'QAR',
-            1 => 'Qatari Rial',
+            1 => 'Qatari Riyal',
         ],
         'RHD' => [
             0 => 'RHD',
@@ -898,9 +898,13 @@ return [
             0 => 'SKK',
             1 => 'Slovak Koruna',
         ],
+        'SLE' => [
+            0 => 'SLE',
+            1 => 'Sierra Leonean Leone',
+        ],
         'SLL' => [
             0 => 'SLL',
-            1 => 'Sierra Leonean Leone',
+            1 => 'Sierra Leonean Leone (1964—2022)',
         ],
         'SOS' => [
             0 => 'SOS',
@@ -1045,6 +1049,10 @@ return [
         'VEB' => [
             0 => 'VEB',
             1 => 'Venezuelan Bolívar (1871–2008)',
+        ],
+        'VED' => [
+            0 => 'VED',
+            1 => 'Bolívar Soberano',
         ],
         'VEF' => [
             0 => 'VEF',

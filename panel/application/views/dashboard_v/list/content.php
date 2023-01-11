@@ -3,7 +3,7 @@
     let productArray = [];
     <?php $total_stock = 0 ?>
     <?php foreach ($products as $key => $value) : ?>
-        <?php $total_stock = $total_stock+ $value->stock ?>
+        <?php $total_stock = $total_stock + $value->stock ?>
         productArray.push({
             stock: parseFloat("<?= $value->stock ?>"),
             category: "<?= $value->category ?>"
@@ -34,8 +34,22 @@
     <?php endforeach ?>
 </script>
 <div class="container-fluid" style="padding-top: 30px">
+    <div class="row">
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-4 mb-sm-4 mb-md-4 mb-lg-4 mb-xl-4">
+
+        </div>
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-4 mb-sm-4 mb-md-4 mb-lg-4 mb-xl-4">
+
+        </div>
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-4 mb-sm-4 mb-md-4 mb-lg-4 mb-xl-4">
+
+        </div>
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-4 mb-sm-4 mb-md-4 mb-lg-4 mb-xl-4">
+            <button class="syncInstagramPosts btn btn-outline-primary rounded-0 btn-sm w-100" data-url="<?= base_url("dashboard/syncInstagramPosts") ?>"><i class="fa fa-instagram"></i> Instagram Paylaşımlarını Senkronize Et <i class="fa fa-sync"></i></button>
+        </div>
+    </div>
     <div class="row text-center">
-        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-4 mb-sm-4 mb-md-4 mb-lg-0 mb-xl-0">
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-4 mb-sm-4 mb-md-4 mb-lg-4 mb-xl-0">
             <div class="counter p-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <div><i class="fa fa-money-bill-alt fa-2x"></i></div>
@@ -51,7 +65,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-4 mb-sm-4 mb-md-4 mb-lg-0 mb-xl-0">
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-4 mb-sm-4 mb-md-4 mb-lg-4 mb-xl-4">
             <div class="counter p-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <div><i class="fa fa-newspaper fa-2x"></i></div>
@@ -67,7 +81,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-4 mb-sm-4 mb-md-4 mb-lg-0 mb-xl-0">
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-4 mb-sm-4 mb-md-4 mb-lg-4 mb-xl-4">
             <div class="counter p-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <div><i class="fa fa-dropbox fa-2x icon-warning-sign"></i></div>
@@ -84,7 +98,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-4 mb-sm-4 mb-md-4 mb-lg-0 mb-xl-0">
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-4 mb-sm-4 mb-md-4 mb-lg-4 mb-xl-4">
             <div class="counter p-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <div> <i class="fa fa-users fa-2x"></i></div>
@@ -101,7 +115,6 @@
             </div>
         </div>
     </div>
-    </br>
     <div class="row ">
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-15">
             <div class="bg-white">
@@ -121,60 +134,6 @@
                     </div>
                 </div>
                 <div id="orderYearChart" class="bg-white"></div>
-                <script>
-                    $(document).ready(function() {
-                        getYearGraph()
-                    })
-
-                    function getYearGraph(status = null) {
-                        let data = {};
-                        let colorRandomOrderYearArray = [];
-                        <?php foreach (range(0, 12) as $colorNumber) : ?>
-                            colorRandomOrderYearArray.push(
-                                "<?= sprintf('#%06X', mt_rand(0, 0xFFFDDD)); ?>"
-                            );
-                        <?php endforeach ?>
-                        if (status !== 'Tamamlandı') {
-                            data = {
-                                status: status
-                            };
-                        }
-                        $.post("<?= base_url("dashboard/orderTotalYear") ?>", data, function(response) {
-                            $("#orderYearChart").empty();
-                            if (response.data.length > 0) {
-                                if (!$("#orderYearChartAlert").hasClass("d-none")) {
-                                    $("#orderYearChartAlert").addClass("d-none");
-                                }
-                                Morris.Bar({
-                                    // ID of the element in which to draw the chart.
-                                    element: 'orderYearChart',
-                                    // Chart data records -- each entry in this array corresponds to a point on
-                                    // the chart.
-                                    data: response.data,
-                                    resize: true,
-                                    // The name of the data record attribute that contains x-values.
-                                    xkey: 'year',
-                                    // A list of names of data record attributes that contain y-values.
-                                    ykeys: ['value'],
-                                    barColors: function(row, series, type) {
-                                        return colorRandomOrderYearArray[row.x];
-                                    },
-                                    // Labels for the ykeys -- will be displayed when you hover over the
-                                    // chart.
-                                    labels: ['Yıllık Toplam Satış'],
-                                    xLabelMargin: 0,
-                                    xLabelAngle: '70',
-                                });
-
-                            } else {
-
-                                if ($("#orderYearChartAlert").hasClass("d-none")) {
-                                    $("#orderYearChartAlert").removeClass("d-none");
-                                }
-                            }
-                        }, 'JSON')
-                    }
-                </script>
             </div>
             <div class="alert alert-danger text-center mt-15 d-none" id="orderYearChartAlert" role="alert">
                 Seçmiş olduğunuz değer için veri bulunamadı!
@@ -206,62 +165,9 @@
                                 </option>
                             <?php endforeach; ?>
                         </select>
-
                     </div>
-
                 </div>
                 <div id="orderMonthChart" class="bg-white"></div>
-
-                <script>
-                    $(document).ready(function() {
-                        getMonthGraph()
-
-                    })
-
-                    function getMonthGraph(status=null,year = null) {
-                        let data = {};
-                        if (status !== null && year!==null) {
-                            data = {
-                                year: year,
-                                status:status
-                            };
-                        }
-                        $.post("<?= base_url("dashboard/orderTotalMonth") ?>", data, function(response) {
-                            $("#orderMonthChart").empty();
-                            if (response.data.length > 0) {
-                                if (!$("#orderMonthChartAlert").hasClass("d-none")) {
-                                    $("#orderMonthChartAlert").addClass("d-none");
-                                }
-                                Morris.Bar({
-                                    // ID of the element in which to draw the chart.
-                                    element: 'orderMonthChart',
-                                    // Chart data records -- each entry in this array corresponds to a point on
-                                    // the chart.
-                                    data: response.data,
-                                    resize: true,
-                                    // The name of the data record attribute that contains x-values.
-                                    xkey: 'month',
-                                    barColors: function(row, series, type) {
-                                        return colorRandomOrderMonthArray[row.x];
-                                    },
-                                    // A list of names of data record attributes that contain y-values.
-                                    ykeys: ['value'],
-                                    // Labels for the ykeys -- will be displayed when you hover over the
-                                    // chart.
-                                    labels: ['Aylık Toplam Satış'],
-                                    xLabelMargin: 0,
-                                    xLabelAngle: '70',
-                                });
-
-                            } else {
-
-                                if ($("#orderMonthChartAlert").hasClass("d-none")) {
-                                    $("#orderMonthChartAlert").removeClass("d-none");
-                                }
-                            }
-                        }, 'JSON')
-                    }
-                </script>
             </div>
             <div class="alert alert-danger text-center mt-15 d-none" id="orderMonthChartAlert" role="alert">
                 Seçmiş olduğunuz tarih aralığında veri bulunamadı!
@@ -275,33 +181,154 @@
             <div class="bg-white">
                 <h4 class="p-4">Kategorilerine Göre Stok Grafiği</h4>
                 <div id="productCategoryChart"></div>
-
-                <script>
-                    $(document).ready(function() {
-                        Morris.Bar({
-                            // ID of the element in which to draw the chart.
-                            title: 'asdas',
-                            element: 'productCategoryChart',
-                            // Chart data records -- each entry in this array corresponds to a point on
-                            // the chart.
-                            data: productArray,
-                            resize: true,
-                            // The name of the data record attribute that contains x-values.
-                            xkey: 'category',
-                            // A list of names of data record attributes that contain y-values.
-                            ykeys: ['stock'],
-                            barColors: function(row, series, type) {
-                                return colorRandomProductArray[row.x];
-                            },
-                            // Labels for the ykeys -- will be displayed when you hover over the
-                            // chart.
-                            labels: ['Toplam Stok'],
-                            xLabelMargin: 0,
-                        });
-
-                    })
-                </script>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', function() {
+        $(document).on("click", ".syncInstagramPosts", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData();
+            let button = $(this);
+            iziToast.info({
+                title: 'Bilgi!',
+                message: 'Eşitleme İşlemi Başlatıldı Lütfen Sayfayı Kapatmadan Bekleyiniz...',
+                position: "topCenter",
+                displayMode: 'once',
+            });
+            button.html("<i class='fa fa-instagram'></i> Eşitleme İşlemi Yapılıyor Lütfen Bekleyin... <i class='fa fa-sync fa-spin'></i>");
+            button.prop("disabled", true);
+            createAjax(url, formData, function() {
+                button.html("<i class='fa fa-instagram'></i> Eşitleme İşlemi Tamamlandı <i class='fa fa-check'></i>");
+                setTimeout(function() {
+                    button.html("<i class='fa fa-instagram'></i> Instagram Paylaşımlarını Senkronize Et <i class='fa fa-sync'></i>");
+                    button.prop("disabled", false);
+                }, 1000);
+            });
+        });
+        /*
+        getYearGraph();
+        getMonthGraph();
+
+        if (productArray.length > 0) {
+            Morris.Bar({
+                // ID of the element in which to draw the chart.
+                title: 'asdas',
+                element: 'productCategoryChart',
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: productArray,
+                resize: true,
+                // The name of the data record attribute that contains x-values.
+                xkey: 'category',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['stock'],
+                barColors: function(row, series, type) {
+                    return colorRandomProductArray[row.x];
+                },
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Toplam Stok'],
+                xLabelMargin: 0,
+            });
+        }
+
+
+        function getMonthGraph(status = null, year = null) {
+            let data = {};
+            if (status !== null && year !== null) {
+                data = {
+                    year: year,
+                    status: status
+                };
+            }
+            $.post("<?= base_url("dashboard/orderTotalMonth") ?>", data, function(response) {
+                $("#orderMonthChart").empty();
+                if (response.data.length > 0) {
+                    if (!$("#orderMonthChartAlert").hasClass("d-none")) {
+                        $("#orderMonthChartAlert").addClass("d-none");
+                    }
+                    Morris.Bar({
+                        // ID of the element in which to draw the chart.
+                        element: 'orderMonthChart',
+                        // Chart data records -- each entry in this array corresponds to a point on
+                        // the chart.
+                        data: response.data,
+                        resize: true,
+                        // The name of the data record attribute that contains x-values.
+                        xkey: 'month',
+                        barColors: function(row, series, type) {
+                            return colorRandomOrderMonthArray[row.x];
+                        },
+                        // A list of names of data record attributes that contain y-values.
+                        ykeys: ['value'],
+                        // Labels for the ykeys -- will be displayed when you hover over the
+                        // chart.
+                        labels: ['Aylık Toplam Satış'],
+                        xLabelMargin: 0,
+                        xLabelAngle: '70',
+                    });
+
+                } else {
+
+                    if ($("#orderMonthChartAlert").hasClass("d-none")) {
+                        $("#orderMonthChartAlert").removeClass("d-none");
+                    }
+                }
+            }, 'JSON')
+        }
+
+        function getYearGraph(status = null) {
+            let data = {};
+            let colorRandomOrderYearArray = [];
+            <?php foreach (range(0, 12) as $colorNumber) : ?>
+                colorRandomOrderYearArray.push(
+                    "<?= sprintf('#%06X', mt_rand(0, 0xFFFDDD)); ?>"
+                );
+            <?php endforeach ?>
+            if (status !== 'Tamamlandı') {
+                data = {
+                    status: status
+                };
+            }
+            $.post("<?= base_url("dashboard/orderTotalYear") ?>", data, function(response) {
+                $("#orderYearChart").empty();
+                if (response.data.length > 0) {
+                    if (!$("#orderYearChartAlert").hasClass("d-none")) {
+                        $("#orderYearChartAlert").addClass("d-none");
+                    }
+                    Morris.Bar({
+                        // ID of the element in which to draw the chart.
+                        element: 'orderYearChart',
+                        // Chart data records -- each entry in this array corresponds to a point on
+                        // the chart.
+                        data: response.data,
+                        resize: true,
+                        // The name of the data record attribute that contains x-values.
+                        xkey: 'year',
+                        // A list of names of data record attributes that contain y-values.
+                        ykeys: ['value'],
+                        barColors: function(row, series, type) {
+                            return colorRandomOrderYearArray[row.x];
+                        },
+                        // Labels for the ykeys -- will be displayed when you hover over the
+                        // chart.
+                        labels: ['Yıllık Toplam Satış'],
+                        xLabelMargin: 0,
+                        xLabelAngle: '70',
+                    });
+
+                } else {
+
+                    if ($("#orderYearChartAlert").hasClass("d-none")) {
+                        $("#orderYearChartAlert").removeClass("d-none");
+                    }
+                }
+            }, 'JSON')
+        }*/
+    });
+</script>

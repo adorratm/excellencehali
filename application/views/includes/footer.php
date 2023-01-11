@@ -111,7 +111,7 @@
         <div class="row align-items-center align-self-center align-content-center">
             <div class="col-md-6">
                 <div class="siteInfo">
-                    © 2022 <a rel="dofollow" class="text-white" href="<?= base_url() ?>" title="<?= $settings->company_name ?>"><?= $settings->company_name ?></a> <?= lang("allRightsReserved") ?>
+                    © 2023 <a rel="dofollow" class="text-white" href="<?= base_url() ?>" title="<?= $settings->company_name ?>"><?= $settings->company_name ?></a> <?= lang("allRightsReserved") ?>
                 </div>
             </div>
             <div class="col-md-6">

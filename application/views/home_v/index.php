@@ -187,34 +187,24 @@
     <!--=================  Popular Topics Section End Here ================= -->
 <?php endif ?>
 
-<?php if (!empty($settings->instagram)) : ?>
-    <?php $userName = str_replace("/", "", (str_replace("https://www.instagram.com/", "", str_replace("https://instagram.com/", "", $settings->instagram)))); ?>
-
-    <?php
-    if (!empty($userName)) :
-        $this->instastory->login($settings->crawler_email, $settings->crawler_password);
-        $this->instastory->getProfile($userName);
-        $medias = $this->instastory->getMedias();
-        $downloadMedias = $this->instastory->downloadMedias();
-    ?>
-        <section class="instagramSection is02">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <h2 class="secTitle"><?= lang("followUsOnInstagram") ?> <a rel="nofollow" href="<?= $settings->instagram ?>" target="_blank" title="Instagram">@<?= $userName ?></a></h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <?php foreach ($medias as $mediaKey => $mediaValue) : ?>
-                        <?php $url = substr(str_replace('/', '-', parse_url($mediaValue->getDisplaySrc(), PHP_URL_PATH)), 1); ?>
-                        <div class="col-lg-3 mb-3">
-                            <a rel="nofollow" title="<?= $settings->company_name ?>" href="<?= $mediaValue->getLink() ?>" target="_blank" class="instagramPhoto imgPopup">
-                                <img data-src="<?= get_picture("instastory", $url) ?>" style="max-height:300px;object-fit:cover" class="img-fluid lazyload" alt="<?= $settings->company_name ?>">
-                            </a>
-                        </div>
-                    <?php endforeach ?>
+<?php if (!empty($instagramPosts)) : ?>
+    <?php $userName = str_replace("/", "", (str_replace("https://www.instagram.com/", "", str_replace("https://instagram.com/", "", $this->viewData->settings->instagram))));?>
+    <section class="instagramSection is02">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="secTitle"><?= lang("followUsOnInstagram") ?> <a rel="nofollow" href="<?= $settings->instagram ?>" target="_blank" title="Instagram">@<?= $userName ?></a></h2>
                 </div>
             </div>
-        </section>
-    <?php endif ?>
+            <div class="row">
+                <?php foreach ($instagramPosts as $mediaKey => $mediaValue) : ?>
+                    <div class="col-lg-3 mb-3">
+                        <a rel="nofollow" title="<?= $settings->company_name ?>" href="<?= $mediaValue->link ?>" target="_blank" class="instagramPhoto imgPopup">
+                            <img data-src="<?= get_picture("instastory", $mediaValue->img_url) ?>" style="max-height:300px;object-fit:cover" class="img-fluid lazyload" alt="<?= $settings->company_name ?>">
+                        </a>
+                    </div>
+                <?php endforeach ?>
+            </div>
+        </div>
+    </section>
 <?php endif ?>
