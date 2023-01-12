@@ -156,7 +156,7 @@ class Home extends MY_Controller
         /**
          * Instagram Posts
          */
-        $this->viewData->instagramPosts = $this->general_model->get_all("instagram_posts",null,"id ASC");
+        $this->viewData->instagramPosts = $this->general_model->get_all("instagram_posts", null, "id ASC");
 
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("home"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
@@ -536,7 +536,7 @@ class Home extends MY_Controller
         if (!empty(clean($this->input->get("search")))) :
             $search = clean($this->input->get("search"));
         endif;
-        $seo_url = $this->uri->segment(3);
+        $seo_url = $this->uri->segment(4);
         $category_id = null;
         $category = null;
         if (!empty($seo_url) && !is_numeric($seo_url)) :
@@ -573,19 +573,18 @@ class Home extends MY_Controller
          */
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
-
         $wheres["p.lang"] = $this->viewData->lang;
         $joins = ["product_details pd" => ["pd.codes = p.codes_id AND pd.codes = p.codes", "left"], "product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
 
-        $select = "p.codes_id,p.codes,p.price,p.discounted_price,GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,p.isActive";
+        $select = "p.codes_id,p.codes,p.price,p.discounted_price,p.id,p.title,p.seo_url,pi.url img_url,p.isActive";
         $distinct = true;
         $groupBy = ["p.id"];
         /**
          * Pagination
          */
         $config = [];
-        $config['base_url'] = (!empty($seo_url) && !is_numeric($seo_url) ? base_url(lang("routes_products") . "/{$seo_url}/") : base_url(lang("routes_products") . "/"));
-        $config['uri_segment'] = (!empty($seo_url) && !is_numeric($seo_url) && !empty($this->uri->segment(4)) ? 4 : (is_numeric($this->uri->segment(3)) ? 3 : 2));
+        $config['base_url'] = (!empty($seo_url) && !is_numeric($seo_url) ? base_url(lang("routes_products") . "/" . $this->uri->segment(3) . "/{$seo_url}/") : base_url(lang("routes_products") . "/" . $this->uri->segment(3) . "/"));
+        $config['uri_segment'] = (!empty($seo_url) && !is_numeric($seo_url) && !empty($this->uri->segment(5)) ? 5 : (is_numeric($this->uri->segment(4)) ? 4 : 2));
         $config['use_page_numbers'] = TRUE;
         $config["full_tag_open"] = "<ul class='pagination justify-content-center'>";
         $config["first_link"] = "<i class='fa fa-angles-left'></i>";
@@ -607,16 +606,16 @@ class Home extends MY_Controller
         $config["full_tag_close"] = "</ul>";
         $config['attributes'] = array('class' => 'page-link');
         $config['total_rows'] = $this->general_model->rowCount("products p", $wheres, $likes, $joins, [], $distinct, $groupBy, "p.id");
-        $config['per_page'] = 21;
+        $config['per_page'] = 1;
         $config["num_links"] = 5;
         $config['reuse_query_string'] = true;
         $this->pagination->initialize($config);
         if (!empty($seo_url) && !is_numeric($seo_url)) :
+            $uri_segment = $this->uri->segment(5);
+        elseif (!empty($this->uri->segment(4)) && is_numeric($this->uri->segment(4))) :
             $uri_segment = $this->uri->segment(4);
-        elseif (!empty($this->uri->segment(3)) && is_numeric($this->uri->segment(3))) :
-            $uri_segment = $this->uri->segment(3);
         else :
-            $uri_segment = $this->uri->segment(3);
+            $uri_segment = $this->uri->segment(4);
         endif;
         if (empty($uri_segment)) :
             $uri_segment = 1;
@@ -655,13 +654,13 @@ class Home extends MY_Controller
     /**
      * Product Detail
      */
-    public function product_detail($codes,$seo_url)
+    public function product_detail($codes, $seo_url)
     {
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
         $joins = ["product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"], "product_details pd" => ["pd.codes_id = p.codes_id AND pd.codes = p.codes", "left"]];
-        $select = "p.codes_id,p.codes,GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url,pd.description,pd.content,pd.features,p.isActive";
+        $select = "p.codes_id,p.codes,p.id,p.title,p.seo_url,pi.url img_url,pd.description,pd.content,pd.features,p.isActive";
         $distinct = true;
         $groupBy = ["p.id"];
         $wheres['p.seo_url'] =  $seo_url;
@@ -950,7 +949,7 @@ class Home extends MY_Controller
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
         $joins = ["product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
-        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url";
+        $select = "p.id,p.title,p.seo_url,pi.url img_url";
         $distinct = true;
         $groupBy = ["p.id"];
         $products = $this->general_model->get_all("products p", $select, "p.id DESC", $wheres, [], $joins, [], [], $distinct, $groupBy);
@@ -1040,7 +1039,7 @@ class Home extends MY_Controller
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
         $joins = ["product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
-        $select = "GROUP_CONCAT(pc.seo_url) category_seos,GROUP_CONCAT(pc.title) category_titles,GROUP_CONCAT(pc.id) category_ids,p.id,p.title,p.seo_url,pi.url img_url";
+        $select = "p.id,p.title,p.seo_url,pi.url img_url";
         $distinct = true;
         $groupBy = ["p.id"];
         $products = $this->general_model->get_all("products p", $select, "p.id DESC", $wheres, [], $joins, [], [], $distinct, $groupBy);

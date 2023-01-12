@@ -17,6 +17,39 @@
     <!-- END: Collections Section -->
     <section class="collectionsSections">
         <div class="container">
+            <div class="row shopAccessRow">
+                <div class="col-sm-6 col-xl-4">
+                    <div class="productCount">Showing <strong>1 - 16</strong> of <strong>220</strong> items</div>
+                </div>
+                <div class="d-none col-lg-4 col-xl-4 d-xl-flex">
+                    <ul class="filterUL">
+                        <li class="active">All</li>
+                        <li>Men</li>
+                        <li>Women</li>
+                        <li>Kids</li>
+                        <li>Accesories</li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 col-xl-4">
+                    <div class="shopAccessBar">
+                        <div class="filterNav">
+                            <a href="javascript:void(0);">Filter<i class="fa-solid fa-sliders"></i></a>
+                        </div>
+                        <div class="sortNav">
+                            <form method="post" action="#">
+                                <label>Sort By</label>
+                                <select name="productFilter">
+                                    <option value="">Default</option>
+                                    <option value="1">High to low</option>
+                                    <option value="2">Low to high</option>
+                                    <option value="3">Top rated</option>
+                                    <option value="4">Recently viewed</option>
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row collectionProductRow">
                 <?php foreach ($product_categories as $k => $v) : ?>
                     <div class="col-sm-6 col-lg-4 col-xl-3">
