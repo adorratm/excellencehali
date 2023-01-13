@@ -849,7 +849,7 @@ function in_parentt($in_parent = null, $lang = null, $store_all_id = null)
         foreach ($result as $key => $value) :
             $html .= '<li>';
             $html .= '<a rel="dofollow" ' .
-                ($t->uri->segment(3) == $value->seo_url ? "class='active link'" : "class='link'") . ' href="' . base_url(lang("routes_products") . "/{$value->seo_url}") . '" title="' . $value->title . '"><i class="bx bx-chevron-right"></i> ' . $value->title . '</a>';
+                ($t->uri->segment(3) == $value->seo_url ? "class='active link'" : "class='link'") . ' href="' . base_url(lang("routes_product_categories") . "/{$value->seo_url}") . '" title="' . $value->title . '"><i class="bx bx-chevron-right"></i> ' . $value->title . '</a>';
             $html .= in_parentt($value->id, $lang, $store_all_id);
             $html .= "</li>";
         endforeach;
@@ -899,7 +899,7 @@ function in_parenttheader($in_parent = null, $lang = null, $store_all_id = null)
         foreach ($result as $key => $value) :
             $html .= '<li class="nav-item">';
             $html .= '<a rel="dofollow" class="' . (in_array($value->id, $store_all_id) ? "dropdown-toggle" : null) . " " .
-                ($t->uri->segment(3) == $value->seo_url ? "active nav-link" : "nav-link") . '" href="' . base_url(lang("routes_products") . "/{$value->seo_url}") . '" title="' . $value->title . '">' . $value->title . '</a>';
+                ($t->uri->segment(3) == $value->seo_url ? "active nav-link" : "nav-link") . '" href="' . base_url(lang("routes_product_categories") . "/{$value->seo_url}") . '" title="' . $value->title . '">' . $value->title . '</a>';
             $html .= in_parenttheader($value->id, $lang, $store_all_id);
             $html .= "</li>";
         endforeach;

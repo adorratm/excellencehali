@@ -15,19 +15,19 @@
                                 <?php if (!empty($value->category_id) && $value->category_id > 0) : ?>
                                     <?php $sCategory = $this->general_model->get("product_categories", null, ["isActive" => 1, "id" => $value->category_id]); ?>
                                     <?php if (!empty($sCategory)) : ?>
-                                        <?php $sUrl = base_url(lang("routes_products") . "/" . $sCategory->seo_url) ?>
+                                        <?php $sUrl = base_url(lang("routes_product_categories") . "/" . $sCategory->seo_url) ?>
                                     <?php endif ?>
                                 <?php endif ?>
                                 <?php if (!empty($value->product_id) && $value->product_id > 0) : ?>
                                     <?php $sProduct = $this->general_model->get("products", null, ["isActive" => 1, "id" => $value->product_id]); ?>
                                     <?php if (!empty($sProduct)) : ?>
-                                        <?php $sUrl = base_url(lang("routes_products") . "/" . lang("routes_product") . "/" . $sProduct->url) ?>
+                                        <?php $sUrl = base_url(lang("routes_product_categories") . "/" . lang("routes_product") . "/" . $sProduct->url) ?>
                                     <?php endif ?>
                                 <?php endif ?>
                                 <?php if (!empty($value->page_id) && $value->page_id > 0) : ?>
                                     <?php $sPage = $this->general_model->get("product_categories", null, ["isActive" => 1, "id" => $value->page_id]); ?>
                                     <?php if (!empty($sPage)) : ?>
-                                        <?php $sUrl = base_url(lang("routes_products") . "/" . $sPage->url) ?>
+                                        <?php $sUrl = base_url(lang("routes_product_categories") . "/" . $sPage->url) ?>
                                     <?php endif ?>
                                 <?php endif ?>
                                 <?php if (!empty($value->service_id) && $value->service_id > 0) : ?>

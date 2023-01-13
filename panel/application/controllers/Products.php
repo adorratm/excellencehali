@@ -60,7 +60,7 @@ class Products extends MY_Controller
     public function update_form($codes_id, $codes)
     {
         $viewData = new stdClass();
-        $viewData->item = $this->general_model->get("products p", "p.*,pd.features features, pd.content content,pd.description description", ["p.codes_id" => $codes_id, "p.codes" => $codes], ["product_details pd" => ["pd.codes = p.codes_id AND pd.codes = p.codes", "left"]],[],[],true,"p.codes_id");
+        $viewData->item = $this->general_model->get("products p", "p.*,pd.features features, pd.content content,pd.description description", ["p.codes_id" => $codes_id, "p.codes" => $codes], ["product_details pd" => ["pd.codes = p.codes_id AND pd.codes = p.codes", "left"]], [], [], true, "p.codes_id");
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
         $viewData->categories = $this->product_category_model->get_all();
@@ -258,10 +258,10 @@ class Products extends MY_Controller
                             'category' => clean($returnValue->Ozelkod1) ?? NULL,
                             'pattern_id' => clean($returnValue->Ok2Id) ?? NULL,
                             'pattern' => clean($returnValue->Ozelkod2) ?? NULL,
-                            'color_id' => clean($returnValue->Ok3Id) ?? NULL,
-                            'color' => clean($returnValue->Ozelkod3) ?? NULL,
-                            'dimension_id' => clean($returnValue->Ok4Id) ?? NULL,
-                            'dimension' => clean($returnValue->Ozelkod4) ?? NULL,
+                            'color_id' =>  clean($returnValue->Ok3Id) ?? NULL,
+                            'color' =>  clean($returnValue->Ozelkod3) ?? NULL,
+                            'dimension_id' =>  clean($returnValue->Ok4Id) ?? NULL,
+                            'dimension' =>  clean($returnValue->Ozelkod4) ?? NULL,
                             'brand_id' => clean($returnValue->Ok8Id) ?? NULL,
                             'brand' => clean($returnValue->Ozelkod8) ?? NULL,
                             'price' => clean($returnValue->Fiyat1) ?? NULL,

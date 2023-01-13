@@ -121,15 +121,15 @@
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <div class="popup_search_form">
-                            <form id="searchForm" action="<?= !empty($this->uri->segment(2) && !is_numeric($this->uri->segment(2))) ? base_url(lang("routes_products")) : base_url(lang("routes_products")) ?>" method="GET" enctype="multipart/form-data">
+                            <form id="searchForm" action="<?= !empty($this->uri->segment(2) && !is_numeric($this->uri->segment(2))) ? base_url(lang("routes_product_categories")) : base_url(lang("routes_product_categories")) ?>" method="GET" enctype="multipart/form-data">
                                 <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
                                 <div class="input-group">
                                     <select class="form-select" onchange="$('#searchForm,#searchFormMobile').attr('action',$(this).val())">
-                                        <option value="<?= base_url(lang("routes_products")) ?>"><?= lang("searchAllCategories") ?></option>
+                                        <option value="<?= base_url(lang("routes_product_categories")) ?>"><?= lang("searchAllCategories") ?></option>
                                         <?php if (!empty($menuCategories)) : ?>
                                             <?php foreach ($menuCategories as $key => $value) : ?>
                                                 <?php if ($value->top_id == 0) : ?>
-                                                    <option value="<?= base_url(lang("routes_products") . "/" . $value->seo_url) ?>"><?= $value->title ?></option>
+                                                    <option value="<?= base_url(lang("routes_product_categories") . "/" . $value->seo_url) ?>"><?= $value->title ?></option>
                                                 <?php endif ?>
                                             <?php endforeach; ?>
                                         <?php endif ?>

@@ -416,17 +416,6 @@ class Home extends MY_Controller
         if (!empty(clean($this->input->get("search")))) :
             $search = clean($this->input->get("search"));
         endif;
-        $seo_url = $this->uri->segment(3);
-        $category_id = null;
-        $category = null;
-        if (!empty($seo_url) && !is_numeric($seo_url)) :
-            $category = $this->general_model->get("product_categories", null, ["isActive" => 1, "lang" => $this->viewData->lang, "seo_url" => $seo_url]);
-            if (!empty($category)) :
-                $category_id = $category->id;
-                $category->seo_url = (!empty($category->seo_url) ? $category->seo_url : null);
-                $category->title = (!empty($category->title) ? $category->title : null);
-            endif;
-        endif;
         /**
          * Order
          */
@@ -436,14 +425,12 @@ class Home extends MY_Controller
          */
         $likes = [];
         if (!empty($search)) :
-            $likes["p.title"] = $search;
-            $likes["p.createdAt"] = $search;
-            $likes["p.updatedAt"] = $search;
+            $likes["pc.title"] = $search;
+            $likes["pc.codes_id"] = $search;
+            $likes["pc.createdAt"] = $search;
+            $likes["pc.updatedAt"] = $search;
         endif;
         $wheres = [];
-        if (!empty($category_id)) :
-            $wheres["p.category_id"] = $category_id;
-        endif;
         /**
          * Wheres
          */
@@ -459,8 +446,8 @@ class Home extends MY_Controller
          * Pagination
          */
         $config = [];
-        $config['base_url'] = (!empty($seo_url) && !is_numeric($seo_url) ? base_url(lang("routes_products") . "/{$seo_url}/") : base_url(lang("routes_products") . "/"));
-        $config['uri_segment'] = (!empty($seo_url) && !is_numeric($seo_url) && !empty($this->uri->segment(4)) ? 4 : (is_numeric($this->uri->segment(3)) ? 3 : 2));
+        $config['base_url'] = base_url(lang("routes_product_categories") . "/");
+        $config['uri_segment'] = (is_numeric($this->uri->segment(3)) ? 3 : 2);
         $config['use_page_numbers'] = TRUE;
         $config["full_tag_open"] = "<ul class='pagination justify-content-center'>";
         $config["first_link"] = "<i class='fa fa-angles-left'></i>";
@@ -486,9 +473,7 @@ class Home extends MY_Controller
         $config["num_links"] = 5;
         $config['reuse_query_string'] = true;
         $this->pagination->initialize($config);
-        if (!empty($seo_url) && !is_numeric($seo_url)) :
-            $uri_segment = $this->uri->segment(4);
-        elseif (!empty($this->uri->segment(3)) && is_numeric($this->uri->segment(3))) :
+        if (!empty($this->uri->segment(3)) && is_numeric($this->uri->segment(3))) :
             $uri_segment = $this->uri->segment(3);
         else :
             $uri_segment = $this->uri->segment(3);
@@ -500,11 +485,6 @@ class Home extends MY_Controller
         $this->viewData->offset = $offset;
         $this->viewData->per_page = $config['per_page'];
         $this->viewData->total_rows = $config['total_rows'];
-        $this->viewData->products_category = $category;
-        /**
-         * Get All Categories
-         */
-        $this->viewData->categories = $this->general_model->get_all("product_categories", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang]);
         /** 
          * Get Products
          */
@@ -512,16 +492,16 @@ class Home extends MY_Controller
         /**
          * Meta
          */
-        $this->viewData->page_title = (!empty($category) ? $category->title : lang("products"));
-        $this->viewData->meta_title = strto("lower|ucwords", (!empty($category) ? $category->title : lang("products"))) . " - " . $this->viewData->settings->company_name;
+        $this->viewData->page_title = (!empty($category) ? $category->title : lang("product_categories"));
+        $this->viewData->meta_title = strto("lower|ucwords", (!empty($category) ? $category->title : lang("product_categories"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-        $this->viewData->og_url                 = clean(base_url(lang("routes_products")));
+        $this->viewData->og_url                 = clean(base_url(lang("routes_product_categories")));
         $this->viewData->og_image           = clean(get_picture("settings_v", $this->viewData->settings->logo));
-        $this->viewData->og_type          = "product";
-        $this->viewData->og_title           = strto("lower|ucwords", (!empty($category) ? $category->title : lang("products"))) . " - " . $this->viewData->settings->company_name;
+        $this->viewData->og_type          = "product.group";
+        $this->viewData->og_title           = strto("lower|ucwords", (!empty($category) ? $category->title : lang("product_categories"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->og_description           = clean($this->viewData->settings->meta_description);
         $this->viewData->links = $this->pagination->create_links();
-        $this->viewFolder = "products_v/index";
+        $this->viewFolder = "product_categories_v/index";
         $this->render();
         //$this->output->enable_profiler(true); // OPEN FOR PERFORMANCE
         //$this->benchmark->mark('code_end');
@@ -583,7 +563,7 @@ class Home extends MY_Controller
          * Pagination
          */
         $config = [];
-        $config['base_url'] = (!empty($seo_url) && !is_numeric($seo_url) ? base_url(lang("routes_products") . "/" . $this->uri->segment(3) . "/{$seo_url}/") : base_url(lang("routes_products") . "/" . $this->uri->segment(3) . "/"));
+        $config['base_url'] = (!empty($seo_url) && !is_numeric($seo_url) ? base_url(lang("routes_product_categories") . "/" . $this->uri->segment(3) . "/{$seo_url}/") : base_url(lang("routes_product_categories") . "/" . $this->uri->segment(3) . "/"));
         $config['uri_segment'] = (!empty($seo_url) && !is_numeric($seo_url) && !empty($this->uri->segment(5)) ? 5 : (is_numeric($this->uri->segment(4)) ? 4 : 2));
         $config['use_page_numbers'] = TRUE;
         $config["full_tag_open"] = "<ul class='pagination justify-content-center'>";
@@ -639,7 +619,7 @@ class Home extends MY_Controller
         $this->viewData->page_title = (!empty($category) ? $category->title : lang("products"));
         $this->viewData->meta_title = strto("lower|ucwords", (!empty($category) ? $category->title : lang("products"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-        $this->viewData->og_url                 = clean(base_url(lang("routes_products")));
+        $this->viewData->og_url                 = clean(base_url(lang("routes_product_categories")));
         $this->viewData->og_image           = clean(get_picture("settings_v", $this->viewData->settings->logo));
         $this->viewData->og_type          = "product";
         $this->viewData->og_title           = strto("lower|ucwords", (!empty($category) ? $category->title : lang("products"))) . " - " . $this->viewData->settings->company_name;
@@ -695,7 +675,7 @@ class Home extends MY_Controller
              */
             $this->viewData->meta_title = strto("lower|ucwords", $this->viewData->product->title) . " - " . $this->viewData->settings->company_name;
             $this->viewData->meta_desc  = !empty($this->viewData->product->content) ? str_replace("”", "\"", @stripslashes($this->viewData->product->content)) : str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-            $this->viewData->og_url                 = clean(base_url(lang("routes_products") . "/" . lang("routes_product") . "/" . $seo_url));
+            $this->viewData->og_url                 = clean(base_url(lang("routes_product_categories") . "/" . lang("routes_product") . "/" . $seo_url));
             $this->viewData->og_image           = clean(get_picture("products_v", $imgURL));
             $this->viewData->og_type          = "product.item";
             $this->viewData->og_title           = strto("lower|ucwords", $this->viewData->product->title) . " - " . $this->viewData->settings->company_name;
@@ -938,7 +918,7 @@ class Home extends MY_Controller
         if (!empty($product_categories)) :
             foreach ($product_categories as $k => $v) :
                 if (!empty($v->seo_url)) :
-                    $this->sitemapmodel->add(base_url(lang("routes_products") . "/{$v->seo_url}"), NULL, 'always', 1);
+                    $this->sitemapmodel->add(base_url(lang("routes_product_categories") . "/{$v->seo_url}"), NULL, 'always', 1);
                 endif;
             endforeach;
         endif;
@@ -956,7 +936,7 @@ class Home extends MY_Controller
         if (!empty($products)) :
             foreach ($products as $k => $v) :
                 if (!empty($v->url)) :
-                    $this->sitemapmodel->add(base_url(lang("routes_products") . "/" . lang("routes_product") . "/{$v->url}"), NULL, 'always', 1);
+                    $this->sitemapmodel->add(base_url(lang("routes_product_categories") . "/" . lang("routes_product") . "/{$v->url}"), NULL, 'always', 1);
                 endif;
             endforeach;
         endif;
@@ -1028,7 +1008,7 @@ class Home extends MY_Controller
         if (!empty($product_categories)) :
             foreach ($product_categories as $k => $v) :
                 if (!empty($v->seo_url)) :
-                    $this->sitemapmodel->add(base_url(lang("routes_products") . "/{$v->seo_url}"), NULL, 'always', 1);
+                    $this->sitemapmodel->add(base_url(lang("routes_product_categories") . "/{$v->seo_url}"), NULL, 'always', 1);
                 endif;
             endforeach;
         endif;
@@ -1046,7 +1026,7 @@ class Home extends MY_Controller
         if (!empty($products)) :
             foreach ($products as $k => $v) :
                 if (!empty($v->url)) :
-                    $this->sitemapmodel->add(base_url(lang("routes_products") . "/" . lang("routes_product") . "/{$v->url}"), NULL, 'always', 1);
+                    $this->sitemapmodel->add(base_url(lang("routes_product_categories") . "/" . lang("routes_product") . "/{$v->url}"), NULL, 'always', 1);
                 endif;
             endforeach;
         endif;
@@ -1130,7 +1110,7 @@ class Home extends MY_Controller
                 xml_add_child($item, 'g:id', $prod->id);
                 xml_add_child($item, 'g:title', strto("lower|ucwords", $prod->title));
                 xml_add_child($item, 'g:description', strto("lower|ucwords", $prod->title));
-                xml_add_child($item, 'g:link',  base_url(lang("routes_products") . "/" . lang("routes_product") . "/{$prod->url}"));
+                xml_add_child($item, 'g:link',  base_url(lang("routes_product_categories") . "/" . lang("routes_product") . "/{$prod->url}"));
                 xml_add_child($item, 'g:image_link', get_picture("products_v", $prod->img_url));
                 xml_add_child($item, 'g:brand', strto("lower|ucwords", $settings->company_name));
                 xml_add_child($item, 'g:condition', 'new');

@@ -10,14 +10,14 @@
                     <div class="products-item h-100">
                         <div class="top">
                             <?php if ($value->isDiscount && (int)$value->discount > 0) : ?>
-                                <a rel="dofollow" href="<?= base_url(lang("routes_products") . "/" . lang("routes_product") . "/{$value->url}" . (!empty($_GET["key"]) ? "?key=" . clean($_GET["key"]) : null)) ?>" title="<?= $value->title ?>" class="product-type two">%<?= (int)$value->discount ?></a>
+                                <a rel="dofollow" href="<?= base_url(lang("routes_product_categories") . "/" . lang("routes_product") . "/{$value->url}" . (!empty($_GET["key"]) ? "?key=" . clean($_GET["key"]) : null)) ?>" title="<?= $value->title ?>" class="product-type two">%<?= (int)$value->discount ?></a>
                             <?php endif ?>
-                            <a rel="dofollow" href="<?= base_url(lang("routes_products") . "/" . lang("routes_product") . "/{$value->url}" . (!empty($_GET["key"]) ? "?key=" . clean($_GET["key"]) : null)) ?>" title="<?= $value->title ?>">
+                            <a rel="dofollow" href="<?= base_url(lang("routes_product_categories") . "/" . lang("routes_product") . "/{$value->url}" . (!empty($_GET["key"]) ? "?key=" . clean($_GET["key"]) : null)) ?>" title="<?= $value->title ?>">
                                 <img width="1920" height="1280" loading="lazy" data-src="<?= get_picture("products_v", $value->img_url) ?>" alt="<?= $value->title ?>" class="img-fluid lazyload">
                             </a>
                             <div class="inner">
                                 <h3>
-                                    <a rel="dofollow" href="<?= base_url(lang("routes_products") . "/" . lang("routes_product") . "/{$value->url}" . (!empty($_GET["key"]) ? "?key=" . clean($_GET["key"]) : null)) ?>" title="<?= $value->title ?>"><?= $value->title ?></a>
+                                    <a rel="dofollow" href="<?= base_url(lang("routes_product_categories") . "/" . lang("routes_product") . "/{$value->url}" . (!empty($_GET["key"]) ? "?key=" . clean($_GET["key"]) : null)) ?>" title="<?= $value->title ?>"><?= $value->title ?></a>
                                 </h3>
                                 <span>
                                     <?php $i = 1 ?>
@@ -25,9 +25,9 @@
                                     <?php foreach (explode(",", $value->category_titles) as $k => $v) : ?>
                                         <?php $seo_url = explode(",", $value->category_seos)[$k]; ?>
                                         <?php if ($i < $count) : ?>
-                                            <a style="color:#0d0d0dd1;" rel="dofollow" href="<?= base_url(lang("routes_products") . "/{$seo_url}" . (!empty($_GET["key"]) ? "?key=" . clean($_GET["key"]) : null)) ?>" title="<?= $v ?>"><?= $v ?></a>,
+                                            <a style="color:#0d0d0dd1;" rel="dofollow" href="<?= base_url(lang("routes_product_categories") . "/{$seo_url}" . (!empty($_GET["key"]) ? "?key=" . clean($_GET["key"]) : null)) ?>" title="<?= $v ?>"><?= $v ?></a>,
                                         <?php else : ?>
-                                            <a style="color:#0d0d0dd1;" rel="dofollow" href="<?= base_url(lang("routes_products") . "/{$seo_url}" . (!empty($_GET["key"]) ? "?key=" . clean($_GET["key"]) : null)) ?>" title="<?= $v ?>"><?= $v ?></a>
+                                            <a style="color:#0d0d0dd1;" rel="dofollow" href="<?= base_url(lang("routes_product_categories") . "/{$seo_url}" . (!empty($_GET["key"]) ? "?key=" . clean($_GET["key"]) : null)) ?>" title="<?= $v ?>"><?= $v ?></a>
                                         <?php endif ?>
                                         <?php $i++ ?>
                                     <?php endforeach ?>
