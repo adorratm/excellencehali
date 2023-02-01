@@ -60,13 +60,6 @@
                 <select class="rounded-0 tagsInput" name="category_id" required disabled>
                     <?php foreach ($categories as $category) : ?>
                         <option <?= ($category->id == $item->category_id ? "selected" : null) ?> value="<?= $category->id; ?>">
-                            <?php if (!empty($category->top_id) && $category->top_id !== 0) : ?>
-                                <?php foreach ($categories as $k => $v) : ?>
-                                    <?php if ($v->id == $category->top_id) : ?>
-                                        <?= $v->id ?> - <?= $v->title ?> >
-                                    <?php endif ?>
-                                <?php endforeach ?>
-                            <?php endif ?>
                             <?= $category->id ?> - <?= $category->title; ?>
                         </option>
                     <?php endforeach ?>

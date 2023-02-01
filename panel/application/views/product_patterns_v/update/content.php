@@ -71,30 +71,6 @@
             </div>
         </div>
     </div>
-    <?php if (!empty($categories)) : ?>
-        <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <div class="form-group">
-                    <label>Üst Kategorisi</label>
-                    <select name="top_id" id="top_id" class="form-control">
-                        <option value="">Üst Kategori Seçiniz.</option>
-                        <?php foreach ($categories as $key => $value) : ?>
-                            <option value="<?= $value->id ?>" <?= ($value->id == $item->top_id ? "selected" : null) ?>>
-                                <?php if (!empty($value->top_id) && $value->top_id !== 0) : ?>
-                                    <?php foreach ($categories as $k => $v) : ?>
-                                        <?php if ($v->id == $value->top_id) : ?>
-                                            <?= $v->title ?> >
-                                        <?php endif ?>
-                                    <?php endforeach ?>
-                                <?php endif ?>
-                                <?= $value->title ?>
-                            </option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
-            </div>
-        </div>
-    <?php endif ?>
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="form-group">

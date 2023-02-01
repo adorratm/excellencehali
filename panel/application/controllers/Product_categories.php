@@ -38,11 +38,11 @@ class Product_categories extends MY_Controller
                     İşlemler
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item updateProductCategoryBtn" href="javascript:void(0)" data-url="' . base_url("product_categories/update_form/$item->category_id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
+                    <a class="dropdown-item updateProductCategoryBtn" href="javascript:void(0)" data-url="' . base_url("product_categories/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
                 </div>
             </div>';
-                $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->category_id . '" data-url="' . base_url("product_categories/isActiveSetter/{$item->category_id}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch' . $i . '"></label></div>';
-                $data[] = [$item->rank, '<i class="fa fa-arrows" data-id="' . $item->category_id . '"></i>', $item->category_id, $item->codes_id, $item->title, (!empty($item->product_category) ? $item->product_category : "<strong class='text-danger'>Ana Kategori</strong>"), $item->codes, $checkbox, turkishDate("d F Y, l H:i:s", $item->createdAt), turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing];
+                $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->id . '" data-url="' . base_url("product_categories/isActiveSetter/{$item->id}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch' . $i . '"></label></div>';
+                $data[] = [$item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->codes_id, $item->title, $item->codes, $checkbox, turkishDate("d F Y, l H:i:s", $item->createdAt), turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing];
             endforeach;
         endif;
         $output = [
@@ -68,7 +68,7 @@ class Product_categories extends MY_Controller
     public function update($id)
     {
         $data = rClean($this->input->post());
-        if (checkEmpty($data)["error"] && checkEmpty($data)["key"] != "top_id" && checkEmpty($data)["key"] != "img_url" && checkEmpty($data)["key"] != "home_url" && checkEmpty($data)["key"] != "banner_url") :
+        if (checkEmpty($data)["error"] && checkEmpty($data)["key"] != "img_url" && checkEmpty($data)["key"] != "home_url" && checkEmpty($data)["key"] != "banner_url") :
             $key = checkEmpty($data)["key"];
             echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Kategorisi Güncelleştirilirken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
         else :
@@ -124,7 +124,6 @@ class Product_categories extends MY_Controller
                     die();
                 endif;
             endif;
-            $data["top_id"] = !empty($data["top_id"]) ? $data["top_id"] : 0;
             $data["seo_url"] = seo($data["title"]);
             $update = $this->product_category_model->update(["id" => $id], $data);
             if ($update) :
@@ -176,7 +175,7 @@ class Product_categories extends MY_Controller
                             'codes_id' => intval(clean($returnValue->Id)) ?? NULL,
                             'title' => clean($returnValue->Kod) ?? NULL,
                             'seo_url' => clean(seo($returnValue->Kod)) ?? NULL,
-                            'isActive' => clean($returnValue->Durum) == 0 ? 1 : NULL,
+                            'isActive' => clean($returnValue->Durum) == 0 ? 1 : 0,
                             'rank' => $rank,
                             'codes' => clean($codesConnectionsValue->id) ?? NULL
                         ]);

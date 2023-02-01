@@ -9,6 +9,7 @@
  * @access public
  *
  */
+#[AllowDynamicProperties]
 class SitemapModel extends CI_Model {
 	
 	/**

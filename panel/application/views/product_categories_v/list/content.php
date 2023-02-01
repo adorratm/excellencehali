@@ -27,7 +27,6 @@
                     <th class="w50">#id</th>
                     <th class="w50">Codes ID</th>
                     <th>Başlık</th>
-                    <th>Üst Kategori</th>
                     <th>Codes Sunucusu</th>
                     <th>Durumu</th>
                     <th>Oluşturulma Tarihi</th>

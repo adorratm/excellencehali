@@ -89,13 +89,6 @@
                                 <?php if (!empty($categories)) : ?>
                                     <?php foreach ($categories as $category) : ?>
                                         <option <?= ($category->id == $item->category_id ? "selected" : null) ?> value="<?= $category->id; ?>">
-                                            <?php if (!empty($category->top_id) && $category->top_id !== 0) : ?>
-                                                <?php foreach ($categories as $k => $v) : ?>
-                                                    <?php if ($v->id == $category->top_id) : ?>
-                                                        <?= $v->title ?> >
-                                                    <?php endif ?>
-                                                <?php endforeach ?>
-                                            <?php endif ?>
                                             <?= $category->title; ?>
                                         </option>
                                     <?php endforeach ?>

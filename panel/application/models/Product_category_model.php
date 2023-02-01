@@ -7,13 +7,13 @@ class Product_category_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
-        $this->column_order = ['product_categories.rank', 'product_categories.id', 'product_categories.id', 'product_categories.codes_id', 'product_categories.title', 'pc.title', 'product_categories.codes', 'product_categories.isActive', 'product_categories.createdAt', 'updatedAt'];
+        $this->column_order = ['rank', 'id', 'id', 'codes_id', 'title', 'codes', 'isActive', 'createdAt', 'updatedAt'];
         // Set searchable column fields
-        $this->column_search = ['product_categories.rank', 'product_categories.id', 'product_categories.id', 'product_categories.codes_id', 'product_categories.title', 'pc.title', 'product_categories.codes', 'product_categories.isActive', 'product_categories.createdAt', 'product_categories.updatedAt'];
+        $this->column_search = ['rank', 'id', 'id', 'codes_id', 'title', 'codes', 'isActive', 'createdAt', 'updatedAt'];
         // Set default order
-        $this->order = ['product_categories.rank' => 'ASC'];
+        $this->order = ['rank' => 'ASC'];
     }
-    public function get_all($where = [], $order = "product_categories.id ASC")
+    public function get_all($where = [], $order = "id ASC")
     {
         return $this->db->where($where)->order_by($order)->get($this->tableName)->result();;
     }
@@ -46,21 +46,7 @@ class Product_category_model extends CI_Model
     }
     private function _get_datatables_query($postData = [])
     {
-        $this->db->where(["product_categories.id!=" => null]);
-        $this->db->select('
-        product_categories.codes_id codes_id,
-        product_categories.codes codes,
-        product_categories.title title,
-		product_categories.rank rank,
-		product_categories.id category_id,
-		product_categories.top_id top_id,
-        pc.title product_category,
-		product_categories.seo_url seo_url,
-        product_categories.lang lang,
-		product_categories.isActive isActive,
-		product_categories.createdAt createdAt,
-        product_categories.updatedAt updatedAt',    false);
-        $this->db->join("product_categories as pc", "pc.id = product_categories.top_id", "left");
+        $this->db->where(["id!=" => null]);
         $this->db->from($this->tableName);
         $i = 0;
         // loop searchable columns

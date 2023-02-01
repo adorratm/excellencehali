@@ -67,7 +67,7 @@ class Product_dimensions extends MY_Controller
     public function update($id)
     {
         $data = rClean($this->input->post());
-        if (checkEmpty($data)["error"] && checkEmpty($data)["key"] != "top_id" && checkEmpty($data)["key"] != "img_url" && checkEmpty($data)["key"] != "home_url" && checkEmpty($data)["key"] != "banner_url") :
+        if (checkEmpty($data)["error"] && checkEmpty($data)["key"] != "img_url" && checkEmpty($data)["key"] != "home_url" && checkEmpty($data)["key"] != "banner_url") :
             $key = checkEmpty($data)["key"];
             echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ürün Ebatı Güncelleştirilirken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
         else :
@@ -123,7 +123,6 @@ class Product_dimensions extends MY_Controller
                     die();
                 endif;
             endif;
-            $data["top_id"] = !empty($data["top_id"]) ? $data["top_id"] : 0;
             $data["seo_url"] = seo($data["title"]);
             $update = $this->product_dimension_model->update(["id" => $id], $data);
             if ($update) :
@@ -175,7 +174,7 @@ class Product_dimensions extends MY_Controller
                             'codes_id' => intval(clean($returnValue->Id)) ?? NULL,
                             'title' => clean($returnValue->Kod) ?? NULL,
                             'seo_url' => clean(seo($returnValue->Kod)) ?? NULL,
-                            'isActive' => clean($returnValue->Durum) == 0 ? 1 : NULL,
+                            'isActive' => clean($returnValue->Durum) == 0 ? 1 : 0,
                             'rank' => $rank,
                             'codes' => clean($codesConnectionsValue->id) ?? NULL
                         ]);
