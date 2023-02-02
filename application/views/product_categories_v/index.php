@@ -17,18 +17,16 @@
     <!-- END: Collections Section -->
     <section class="collectionsSections">
         <div class="container">
-            <div class="row shopAccessRow">
+            <div class="row shopAccessRow align-items-center align-content-center align-self-center">
                 <div class="col-sm-6 col-xl-4">
-                    <div class="productCount">Showing <strong>1 - 16</strong> of <strong>220</strong> items</div>
+                    <div class="productCount"><?= $offset == 0 ? (!empty($product_categories) ? 1 : 0) : (empty($product_categories) ? 0 : $offset) ?>–<?= $total_rows > $offset + $per_page ? (empty($product_categories) ? 0 : $offset + $per_page) : (empty($product_categories) ? 0 : $total_rows) ?> / <?= empty($product_categories) ? 0 : $total_rows ?></div>
                 </div>
                 <div class="d-none col-lg-4 col-xl-4 d-xl-flex">
-                    <ul class="filterUL">
-                        <li class="active">All</li>
-                        <li>Men</li>
-                        <li>Women</li>
-                        <li>Kids</li>
-                        <li>Accesories</li>
-                    </ul>
+                    <form class="w-100" id="searchForm" action="<?= !empty($this->uri->segment(3) && !is_numeric($this->uri->segment(3))) ? base_url(lang("routes_product_categories") . "/" . $this->uri->segment(3)) : base_url(lang("routes_product_categories")) ?>" method="GET" enctype="multipart/form-data">
+                        <input type="hidden" name="orderBy" value="<?= (!empty($_GET["orderBy"]) ? $_GET["orderBy"] : "p.id DESC") ?>">
+                        <input class="form-control" placeholder="<?=lang("searchCategories")?>" type="text" name="search" value="<?= (!empty($_GET["search"]) ? $_GET["search"] : null) ?>">
+                        <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
+                    </form>
                 </div>
                 <div class="col-sm-6 col-xl-4">
                     <div class="shopAccessBar">
