@@ -11,8 +11,8 @@ $lang["(:any)/blog/(:any)"] = "blog/index/$2";
 $lang["(:any)/blog/(:any)/(:num)"] = "blog/index/$2/$3";
 $lang["(:any)/blog/detay/(:any)"] = "blog/blog_detail/$2";
 
-$lang["(:any)/koleksiyonlar"] = "product_categories/index";
-$lang["(:any)/koleksiyonlar/(:num)"] = "product_categories/index/$2";
+$lang["(:any)/koleksiyonlar"] = "product_collections/index";
+$lang["(:any)/koleksiyonlar/(:num)"] = "product_collections/index/$2";
 $lang["(:any)/koleksiyonlar/(:num)/(:any)"] = "products/index/$2/$3";
 $lang["(:any)/koleksiyonlar/(:num)/(:any)/(:num)"] = "products/index/$2/$3/$4";
 $lang["(:any)/koleksiyonlar/urun/(:num)/(:any)"] = "products/product_detail/$2/$3";

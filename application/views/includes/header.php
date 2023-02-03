@@ -121,22 +121,9 @@
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <div class="popup_search_form">
-                            <form id="searchForm" action="<?= !empty($this->uri->segment(2) && !is_numeric($this->uri->segment(2))) ? base_url(lang("routes_product_categories")) : base_url(lang("routes_product_categories")) ?>" method="GET" enctype="multipart/form-data">
+                            <form id="searchForm" action="<?= !empty($this->uri->segment(2) && !is_numeric($this->uri->segment(2))) ? base_url(lang("routes_product_collections")) : base_url(lang("routes_product_collections")) ?>" method="GET" enctype="multipart/form-data">
                                 <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
                                 <div class="input-group">
-                                    <select class="form-select" onchange="$('#searchForm,#searchFormMobile').attr('action',$(this).val())">
-                                        <option value="<?= base_url(lang("routes_product_categories")) ?>"><?= lang("searchAllCategories") ?></option>
-                                        <?php if (!empty($menuCategories)) : ?>
-                                            <?php foreach ($menuCategories as $key => $value) : ?>
-                                                <?php if ($value->top_id == 0) : ?>
-                                                    <option value="<?= base_url(lang("routes_product_categories") . "/" . $value->seo_url) ?>"><?= $value->title ?></option>
-                                                <?php endif ?>
-                                            <?php endforeach; ?>
-                                        <?php endif ?>
-                                    </select>
-                                    <input type="hidden" name="orderBy" value="<?= (!empty($_GET["orderBy"]) ? clean($_GET["orderBy"]) : null) ?>">
-                                    <input type="hidden" name="amount" value="<?= (!empty($_GET["amount"]) ? clean($_GET["amount"]) : null) ?>">
-                                    <input type="hidden" name="key" value="<?= (!empty($_GET["key"]) ? clean($_GET["key"]) : null) ?>">
                                     <input name="search" id="search" type="search" placeholder="<?= lang("searchProduct") ?>..." required>
                                     <button type="submit" aria-label="<?= $settings->company_name ?>"><i class="fa fa-search"></i></button>
                                 </div>

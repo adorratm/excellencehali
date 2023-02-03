@@ -60,10 +60,6 @@ class Products extends MY_Controller
         $this->viewData->footer_menus3 = show_tree('FOOTER3', $this->viewData->lang);
         $this->viewData->languages = $languages;
         /**
-         * Menu Categories
-         */
-        $this->viewData->menuCategories = $this->general_model->get_all("product_categories", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang], [], [], []);
-        /**
          * Get User Data
          */
         $this->viewData->user = get_active_user() ?? [];
@@ -124,14 +120,14 @@ class Products extends MY_Controller
             $search = clean($this->input->get("search"));
         endif;
         $seo_url = $this->uri->segment(4);
-        $category_id = null;
-        $category = null;
+        $collection_id = null;
+        $collection = null;
         if (!empty($seo_url) && !is_numeric($seo_url)) :
-            $category = $this->general_model->get("product_categories", null, ["isActive" => 1, "lang" => $this->viewData->lang, "seo_url" => $seo_url]);
-            if (!empty($category)) :
-                $category_id = $category->id;
-                $category->seo_url = (!empty($category->seo_url) ? $category->seo_url : null);
-                $category->title = (!empty($category->title) ? $category->title : null);
+            $collection = $this->general_model->get("product_collections", null, ["isActive" => 1, "lang" => $this->viewData->lang, "seo_url" => $seo_url]);
+            if (!empty($collection)) :
+                $collection_id = $collection->id;
+                $collection->seo_url = (!empty($collection->seo_url) ? $collection->seo_url : null);
+                $collection->title = (!empty($collection->title) ? $collection->title : null);
             endif;
         endif;
         /**
@@ -152,8 +148,8 @@ class Products extends MY_Controller
             $likes["pd.content"] = $search;
         endif;
         $wheres = [];
-        if (!empty($category_id)) :
-            $wheres["p.category_id"] = $category_id;
+        if (!empty($collection_id)) :
+            $wheres["p.collection_id"] = $collection_id;
         endif;
         /**
          * Wheres
@@ -161,7 +157,7 @@ class Products extends MY_Controller
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
-        $joins = ["product_details pd" => ["pd.codes = p.codes_id AND pd.codes = p.codes", "left"], "product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
+        $joins = ["product_details pd" => ["pd.codes = p.codes_id AND pd.codes = p.codes", "left"], "product_collections pc" => ["p.collection_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
 
         $select = "p.codes_id,p.codes,p.price,p.discounted_price,p.id,p.title,p.seo_url,pi.url img_url,p.isActive";
         $distinct = true;
@@ -170,7 +166,7 @@ class Products extends MY_Controller
          * Pagination
          */
         $config = [];
-        $config['base_url'] = (!empty($seo_url) && !is_numeric($seo_url) ? base_url(lang("routes_product_categories") . "/" . $this->uri->segment(3) . "/{$seo_url}/") : base_url(lang("routes_product_categories") . "/" . $this->uri->segment(3) . "/"));
+        $config['base_url'] = (!empty($seo_url) && !is_numeric($seo_url) ? base_url(lang("routes_product_collections") . "/" . $this->uri->segment(3) . "/{$seo_url}/") : base_url(lang("routes_product_collections") . "/" . $this->uri->segment(3) . "/"));
         $config['uri_segment'] = (!empty($seo_url) && !is_numeric($seo_url) && !empty($this->uri->segment(5)) ? 5 : (is_numeric($this->uri->segment(4)) ? 4 : 2));
         $config['use_page_numbers'] = TRUE;
         $config["full_tag_open"] = "<ul class='pagination justify-content-center'>";
@@ -211,11 +207,11 @@ class Products extends MY_Controller
         $this->viewData->offset = $offset;
         $this->viewData->per_page = $config['per_page'];
         $this->viewData->total_rows = $config['total_rows'];
-        $this->viewData->products_category = $category;
+        $this->viewData->products_collection = $collection;
         /**
-         * Get All Categories
+         * Get All Collections
          */
-        $this->viewData->categories = $this->general_model->get_all("product_categories", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang]);
+        $this->viewData->collections = $this->general_model->get_all("product_collections", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang]);
         /** 
          * Get Products
          */
@@ -223,13 +219,13 @@ class Products extends MY_Controller
         /**
          * Meta
          */
-        $this->viewData->page_title = (!empty($category) ? $category->title : lang("products"));
-        $this->viewData->meta_title = strto("lower|ucwords", (!empty($category) ? $category->title : lang("products"))) . " - " . $this->viewData->settings->company_name;
+        $this->viewData->page_title = (!empty($collection) ? $collection->title : lang("products"));
+        $this->viewData->meta_title = strto("lower|ucwords", (!empty($collection) ? $collection->title : lang("products"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-        $this->viewData->og_url                 = clean(base_url(lang("routes_product_categories")));
+        $this->viewData->og_url                 = clean(base_url(lang("routes_product_collections")));
         $this->viewData->og_image           = clean(get_picture("settings_v", $this->viewData->settings->logo));
         $this->viewData->og_type          = "product";
-        $this->viewData->og_title           = strto("lower|ucwords", (!empty($category) ? $category->title : lang("products"))) . " - " . $this->viewData->settings->company_name;
+        $this->viewData->og_title           = strto("lower|ucwords", (!empty($collection) ? $collection->title : lang("products"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->og_description           = clean($this->viewData->settings->meta_description);
         $this->viewData->links = $this->pagination->create_links();
         $this->viewFolder = "products_v/index";
@@ -246,7 +242,7 @@ class Products extends MY_Controller
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
-        $joins = ["product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"], "product_details pd" => ["pd.codes_id = p.codes_id AND pd.codes = p.codes", "left"]];
+        $joins = ["product_collections pc" => ["p.collection_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"], "product_details pd" => ["pd.codes_id = p.codes_id AND pd.codes = p.codes", "left"]];
         $select = "p.codes_id,p.codes,p.id,p.title,p.seo_url,pi.url img_url,pd.description,pd.content,pd.features,p.isActive";
         $distinct = true;
         $groupBy = ["p.id"];
@@ -258,9 +254,9 @@ class Products extends MY_Controller
         $this->viewData->product = $this->general_model->get("products p", $select, $wheres, $joins, [], [], $distinct, $groupBy);
         if (!empty($this->viewData->product)) :
             /**
-             * Get All Categories
+             * Get All Collections
              */
-            $this->viewData->categories = $this->general_model->get_all("product_categories", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang]);
+            $this->viewData->collections = $this->general_model->get_all("product_collections", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang]);
             /**
              * Get Product Images
              */
@@ -282,7 +278,7 @@ class Products extends MY_Controller
              */
             $this->viewData->meta_title = strto("lower|ucwords", $this->viewData->product->title) . " - " . $this->viewData->settings->company_name;
             $this->viewData->meta_desc  = !empty($this->viewData->product->content) ? str_replace("”", "\"", @stripslashes($this->viewData->product->content)) : str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-            $this->viewData->og_url                 = clean(base_url(lang("routes_product_categories") . "/" . lang("routes_product") . "/" . $seo_url));
+            $this->viewData->og_url                 = clean(base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/" . $seo_url));
             $this->viewData->og_image           = clean(get_picture("products_v", $imgURL));
             $this->viewData->og_type          = "product.item";
             $this->viewData->og_title           = strto("lower|ucwords", $this->viewData->product->title) . " - " . $this->viewData->settings->company_name;

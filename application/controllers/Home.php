@@ -60,10 +60,6 @@ class Home extends MY_Controller
         $this->viewData->footer_menus3 = show_tree('FOOTER3', $this->viewData->lang);
         $this->viewData->languages = $languages;
         /**
-         * Menu Categories
-         */
-        $this->viewData->menuCategories = $this->general_model->get_all("product_categories", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang], [], [], []);
-        /**
          * Get User Data
          */
         $this->viewData->user = get_active_user() ?? [];
@@ -174,9 +170,9 @@ class Home extends MY_Controller
      * -----------------------------------------------------------------------------------------------
      * ...:::!!! ================================== INDEX ================================== !!!:::...
      * -----------------------------------------------------------------------------------------------
-     */ 
-    
-    
+     */
+
+
     /**
      * -----------------------------------------------------------------------------------------------
      * ...:::!!! ================================ LANGUAGE ================================= !!!:::...
@@ -249,11 +245,11 @@ class Home extends MY_Controller
         /**
          * Product Categories
          */
-        $product_categories = $this->general_model->get_all("product_categories", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang]);
-        if (!empty($product_categories)) :
-            foreach ($product_categories as $k => $v) :
+        $product_collections = $this->general_model->get_all("product_collections", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang]);
+        if (!empty($product_collections)) :
+            foreach ($product_collections as $k => $v) :
                 if (!empty($v->seo_url)) :
-                    $this->sitemapmodel->add(base_url(lang("routes_product_categories") . "/{$v->seo_url}"), NULL, 'always', 1);
+                    $this->sitemapmodel->add(base_url(lang("routes_product_collections") . "/{$v->seo_url}"), NULL, 'always', 1);
                 endif;
             endforeach;
         endif;
@@ -263,7 +259,7 @@ class Home extends MY_Controller
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
-        $joins = ["product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
+        $joins = ["product_collections pc" => ["p.collection_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
         $select = "p.id,p.title,p.seo_url,pi.url img_url";
         $distinct = true;
         $groupBy = ["p.id"];
@@ -271,7 +267,7 @@ class Home extends MY_Controller
         if (!empty($products)) :
             foreach ($products as $k => $v) :
                 if (!empty($v->url)) :
-                    $this->sitemapmodel->add(base_url(lang("routes_product_categories") . "/" . lang("routes_product") . "/{$v->url}"), NULL, 'always', 1);
+                    $this->sitemapmodel->add(base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/{$v->url}"), NULL, 'always', 1);
                 endif;
             endforeach;
         endif;
@@ -337,13 +333,13 @@ class Home extends MY_Controller
             endforeach;
         endif;
         /**
-         * Product Categories
+         * Product Collections
          */
-        $product_categories = $this->general_model->get_all("product_categories", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang]);
-        if (!empty($product_categories)) :
-            foreach ($product_categories as $k => $v) :
+        $product_collections = $this->general_model->get_all("product_collections", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang]);
+        if (!empty($product_collections)) :
+            foreach ($product_collections as $k => $v) :
                 if (!empty($v->seo_url)) :
-                    $this->sitemapmodel->add(base_url(lang("routes_product_categories") . "/{$v->seo_url}"), NULL, 'always', 1);
+                    $this->sitemapmodel->add(base_url(lang("routes_product_collections") . "/{$v->seo_url}"), NULL, 'always', 1);
                 endif;
             endforeach;
         endif;
@@ -353,7 +349,7 @@ class Home extends MY_Controller
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
-        $joins = ["product_categories pc" => ["p.category_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
+        $joins = ["product_collections pc" => ["p.collection_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
         $select = "p.id,p.title,p.seo_url,pi.url img_url";
         $distinct = true;
         $groupBy = ["p.id"];
@@ -361,7 +357,7 @@ class Home extends MY_Controller
         if (!empty($products)) :
             foreach ($products as $k => $v) :
                 if (!empty($v->url)) :
-                    $this->sitemapmodel->add(base_url(lang("routes_product_categories") . "/" . lang("routes_product") . "/{$v->url}"), NULL, 'always', 1);
+                    $this->sitemapmodel->add(base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/{$v->url}"), NULL, 'always', 1);
                 endif;
             endforeach;
         endif;
@@ -445,7 +441,7 @@ class Home extends MY_Controller
                 xml_add_child($item, 'g:id', $prod->id);
                 xml_add_child($item, 'g:title', strto("lower|ucwords", $prod->title));
                 xml_add_child($item, 'g:description', strto("lower|ucwords", $prod->title));
-                xml_add_child($item, 'g:link',  base_url(lang("routes_product_categories") . "/" . lang("routes_product") . "/{$prod->url}"));
+                xml_add_child($item, 'g:link',  base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/{$prod->url}"));
                 xml_add_child($item, 'g:image_link', get_picture("products_v", $prod->img_url));
                 xml_add_child($item, 'g:brand', strto("lower|ucwords", $settings->company_name));
                 xml_add_child($item, 'g:condition', 'new');
@@ -453,16 +449,16 @@ class Home extends MY_Controller
                 xml_add_child($item, 'g:price',  '0 ' . $this->viewData->currency);
                 //https://www.google.com/basepages/producttype/taxonomy-with-ids.en-US.txt
                 /**
-                 * Get All Categories
+                 * Get All Collections
                  */
-                $categories = $this->general_model->get_all("product_categories", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang], [], [], []);
-                $category = null;
-                foreach ($categories as $k => $v) :
-                    if ($v->id == $prod->category_id) :
-                        $category = $v->title;
+                $collections = $this->general_model->get_all("product_collections", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang], [], [], []);
+                $collection = null;
+                foreach ($collections as $k => $v) :
+                    if ($v->id == $prod->collection_id) :
+                        $collection = $v->title;
                     endif;
                 endforeach;
-                xml_add_child($item, 'g:google_product_category', strto("lower|ucwords", $category));
+                xml_add_child($item, 'g:google_product_category', strto("lower|ucwords", $collection));
             //xml_add_child($item, 'g:custom_label_0', $prod->);
             endforeach;
         endif;

@@ -1,11 +1,11 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!-- BEGIN: Page Banner Section -->
-<section class="pageBannerSection" style="background-image: url(<?= !empty($products_category) && !empty($products_category->img_url) ? get_picture("product_categories_v", $products_category->banner_url) : get_picture("settings_v", $settings->product_logo) ?>);">
+<section class="pageBannerSection" style="background-image: url(<?= !empty($products_collection) && !empty($products_collection->img_url) ? get_picture("product_collections_v", $products_collection->banner_url) : get_picture("settings_v", $settings->product_logo) ?>);">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="pageBannerContent text-center">
-                    <h2 class="text-white mb-0"><?= !empty($products_category) ? strto("lower|ucwords", $products_category->title) : strto("lower|ucwords", lang("products")) ?></h2>
+                    <h2 class="text-white mb-0"><?= !empty($products_collection) ? strto("lower|ucwords", $products_collection->title) : strto("lower|ucwords", lang("products")) ?></h2>
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@
                                     <img loading="lazy" width="1000" height="1000" data-src="<?= get_picture("products_v", $secondaryImage) ?>" alt="<?= $value->title ?>" title="<?= $value->title ?>" class="img-fluid lazyload">
                                 <?php endif ?>
                                 <div class="pi01Actions">
-                                    <a href="<?= base_url(lang("routes_product_categories") . "/" . lang("routes_product") . "/" . $value->codes . "/" . $value->seo_url) ?>" rel="dofollow" title="<?= $value->title ?>"><i class="fa-solid fa-arrows-up-down-left-right"></i></a>
+                                    <a href="<?= base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/" . $value->codes . "/" . $value->seo_url) ?>" rel="dofollow" title="<?= $value->title ?>"><i class="fa-solid fa-arrows-up-down-left-right"></i></a>
                                 </div>
                                 <?php if (!empty($value->discounted_price)) : ?>
                                     <div class="productLabels clearfix">
@@ -69,7 +69,7 @@
                                 <?php endif ?>
                             </div>
                             <div class="pi01Details">
-                                <h3><a href="<?= base_url(lang("routes_product_categories") . "/" . lang("routes_product") . "/" . $value->codes . "/" . $value->seo_url) ?>" rel="dofollow" title="<?= $value->title ?>"><?= $value->title ?></a></h3>
+                                <h3><a href="<?= base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/" . $value->codes . "/" . $value->seo_url) ?>" rel="dofollow" title="<?= $value->title ?>"><?= $value->title ?></a></h3>
                                 <div class="pi01Price">
                                     <ins><?= !empty($value->discounted_price) ? $value->discounted_price : $value->price ?></ins>
                                     <?php if (!empty($value->discounted_price)) : ?>

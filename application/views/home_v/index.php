@@ -12,22 +12,22 @@
                                 <?php if (!empty($value->button_url)) : ?>
                                     <?php $sUrl = $value->button_url ?>
                                 <?php endif ?>
-                                <?php if (!empty($value->category_id) && $value->category_id > 0) : ?>
-                                    <?php $sCategory = $this->general_model->get("product_categories", null, ["isActive" => 1, "id" => $value->category_id]); ?>
-                                    <?php if (!empty($sCategory)) : ?>
-                                        <?php $sUrl = base_url(lang("routes_product_categories") . "/" . $sCategory->seo_url) ?>
+                                <?php if (!empty($value->collection_id) && $value->collection_id > 0) : ?>
+                                    <?php $sCollection = $this->general_model->get("product_collections", null, ["isActive" => 1, "id" => $value->collection_id]); ?>
+                                    <?php if (!empty($sCollection)) : ?>
+                                        <?php $sUrl = base_url(lang("routes_product_collections") . "/" . $sCollection->seo_url) ?>
                                     <?php endif ?>
                                 <?php endif ?>
                                 <?php if (!empty($value->product_id) && $value->product_id > 0) : ?>
                                     <?php $sProduct = $this->general_model->get("products", null, ["isActive" => 1, "id" => $value->product_id]); ?>
                                     <?php if (!empty($sProduct)) : ?>
-                                        <?php $sUrl = base_url(lang("routes_product_categories") . "/" . lang("routes_product") . "/" . $sProduct->url) ?>
+                                        <?php $sUrl = base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/" . $sProduct->url) ?>
                                     <?php endif ?>
                                 <?php endif ?>
                                 <?php if (!empty($value->page_id) && $value->page_id > 0) : ?>
-                                    <?php $sPage = $this->general_model->get("product_categories", null, ["isActive" => 1, "id" => $value->page_id]); ?>
+                                    <?php $sPage = $this->general_model->get("product_collections", null, ["isActive" => 1, "id" => $value->page_id]); ?>
                                     <?php if (!empty($sPage)) : ?>
-                                        <?php $sUrl = base_url(lang("routes_product_categories") . "/" . $sPage->url) ?>
+                                        <?php $sUrl = base_url(lang("routes_product_collections") . "/" . $sPage->url) ?>
                                     <?php endif ?>
                                 <?php endif ?>
                                 <?php if (!empty($value->service_id) && $value->service_id > 0) : ?>
@@ -188,7 +188,7 @@
 <?php endif ?>
 
 <?php if (!empty($instagramPosts)) : ?>
-    <?php $userName = str_replace("/", "", (str_replace("https://www.instagram.com/", "", str_replace("https://instagram.com/", "", $this->viewData->settings->instagram))));?>
+    <?php $userName = str_replace("/", "", (str_replace("https://www.instagram.com/", "", str_replace("https://instagram.com/", "", $this->viewData->settings->instagram)))); ?>
     <section class="instagramSection is02">
         <div class="container">
             <div class="row">

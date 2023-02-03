@@ -4402,7 +4402,7 @@
     height: 48px;
     border: 1px solid #c5d0cf;
     text-align: center;
-    line-height: 35px;
+    line-height: 35px!important;
     font-size: 16px;
     border-radius: 50%;
     margin-right: 6px;

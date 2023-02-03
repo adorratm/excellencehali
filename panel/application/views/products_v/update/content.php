@@ -56,11 +56,11 @@
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="form-group">
-                <label>Ürün Kategorisi</label>
-                <select class="rounded-0 tagsInput" name="category_id" required disabled>
-                    <?php foreach ($categories as $category) : ?>
-                        <option <?= ($category->id == $item->category_id ? "selected" : null) ?> value="<?= $category->id; ?>">
-                            <?= $category->id ?> - <?= $category->title; ?>
+                <label>Ürün Koleksiyonu</label>
+                <select class="rounded-0 tagsInput" name="collection_id" required disabled>
+                    <?php foreach ($collections as $collection) : ?>
+                        <option <?= ($collection->id == $item->collection_id ? "selected" : null) ?> value="<?= $collection->id; ?>">
+                            <?= $collection->id ?> - <?= $collection->title; ?>
                         </option>
                     <?php endforeach ?>
                 </select>

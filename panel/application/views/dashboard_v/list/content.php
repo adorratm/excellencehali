@@ -6,7 +6,7 @@
         <?php $total_stock = $total_stock + $value->stock ?>
         productArray.push({
             stock: parseFloat("<?= $value->stock ?>"),
-            category: "<?= $value->category ?>"
+            collection: "<?= $value->collection ?>"
         });
     <?php endforeach ?>
     let yearArray = [];
@@ -179,8 +179,8 @@
 
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
             <div class="bg-white">
-                <h4 class="p-4">Kategorilerine Göre Stok Grafiği</h4>
-                <div id="productCategoryChart"></div>
+                <h4 class="p-4">Koleksiyonlara Göre Stok Grafiği</h4>
+                <div id="productCollectionChart"></div>
             </div>
         </div>
     </div>
@@ -218,13 +218,13 @@
             Morris.Bar({
                 // ID of the element in which to draw the chart.
                 title: 'asdas',
-                element: 'productCategoryChart',
+                element: 'productCollectionChart',
                 // Chart data records -- each entry in this array corresponds to a point on
                 // the chart.
                 data: productArray,
                 resize: true,
                 // The name of the data record attribute that contains x-values.
-                xkey: 'category',
+                xkey: 'collection',
                 // A list of names of data record attributes that contain y-values.
                 ykeys: ['stock'],
                 barColors: function(row, series, type) {

@@ -17,7 +17,7 @@
                         <button class="btn btn-sm btn-outline-danger rounded-0 " onclick="clearFilter('filter_form','productDimensionTable')" id="clear_button" data-toggle="tooltip" data-placement="top" data-title="Filtreyi Temizle" data-original-title="" title=""><i class="fa fa-eraser"></i></button>
                     </label>
                     <label for="search_button" class="mx-1">
-                        <button class="btn btn-sm btn-outline-success rounded-0 " onclick="reloadTable('productDimensionTable')" id="search_button" data-toggle="tooltip" data-placement="top" data-title="Ürün Kategorisi Ara"><i class="fa fa-search"></i></button>
+                        <button class="btn btn-sm btn-outline-success rounded-0 " onclick="reloadTable('productDimensionTable')" id="search_button" data-toggle="tooltip" data-placement="top" data-title="Ürün Ebatı Ara"><i class="fa fa-search"></i></button>
                 </div>
             </form>
             <table class="table table-hover table-striped table-bordered content-container productDimensionTable">
@@ -87,7 +87,7 @@
             e.stopImmediatePropagation();
             $('#productDimensionModal').iziModal('destroy');
             let url = $(this).data("url");
-            createModal("#productDimensionModal", "Ürün Kategorisi Düzenle", "Ürün Kategorisi Düzenle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+            createModal("#productDimensionModal", "Ürün Ebatı Düzenle", "Ürün Ebatı Düzenle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
                 $.post(url, {}, function(response) {
                     $("#productDimensionModal .iziModal-content").html(response);
                     TinyMCEInit();

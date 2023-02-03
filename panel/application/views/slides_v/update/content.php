@@ -83,13 +83,13 @@
                     </div>
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-none">
                         <div class="form-group">
-                            <label>Kategori Linki</label>
-                            <select disabled class="form-control form-control-sm rounded-0 tagsInput" name="category_id" required>
+                            <label>Koleksiyon Linki</label>
+                            <select disabled class="form-control form-control-sm rounded-0 tagsInput" name="collection_id" required>
                                 <option value="">Sayfa Seçiniz.</option>
-                                <?php if (!empty($categories)) : ?>
-                                    <?php foreach ($categories as $category) : ?>
-                                        <option <?= ($category->id == $item->category_id ? "selected" : null) ?> value="<?= $category->id; ?>">
-                                            <?= $category->title; ?>
+                                <?php if (!empty($collections)) : ?>
+                                    <?php foreach ($collections as $collection) : ?>
+                                        <option <?= ($collection->id == $item->collection_id ? "selected" : null) ?> value="<?= $collection->id; ?>">
+                                            <?= $collection->title; ?>
                                         </option>
                                     <?php endforeach ?>
                                 <?php endif; ?>

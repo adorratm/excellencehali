@@ -60,10 +60,6 @@ class Pages extends MY_Controller
         $this->viewData->footer_menus3 = show_tree('FOOTER3', $this->viewData->lang);
         $this->viewData->languages = $languages;
         /**
-         * Menu Categories
-         */
-        $this->viewData->menuCategories = $this->general_model->get_all("product_categories", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang], [], [], []);
-        /**
          * Get User Data
          */
         $this->viewData->user = get_active_user() ?? [];

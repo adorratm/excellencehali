@@ -904,19 +904,19 @@ function rWebp2($dir)
  * recursive function to loop
  * through all comments and retrieve it
  */
-function show_categories($lang = "tr")
+function show_collections($lang = "tr")
 {
     $t = &get_instance();
     // this variable to save all concatenated html
     $html = "";
     // build hierarchy  html structure based on ul li (parent-child) nodes
-        $result = $t->general_model->get_all("product_categories", "title,seo_url,id", "rank ASC", ["isActive" => 1, "lang" => $lang]);
+        $result = $t->general_model->get_all("product_collections", "title,seo_url,id", "rank ASC", ["isActive" => 1, "lang" => $lang]);
         $html .=  '<ul>';
         foreach ($result as $key => $value) :
             $html .= '<li>';
             $html .= '<a rel="dofollow" ' .
-                ($t->uri->segment(3) == $value->seo_url ? "class='active link'" : "class='link'") . ' href="' . base_url(lang("routes_product_categories") . "/{$value->seo_url}") . '" title="' . $value->title . '"><i class="bx bx-chevron-right"></i> ' . $value->title . '</a>';
-            $html .= show_categories($value->id, $lang);
+                ($t->uri->segment(3) == $value->seo_url ? "class='active link'" : "class='link'") . ' href="' . base_url(lang("routes_product_collections") . "/{$value->seo_url}") . '" title="' . $value->title . '"><i class="bx bx-chevron-right"></i> ' . $value->title . '</a>';
+            $html .= show_collections($value->id, $lang);
             $html .= "</li>";
         endforeach;
         $html .=  "</ul>";
@@ -934,19 +934,19 @@ function split_name($name = null)
  * recursive function to loop
  * through all comments and retrieve it
  */
-function show_header_categories($lang = "tr")
+function show_header_collections($lang = "tr")
 {
     $t = &get_instance();
     // this variable to save all concatenated html
     $html = "";
     // build hierarchy  html structure based on ul li (parent-child) nodes
-        $result = $t->general_model->get_all("product_categories", "title,seo_url,id", "rank ASC", ["isActive" => 1, "lang" => $lang]);
+        $result = $t->general_model->get_all("product_collections", "title,seo_url,id", "rank ASC", ["isActive" => 1, "lang" => $lang]);
         $html .=  '<ul>';
         foreach ($result as $key => $value) :
             $html .= '<li class="nav-item">';
             $html .= '<a rel="dofollow"' .
-                ($t->uri->segment(3) == $value->seo_url ? "active nav-link" : "nav-link") . '" href="' . base_url(lang("routes_product_categories") . "/{$value->seo_url}") . '" title="' . $value->title . '">' . $value->title . '</a>';
-            $html .= show_header_categories($value->id, $lang);
+                ($t->uri->segment(3) == $value->seo_url ? "active nav-link" : "nav-link") . '" href="' . base_url(lang("routes_product_collections") . "/{$value->seo_url}") . '" title="' . $value->title . '">' . $value->title . '</a>';
+            $html .= show_header_collections($value->id, $lang);
             $html .= "</li>";
         endforeach;
         $html .=  "</ul>";

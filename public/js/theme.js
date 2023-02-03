@@ -41,7 +41,7 @@
     /*------------------------------------------------------
     /  01. Variables
     /------------------------------------------------------*/
-    var $anSelect = $('.anSelect select'),
+    let $anSelect = $('.anSelect select'),
         $sortNavSelect = $('.sortNav select'),
         $singleVariationSelect = $('.singleVariation select'),
         $productCarousel = $('.productCarousel'),
@@ -53,7 +53,6 @@
         $testimonialCarousel = $('.testimonialCarousel'),
         $testimonialCarousel2 = $('.testimonialCarousel2'),
         $instagramSlider = $('.instagramSlider'),
-        $imgPopup = $('.imgPopup'),
         $clientLogoSlider = $('.clientLogoSlider'),
         $categoryCarousel2 = $('.categoryCarousel2'),
         $sliderRange = $('#sliderRange'),
@@ -91,7 +90,7 @@
 
     // Owl Carousel For teamCarousel
     if ($teamCarousel.length > 0) {
-        var $teamCarousel_obj = $teamCarousel.owlCarousel({
+        $teamCarousel.owlCarousel({
             autoplay: false,
             margin: 24,
             loop: false,
@@ -122,7 +121,7 @@
 
     // Owl Carousel For productCarousel
     if ($productCarousel.length > 0) {
-        var $productCarousel_obj = $productCarousel.owlCarousel({
+        $productCarousel.owlCarousel({
             autoplay: false,
             margin: 24,
             loop: false,
@@ -153,7 +152,7 @@
 
     // Owl Carousel For contactCarousel
     if ($contactCarousel.length > 0) {
-        var $contactCarousel_obj = $contactCarousel.owlCarousel({
+        $contactCarousel.owlCarousel({
             autoplay: false,
             margin: 24,
             loop: false,
@@ -185,7 +184,7 @@
 
     // Owl Carousel For categoryCarousel
     if ($categoryCarousel.length > 0) {
-        var $categoryCarousel_obj = $categoryCarousel.owlCarousel({
+        $categoryCarousel.owlCarousel({
             autoplay: false,
             margin: 24,
             loop: true,
@@ -216,7 +215,7 @@
 
     // Owl Carousel For categoryCarousel2
     if ($categoryCarousel2.length > 0) {
-        var $categoryCarousel2_obj = $categoryCarousel2.owlCarousel({
+        $categoryCarousel2.owlCarousel({
             autoplay: false,
             margin: 24,
             loop: true,
@@ -247,7 +246,7 @@
 
     // Owl Carousel For testimonialCarousel2
     if ($testimonialCarousel2.length > 0) {
-        var $testimonialCarousel2_obj = $testimonialCarousel2.owlCarousel({
+        $testimonialCarousel2.owlCarousel({
             autoplay: false,
             margin: 24,
             loop: true,
@@ -279,7 +278,7 @@
 
     // Owl Carousel For testimonialCarousel
     if ($testimonialCarousel.length > 0) {
-        var $testimonialCarousel_obj = $testimonialCarousel.owlCarousel({
+        let $testimonialCarousel_obj = $testimonialCarousel.owlCarousel({
             autoplay: false,
             margin: 24,
             loop: true,
@@ -313,7 +312,7 @@
 
     // Owl Carousel For instagramSlider
     if ($instagramSlider.length > 0) {
-        var $instagramSlider_obj = $instagramSlider.owlCarousel({
+        $instagramSlider.owlCarousel({
             autoplay: false,
             margin: 0,
             loop: true,
@@ -343,7 +342,7 @@
 
     // Owl Carousel For clientLogoSlider
     if ($clientLogoSlider.length > 0) {
-        var $clientLogoSlider_obj = $clientLogoSlider.owlCarousel({
+        $clientLogoSlider.owlCarousel({
             autoplay: false,
             margin: 0,
             loop: true,
@@ -427,25 +426,21 @@
     / 04. Masonry Grid
     /---------------------------------------------------------*/
     if ($masonryGrid.length > 0) {
-        var $masonryGrid = $('#masonryGrid');
+        let Shuffle = window.Shuffle;
+        let element = document.querySelector('#masonryGrid');
+        let sizer = element.querySelector('.shafSizer');
 
-        var Shuffle = window.Shuffle;
-        var element = document.querySelector('#masonryGrid');
-        var sizer = element.querySelector('.shafSizer');
-
-        var shaff_inst = new Shuffle(element, {
+        new Shuffle(element, {
             itemSelector: '.shafItem',
             sizer: sizer
         });
     }
     if ($masonryGrid2.length > 0) {
-        var $masonryGrid2 = $('#masonryGrid2');
+        let Shuffle = window.Shuffle;
+        let element = document.querySelector('#masonryGrid2');
+        let sizer = element.querySelector('.shafSizer');
 
-        var Shuffle = window.Shuffle;
-        var element = document.querySelector('#masonryGrid2');
-        var sizer = element.querySelector('.shafSizer');
-
-        var shaff_inst = new Shuffle(element, {
+        new Shuffle(element, {
             itemSelector: '.shafItem',
             sizer: sizer
         });
@@ -455,12 +450,11 @@
     / 05. Count Down
     /----------------------------------------------------------*/
     if ($ulinaCountDown.length > 0) {
-        var d = $ulinaCountDown.attr('data-day');
-        var m = $ulinaCountDown.attr('data-month');
-        var y = $ulinaCountDown.attr('data-year');
+        let d = $ulinaCountDown.attr('data-day');
+        let m = $ulinaCountDown.attr('data-month');
+        let y = $ulinaCountDown.attr('data-year');
         $ulinaCountDown.countdown({
-            //until: new Date(y, m - 1, d),
-            until: '+2d',
+            until: new Date(y, m - 1, d),
             format: 'DHMS',
             labels: ['Yrs', 'Mths', 'Weks', 'Days', 'Hrs', 'Mins', 'Secs']
         });
@@ -469,7 +463,7 @@
     /*--------------------------------------------------------
      /   07. Back To Top
      /--------------------------------------------------------*/
-    var back = $("#backtotop"),
+    let back = $("#backtotop"),
         body = $("body, html");
     $(window).on('scroll', function () {
         if ($(window).scrollTop() > $(window).height()) {
@@ -505,7 +499,7 @@
     /   09. Revolution Slider
     /--------------------------------------------------------*/
     if ($('.sliderSection01').length > 0) {
-        var revapi1 = jQuery('#rev_slider_1').show().revolution({
+        jQuery('#rev_slider_1').show().revolution({
             delay: 9000,
             responsiveLevels: [1400, 1399, 991, 767],
             gridwidth: [1320, 1140, 720],
@@ -571,7 +565,7 @@
         });
     }
     if ($('.sliderSection02').length > 0) {
-        var revapi1 = jQuery('#rev_slider_2').show().revolution({
+        jQuery('#rev_slider_2').show().revolution({
             delay: 9000,
             responsiveLevels: [1400, 1399, 991, 767],
             gridwidth: [1320, 1140, 720],
@@ -678,15 +672,15 @@
     /  13. Cirle Progress
     /------------------------------------------------------*/
     if ($(".circleProgress").length > 0) {
-        var ast1 = true;
+        let ast1 = true;
         $('.circleProgress').appear();
         $('.circleProgress').on('appear', function () {
             if (ast1 == true) {
                 $(".circleProgress").each(function () {
-                    var pint = $(this).attr('data-skills');
-                    var decs = pint * 100;
-                    var efill = $(this).attr('data-emptyfill');
-                    var fill = $(this).attr('data-fills');
+                    let pint = $(this).attr('data-skills');
+                    let decs = pint * 100;
+                    let efill = $(this).attr('data-emptyfill');
+                    let fill = $(this).attr('data-fills');
 
                     $(this).circleProgress({
                         value: pint,
@@ -713,14 +707,14 @@
         $('.singleSkill').appear();
         $('.singleSkill').on('appear', loadSkills);
     }
-    var coun = true;
+    let coun = true;
     function loadSkills() {
         $(".singleSkill").each(function () {
-            var datacount = $(this).attr("data-skill");
+            let datacount = $(this).attr("data-skill");
             $(".skill", this).animate({ 'width': datacount + '%' }, 2000);
             if (coun) {
                 $(this).find('span').each(function () {
-                    var $this = $(this);
+                    let $this = $(this);
                     $({ Counter: 0 }).animate({ Counter: datacount }, {
                         duration: 2000,
                         easing: 'swing',
@@ -739,13 +733,13 @@
     $('.timer').appear();
     $(document.body).on('appear', '.timer', function (e, $affected) {
         $affected.each(function () {
-            var $this = $(this);
+            let $this = $(this);
             if (!$this.hasClass('appeared')) {
                 jQuery({ Counter: 0 }).animate({ Counter: $this.attr('data-count') }, {
                     duration: 3000,
                     easing: 'swing',
                     step: function () {
-                        var num = Math.ceil(this.Counter).toString();
+                        let num = Math.ceil(this.Counter).toString();
                         $this.html(num);
                     }
                 });
@@ -758,8 +752,7 @@
     /  16. Sticky Header
     /---------------------------------------------------------*/
     $(window).on('scroll', function () {
-        var heights = $(window).height();
-        var header_height = $(".isSticky").height();
+        let header_height = $(".isSticky").height();
         if ($(window).scrollTop() > 100) {
             if ($(".isSticky").hasClass('h01Mode2')) {
                 $('.blanks').css('height', header_height);
@@ -794,7 +787,7 @@
     /  18. Preloader
     /---------------------------------------------------------*/
     $(window).on('load', function () {
-        var preload = $('#preloader');
+        let preload = $('#preloader');
         if (preload.length > 0) {
             preload.delay(500).fadeOut('slow');
         }

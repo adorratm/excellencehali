@@ -9,7 +9,7 @@ class Products extends MY_Controller
         parent::__construct();
         $this->viewFolder = "products_v";
         $this->load->model("product_model");
-        $this->load->model("product_category_model");
+        $this->load->model("product_collection_model");
         $this->load->model("product_image_model");
         $this->load->model("product_dimension_model");
         $this->load->model("product_detail_model");
@@ -45,7 +45,7 @@ class Products extends MY_Controller
                     </div>
                 </div>';
                 $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->id . '" data-url="' . base_url("products/isActiveSetter/{$item->id}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch4' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch4' . $i . '"></label></div>';
-                $data[] = [$item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->codes_id, $item->title, $item->brand, $item->category, $item->pattern, $item->color, $item->dimension, $item->codes, $checkbox, turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing];
+                $data[] = [$item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->codes_id, $item->title, $item->brand, $item->collection, $item->pattern, $item->color, $item->dimension, $item->codes, $checkbox, turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing];
             endforeach;
         endif;
         $output = [
@@ -63,7 +63,7 @@ class Products extends MY_Controller
         $viewData->item = $this->general_model->get("products p", "p.*,pd.features features, pd.content content,pd.description description", ["p.codes_id" => $codes_id, "p.codes" => $codes], ["product_details pd" => ["pd.codes = p.codes_id AND pd.codes = p.codes", "left"]], [], [], true, "p.codes_id");
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
-        $viewData->categories = $this->product_category_model->get_all();
+        $viewData->collections = $this->product_collection_model->get_all();
         $viewData->settings = $this->general_model->get_all("settings", null, null, ["isActive" => 1]);
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
@@ -254,8 +254,8 @@ class Products extends MY_Controller
                             'title' => clean($returnValue->Baslik) ?? NULL,
                             'seo_url' => clean(seo($returnValue->Baslik)) ?? NULL,
                             'barcode' => clean($returnValue->barcode) ?? NULL,
-                            'category_id' => clean($returnValue->Ok1Id) ?? NULL,
-                            'category' => clean($returnValue->Ozelkod1) ?? NULL,
+                            'collection_id' => clean($returnValue->Ok1Id) ?? NULL,
+                            'collection' => clean($returnValue->Ozelkod1) ?? NULL,
                             'pattern_id' => clean($returnValue->Ok2Id) ?? NULL,
                             'pattern' => clean($returnValue->Ozelkod2) ?? NULL,
                             'color_id' =>  clean($returnValue->Ok3Id) ?? NULL,

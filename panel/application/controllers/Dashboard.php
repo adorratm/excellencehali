@@ -29,10 +29,10 @@ class Dashboard extends CI_Controller
         $order = "stock ASC";
         $likes = [];
         $wheres["p.isActive"] = 1;
-        $joins = ["product_categories pc" => ["pc.id=p.category_id", "left"]];
-        $select = "SUM(CAST(p.stock AS FLOAT)) AS stock,pc.title AS category ";
+        $joins = ["product_collections pc" => ["pc.id=p.collection_id", "left"]];
+        $select = "SUM(CAST(p.stock AS FLOAT)) AS stock,pc.title AS collection ";
         $distinct = false;
-        $groupBy = ["category"];
+        $groupBy = ["collection"];
         $this->viewData->products = $this->general_model->get_all("products p", $select, $order, $wheres, $likes, $joins, [], [], $distinct, $groupBy);
         $this->viewData->total_products_count = $this->general_model->rowCount("products");
         $this->load->view("{$this->viewData->viewFolder}/{$this->viewData->subViewFolder}/index", $this->viewData);

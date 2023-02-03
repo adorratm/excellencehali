@@ -11,18 +11,18 @@
                         <a rel="dofollow" href="<?= base_url(); ?>" title="<?= strto("lower|ucwords", lang("home")) ?>"><?= strto("lower|ucwords", lang("home")) ?></a>
                     </li>
                     <li>
-                        <a href="<?= base_url(lang("routes_product_categories")); ?>" rel="dofollow" title="<?= strto("lower|ucwords", lang("products")) ?>"><?= strto("lower|ucwords", lang("products")) ?></a>
+                        <a href="<?= base_url(lang("routes_product_collections")); ?>" rel="dofollow" title="<?= strto("lower|ucwords", lang("products")) ?>"><?= strto("lower|ucwords", lang("products")) ?></a>
                     </li>
-                    <?php if (!empty($product->category_ids)) : ?>
+                    <?php if (!empty($product->collection_ids)) : ?>
                         <li>
                             <?php $i = 1 ?>
-                            <?php $count = count(explode(",", $product->category_ids)) ?>
-                            <?php foreach (explode(",", $product->category_titles) as $k => $v) : ?>
-                                <?php $seo_url = explode(",", $product->category_seos)[$k]; ?>
+                            <?php $count = count(explode(",", $product->collection_ids)) ?>
+                            <?php foreach (explode(",", $product->collection_titles) as $k => $v) : ?>
+                                <?php $seo_url = explode(",", $product->collection_seos)[$k]; ?>
                                 <?php if ($i < $count) : ?>
-                                    <a rel="dofollow" href="<?= base_url(lang("routes_product_categories") . "/{$seo_url}") ?>" title="<?= strto("lower|ucwords", $v) ?>"><?= strto("lower|ucwords", $v) ?></a>,
+                                    <a rel="dofollow" href="<?= base_url(lang("routes_product_collections") . "/{$seo_url}") ?>" title="<?= strto("lower|ucwords", $v) ?>"><?= strto("lower|ucwords", $v) ?></a>,
                                 <?php else : ?>
-                                    <a rel="dofollow" href="<?= base_url(lang("routes_product_categories") . "/{$seo_url}") ?>" title="<?= strto("lower|ucwords", $v) ?>"><?= strto("lower|ucwords", $v) ?></a>
+                                    <a rel="dofollow" href="<?= base_url(lang("routes_product_collections") . "/{$seo_url}") ?>" title="<?= strto("lower|ucwords", $v) ?>"><?= strto("lower|ucwords", $v) ?></a>
                                 <?php endif ?>
                                 <?php $i++ ?>
                             <?php endforeach ?>
