@@ -16,7 +16,7 @@
 
 <!-- END: Collections Section -->
 <section class="collectionsSections">
-    <div class="container">
+    <div class="container-fluid px-5">
         <div class="row shopAccessRow align-items-center align-content-center align-self-center shadow p-2">
             <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 my-2">
                 <div class="productCount"><?= $offset == 0 ? (!empty($product_collections) ? 1 : 0) : (empty($product_collections) ? 0 : $offset) ?>–<?= $total_rows > $offset + $per_page ? (empty($product_collections) ? 0 : $offset + $per_page) : (empty($product_collections) ? 0 : $total_rows) ?> / <?= empty($product_collections) ? 0 : $total_rows ?></div>
@@ -38,47 +38,47 @@
             <div class="col-sm-12 col-md-5 col-lg-4 col-xl-3 my-2">
                 <div class="shopAccessBar">
                     <div class="sortNav">
-                        <form method="post" action="#">
-                            <label><?= lang("orderBy") ?></label>
-                            <select name="productFilter" onchange="$('#searchCollectionForm').find('input[name=orderBy]').val($(this).val());$('#searchCollectionForm').submit()">
-                                <option value="1"><?= lang("newToOld") ?></option>
-                                <option value="2"><?= lang("oldToNew") ?></option>
-                                <option value="3"><?= lang("aToZ") ?></option>
-                                <option value="4"><?= lang("zToA") ?></option>
-                            </select>
-                        </form>
+                        <label><?= lang("orderBy") ?></label>
+                        <select name="productFilter" onchange="$('#searchCollectionForm').find('input[name=orderBy]').val($(this).val());$('#searchCollectionForm').submit()">
+                            <option <?= (!empty($_GET["orderBy"]) && $_GET["orderBy"] == 1 ? "selected" : null) ?> value="1"><?= lang("newToOld") ?></option>
+                            <option <?= (!empty($_GET["orderBy"]) && $_GET["orderBy"] == 2 ? "selected" : null) ?> value="2"><?= lang("oldToNew") ?></option>
+                            <option <?= (!empty($_GET["orderBy"]) && $_GET["orderBy"] == 3 ? "selected" : null) ?> value="3"><?= lang("aToZ") ?></option>
+                            <option <?= (!empty($_GET["orderBy"]) && $_GET["orderBy"] == 4 ? "selected" : null) ?> value="4"><?= lang("zToA") ?></option>
+                        </select>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row collectionProductRow bg-white shadow">
-            <?php if (!empty($product_collections)) : ?>
+
+        <?php if (!empty($product_collections)) : ?>
+            <div class="row collectionProductRow bg-white shadow p-2 align-items-stretch align-self-stretch align-content-stretch">
                 <?php foreach ($product_collections as $k => $v) : ?>
-                    <div class="col-sm-6 col-lg-4 col-xl-3 mb-3">
-                        <div class="productItem01 ">
+                    <div class="col-sm-6 col-lg-4 col-xl-3 my-3">
+                        <div class="productItem01 border rounded p-3 h-100 shadow-sm">
                             <div class="pi01Thumb">
                                 <img data-src="<?= get_picture("product_collections_v", $v->img_url) ?>" class="img-fluid lazyload" alt="<?= $v->title ?>" title="<?= $v->title ?>" />
                                 <img data-src="<?= get_picture("product_collections_v", $v->img_url) ?>" class="img-fluid lazyload" alt="<?= $v->title ?>" title="<?= $v->title ?>" />
                                 <div class="pi01Actions">
-                                    <a href="<?= base_url(lang("routes_products") . "/" . $v->codes . "/" . $v->seo_url) ?>" rel="dofollow" title="<?= lang("viewProducts") ?>"><i class="fa-solid fa-arrows-up-down-left-right"></i></a>
+                                    <a href="<?= base_url(lang("routes_product_collections") . "/" . $v->codes . "/" . $v->seo_url) ?>" rel="dofollow" title="<?= lang("viewProducts") ?>"><i class="fa-solid fa-arrows-up-down-left-right"></i></a>
                                 </div>
                             </div>
                             <div class="pi01Details">
-                                <h3 class="secTitle text-center"><a href="<?= base_url(lang("routes_products") . "/" . $v->codes . "/" . $v->seo_url) ?>" rel="dofollow" title="<?= lang("viewProducts") ?>"><?= $v->title ?></a></h3>
+                                <h3 class="secTitle text-center fw-medium fs-6"><a href="<?= base_url(lang("routes_product_collections") . "/" . $v->codes . "/" . $v->seo_url) ?>" rel="dofollow" title="<?= lang("viewProducts") ?>"><?= $v->title ?></a></h3>
                             </div>
                         </div>
                     </div>
                 <?php endforeach ?>
-            <?php endif ?>
-            <?php if (empty($product_collections)) : ?>
-                <div class="alert alert-warning rounded-0 shadow" role="alert">
-                    <h4 class="alert-heading"><?= lang("warning") ?></h4>
-                    <p><?= lang("weCantFindAnyProductCollectionsWithYourSearch") ?></p>
-                    <hr>
-                    <p class="mb-0"><?= lang("youCanSearchDifferentProductCollections") ?></p>
-                </div>
-            <?php endif ?>
-        </div>
+            </div>
+        <?php endif ?>
+        <?php if (empty($product_collections)) : ?>
+            <div class="alert alert-warning rounded-0 shadow" role="alert">
+                <h4 class="alert-heading"><?= lang("warning") ?></h4>
+                <p><?= lang("weCantFindAnyProductCollectionsWithYourSearch") ?></p>
+                <hr>
+                <p class="mb-0"><?= lang("youCanSearchDifferentProductCollections") ?></p>
+            </div>
+        <?php endif ?>
+
         <?= @$links ?>
     </div>
 </section>

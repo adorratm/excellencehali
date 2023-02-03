@@ -105,7 +105,7 @@ class Products extends MY_Controller
      * -----------------------------------------------------------------------------------------------
      */
 
-     /**
+    /**
      * -----------------------------------------------------------------------------------------------
      * ...:::!!! ================================ PRODUCTS ================================= !!!:::...
      * -----------------------------------------------------------------------------------------------
@@ -125,7 +125,7 @@ class Products extends MY_Controller
         if (!empty($seo_url) && !is_numeric($seo_url)) :
             $collection = $this->general_model->get("product_collections", null, ["isActive" => 1, "lang" => $this->viewData->lang, "seo_url" => $seo_url]);
             if (!empty($collection)) :
-                $collection_id = $collection->id;
+                $collection_id = $collection->codes_id;
                 $collection->seo_url = (!empty($collection->seo_url) ? $collection->seo_url : null);
                 $collection->title = (!empty($collection->title) ? $collection->title : null);
             endif;
@@ -133,14 +133,25 @@ class Products extends MY_Controller
         /**
          * Order
          */
-        $order = !empty($_GET["orderBy"]) ? clean($_GET["orderBy"]) : "p.id DESC";
+        $order = "p.id DESC";
+        if (!empty($_GET["orderBy"]) && clean($_GET["orderBy"]) == 1) :
+            $order = "p.id DESC";
+        endif;
+        if (!empty($_GET["orderBy"]) && clean($_GET["orderBy"]) == 2) :
+            $order = "p.id ASC";
+        endif;
+        if (!empty($_GET["orderBy"]) && clean($_GET["orderBy"]) == 3) :
+            $order = "p.title ASC";
+        endif;
+        if (!empty($_GET["orderBy"]) && clean($_GET["orderBy"]) == 4) :
+            $order = "p.title DESC";
+        endif;
         /**
          * Likes
          */
         $likes = [];
         if (!empty($search)) :
             $likes["p.title"] = $search;
-            $likes["p.content"] = $search;
             $likes["p.createdAt"] = $search;
             $likes["p.updatedAt"] = $search;
             $likes["pd.description"] = $search;
@@ -189,7 +200,7 @@ class Products extends MY_Controller
         $config["full_tag_close"] = "</ul>";
         $config['attributes'] = array('class' => 'page-link');
         $config['total_rows'] = $this->general_model->rowCount("products p", $wheres, $likes, $joins, [], $distinct, $groupBy, "p.id");
-        $config['per_page'] = 1;
+        $config['per_page'] = 24;
         $config["num_links"] = 5;
         $config['reuse_query_string'] = true;
         $this->pagination->initialize($config);
@@ -212,6 +223,22 @@ class Products extends MY_Controller
          * Get All Collections
          */
         $this->viewData->collections = $this->general_model->get_all("product_collections", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang]);
+        /** 
+         * Get Product Patterns
+         */
+        $this->viewData->product_patterns = $this->general_model->get_all("products p", "pattern_id,pattern", "pattern ASC", $wheres, $likes, $joins, [], [], $distinct, "pattern");
+        /** 
+         * Get Product Colors
+         */
+        $this->viewData->product_colors = $this->general_model->get_all("products p", "color_id,color", "color ASC", $wheres, $likes, $joins, [], [], $distinct, "color");
+        /** 
+         * Get Product Dimensions
+         */
+        $this->viewData->product_dimensions = $this->general_model->get_all("products p", "dimension_id,dimension", "dimension ASC", $wheres, $likes, $joins, [], [], $distinct, "dimension");
+        /** 
+         * Get Product Brands
+         */
+        $this->viewData->product_brands = $this->general_model->get_all("products p", "brand_id,brand", "brand ASC", $wheres, $likes, $joins, [], [], $distinct, "brand");
         /** 
          * Get Products
          */

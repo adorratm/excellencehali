@@ -3881,22 +3881,20 @@
 .sortNav {
     position: relative;
     margin: 0 30px 0 0;
-}
-
-.sortNav form {
     margin: 0;
     padding: 0;
     display: inline-flex;
+
 }
 
-.sortNav form label {
+.sortNav label {
     font-size: 16px;
     line-height: 24px;
     color: #7f8495;
     margin: 0 13px 0 0;
 }
 
-.sortNav form .nice-select {
+.sortNav .nice-select {
     font-size: 16px;
     line-height: 24px;
     color: #7f8495;
@@ -3909,11 +3907,11 @@
     height: auto;
 }
 
-.sortNav form .nice-select span.current {
+.sortNav .nice-select span.current {
     font-weight: 700;
 }
 
-.sortNav form .nice-select:after {
+.sortNav .nice-select:after {
     content: '\f107';
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
@@ -3932,11 +3930,11 @@
     -webkit-transform: rotate(0deg);
 }
 
-.sortNav form .nice-select.open:after {
+.sortNav .nice-select.open:after {
     content: '\f106';
 }
 
-.sortNav form .nice-select .list {
+.sortNav .nice-select .list {
     margin: 10px 0 0;
     border-radius: 3px;
     border: none;
@@ -3944,7 +3942,7 @@
     min-width: 80px;
 }
 
-.sortNav form .nice-select .list .option {
+.sortNav .nice-select .list .option {
     font-size: 16px;
     color: #7f8495;
     text-transform: capitalize;
@@ -3952,9 +3950,9 @@
     line-height: 40px;
 }
 
-.sortNav form .nice-select .option:hover,
-.sortNav form .nice-select .option.focus,
-.sortNav form .nice-select .option.selected.focus {
+.sortNav .nice-select .option:hover,
+.sortNav .nice-select .option.focus,
+.sortNav .nice-select .option.selected.focus {
     background-color: #9ebbbd !important;
     color: #FFF !important;
 }
@@ -4100,7 +4098,7 @@
 }
 
 .shopSidebar .widget {
-    margin: 0 0 36px;
+    margin: 0 0 20px;
     padding: 0;
 }
 
@@ -4109,7 +4107,8 @@
     line-height: 30px;
     position: relative;
     padding: 0 0 0 17px;
-    margin: 0 0 21px;
+    margin: 0 0 5px;
+    cursor: pointer;
 }
 
 .shopSidebar .widget .widgetTitle:before {
@@ -4387,7 +4386,7 @@
 }
 
 .shopSidebar .widget.sizeFilter {
-    margin: 0 0 42px;
+    margin: 0 0 20px;
 }
 
 .pagination {
@@ -4402,7 +4401,7 @@
     height: 48px;
     border: 1px solid #c5d0cf;
     text-align: center;
-    line-height: 35px!important;
+    line-height: 35px !important;
     font-size: 16px;
     border-radius: 50%;
     margin-right: 6px;
@@ -8364,51 +8363,51 @@ form.contactForm button.ulinaBTN {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-  }
-  
-  /* Hide the browser's default checkbox */
-  .cbx input {
+}
+
+/* Hide the browser's default checkbox */
+.cbx input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
     height: 0;
     width: 0;
-  }
-  
-  /* Create a custom checkbox */
-  .checkmark {
+}
+
+/* Create a custom checkbox */
+.checkmark {
     position: absolute;
     top: 0;
     left: 0;
     height: 25px;
     width: 25px;
     background-color: #eee;
-  }
-  
-  /* On mouse-over, add a grey background color */
-  .cbx:hover input ~ .checkmark {
+}
+
+/* On mouse-over, add a grey background color */
+.cbx:hover input~.checkmark {
     background-color: #ccc;
-  }
-  
-  /* When the checkbox is checked, add a blue background */
-  .cbx input:checked ~ .checkmark {
+}
+
+/* When the checkbox is checked, add a blue background */
+.cbx input:checked~.checkmark {
     background-color: #2196F3;
-  }
-  
-  /* Create the checkmark/indicator (hidden when not checked) */
-  .checkmark:after {
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
     content: "";
     position: absolute;
     display: none;
-  }
-  
-  /* Show the checkmark when checked */
-  .cbx input:checked ~ .checkmark:after {
+}
+
+/* Show the checkmark when checked */
+.cbx input:checked~.checkmark:after {
     display: block;
-  }
-  
-  /* Style the checkmark/indicator */
-  .cbx .checkmark:after {
+}
+
+/* Style the checkmark/indicator */
+.cbx .checkmark:after {
     left: 9px;
     top: 5px;
     width: 5px;
@@ -8418,4 +8417,23 @@ form.contactForm button.ulinaBTN {
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
-  }
+}
+
+.shopSidebar .widget ul {
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.shopSidebar .widget ul::-webkit-scrollbar{
+    width: 5px;
+}
+
+.shopSidebar .widget ul::-webkit-scrollbar-track{
+    background: #dcebe9;
+    
+}
+
+.shopSidebar .widget ul::-webkit-scrollbar-thumb{
+    background: #7b9496;
+    border-radius: 50px;
+}
