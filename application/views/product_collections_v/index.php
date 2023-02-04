@@ -53,7 +53,7 @@
         <?php if (!empty($product_collections)) : ?>
             <div class="row collectionProductRow bg-white shadow p-2 align-items-stretch align-self-stretch align-content-stretch">
                 <?php foreach ($product_collections as $k => $v) : ?>
-                    <div class="col-sm-6 col-lg-4 col-xl-3 my-3">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2 my-3">
                         <div class="productItem01 border rounded p-3 h-100 shadow-sm">
                             <div class="pi01Thumb">
                                 <img data-src="<?= get_picture("product_collections_v", $v->img_url) ?>" class="img-fluid lazyload" alt="<?= $v->title ?>" title="<?= $v->title ?>" />

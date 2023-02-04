@@ -138,7 +138,7 @@
                 <div class="col-sm-7 col-md-8 col-lg-9 col-xl-10">
                     <div class="row">
                         <?php foreach ($products as $key => $value) : ?>
-                            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 my-3">
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-3 my-3">
                                 <div class="productItem01 rounded border p-3 h-100 shadow-sm">
                                     <div class="pi01Thumb">
                                         <img loading="lazy" width="1000" height="1000" data-src="<?= get_picture("products_v", $value->img_url) ?>" alt="<?= $value->title ?>" title="<?= $value->title ?>" class="img-fluid lazyload" />

@@ -7753,6 +7753,8 @@
 .pageBannerSection {
     background: #ecf5f4;
     height: 200px;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .pageBannerContent {
