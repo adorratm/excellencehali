@@ -818,86 +818,86 @@ function rWebp2($dir)
 }
 
 /**
-     * -----------------------------------------------------------------------------------------------
-     * ...:::!!! ================================== MENU =================================== !!!:::...
-     * -----------------------------------------------------------------------------------------------
-     */
-    /**
-     * Show Tree
-     */
-    function show_tree($position = 'HEADER', $lang = 'tr')
-    {
-        $t = &get_instance();
-        // create array to store all menus ids
-        $store_all_id = array();
-        // get all parent menus ids by using isactive
-        $id_result = $t->general_model->get_all("menus", "top_id", "rank ASC", ["position" => $position, "isActive" => 1, "lang" => $lang]);
-        // loop through all menus to save parent ids $store_all_id array
-        foreach ($id_result as $menu_id) {
-            array_push($store_all_id, $menu_id->top_id);
-        }
-        // return all hierarchical tree data from in_parent by sending
-        //  initiate parameters 0 is the main parent,blog id, all parent ids
-        return  in_parent(0, $position, $lang, $store_all_id);
+ * -----------------------------------------------------------------------------------------------
+ * ...:::!!! ================================== MENU =================================== !!!:::...
+ * -----------------------------------------------------------------------------------------------
+ */
+/**
+ * Show Tree
+ */
+function show_tree($position = 'HEADER', $lang = 'tr')
+{
+    $t = &get_instance();
+    // create array to store all menus ids
+    $store_all_id = array();
+    // get all parent menus ids by using isactive
+    $id_result = $t->general_model->get_all("menus", "top_id", "rank ASC", ["position" => $position, "isActive" => 1, "lang" => $lang]);
+    // loop through all menus to save parent ids $store_all_id array
+    foreach ($id_result as $menu_id) {
+        array_push($store_all_id, $menu_id->top_id);
     }
-    /**
-     * recursive function to loop
-     * through all comments and retrieve it
-     */
-    function in_parent($in_parent = null, $position = null, $lang = null, $store_all_id = null)
-    {
-        $t = &get_instance();
-        // this variable to save all concatenated html
-        $html = "";
-        // build hierarchy  html structure based on ul li (parent-child) nodes
-        if (in_array($in_parent, $store_all_id)) :
-            $result = $t->general_model->get_all("menus", "url,title,id,top_id,page_id,target", "rank ASC", ["position" => $position, "top_id" => $in_parent, "isActive" => 1, "lang" => $lang]);
-            $html .=  '<ul ' . ($position == "HEADER" && $in_parent == 0 ? null : null) . '>';
-            foreach ($result as $key => $value) :
-                $page = $t->general_model->get("pages", "url,title", ["isActive" => 1, "id" => $value->page_id, "lang" => $lang]);
-                if ($value->page_id !== 0) :
-                    if (!empty($page)) :
-                        $page->url = (!empty($page->url) ? $page->url : null);
-                    endif;
+    // return all hierarchical tree data from in_parent by sending
+    //  initiate parameters 0 is the main parent,blog id, all parent ids
+    return  in_parent(0, $position, $lang, $store_all_id);
+}
+/**
+ * recursive function to loop
+ * through all comments and retrieve it
+ */
+function in_parent($in_parent = null, $position = null, $lang = null, $store_all_id = null)
+{
+    $t = &get_instance();
+    // this variable to save all concatenated html
+    $html = "";
+    // build hierarchy  html structure based on ul li (parent-child) nodes
+    if (in_array($in_parent, $store_all_id)) :
+        $result = $t->general_model->get_all("menus", "url,title,id,top_id,page_id,target", "rank ASC", ["position" => $position, "top_id" => $in_parent, "isActive" => 1, "lang" => $lang]);
+        $html .=  '<ul ' . ($position == "HEADER" && $in_parent == 0 ? null : null) . '>';
+        foreach ($result as $key => $value) :
+            $page = $t->general_model->get("pages", "url,title", ["isActive" => 1, "id" => $value->page_id, "lang" => $lang]);
+            if ($value->page_id !== 0) :
+                if (!empty($page)) :
+                    $page->url = (!empty($page->url) ? $page->url : null);
                 endif;
-                $value->title = (!empty($value->title) ? $value->title : null);
-                if (!empty($value->url)) :
-                    $value->url = (!empty($value->url) ? $value->url : null);
-                endif;
-                $html .= '<li ' . (($position == "HEADER") && (in_array($value->id, $store_all_id)) ? ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) || ($t->uri->segment(2) === null && $value->url === '/') ? "class='menu-item-has-children active'" : "class='menu-item-has-children'") : ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || ($t->uri->segment(2) === null && $value->url === '/') || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) ? null : null)) . '>';
-                if (empty($value->url)) :
+            endif;
+            $value->title = (!empty($value->title) ? $value->title : null);
+            if (!empty($value->url)) :
+                $value->url = (!empty($value->url) ? $value->url : null);
+            endif;
+            $html .= '<li ' . (($position == "HEADER") && (in_array($value->id, $store_all_id)) ? ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) || ($t->uri->segment(2) === null && $value->url === '/') ? "class='menu-item-has-children active'" : "class='menu-item-has-children'") : ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || ($t->uri->segment(2) === null && $value->url === '/') || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) ? null : null)) . '>';
+            if (empty($value->url)) :
 
-                    if (!empty($page->url)) :
+                if (!empty($page->url)) :
 
-                        $html .= '<a rel="dofollow" ' . (($position == "MOBILE" || $position == "HEADER") && in_array($value->id, $store_all_id) ? ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) || ($t->uri->segment(2) === null && $value->url === '/') ? "class='active'" : "class=''") : ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || ($t->uri->segment(2) === null && $value->url === '/') || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) ? "class='active'" : "class=''")) . ' href="' . base_url(lang("routes_page") . "/" . (!empty($page->url) ? $page->url : null)) . '" target="' . $value->target . '" title="' . $value->title . '">' . $value->title . '</a>';
-                        array_push($t->viewData->page_urls, base_url(lang("routes_page") . "/" . (!empty($page->url) ? $page->url : null)));
-                    else :
-                        $html .= '<a rel="dofollow" ' . (($position == "MOBILE" || $position == "HEADER") && in_array($value->id, $store_all_id) ? ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) || ($t->uri->segment(2) === null && $value->url === '/') ? "class='active'" : "class=''") : ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || ($t->uri->segment(2) === null && $value->url === '/') || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) ? "class='active'" : "class=''")) . ' href="' . base_url(seo(strto("lower", $value->title))) . '" target="' . $value->target . '" title="' . $value->title . '">' . $value->title . '</a>';
-                        array_push($t->viewData->page_urls, base_url(seo(strto("lower", $value->title))));
-                    endif;
+                    $html .= '<a rel="dofollow" ' . (($position == "MOBILE" || $position == "HEADER") && in_array($value->id, $store_all_id) ? ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) || ($t->uri->segment(2) === null && $value->url === '/') ? "class='active'" : "class=''") : ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || ($t->uri->segment(2) === null && $value->url === '/') || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) ? "class='active'" : "class=''")) . ' href="' . base_url(lang("routes_page") . "/" . (!empty($page->url) ? $page->url : null)) . '" target="' . $value->target . '" title="' . $value->title . '">' . $value->title . '</a>';
+                    array_push($t->viewData->page_urls, base_url(lang("routes_page") . "/" . (!empty($page->url) ? $page->url : null)));
                 else :
-                    $url = parse_url($value->url, PHP_URL_SCHEME);
-                    if ($url === "http" || $url === "https") :
-                        $html .= '<a rel="dofollow" ' . (($position == "MOBILE" || $position == "HEADER") && in_array($value->id, $store_all_id) ? ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) || ($t->uri->segment(2) === null && $value->url === '/') ? "class='active'" : "class=''") : ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || ($t->uri->segment(2) === null && $value->url === '/') || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) ? "class='active'" : "class=''")) . ' href="' . $value->url . '" target="' . $value->target . '" title="' . $value->title . '">' . $value->title . '</a>';
-                        array_push($t->viewData->page_urls, $value->url);
-                    else :
-                        $html .= '<a rel="dofollow" ' . (($position == "MOBILE" || $position == "HEADER") && in_array($value->id, $store_all_id) ? ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) || ($t->uri->segment(2) === null && $value->url === '/') ? "class='active'" : "class=''") : ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || ($t->uri->segment(2) === null && $value->url === '/') || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) ? "class='active'" : "class=''")) . ' href="' . base_url($value->url) . '" target="' . $value->target . '" title="' . $value->title . '">' . $value->title . '</a>';
-                        array_push($t->viewData->page_urls, base_url($value->url));
-                    endif;
+                    $html .= '<a rel="dofollow" ' . (($position == "MOBILE" || $position == "HEADER") && in_array($value->id, $store_all_id) ? ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) || ($t->uri->segment(2) === null && $value->url === '/') ? "class='active'" : "class=''") : ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || ($t->uri->segment(2) === null && $value->url === '/') || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) ? "class='active'" : "class=''")) . ' href="' . base_url(seo(strto("lower", $value->title))) . '" target="' . $value->target . '" title="' . $value->title . '">' . $value->title . '</a>';
+                    array_push($t->viewData->page_urls, base_url(seo(strto("lower", $value->title))));
                 endif;
-                $html .= in_parent($value->id, $position, $lang, $store_all_id);
-                $html .= "</li>";
-            endforeach;
-            $html .=  "</ul>";
-        endif;
+            else :
+                $url = parse_url($value->url, PHP_URL_SCHEME);
+                if ($url === "http" || $url === "https") :
+                    $html .= '<a rel="dofollow" ' . (($position == "MOBILE" || $position == "HEADER") && in_array($value->id, $store_all_id) ? ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) || ($t->uri->segment(2) === null && $value->url === '/') ? "class='active'" : "class=''") : ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || ($t->uri->segment(2) === null && $value->url === '/') || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) ? "class='active'" : "class=''")) . ' href="' . $value->url . '" target="' . $value->target . '" title="' . $value->title . '">' . $value->title . '</a>';
+                    array_push($t->viewData->page_urls, $value->url);
+                else :
+                    $html .= '<a rel="dofollow" ' . (($position == "MOBILE" || $position == "HEADER") && in_array($value->id, $store_all_id) ? ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) || ($t->uri->segment(2) === null && $value->url === '/') ? "class='active'" : "class=''") : ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || ($t->uri->segment(2) === null && $value->url === '/') || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) ? "class='active'" : "class=''")) . ' href="' . base_url($value->url) . '" target="' . $value->target . '" title="' . $value->title . '">' . $value->title . '</a>';
+                    array_push($t->viewData->page_urls, base_url($value->url));
+                endif;
+            endif;
+            $html .= in_parent($value->id, $position, $lang, $store_all_id);
+            $html .= "</li>";
+        endforeach;
+        $html .=  "</ul>";
+    endif;
 
-        return $html;
-    }
-    /**
-     * -----------------------------------------------------------------------------------------------
-     * ...:::!!! ================================== MENU =================================== !!!:::...
-     * -----------------------------------------------------------------------------------------------
-     */
+    return $html;
+}
+/**
+ * -----------------------------------------------------------------------------------------------
+ * ...:::!!! ================================== MENU =================================== !!!:::...
+ * -----------------------------------------------------------------------------------------------
+ */
 
 
 /**
@@ -910,16 +910,16 @@ function show_collections($lang = "tr")
     // this variable to save all concatenated html
     $html = "";
     // build hierarchy  html structure based on ul li (parent-child) nodes
-        $result = $t->general_model->get_all("product_collections", "title,seo_url,id", "rank ASC", ["isActive" => 1, "lang" => $lang]);
-        $html .=  '<ul>';
-        foreach ($result as $key => $value) :
-            $html .= '<li>';
-            $html .= '<a rel="dofollow" ' .
-                ($t->uri->segment(3) == $value->seo_url ? "class='active link'" : "class='link'") . ' href="' . base_url(lang("routes_product_collections") . "/{$value->seo_url}") . '" title="' . $value->title . '"><i class="bx bx-chevron-right"></i> ' . $value->title . '</a>';
-            $html .= show_collections($value->id, $lang);
-            $html .= "</li>";
-        endforeach;
-        $html .=  "</ul>";
+    $result = $t->general_model->get_all("product_collections", "title,seo_url,id", "rank ASC", ["isActive" => 1, "lang" => $lang]);
+    $html .=  '<ul>';
+    foreach ($result as $key => $value) :
+        $html .= '<li>';
+        $html .= '<a rel="dofollow" ' .
+            ($t->uri->segment(3) == $value->seo_url ? "class='active link'" : "class='link'") . ' href="' . base_url(lang("routes_product_collections") . "/{$value->seo_url}") . '" title="' . $value->title . '"><i class="bx bx-chevron-right"></i> ' . $value->title . '</a>';
+        $html .= show_collections($value->id, $lang);
+        $html .= "</li>";
+    endforeach;
+    $html .=  "</ul>";
     return $html;
 }
 // uses regex that accepts any word character or hyphen in last name
@@ -940,16 +940,16 @@ function show_header_collections($lang = "tr")
     // this variable to save all concatenated html
     $html = "";
     // build hierarchy  html structure based on ul li (parent-child) nodes
-        $result = $t->general_model->get_all("product_collections", "title,seo_url,id", "rank ASC", ["isActive" => 1, "lang" => $lang]);
-        $html .=  '<ul>';
-        foreach ($result as $key => $value) :
-            $html .= '<li class="nav-item">';
-            $html .= '<a rel="dofollow"' .
-                ($t->uri->segment(3) == $value->seo_url ? "active nav-link" : "nav-link") . '" href="' . base_url(lang("routes_product_collections") . "/{$value->seo_url}") . '" title="' . $value->title . '">' . $value->title . '</a>';
-            $html .= show_header_collections($value->id, $lang);
-            $html .= "</li>";
-        endforeach;
-        $html .=  "</ul>";
+    $result = $t->general_model->get_all("product_collections", "title,seo_url,id", "rank ASC", ["isActive" => 1, "lang" => $lang]);
+    $html .=  '<ul>';
+    foreach ($result as $key => $value) :
+        $html .= '<li class="nav-item">';
+        $html .= '<a rel="dofollow"' .
+            ($t->uri->segment(3) == $value->seo_url ? "active nav-link" : "nav-link") . '" href="' . base_url(lang("routes_product_collections") . "/{$value->seo_url}") . '" title="' . $value->title . '">' . $value->title . '</a>';
+        $html .= show_header_collections($value->id, $lang);
+        $html .= "</li>";
+    endforeach;
+    $html .=  "</ul>";
     return $html;
 }
 
@@ -964,16 +964,4 @@ function get_secondary_image($codes_id = null, $codes = null, $cover_url = null,
         return $cover_url;
     endif;
     return null;
-}
-
-function encodeimg($url)
-{
-    $r = get_headers($url, 1);
-    if (isset($r['Content-Type'])) {
-        $imageData = base64_encode(file_get_contents($url));
-        $src = 'data: ' . $r['Content-Type'] . ';base64,' . $imageData;
-    } else {
-        $src = $url;
-    }
-    return $src;
 }

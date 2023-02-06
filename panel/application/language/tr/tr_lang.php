@@ -1,4 +1,6 @@
 <?php
+$lang["productFilter"] = "Ürünleri Filtrele";
+$lang["clearFilter"] = "Filtreyi Temizle";
 $lang["productColor"] = "Ürün Rengi";
 $lang["productDimension"] = "Ürün Ebatı";
 $lang["productPattern"] = "Ürün Deseni";
