@@ -146,6 +146,12 @@ class Products extends MY_Controller
         if (!empty($_GET["orderBy"]) && clean($_GET["orderBy"]) == 4) :
             $order = "p.title DESC";
         endif;
+        if (!empty($_GET["orderBy"]) && clean($_GET["orderBy"]) == 5) :
+            $order = "(CASE WHEN discounted_price = NULL then  CAST(price as INT) ELSE CAST(discounted_price as INT) end) ASC";
+        endif;
+        if (!empty($_GET["orderBy"]) && clean($_GET["orderBy"]) == 6) :
+            $order = "(CASE WHEN discounted_price = NULL then  CAST(price as INT) ELSE CAST(discounted_price as INT) end) DESC";
+        endif;
         /**
          * Likes
          */
@@ -158,6 +164,27 @@ class Products extends MY_Controller
             $likes["pd.features"] = $search;
             $likes["pd.content"] = $search;
         endif;
+
+        /**
+         * Apply Filter
+         */
+        $whereIn = [];
+        if (!empty($_GET["patternChecks"])) :
+            $whereIn["p.pattern_id"] = array_map("intVal", explode(",", clean($_GET["patternChecks"])));
+        endif;
+        if (!empty($_GET["dimensionChecks"])) :
+            $whereIn["p.dimension_id"] = array_map("intVal", explode(",", clean($_GET["dimensionChecks"])));
+        endif;
+        if (!empty($_GET["colorChecks"])) :
+            $whereIn["p.color_id"] = array_map("intVal", explode(",", clean($_GET["colorChecks"])));
+        endif;
+        if (!empty($_GET["brandChecks"])) :
+            $whereIn["p.brand_id"] = array_map("intVal", explode(",", clean($_GET["brandChecks"])));
+        endif;
+        /**
+         * #Apply Filter
+         */
+
         $wheres = [];
         if (!empty($collection_id)) :
             $wheres["p.collection_id"] = $collection_id;
@@ -199,7 +226,7 @@ class Products extends MY_Controller
         $config["last_tag_close"] = "</li>";
         $config["full_tag_close"] = "</ul>";
         $config['attributes'] = array('class' => 'page-link');
-        $config['total_rows'] = $this->general_model->rowCount("products p", $wheres, $likes, $joins, [], $distinct, $groupBy, "p.id");
+        $config['total_rows'] = $this->general_model->rowCount("products p", $wheres, $likes, $joins, $whereIn, $distinct, $groupBy, "p.id");
         $config['per_page'] = 24;
         $config["num_links"] = 5;
         $config['reuse_query_string'] = true;
@@ -226,23 +253,23 @@ class Products extends MY_Controller
         /** 
          * Get Product Patterns
          */
-        $this->viewData->product_patterns = $this->general_model->get_all("products p", "pattern_id,pattern", "pattern ASC", $wheres, $likes, $joins, [], [], $distinct, "pattern");
+        $this->viewData->product_patterns = $this->general_model->get_all("products p", "pattern_id,pattern", "pattern ASC", $wheres, [], $joins, [], [],  $distinct, "pattern");
         /** 
          * Get Product Colors
          */
-        $this->viewData->product_colors = $this->general_model->get_all("products p", "color_id,color", "color ASC", $wheres, $likes, $joins, [], [], $distinct, "color");
+        $this->viewData->product_colors = $this->general_model->get_all("products p", "color_id,color", "color ASC", $wheres, [], $joins, [], [],  $distinct, "color");
         /** 
          * Get Product Dimensions
          */
-        $this->viewData->product_dimensions = $this->general_model->get_all("products p", "dimension_id,dimension", "dimension ASC", $wheres, $likes, $joins, [], [], $distinct, "dimension");
+        $this->viewData->product_dimensions = $this->general_model->get_all("products p", "dimension_id,dimension", "dimension ASC", $wheres, [], $joins, [], [],  $distinct, "dimension");
         /** 
          * Get Product Brands
          */
-        $this->viewData->product_brands = $this->general_model->get_all("products p", "brand_id,brand", "brand ASC", $wheres, $likes, $joins, [], [], $distinct, "brand");
+        $this->viewData->product_brands = $this->general_model->get_all("products p", "brand_id,brand", "brand ASC", $wheres, [], $joins, [], [],  $distinct, "brand");
         /** 
          * Get Products
          */
-        $this->viewData->products = $this->general_model->get_all("products p", $select, $order, $wheres, $likes, $joins, [$config["per_page"], $offset], [], $distinct, $groupBy);
+        $this->viewData->products = $this->general_model->get_all("products p", $select, $order, $wheres, $likes, $joins, [$config["per_page"], $offset], $whereIn, $distinct, $groupBy);
         /**
          * Meta
          */
