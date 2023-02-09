@@ -165,7 +165,7 @@ class Products extends MY_Controller
     }
     public function file_upload($codes_id, $codes, $lang)
     {
-        $resize = ['height' => 1280, 'width' => 1920, 'maintain_ratio' => FALSE, 'master_dim' => 'height'];
+        $resize = ['height' => 1000, 'width' => 1000, 'maintain_ratio' => FALSE, 'master_dim' => 'height'];
         $image = upload_picture("file", "uploads/$this->viewFolder/", $resize, "*");
         if ($image["success"]) :
             $getRank = $this->product_image_model->rowCount();

@@ -24,7 +24,7 @@
                             <div class="inner-box h-100">
                                 <div class="image">
                                     <a rel="dofollow" href="<?= base_url(lang("routes_galleries") . "/" . lang("routes_gallery") . "/{$value->url}") ?>" title="<?= $value->title ?>">
-                                        <img width="1920" height="1280" loading="lazy" data-src="<?= get_picture("galleries_v/{$value->gallery_type}/{$value->folder_name}", $value->img_url) ?>" title="<?= $value->title ?>" alt="<?= $value->title ?>" class="lazyload rounded img-fluid">
+                                        <img width="1000" height="1000" loading="lazy" data-src="<?= get_picture("galleries_v/{$value->gallery_type}/{$value->folder_name}", $value->img_url) ?>" title="<?= $value->title ?>" alt="<?= $value->title ?>" class="lazyload rounded img-fluid">
                                     </a>
                                 </div>
                                 <div class="mt-3">

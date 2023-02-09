@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-lg-10 offset-lg-1">
                 <div class="blogDetailsThumb">
-                    <img width="1920" height="1280" loading="lazy" data-src="<?= get_picture("blogs_v", $blog->img_url) ?>" title="<?= $blog->title ?>" alt="<?= $blog->title ?>" class="img-fluid w-100 lazyload">
+                    <img width="1000" height="1000" loading="lazy" data-src="<?= get_picture("blogs_v", $blog->img_url) ?>" title="<?= $blog->title ?>" alt="<?= $blog->title ?>" class="img-fluid w-100 lazyload">
                 </div>
                 <div class="blogDetailsContentArea">
                     <div class="bi01Meta clearfix">

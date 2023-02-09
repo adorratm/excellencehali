@@ -13,7 +13,7 @@
                                 <a rel="dofollow" href="<?= base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/{$value->url}" . (!empty($_GET["key"]) ? "?key=" . clean($_GET["key"]) : null)) ?>" title="<?= $value->title ?>" class="product-type two">%<?= (int)$value->discount ?></a>
                             <?php endif ?>
                             <a rel="dofollow" href="<?= base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/{$value->url}" . (!empty($_GET["key"]) ? "?key=" . clean($_GET["key"]) : null)) ?>" title="<?= $value->title ?>">
-                                <img width="1920" height="1280" loading="lazy" data-src="<?= get_picture("products_v", $value->img_url) ?>" alt="<?= $value->title ?>" class="img-fluid lazyload">
+                                <img width="1000" height="1000" loading="lazy" data-src="<?= get_picture("products_v", $value->img_url) ?>" alt="<?= $value->title ?>" class="img-fluid lazyload">
                             </a>
                             <div class="inner">
                                 <h3>

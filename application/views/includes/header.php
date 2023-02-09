@@ -80,7 +80,6 @@
             <div class="accessNav">
                 <a href="javascript:void(0);" class="menuToggler"><i class="fa-solid fa-bars"></i> <span>Menu</span></a>
                 <div class="anItems">
-                    <div class="anSearch"><a href="javascript:void(0);"><i class="fa-solid fa-search"></i></a></div>
                     <div class="anUser"><a href="javascript:void(0);"><i class="fa-solid fa-user"></i></a></div>
                     <div class="anCart">
                         <a href="javascript:void(0);"><i class="fa-solid fa-shopping-cart"></i><span><?= count($this->cart->contents()) ?></span></a>
@@ -95,44 +94,3 @@
 </header>
 <div class="blankHeader"></div>
 <!-- END: Section -->
-
-<!-- BEGIN: Search Popup Section -->
-<section class="popup_search_sec">
-    <div class="popup_search_overlay"></div>
-    <div class="pop_search_background">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6 col-md-6">
-                    <div class="popup_logo">
-                        <a rel="dofollow" href="<?= base_url() ?>" title="<?= $settings->company_name ?>">
-                            <picture>
-                                <img width="300" height="90" data-src="<?= get_picture("settings_v", $settings->logo) ?>" alt="<?= $settings->company_name ?>" class="lazyload img-fluid">
-                            </picture>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6">
-                    <a href="javascript:void(0);" id="search_Closer" class="search_Closer"></a>
-                </div>
-            </div>
-        </div>
-        <div class="middle_search">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <div class="popup_search_form">
-                            <form id="searchForm" action="<?= !empty($this->uri->segment(2) && !is_numeric($this->uri->segment(2))) ? base_url(lang("routes_product_collections")) : base_url(lang("routes_product_collections")) ?>" method="GET" enctype="multipart/form-data">
-                                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
-                                <div class="input-group">
-                                    <input name="search" id="search" type="search" placeholder="<?= lang("searchProduct") ?>..." required>
-                                    <button type="submit" aria-label="<?= $settings->company_name ?>"><i class="fa fa-search"></i></button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- END: Search Popup Section -->

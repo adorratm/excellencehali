@@ -753,8 +753,8 @@ function upload_picture($file, $uploadPath, $resize = [], $allowedTypes = "bmp|g
                 'image_library'   => 'gd2',
                 'source_image'    =>  $image_data['full_path'],
                 'maintain_ratio'  => (!empty($resize["maintain_ratio"]) ? $resize["maintain_ratio"] : FALSE),
-                'height'          => (!empty($resize["height"]) ? $resize["height"] : 1280),
-                'width'           => (!empty($resize["width"]) ? $resize["width"] : 1920),
+                'height'          => (!empty($resize["height"]) ? $resize["height"] : 1000),
+                'width'           => (!empty($resize["width"]) ? $resize["width"] : 1000),
                 'master_dim'      => (!empty($resize["master_dim"]) ? $resize["master_dim"] : 'height'),
                 'quality'         => '85%'
             ];
