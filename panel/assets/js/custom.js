@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     /** WORST CODES */
     $(".tagsInput").select2({
         width: 'resolve',
@@ -20,17 +20,17 @@ $(document).ready(function() {
 
     /** Sortable */
     $(".sortable").sortable();
-    $(document).on("sortupdate", '.sortable', function(event, ui) {
+    $(document).on("sortupdate", '.sortable', function (event, ui) {
         let $data = $(this).sortable("serialize");
         let $data_url = $(this).data("url");
         $.post($data_url, {
             data: $data
-        }, function(response) {});
+        }, function (response) { });
     });
     /** Sortable */
 
     /** Button Usage */
-    $(document).on("change", ".button_usage_btn", function() {
+    $(document).on("change", ".button_usage_btn", function () {
         $(this).parent().parent().find(".button-information-container").slideToggle();
     });
     /** Button Usage */
@@ -39,10 +39,10 @@ $(document).ready(function() {
     if ($(".dropzone").length > 0) {
         Dropzone.autoDiscover = false;
         //;
-        $('.dropzone').each(function(index) {
+        $('.dropzone').each(function (index) {
             let elem = "#" + $(this).attr("id");
             let $uploadSection = Dropzone.forElement(elem);
-            $uploadSection.on("complete", function(file) {
+            $uploadSection.on("complete", function (file) {
                 //console.log(file);
                 let dataTable = $(elem).data("table");
                 reloadTable(dataTable);
@@ -56,7 +56,7 @@ $(document).ready(function() {
     /** TinyMCE */
 
     /** IsActiveSetter */
-    $(document).on("click", ".my-check", function() {
+    $(document).on("click", ".my-check", function () {
         let id = $(this).data("id");
         let url = $(this).data("url");
         let value = null;
@@ -68,7 +68,7 @@ $(document).ready(function() {
         $.post(url, {
             "id": id,
             "data": value
-        }, function(data) {
+        }, function (data) {
             if (data.success) {
                 iziToast.success({
                     title: data.title,
@@ -87,7 +87,7 @@ $(document).ready(function() {
     /** IsActiveSetter */
 
     /** IsCoverSetter */
-    $(document).on('change', '.isCover', function() {
+    $(document).on('change', '.isCover', function () {
         let id = $(this).data("id");
         let url = $(this).data("url");
         let dataTable = $(this).data("table");
@@ -100,7 +100,7 @@ $(document).ready(function() {
         $.post(url, {
             "id": id,
             "data": value
-        }, function(data) {
+        }, function (data) {
             if (data.success) {
                 iziToast.success({
                     title: data.title,
@@ -121,7 +121,7 @@ $(document).ready(function() {
     /** IsCoverSetter */
 
     /** Remove Button */
-    $(document).on('click', '.remove-btn', function(e) {
+    $(document).on('click', '.remove-btn', function (e) {
         let url = $(this).data("url");
         let dataTable = $(this).data("table");
         swal.fire({
@@ -133,10 +133,10 @@ $(document).ready(function() {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Evet, Sil!',
             cancelButtonText: "Hayır"
-        }).then(function(result) {
+        }).then(function (result) {
             if (result.value) {
                 let formData = new FormData();
-                createAjax(url, formData, function() {
+                createAjax(url, formData, function () {
                     reloadTable(dataTable);
                 });
             }
@@ -169,8 +169,8 @@ function TinyMCEInit(height = 300, fullpage = false, selector = '.tinymce') {
         mobile: {
             theme: 'silver'
         },
-        setup: function(editor) {
-            editor.on('change', function() {
+        setup: function (editor) {
+            editor.on('change', function () {
                 editor.save();
             });
         },
@@ -178,36 +178,45 @@ function TinyMCEInit(height = 300, fullpage = false, selector = '.tinymce') {
         images_upload_url: base_url + 'settings/uploadImage',
         convert_urls: false,
         // override default upload handler to simulate successful upload
-        images_upload_handler: function(blobInfo, success, failure) {
-            var xhr, formData;
-
-            xhr = new XMLHttpRequest();
+        images_upload_handler: (blobInfo, progress) => new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
             xhr.withCredentials = false;
             xhr.open('POST', base_url + 'settings/uploadImage');
 
-            xhr.onload = function() {
-                var json;
-
-                if (xhr.status != 200) {
-                    failure('HTTP Error: ' + xhr.status);
-                    return;
-                }
-
-                json = JSON.parse(xhr.responseText);
-
-                if (!json || typeof json.location != 'string') {
-                    failure('Invalid JSON: ' + xhr.responseText);
-                    return;
-                }
-
-                success(json.location);
+            xhr.upload.onprogress = (e) => {
+                progress(e.loaded / e.total * 100);
             };
 
-            formData = new FormData();
+            xhr.onload = () => {
+                if (xhr.status === 403) {
+                    reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
+                    return;
+                }
+
+                if (xhr.status < 200 || xhr.status >= 300) {
+                    reject('HTTP Error: ' + xhr.status);
+                    return;
+                }
+
+                const json = JSON.parse(xhr.responseText);
+
+                if (!json || typeof json.location != 'string') {
+                    reject('Invalid JSON: ' + xhr.responseText);
+                    return;
+                }
+
+                resolve(json.location);
+            };
+
+            xhr.onerror = () => {
+                reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+            };
+
+            const formData = new FormData();
             formData.append('file', blobInfo.blob(), blobInfo.filename());
 
             xhr.send(formData);
-        },
+        }),
     });
     /* TinyMCE */
 }
@@ -223,8 +232,8 @@ function TableInitializerV2(gelentablo, gelendata, gelencolumn, gelenurl, rankUr
 }, {
     "targets": ['nosort'],
     "orderable": false,
-}, ]) {
-    $('table.' + gelentablo).on('draw.dt', function() {
+},]) {
+    $('table.' + gelentablo).on('draw.dt', function () {
         $('table.' + gelentablo).DataTable().columns.adjust();
         $('table.' + gelentablo).DataTable().responsive.recalc();
     });
@@ -305,27 +314,27 @@ function TableInitializerV2(gelentablo, gelendata, gelencolumn, gelenurl, rankUr
             'data': gelendata
         },
         //'columns': gelencolumn,
-        "rowCallback": function(row, data) {
+        "rowCallback": function (row, data) {
             if (data.satirrengi !== "" && data.satirrengi !== null) {
                 $(row).addClass(data.satirrengi);
             }
             if (data.sutunrengi !== "" && data.sutunrengi !== null && data.sutunindex !== "" && data.sutunindex !== null) {
 
-                $.each(data.sutunrengi, function(key, value) {
+                $.each(data.sutunrengi, function (key, value) {
                     $(row).find('td:eq(' + data.sutunindex + ')').css("background-color", value);
                 });
             }
         },
     });
-    $('table.' + gelentablo).on("responsive-display", function() {
+    $('table.' + gelentablo).on("responsive-display", function () {
         $('table.' + gelentablo).DataTable().columns.adjust();
         $('table.' + gelentablo).DataTable().responsive.recalc();
     });
-    $('table.' + gelentablo).on("responsive-resize", function() {
+    $('table.' + gelentablo).on("responsive-resize", function () {
         $('table.' + gelentablo).DataTable().columns.adjust();
         $('table.' + gelentablo).DataTable().responsive.recalc();
     });
-    $('table.' + gelentablo).DataTable().on('row-reorder', function(e, details) {
+    $('table.' + gelentablo).DataTable().on('row-reorder', function (e, details) {
         e.preventDefault();
         e.stopImmediatePropagation();
         if (details.length) {
@@ -343,7 +352,7 @@ function TableInitializerV2(gelentablo, gelendata, gelencolumn, gelenurl, rankUr
                 data: {
                     rows
                 }
-            }).done(function() {
+            }).done(function () {
                 $('table.' + gelentablo).DataTable().ajax.reload()
             });
         }
@@ -369,7 +378,7 @@ function runScript(e, table) {
 /** TableInitializerV2 */
 
 /** createAjax */
-function createAjax(url, formData, successFnc = function() {}, errorFnc = function() {}) {
+function createAjax(url, formData, successFnc = function () { }, errorFnc = function () { }) {
     $.ajax({
         type: "POST",
         url: url,
@@ -378,7 +387,7 @@ function createAjax(url, formData, successFnc = function() {}, errorFnc = functi
         contentType: false,
         processData: false,
         dataType: "JSON"
-    }).done(function(response) {
+    }).done(function (response) {
         if (response.success) {
             iziToast.success({
                 title: response.title,
@@ -388,7 +397,7 @@ function createAjax(url, formData, successFnc = function() {}, errorFnc = functi
             });
             successFnc(response);
             if (response.redirect !== null && response.redirect !== "" && response.redirect !== undefined) {
-                setTimeout(function() {
+                setTimeout(function () {
                     window.location.href = response.redirect;
                 }, 2000);
             }
@@ -401,7 +410,7 @@ function createAjax(url, formData, successFnc = function() {}, errorFnc = functi
             });
             errorFnc(response);
             if (response.redirect !== null && response.redirect !== "" && response.redirect !== undefined) {
-                setTimeout(function() {
+                setTimeout(function () {
                     window.location.href = response.redirect;
                 }, 2000);
             }
@@ -411,7 +420,7 @@ function createAjax(url, formData, successFnc = function() {}, errorFnc = functi
 /** createAjax */
 
 /** createModal */
-function createModal(modalClass = null, modalTitle = null, modalSubTitle = null, width = 600, bodyOverflow = true, padding = "20px", radius = 0, headerColor = "#e20e17", background = "#fff", zindex = 1040, onOpening = function() {}, onOpened = function() {}, onClosing = function() {}, onClosed = function() {}, afterRender = function() {}, onFullScreen = function() {}, onResize = function() {}, fullscreen = true, openFullscreen = false, closeOnEscape = true, closeButton = true, overlayClose = false, autoOpen = 0) {
+function createModal(modalClass = null, modalTitle = null, modalSubTitle = null, width = 600, bodyOverflow = true, padding = "20px", radius = 0, headerColor = "#e20e17", background = "#fff", zindex = 1040, onOpening = function () { }, onOpened = function () { }, onClosing = function () { }, onClosed = function () { }, afterRender = function () { }, onFullScreen = function () { }, onResize = function () { }, fullscreen = true, openFullscreen = false, closeOnEscape = true, closeButton = true, overlayClose = false, autoOpen = 0) {
     if (modalClass !== "" || modalClass !== null) {
         $(modalClass).iziModal({
             title: modalTitle,
@@ -443,14 +452,14 @@ function createModal(modalClass = null, modalTitle = null, modalSubTitle = null,
 /** createModal */
 
 /** openModal */
-function openModal(modalClass = null, event = function() {}) {
+function openModal(modalClass = null, event = function () { }) {
     $(modalClass).iziModal('open', event);
     $(modalClass).iziModal('setFullscreen', false);
 }
 /** openModal */
 
 /** closeModal */
-function closeModal(modalClass = null, event = function() {}) {
+function closeModal(modalClass = null, event = function () { }) {
     $(modalClass).iziModal('setFullscreen', false);
     $(modalClass).iziModal('close', event);
 }
@@ -493,7 +502,7 @@ function deleteCookie(name) {
 /** deleteCookie */
 
 function flatPickrInit() {
-    $("input.datetimepicker").each(function() {
+    $("input.datetimepicker").each(function () {
         $(this).flatpickr({
             enableTime: true,
             enableSeconds: true,

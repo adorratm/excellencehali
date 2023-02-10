@@ -296,8 +296,8 @@ class Products extends MY_Controller
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
-        $joins = ["product_collections pc" => ["p.collection_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"], "product_details pd" => ["pd.codes_id = p.codes_id AND pd.codes = p.codes", "left"]];
-        $select = "p.codes_id,p.codes,p.id,p.title,p.seo_url,pi.url img_url,pd.description,pd.content,pd.features,p.isActive";
+        $joins = ["product_collections pc" => ["p.collection_id = pc.codes_id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"], "product_details pd" => ["pd.codes_id = p.codes_id AND pd.codes = p.codes", "left"]];
+        $select = "pc.title collection_title,pc.codes_id collection_codes,pc.seo_url collection_seo_url,p.price,p.discounted_price,p.codes_id,p.codes,p.id,p.title,p.seo_url,pi.url img_url,pd.description,pd.content,pd.features,p.isActive";
         $distinct = true;
         $groupBy = ["p.id"];
         $wheres['p.seo_url'] =  $seo_url;
@@ -306,6 +306,7 @@ class Products extends MY_Controller
          * Get Product Detail
          */
         $this->viewData->product = $this->general_model->get("products p", $select, $wheres, $joins, [], [], $distinct, $groupBy);
+
         if (!empty($this->viewData->product)) :
             /**
              * Get All Collections

@@ -57,10 +57,6 @@
         $categoryCarousel2 = $('.categoryCarousel2'),
         $sliderRange = $('#sliderRange'),
         $pointerImage = $('.pointerImage'),
-        $productGallery = $('.productGallery'),
-        $productGalleryThumb = $('.productGalleryThumb'),
-        $productGallery2 = $('.productGallery2'),
-        $productGalleryThumb2 = $('.productGalleryThumb2'),
         $shippingFormElementsSelect = $('.shippingFormElements select'),
         $checkoutForm = $('.checkoutForm select'),
         $teamCarousel = $('.teamCarousel');
@@ -369,58 +365,6 @@
             }
         });
     };
-
-    // Slick For productGallery
-    $productGallery.slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: false,
-        fade: true,
-        asNavFor: '.productGalleryThumb'
-    });
-
-    // Slick For productGalleryThumb
-    $productGalleryThumb.slick({
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        asNavFor: '.productGallery',
-        dots: false,
-        centerMode: false,
-        focusOnSelect: false,
-        arrows: true,
-        prevArrow: '<button type="button" class="slick-prev"><i class="fa-solid fa-angle-left"></i></button>',
-        nextArrow: '<button type="button" class="slick-next"><i class="fa-solid fa-angle-right"></i></button>'
-    });
-
-    // Slick For productGallery2
-    $productGallery2.slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: false,
-        fade: true,
-        asNavFor: '.productGalleryThumb2'
-    });
-
-    // Slick For productGalleryThumb2
-    $productGalleryThumb2.slick({
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        asNavFor: '.productGallery2',
-        dots: false,
-        arrows: false,
-        vertical: true,
-        focusOnSelect: true,
-        verticalSwiping: true,
-        responsive: [
-            {
-                breakpoint: 575,
-                settings: {
-                    vertical: false,
-                    slidesToShow: 3
-                }
-            }
-        ]
-    });
 
     /*--------------------------------------------------------
     / 04. Masonry Grid
@@ -814,40 +758,5 @@
         $('.mainMenu').slideToggle();
         $(this).toggleClass('active');
     });
-
-    /*--------------------------------------------------------
-    /  23. Product QuickView
-    /---------------------------------------------------------*/
-    $('.pi01QuickView').on('click', function (e) {
-        e.preventDefault();
-        const myModal = new bootstrap.Modal('#productQuickView', {
-            keyboard: false
-        })
-        const productQuickView = document.getElementById('productQuickView');
-        myModal.show(productQuickView);
-        productQuickView.addEventListener('shown.bs.modal', event => {
-            // Slick For productGallery
-            $('#productQuickView .productGalleryPopup').not('.slick-initialized').slick({
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                arrows: false,
-                fade: true,
-                asNavFor: '.productGalleryThumbPopup'
-            });
-
-            // Slick For productGalleryThumb
-            $('#productQuickView .productGalleryThumbPopup').not('.slick-initialized').slick({
-                slidesToShow: 3,
-                slidesToScroll: 1,
-                asNavFor: '.productGalleryPopup',
-                dots: false,
-                centerMode: false,
-                focusOnSelect: true,
-                arrows: true,
-                prevArrow: '<button type="button" class="slick-prev"><i class="fa-solid fa-angle-left"></i></button>',
-                nextArrow: '<button type="button" class="slick-next"><i class="fa-solid fa-angle-right"></i></button>'
-            });
-        })
-    })
 
 })(jQuery)

@@ -145,7 +145,19 @@
             box-shadow: -1px 1px 5px 0 rgb(84 84 84 / 35%)
         }
 
-        .single-product-thumbb.active {
+        .owl-thumbs{
+            overflow-x: hidden;
+            justify-content: unset;
+            margin-left: 75px;
+            margin-right: 75px;
+        }
+
+        .carousel-indicators [data-bs-target]{
+            min-width: 75px;
+            height: auto;
+        }
+
+        .owl-thumbs .active {
             border-color: #e10018 !important;
         }
     </style>
