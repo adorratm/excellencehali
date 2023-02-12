@@ -1,4 +1,5 @@
 <?php
+$lang["availableStock"] = "Stok";
 $lang["productFilter"] = "Ürünleri Filtrele";
 $lang["clearFilter"] = "Filtreyi Temizle";
 $lang["productColor"] = "Ürün Rengi";

@@ -99,7 +99,7 @@
                             <div class="ratingCounts">52 Reviews</div>
                         </div>
                         <div class="productStock float-end">
-                            <span>Available :</span> 12
+                            <span><?= lang("availableStock") ?> :</span> <?= $product->stock ?>
                         </div>
                     </div>
                     <div class="pcExcerpt">
@@ -107,7 +107,7 @@
                     </div>
                     <div class="pcVariations">
                         <div class="pcVariation">
-                            <span>Color</span>
+                            <span><?= lang("productColor") ?></span>
                             <div class="pcvContainer">
                                 <div class="pi01VCItem">
                                     <input checked type="radio" name="color_4_6" value="Blue" id="color_4_6251_1_blue" />
