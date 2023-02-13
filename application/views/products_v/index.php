@@ -170,7 +170,8 @@ $explodedBrandChecks = !empty($_GET["brandChecks"]) ? array_map("intVal", explod
                                             </div>
                                             <?php if (!empty($value->discounted_price)) : ?>
                                                 <div class="productLabels clearfix">
-                                                    <span class="plDis"><?= lang("discountedProduct") ?></span>
+                                                    <span class="plDis">- <?= $value->price - $value->discounted_price ?><?= $symbol ?></span>
+                                                    <span class="plSale"><?= lang("discountedProduct") ?></span>
                                                 </div>
                                             <?php endif ?>
                                         </div>
@@ -178,9 +179,11 @@ $explodedBrandChecks = !empty($_GET["brandChecks"]) ? array_map("intVal", explod
                                             <h3 class="text-center fw-medium fs-6"><a href="<?= base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/" . $value->codes . "/" . $value->seo_url) ?>" rel="dofollow" title="<?= $value->title ?>"><?= $value->title ?></a></h3>
                                             <?php if (get_active_user()) : ?>
                                                 <div class="pi01Price">
-                                                    <ins><?= !empty($value->discounted_price) ? $value->discounted_price : $value->price ?></ins>
-                                                    <?php if (!empty($value->discounted_price)) : ?>
-                                                        <del><?= $value->price ?></del>
+                                                    <?php if (!empty($value->price) || !empty($value->discounted_price)) : ?>
+                                                        <ins><?= !empty($value->discounted_price) ? $value->discounted_price : $value->price ?> <?= $symbol ?></ins>
+                                                    <?php endif ?>
+                                                    <?php if (!empty($value->discounted_price) && $value->discounted_price > 0) : ?>
+                                                        <del><?= $value->price ?> <?= $symbol ?></del>
                                                     <?php endif ?>
                                                 </div>
                                             <?php endif ?>

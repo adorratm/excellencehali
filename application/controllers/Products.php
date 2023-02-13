@@ -297,7 +297,7 @@ class Products extends MY_Controller
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
         $joins = ["product_collections pc" => ["p.collection_id = pc.codes_id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"], "product_details pd" => ["pd.codes_id = p.codes_id AND pd.codes = p.codes", "left"]];
-        $select = "p.stock,pc.title collection_title,pc.codes_id collection_codes,pc.seo_url collection_seo_url,p.price,p.discounted_price,p.codes_id,p.codes,p.id,p.title,p.seo_url,pi.url img_url,pd.description,pd.content,pd.features,p.isActive";
+        $select = "p.pattern_id,p.pattern,p.color_id,p.color,p.dimension_id,p.dimension,p.brand_id,p.brand,p.collection_id,p.collection,p.barcode,p.stock,pc.title collection_title,pc.codes_id collection_codes,pc.seo_url collection_seo_url,p.price,p.discounted_price,p.codes_id,p.codes,p.id,p.title,p.seo_url,pi.url img_url,pd.description,pd.content,pd.features,p.isActive";
         $distinct = true;
         $groupBy = ["p.id"];
         $wheres['p.seo_url'] =  $seo_url;
@@ -328,6 +328,16 @@ class Products extends MY_Controller
              * Get All Cover Product Images
              */
             $this->viewData->product_images = $this->general_model->get_all("product_images", null, "rank ASC", ["isActive" => 1, "isCover" => 1, "lang" => $this->viewData->lang]);
+            /** 
+             * Get Same Products
+             */
+            if (!empty($this->viewData->product)) :
+                unset($wheres['p.seo_url']);
+                $wheres["p.collection_id"] = $this->viewData->product->collection_id;
+                $wheres["p.codes_id !="] = $this->viewData->product->codes_id;
+                $wheres["p.codes"] = $this->viewData->product->codes;
+                $this->viewData->same_products = $this->general_model->get_all("products p", $select, "rand()", $wheres, [], $joins, [12], [], $distinct, $groupBy);
+            endif;
             /**
              * Meta
              */

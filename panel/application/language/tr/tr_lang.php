@@ -1,7 +1,12 @@
 <?php
+$lang["addToCart"] = "Sepete Ekle";
+$lang["shareProduct"] = "Ürünü Paylaş";
+$lang["outOfStock"] = "Stokta Yok";
 $lang["availableStock"] = "Stok";
 $lang["productFilter"] = "Ürünleri Filtrele";
 $lang["clearFilter"] = "Filtreyi Temizle";
+$lang["productBarcode"] = "Ürün Barkodu";
+$lang["productCollection"] = "Ürün Koleksiyonu";
 $lang["productColor"] = "Ürün Rengi";
 $lang["productDimension"] = "Ürün Ebatı";
 $lang["productPattern"] = "Ürün Deseni";

@@ -87,7 +87,8 @@
     // Owl Carousel For teamCarousel
     if ($teamCarousel.length > 0) {
         $teamCarousel.owlCarousel({
-            autoplay: false,
+            rewind: true,
+            autoplay: 2000,
             margin: 24,
             loop: false,
             nav: true,
@@ -118,7 +119,8 @@
     // Owl Carousel For productCarousel
     if ($productCarousel.length > 0) {
         $productCarousel.owlCarousel({
-            autoplay: false,
+            rewind: true,
+            autoplay: 2000,
             margin: 24,
             loop: false,
             nav: true,
@@ -149,7 +151,8 @@
     // Owl Carousel For contactCarousel
     if ($contactCarousel.length > 0) {
         $contactCarousel.owlCarousel({
-            autoplay: false,
+            rewind: true,
+            autoplay: 2000,
             margin: 24,
             loop: false,
             nav: true,
@@ -181,9 +184,10 @@
     // Owl Carousel For categoryCarousel
     if ($categoryCarousel.length > 0) {
         $categoryCarousel.owlCarousel({
-            autoplay: false,
+            rewind: true,
+            autoplay: 2000,
             margin: 24,
-            loop: true,
+            loop: false,
             nav: true,
             navText: ['<i class="fa-solid fa-angle-left"></i>', '<i class="fa-solid fa-angle-right"></i>'],
             dots: false,
@@ -212,9 +216,10 @@
     // Owl Carousel For categoryCarousel2
     if ($categoryCarousel2.length > 0) {
         $categoryCarousel2.owlCarousel({
-            autoplay: false,
+            rewind: true,
+            autoplay: 2000,
             margin: 24,
-            loop: true,
+            loop: false,
             nav: true,
             navText: ['<i class="fa-solid fa-angle-left"></i>', '<i class="fa-solid fa-angle-right"></i>'],
             dots: false,
@@ -243,9 +248,10 @@
     // Owl Carousel For testimonialCarousel2
     if ($testimonialCarousel2.length > 0) {
         $testimonialCarousel2.owlCarousel({
-            autoplay: false,
+            rewind: true,
+            autoplay: 2000,
             margin: 24,
-            loop: true,
+            loop: false,
             nav: true,
             navText: ['<i class="fa-solid fa-angle-left"></i>', '<i class="fa-solid fa-angle-right"></i>'],
             dots: true,
@@ -275,9 +281,10 @@
     // Owl Carousel For testimonialCarousel
     if ($testimonialCarousel.length > 0) {
         let $testimonialCarousel_obj = $testimonialCarousel.owlCarousel({
-            autoplay: false,
+            rewind: true,
+            autoplay: 2000,
             margin: 24,
-            loop: true,
+            loop: false,
             nav: true,
             navText: [],
             dots: true,
@@ -309,9 +316,10 @@
     // Owl Carousel For instagramSlider
     if ($instagramSlider.length > 0) {
         $instagramSlider.owlCarousel({
-            autoplay: false,
+            rewind: true,
+            autoplay: 2000,
             margin: 0,
-            loop: true,
+            loop: false,
             nav: false,
             dots: false,
             items: 5,
@@ -444,7 +452,7 @@
     /--------------------------------------------------------*/
     if ($('.sliderSection01').length > 0) {
         jQuery('#rev_slider_1').show().revolution({
-            delay: 9000,
+            delay: 2000,
             responsiveLevels: [1400, 1399, 991, 767],
             gridwidth: [1320, 1140, 720],
             jsFileLocation: "js/",
@@ -510,7 +518,7 @@
     }
     if ($('.sliderSection02').length > 0) {
         jQuery('#rev_slider_2').show().revolution({
-            delay: 9000,
+            delay: 2000,
             responsiveLevels: [1400, 1399, 991, 767],
             gridwidth: [1320, 1140, 720],
             jsFileLocation: "js/",

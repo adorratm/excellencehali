@@ -1475,12 +1475,12 @@
 
     /* Shop Pages */
     .pageBannerContent h2 {
-        font-size: 52px;
+        font-size: 36px;
     }
 
     .singleBlogPageBanner .pageBannerContent h2 {
-        font-size: 50px;
-        line-height: 62px;
+        font-size: 36px;
+        line-height: 40px;
     }
 
     .filterNav {
@@ -1978,8 +1978,8 @@
     }
 
     .singleBlogPageBanner .pageBannerContent h2 {
-        font-size: 40px;
-        line-height: 52px;
+        font-size: 36px;
+        line-height: 40px;
     }
 
     /*Shop Page*/
@@ -2010,7 +2010,8 @@
     }
 
     .pageBannerContent h2 {
-        font-size: 42px;
+        font-size: 36px;
+        line-height: 40px;
     }
 
     /* Shop Page */

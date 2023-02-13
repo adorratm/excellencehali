@@ -1712,7 +1712,7 @@
     border-color: #dbdfe3
 }
 
-.pi01VCItem label:after {
+.pi01VCItem label span {
     content: '';
     position: absolute;
     left: 0;
@@ -1730,17 +1730,9 @@
     -webkit-transition: all ease 350ms;
 }
 
-.pi01VCItem input[type="radio"]:checked+label:after {
+.pi01VCItem input[type="radio"]:checked+label span {
     width: 10px;
     height: 10px;
-}
-
-.pi01VCItem.yellows label:after {
-    background: #f2c864;
-}
-
-.pi01VCItem.reds label:after {
-    background: #f42222;
 }
 
 .pi01VSize {
@@ -4243,8 +4235,9 @@
 
 .pswItem label {
     border: 1px solid #e5e5e5;
-    width: 36px;
+    width: auto;
     height: 36px;
+    padding: 0 5px;
     text-align: center;
     border-radius: 3px;
     font-size: 16px;
@@ -4253,7 +4246,6 @@
     background: #FFF;
     line-height: 35px;
     cursor: pointer;
-    padding: 0 0;
     transition: all ease 350ms;
     -moz-transition: all ease 350ms;
     -webkit-transition: all ease 350ms;
@@ -4296,7 +4288,7 @@
     -webkit-transition: all ease 350ms;
 }
 
-.pcwItem label:after {
+.pcwItem label span {
     content: '';
     position: absolute;
     left: 0;
@@ -4313,19 +4305,19 @@
     -webkit-transition: all ease 350ms;
 }
 
-.pcwItem.pcwi2 label:after {
+.pcwItem.pcwi2 label span {
     background: #f2c864;
 }
 
-.pcwItem.pcwi3 label:after {
+.pcwItem.pcwi3 label span {
     background: #f42222;
 }
 
-.pcwItem.pcwi4 label:after {
+.pcwItem.pcwi4 label span {
     background: #4dde73;
 }
 
-.pcwItem.pcwi5 label:after {
+.pcwItem.pcwi5 label span {
     background: #a758d5;
 }
 
@@ -4811,8 +4803,6 @@
 
 .pcMeta p {
     position: relative;
-    display: flex;
-    justify-content: flex-start;
     font-size: 14px;
     line-height: 26px;
     color: #717788;
@@ -6193,7 +6183,7 @@
     border-radius: 50%;
 }
 
-.wc_payment_methods li input[type="radio"]:checked+label:after {
+.wc_payment_methods li input[type="radio"]:checked+label span {
     content: '';
     width: 9px;
     height: 9px;
@@ -7767,8 +7757,8 @@
 }
 
 .pageBannerContent h2 {
-    font-size: 72px;
-    line-height: 84px;
+    font-size: 36px;
+    line-height: 82px;
     margin: 0 0 30px;
 }
 
@@ -8267,4 +8257,13 @@ form.contactForm button.ulinaBTN {
 .shopSidebar .widget ul::-webkit-scrollbar-thumb{
     background: #7b9496;
     border-radius: 50px;
+}
+
+.owl-carousel .owl-stage{
+    display: flex;
+}
+
+.owl-carousel .owl-stage .owl-item{
+    display: flex;
+    flex: 1 0 auto;
 }
