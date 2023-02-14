@@ -82,7 +82,7 @@
                 <div class="anItems">
                     <div class="anUser"><a href="javascript:void(0);"><i class="fa-solid fa-user"></i></a></div>
                     <div class="anCart">
-                        <a href="javascript:void(0);"><i class="fa-solid fa-shopping-cart"></i><span><?= count($this->cart->contents()) ?></span></a>
+                        <a href="javascript:void(0);"><i class="fa-solid fa-shopping-cart"></i><span class="totalItemsCount"><?= $total_items ?></span></a>
                         <div class="cartWidgetArea">
                             <?php $this->load->view("includes/headerCart") ?>
                         </div>

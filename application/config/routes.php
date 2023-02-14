@@ -51,8 +51,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 */
 $route['translate_uri_dashes'] = FALSE;
 $route["default_controller"] = "home/index";
-$route['404_override'] = "home/error";
-$route['404.html'] = "home/error";
+$route['404_override'] = "my_controller/error";
+$route['404.html'] = "my_controller/error";
 function getDirContents($dir, $filter = '', &$results = array())
 {
     $files = scandir($dir);

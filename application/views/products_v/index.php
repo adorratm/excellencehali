@@ -313,7 +313,7 @@ $explodedBrandChecks = !empty($_GET["brandChecks"]) ? array_map("intVal", explod
         });
     });
 
-    function searchFunction(inputId, ulId) {
+    const searchFunction = (inputId, ulId) => {
         // Declare variables
         let input, filter, ul, li, label, i, txtValue;
         input = document.getElementById(inputId);

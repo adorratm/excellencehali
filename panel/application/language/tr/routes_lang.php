@@ -1,6 +1,6 @@
 <?php
 $lang['(:any)'] = 'home/index';
-$lang['(:any)/404.html'] = "home/error";
+$lang['(:any)/404.html'] = "my_controller/error";
 $lang["(:any)/sitemap.xml"] = "home/sitemap";
 $lang["(:any)/sitemapindex.xml"] = "home/sitemapindex";
 $lang["(:any)/facebook-katalog.xml"] = "home/catalog";
@@ -29,3 +29,15 @@ $lang['(:any)/iletisim-formu'] = 'contact/contact_form';
 $lang['(:any)/sayfa/(:any)'] = 'pages/index/$2';
 
 $lang['(:any)/dil-degistir'] = 'home/switchLanguage';
+
+$lang['(:any)/sepet'] = 'cart/index';
+$lang['(:any)/sepet/ust'] = 'cart/header_cart';
+$lang['(:any)/sepet/adet'] = 'cart/quantity';
+$lang['(:any)/sepet/ekle'] = 'cart/add';
+$lang['(:any)/sepet/guncelle'] = 'cart/update';
+$lang['(:any)/sepet/sil'] = 'cart/delete';
+$lang['(:any)/sepet/temizle'] = 'cart/clear';
+
+$lang['(:any)/odeme'] = 'payment/index';
+$lang['(:any)/odeme/odeme-basarili'] = 'payment/payment_success';
+$lang['(:any)/odeme/odeme-basarisiz'] = 'payment/payment_fail';

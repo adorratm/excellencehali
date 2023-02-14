@@ -36,7 +36,7 @@
     22. Mobile Menu
 */
 
-(function () {
+(() => {
     'use strict';
     /*------------------------------------------------------
     /  01. Variables
@@ -305,10 +305,10 @@
                 }
             }
         });
-        $('.tnext').on('click', function () {
+        $('.tnext').on('click', () => {
             $testimonialCarousel_obj.trigger('next.owl.carousel');
         });
-        $('.tprev').on('click', function () {
+        $('.tprev').on('click', () => {
             $testimonialCarousel_obj.trigger('prev.owl.carousel');
         });
     }
@@ -417,14 +417,14 @@
      /--------------------------------------------------------*/
     let back = $("#backtotop"),
         body = $("body, html");
-    $(window).on('scroll', function () {
+    $(window).on('scroll', () => {
         if ($(window).scrollTop() > $(window).height()) {
             back.css({ bottom: '25px', opacity: '1', visibility: 'visible' });
         } else {
             back.css({ bottom: '-25px', opacity: '0', visibility: 'hidden' });
         }
     });
-    body.on("click", "#backtotop", function (e) {
+    body.on("click", "#backtotop", (e) => {
         e.preventDefault();
         body.animate({ scrollTop: 0 });
         return false;
@@ -433,9 +433,9 @@
     /*--------------------------------------------------------
      /   08. Pointer Image
      /--------------------------------------------------------*/
-    $pointerImage.each(function () {
+    $pointerImage.each(() => {
         let $pointerWrap = $(this);
-        $('.cpAchor', $pointerWrap).on('click', function (e) {
+        $('.cpAchor', $pointerWrap).on('click', (e) => {
             e.preventDefault();
             let $cpAchor = $(this);
             if ($cpAchor.parent('.clickPoint').hasClass('active')) {
@@ -586,7 +586,7 @@
     /*--------------------------------------------------------
     /   10. Sidebar Toggle
     /--------------------------------------------------------*/
-    $('.shopSidebar ul li.menu-item-has-children > a').on('click', function (e) {
+    $('.shopSidebar ul li.menu-item-has-children > a').on('click', (e) => {
         e.preventDefault();
         $(this).siblings('ul').slideToggle();
         $(this).parent('li.menu-item-has-children').toggleClass('active');
@@ -601,7 +601,7 @@
             min: 0,
             max: 10000,
             values: [0, 2000],
-            slide: function (event, ui) {
+            slide: (event, ui) => {
                 $("#amount").html("$" + ui.values[0] + " - $" + ui.values[1]);
             }
         });
@@ -611,7 +611,7 @@
     /*--------------------------------------------------------
     / 12. Payment Method Toggle
     /----------------------------------------------------------*/
-    $('.wc_payment_methods li > label').on('click', function () {
+    $('.wc_payment_methods li > label').on('click', () => {
         if (!$(this).parent('li').hasClass('active')) {
             $('.wc_payment_methods li').removeClass('active');
             $('.wc_payment_methods li .paymentDesc').slideUp();
@@ -626,9 +626,9 @@
     if ($(".circleProgress").length > 0) {
         let ast1 = true;
         $('.circleProgress').appear();
-        $('.circleProgress').on('appear', function () {
+        $('.circleProgress').on('appear', () => {
             if (ast1 == true) {
-                $(".circleProgress").each(function () {
+                $(".circleProgress").each(() => {
                     let pint = $(this).attr('data-skills');
                     let decs = pint * 100;
                     let efill = $(this).attr('data-emptyfill');
@@ -643,7 +643,7 @@
                         animation: { duration: 1800 },
                         size: 96,
                         emptyFill: efill
-                    }).on('circle-animation-progress', function (event, progress) {
+                    }).on('circle-animation-progress', (event, progress) => {
                         $(this).find('h3').html(parseInt(decs * progress) + '%');
                     });
                 });
@@ -660,17 +660,17 @@
         $('.singleSkill').on('appear', loadSkills);
     }
     let coun = true;
-    function loadSkills() {
-        $(".singleSkill").each(function () {
+    const loadSkills = () => {
+        $(".singleSkill").each(() => {
             let datacount = $(this).attr("data-skill");
             $(".skill", this).animate({ 'width': datacount + '%' }, 2000);
             if (coun) {
-                $(this).find('span').each(function () {
+                $(this).find('span').each(() => {
                     let $this = $(this);
                     $({ Counter: 0 }).animate({ Counter: datacount }, {
                         duration: 2000,
                         easing: 'swing',
-                        step: function () {
+                        step: () => {
                             $this.text(Math.ceil(this.Counter) + '%');
                         }
                     });
@@ -683,14 +683,14 @@
     / 15. Counter
     /---------------------------------------------------------*/
     $('.timer').appear();
-    $(document.body).on('appear', '.timer', function (e, $affected) {
-        $affected.each(function () {
+    $(document.body).on('appear', '.timer', (e, $affected) => {
+        $affected.each(() => {
             let $this = $(this);
             if (!$this.hasClass('appeared')) {
                 jQuery({ Counter: 0 }).animate({ Counter: $this.attr('data-count') }, {
                     duration: 3000,
                     easing: 'swing',
-                    step: function () {
+                    step: () => {
                         let num = Math.ceil(this.Counter).toString();
                         $this.html(num);
                     }
@@ -703,7 +703,7 @@
     /*--------------------------------------------------------
     /  16. Sticky Header
     /---------------------------------------------------------*/
-    $(window).on('scroll', function () {
+    $(window).on('scroll', () => {
         let header_height = $(".isSticky").height();
         if ($(window).scrollTop() > 100) {
             if ($(".isSticky").hasClass('h01Mode2')) {
@@ -727,18 +727,18 @@
     /*--------------------------------------------------------
     / 17. Popup Search
     /----------------------------------------------------------*/
-    $('.anSearch > a').on('click', function (e) {
+    $('.anSearch > a').on('click', (e) => {
         e.preventDefault();
         $('.popup_search_sec').toggleClass('active');
     });
-    $('.popup_search_overlay, #search_Closer').on('click', function () {
+    $('.popup_search_overlay, #search_Closer').on('click', () => {
         $('.popup_search_sec').removeClass('active');
     });
 
     /*--------------------------------------------------------
     /  18. Preloader
     /---------------------------------------------------------*/
-    $(window).on('load', function () {
+    $(window).on('load', () => {
         let preload = $('#preloader');
         if (preload.length > 0) {
             preload.delay(500).fadeOut('slow');
@@ -748,20 +748,20 @@
     /*--------------------------------------------------------
     /  21. Social Toggle Menu
     /---------------------------------------------------------*/
-    $('.anSocial a.tog').on('click', function () {
+    $('.anSocial a.tog').on('click', () => {
         $(this).parent('.anSocial').toggleClass('active');
     });
 
     /*--------------------------------------------------------
     /  22. Mobile Menu
     /---------------------------------------------------------*/
-    $('.mainMenu ul li.menu-item-has-children > a').on('click', function (e) {
+    $('.mainMenu ul li.menu-item-has-children > a').on('click', (e) => {
         e.preventDefault();
         if ($(window).width() < 1366) {
             $(this).siblings('ul, .megaMenu').slideToggle();
         }
     });
-    $('.menuToggler').on('click', function (e) {
+    $('.menuToggler').on('click', (e) => {
         e.preventDefault();
         $('.mainMenu').slideToggle();
         $(this).toggleClass('active');

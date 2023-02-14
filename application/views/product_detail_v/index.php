@@ -93,7 +93,7 @@
                     <?php endif ?>
 
                     <div class="pcExcerpt">
-                        <?= $product->description ?>
+                        <?= $product->content ?>
                     </div>
                     <div class="pcVariations">
                         <div class="pcVariation align-items-center align-self-center align-content-center pcv2">
@@ -146,9 +146,9 @@
                     <div class="pcBtns align-items-center align-self-center align-content-center">
                         <?php if (!empty($product->stock)) : ?>
                             <div class="quantity clearfix">
-                                <button type="button" name="btnMinus" class="qtyBtn btnMinus">_</button>
-                                <input type="number" class="carqty input-text qty text" name="quantity" value="1" max="<?= $product->stock ?>">
-                                <button type="button" name="btnPlus" class="qtyBtn btnPlus">+</button>
+                                <button type="button" class="qtyBtn btnMinus"><i class="fa fa-minus"></i></button>
+                                <input type="number" class="carqty input-text qty text" name="quantity" min="1" value="1" max="<?= $product->stock ?>">
+                                <button type="button" class="qtyBtn btnPlus" data-max="<?= $product->stock ?>"><i class="fa fa-plus"></i></button>
                             </div>
                         <?php endif ?>
                         <div class="productRadingsStock clearfix mb-0 me-3">
@@ -157,7 +157,7 @@
                             </div>
                         </div>
                         <?php if (!empty($product->stock)) : ?>
-                            <button type="button" class="ulinaBTN"><span><?= lang("addToCart") ?></span></button>
+                            <button type="button" class="ulinaBTN addToCart" data-quantity="1" data-product-id="<?= $product->codes_id ?>" data-product-codes="<?= $product->codes ?>"><span><?= lang("addToCart") ?></span></button>
                         <?php endif ?>
                     </div>
                     <div class="pcMeta">
@@ -165,7 +165,7 @@
                             <span><?= lang("productBarcode") ?> : </span>
                             <a href="javascript:void(0);"><?= $product->barcode ?></a>
                         </p>
-                        <p class="pcmSocial border p-3" style="width: fit-content;">
+                        <p class="pcmSocial border rounded p-3" style="width: fit-content;">
                             <span class="me-2"><?= lang("shareProduct") ?> : </span>
                             <a class="fac" rel="nofollow" title="Facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode(str_replace("tr/index.php/", "", current_url())) ?>&t=<?= urlencode(str_replace("tr/index.php/", "", current_url())) ?>"><i class="fa-brands fa-facebook-f"></i></a>
                             <a class="twi" rel="nofollow" title="Twitter" target="_blank" href="https://twitter.com/intent/tweet?text=<?= urlencode(str_replace("tr/index.php/", "", current_url())) ?>&t=<?= urlencode(str_replace("tr/index.php/", "", current_url())) ?>"><i class="fa-brands fa-twitter"></i></a>
@@ -178,201 +178,47 @@
                 </div>
             </div>
         </div>
-        <div class="row productTabRow">
-            <div class="col-lg-12">
-                <ul class="nav productDetailsTab" id="productDetailsTab" role="tablist">
-                    <li role="presentation">
-                        <button class="active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">Description</button>
-                    </li>
-                    <li role="presentation">
-                        <button id="additionalinfo-tab" data-bs-toggle="tab" data-bs-target="#additionalinfo" type="button" role="tab" aria-controls="additionalinfo" aria-selected="false" tabindex="-1">Additional Information</button>
-                    </li>
-                    <li role="presentation">
-                        <button id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false" tabindex="-1">Item
-                            Review</button>
-                    </li>
-                </ul>
-                <div class="tab-content" id="desInfoRev_content">
-                    <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab" tabindex="0">
-                        <div class="productDescContentArea">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="descriptionContent">
-                                        <h3>Product Details</h3>
-                                        <p>
-                                            Desectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                                            et dolore ma na alihote pare ei gansh es gan qua.
-                                        </p>
-                                        <p>
-                                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                                            uet aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                            reprehenderit in volupteat velit esse cillum dolore eu fugiat nulla
-                                            pariatur. Excepteur sint occaecat cupiatat non proiden re dolor in
-                                            reprehend.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="descriptionContent featureCols">
-                                        <h3>Product Features</h3>
-                                        <ul>
-                                            <li>Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                                                accusantium </li>
-                                            <li>Letotam rem aperiam, eaque ipsa quae ab illo inventore veritatis
-                                            </li>
-                                            <li>Vitae dicta sunt explicabo. Nemo enim ipsam volupta aut odit aut
-                                                fugit </li>
-                                            <li>Lesed quia consequuntur magni dolores eos qui ratione voluptate.
-                                            </li>
-                                        </ul>
-                                    </div>
+        <?php if (!empty(clean($product->description)) || !empty(clean($product->features))) : ?>
+            <div class="row productTabRow">
+                <div class="col-lg-12">
+                    <ul class="nav productDetailsTab" id="productDetailsTab" role="tablist">
+                        <?php if (!empty(clean($product->description))) : ?>
+                            <li role="presentation">
+                                <button class="active" id="<?= seo(lang("productDescription")) ?>-tab" data-bs-toggle="tab" data-bs-target="#<?= seo(lang("productDescription")) ?>" type="button" role="tab" aria-controls="<?= seo(lang("productDescription")) ?>" aria-selected="true"><?= lang("productDescription") ?></button>
+                            </li>
+                        <?php endif ?>
+                        <?php if (!empty(clean($product->features))) : ?>
+                            <li role="presentation">
+                                <button <?= empty(clean($product->description)) ? "class='active'" : null ?> id="<?= seo(lang("productFeatures")) ?>-tab" data-bs-toggle="tab" data-bs-target="#<?= seo(lang("productFeatures")) ?>" type="button" role="tab" aria-controls="<?= seo(lang("productFeatures")) ?>" aria-selected="false" tabindex="-1"><?= lang("productFeatures") ?></button>
+                            </li>
+                        <?php endif ?>
+                    </ul>
+                    <div class="tab-content" id="desInfoRev_content">
+                        <?php if (!empty(clean($product->description))) : ?>
+                            <div class="tab-pane fade show active" id="<?= seo(lang("productDescription")) ?>" role="tabpanel" aria-labelledby="<?= seo(lang("productDescription")) ?>-tab" tabindex="0">
+                                <div class="productDescContentArea">
+                                    <?= $product->description ?>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="additionalinfo" role="tabpanel" aria-labelledby="additionalinfo-tab" tabindex="0">
-                        <div class="additionalContentArea">
-                            <h3>Additional Information</h3>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <th>Item Code</th>
-                                        <td>AB42 - 2394 - DS023</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Brand</th>
-                                        <td>Ulina</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Dimention</th>
-                                        <td>12 Cm x 42 Cm x 20 Cm</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Specification</th>
-                                        <td>1pc dress, 1 pc soap, 1 cleaner</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Weight</th>
-                                        <td>2 kg</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Warranty</th>
-                                        <td>1 year</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab" tabindex="0">
-                        <div class="productReviewArea">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <h3>10 Reviews</h3>
-                                    <div class="reviewList">
-                                        <ol>
-                                            <li>
-                                                <div class="postReview">
-                                                    <img src="images/author/7.jpg" alt="Post Review">
-                                                    <h2>Greaet product. Packaging was also good!</h2>
-                                                    <div class="postReviewContent">
-                                                        Desectetur adipisicing elit, sed do eiusmod tempor
-                                                        incididunt ut labore et dolore ma na alihote pare ei gansh
-                                                        es gan quim veniam, quis nostr udg exercitation ullamco
-                                                        laboris nisi ut aliquip
-                                                    </div>
-                                                    <div class="productRatingWrap">
-                                                        <div class="star-rating"><span></span></div>
-                                                    </div>
-                                                    <div class="reviewMeta">
-                                                        <h4>John Manna</h4>
-                                                        <span>on June 10, 2022</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="postReview">
-                                                    <img src="images/author/8.jpg" alt="Post Review">
-                                                    <h2>The item is very comfortable and soft!</h2>
-                                                    <div class="postReviewContent">
-                                                        Desectetur adipisicing elit, sed do eiusmod tempor
-                                                        incididunt ut labore et dolore ma na alihote pare ei gansh
-                                                        es gan quim veniam, quis nostr udg exercitation ullamco
-                                                        laboris nisi ut aliquip
-                                                    </div>
-                                                    <div class="productRatingWrap">
-                                                        <div class="star-rating"><span></span></div>
-                                                    </div>
-                                                    <div class="reviewMeta">
-                                                        <h4>Robert Thomas</h4>
-                                                        <span>on June 10, 2022</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="postReview">
-                                                    <img src="images/author/9.jpg" alt="Post Review">
-                                                    <h2>I liked the product, it is awesome.</h2>
-                                                    <div class="postReviewContent">
-                                                        Desectetur adipisicing elit, sed do eiusmod tempor
-                                                        incididunt ut labore et dolore ma na alihote pare ei gansh
-                                                        es gan quim veniam, quis nostr udg exercitation ullamco
-                                                        laboris nisi ut aliquip
-                                                    </div>
-                                                    <div class="productRatingWrap">
-                                                        <div class="star-rating"><span></span></div>
-                                                    </div>
-                                                    <div class="reviewMeta">
-                                                        <h4>Ken Williams</h4>
-                                                        <span>on June 10, 2022</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ol>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="commentFormArea">
-                                        <h3>Add A Review</h3>
-                                        <div class="reviewFrom">
-                                            <form method="post" action="#" class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="reviewStar">
-                                                        <label>Your Rating</label>
-                                                        <div class="rsStars"><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <input type="text" name="comTitle" placeholder="Review title">
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <textarea name="comComment" placeholder="Write your review here"></textarea>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <input type="text" name="comName" placeholder="Your name">
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <input type="email" name="comEmail" placeholder="Your email">
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <button type="submit" name="reviewtSubmit" class="ulinaBTN"><span>Submit Now</span></button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
+                        <?php endif ?>
+                        <?php if (!empty(clean($product->features))) : ?>
+                            <div class="tab-pane fade <?= empty(clean($product->description)) ? "show active" : null ?>" id="<?= seo(lang("productFeatures")) ?>" role="tabpanel" aria-labelledby="<?= seo(lang("productFeatures")) ?>-tab" tabindex="0">
+                                <div class="additionalContentArea">
+                                    <?= $product->features ?>
                                 </div>
                             </div>
-                        </div>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php endif ?>
         <?php $this->load->view("includes/productSlider", ["title" => lang("sameProducts"), "data" => $same_products]); ?>
     </div>
 </section>
 <!-- END: Shop Details Section -->
 
 <script>
-    window.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener('DOMContentLoaded', () => {
         if (($('#lightgallery, .lightgallery').length > 0)) {
             $('#lightgallery, .lightgallery').lightGallery({
                 selector: '.lightimg',
@@ -382,16 +228,7 @@
                 download: false,
             })
         }
-        if (($('#lightgallery2, .lightgallery2').length > 0)) {
-            $('#lightgallery2, .lightgallery2').lightGallery({
-                selector: '.lightimg2',
-                loop: !0,
-                thumbnail: !0,
-                exThumbImage: 'data-exthumbimage2',
-                download: false
-            })
-        }
-        $(".carousel").on("slid.bs.carousel", function(event) {
+        $(".carousel").on("slid.bs.carousel", (event) => {
             $(".owl-thumb-item:not('.d-none')[data-bs-slide-to=" + event.from + "]").removeClass("active");
             $(".owl-thumb-item:not('.d-none')[data-bs-slide-to=" + event.to + "]").addClass("active");
             let x = $(".owl-thumb-item.active:not('.d-none')[data-bs-slide-to=" + event.to + "]").width();
@@ -399,5 +236,72 @@
                 scrollLeft: event.to * x
             }, 500);
         });
+        /**
+         * Cart Operations
+         */
+        $(".btnMinus").on("click", () => {
+            let $this = $(this);
+            let input = $("input[name='quantity']");
+            let value = parseInt(input.val());
+            if (value > 1) {
+                input.val(value - 1);
+                $("input[name='quantity']").trigger("change");
+            }
+        });
+        $(".btnPlus").on("click", () => {
+            let input = $("input[name='quantity']");
+            let value = parseInt(input.val());
+            if (value < parseInt(input.attr("max"))) {
+                input.val(value + 1);
+                $("input[name='quantity']").trigger("change");
+            }
+        });
+        $("input[name='quantity']").on("change", () => {
+            if (parseInt($("input[name='quantity']").val()) < 1) {
+                $("input[name='quantity']").val(1);
+            }
+            if (parseInt($("input[name='quantity']").val()) > parseInt($("input[name='quantity']").attr("max"))) {
+                $("input[name='quantity']").val($("input[name='quantity']").attr("max"));
+            }
+            $(".addToCart").data("quantity", $("input[name='quantity']").val());
+        });
+        /**
+         * Add To Cart
+         */
+        $(document).on("click", ".addToCart", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let $this = $(this);
+            $this.attr("disabled", "disabled");
+            let productId = $this.data("product-id");
+            let codes = $this.data("product-codes");
+            let quantity = $this.data("quantity");
+            $.post('<?= base_url(lang("routes_cart") . "/" . lang("routes_add-to-cart")) ?>', {
+                "codes_id": productId,
+                "codes": codes,
+                "quantity": quantity,
+                "<?= $this->security->get_csrf_token_name() ?>": "<?= $this->security->get_csrf_hash() ?>"
+            }, function(response) {
+                if (response.success) {
+                    iziToast.success({
+                        title: response.title,
+                        message: response.msg,
+                        position: "topCenter",
+                    });
+                    $(".cartWidgetArea").load('<?= base_url(lang("routes_cart") . "/" . lang("routes_cart-header")) ?>');
+                    element.load('<?= base_url(lang("routes_cart") . "/" . lang("routes_cart-quantity")) ?>');
+                } else {
+                    iziToast.error({
+                        title: response.title,
+                        message: response.msg,
+                        position: "topCenter",
+                    });
+                }
+                $this.removeAttr("disabled");
+            }, 'JSON');
+        });
+        /**
+         * #Cart Operations
+         */
     });
 </script>

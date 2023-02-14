@@ -118,7 +118,6 @@ input:focus, select:focus, textarea:focus, button:focus{
     display: inline-block;
     position: relative;
     height: 48px;
-    min-width: 155px;
     background: transparent;
     border-radius: 48px;
     font-size: 16px;

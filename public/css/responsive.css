@@ -365,11 +365,6 @@
         font-family: 'Roboto', sans-serif;
         align-items: center;
         padding: 0 20px;
-        margin: 36px 25px 36px 0;
-    }
-
-    .h01Mode2 .menuToggler {
-        margin: 24px 25px 24px 0;
     }
 
     .menuToggler i {
@@ -838,10 +833,6 @@
         padding: 0 18px;
     }
 
-    .logo {
-        width: 20%;
-    }
-
     .anSupport {
         margin-left: 35px;
         padding-left: 50px;
@@ -1122,10 +1113,6 @@
         display: none;
     }
 
-    .logo {
-        width: 30%;
-    }
-
     .cartWidgetArea {
         right: 0;
     }
@@ -1366,6 +1353,10 @@
 /  11. max-width: 767px
 /----------------========----------------*/
 @media (max-width: 767px) {
+    .pcBtns .ulinaBTN {
+        padding: 0 10px;
+    }
+
     .headerInner02 .logo img {
         height: 80px;
         width: auto;
@@ -1572,13 +1563,13 @@
     }
 
     .quantity button {
-        left: 10px;
-        top: 1px;
+        left: 4px;
+        top: 4px;
     }
 
     .quantity button:last-child {
-        right: 10px;
-        top: 8px;
+        right: 4px;
+        top: 4px;
     }
 
     .woocommerce .shop_table.cart_table tbody tr td.product-remove {
@@ -1777,7 +1768,7 @@
     }
 
     .headerInner02 .logo img {
-        height: 45px;
+        height: auto;
         width: auto;
     }
 
@@ -2049,8 +2040,6 @@
         flex-wrap: wrap;
     }
 
-    .pcBtns .quantity,
-    .pcBtns .ulinaBTN,
     .pcBtns a {
         margin-bottom: 12px;
     }

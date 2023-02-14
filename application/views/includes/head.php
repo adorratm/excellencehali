@@ -145,20 +145,26 @@
             box-shadow: -1px 1px 5px 0 rgb(84 84 84 / 35%)
         }
 
-        .owl-thumbs{
+        .owl-thumbs {
             overflow-x: hidden;
             justify-content: unset;
             margin-left: 75px;
             margin-right: 75px;
         }
 
-        .carousel-indicators [data-bs-target]{
+        .carousel-indicators [data-bs-target] {
             min-width: 75px;
             height: auto;
         }
 
+        .owl-thumbs .owl-thumb-item {
+            padding: 5px;
+            border-radius: 0.375rem;
+        }
+
         .owl-thumbs .active {
-            border-color: #e10018 !important;
+            border-color: #7f8495 !important;
+            border-radius: 0.375rem;
         }
     </style>
 

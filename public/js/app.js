@@ -1,22 +1,22 @@
-window.addEventListener('DOMContentLoaded', function () {
-    $("iframe").each(function () {
+window.addEventListener('DOMContentLoaded', () => {
+    $("iframe").each(() => {
         $(this).attr("loading", "lazy");
         $(this).data("src", $(this).attr("src"));
         $(this).addClass("lazyload");
     });
-    $(document).on("click", ".btnSubmitForm", function (e) {
+    $(document).on("click", ".btnSubmitForm", (e) => {
         e.preventDefault();
         e.stopImmediatePropagation();
         let $this = $(this);
         $this.attr("disabled", "disabled");
-        createAjax($this.data("url"), new FormData(document.getElementById("contact-form")), function () {
+        createAjax($this.data("url"), new FormData(document.getElementById("contact-form")), () => {
             $("#contact-form")[0].reset();
             $this.removeAttr("disabled");
-        }, function () {
+        }, () => {
             $this.removeAttr("disabled");
         });
     });
-    setTimeout(function () {
+    setTimeout(() => {
         $("body").tooltip({
             selector: '[data-toggle="tooltip"]',
             trigger: "hover",
@@ -29,7 +29,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
 
-function createAjax(e, t, n = function () { }, o = function () { }) {
+const createAjax = (e, t, n = () => { }, o = () => { }) => {
     $.ajax({
         type: "POST",
         url: e,
@@ -38,26 +38,26 @@ function createAjax(e, t, n = function () { }, o = function () { }) {
         contentType: !1,
         processData: !1,
         dataType: "JSON"
-    }).done(function (e) {
+    }).done((e) => {
         e.success ? (iziToast.success({
             title: e.title,
             message: e.message,
             position: "topCenter",
             displayMode: "once"
-        }), n(e), null !== e.redirect && "" !== e.redirect && void 0 !== e.redirect && setTimeout(function () {
+        }), n(e), null !== e.redirect && "" !== e.redirect && void 0 !== e.redirect && setTimeout(() => {
             window.location.href = e.redirect
         }, 2e3)) : (iziToast.error({
             title: e.title,
             message: e.message,
             position: "topCenter",
             displayMode: "once"
-        }), o(e), null !== e.redirect && "" !== e.redirect && void 0 !== e.redirect && setTimeout(function () {
+        }), o(e), null !== e.redirect && "" !== e.redirect && void 0 !== e.redirect && setTimeout(() => {
             window.location.href = e.redirect
         }, 2e3))
     })
 }
 
-function setCookie(e, t, n) {
+const setCookie = (e, t, n) => {
     let o;
     if (n) {
         let e = new Date;
@@ -66,7 +66,7 @@ function setCookie(e, t, n) {
     document.cookie = encodeURIComponent(e) + "=" + encodeURIComponent(t) + o + "; path=/"
 }
 
-function getCookie(e) {
+const getCookie = (e) => {
     let t = encodeURIComponent(e) + "=",
         n = document.cookie.split(";");
     for (let e = 0; e < n.length; e++) {
@@ -75,9 +75,9 @@ function getCookie(e) {
             " " === o.charAt(0);) o = o.substring(1, o.length);
         if (0 === o.indexOf(t)) return decodeURIComponent(o.substring(t.length, o.length))
     }
-    return null
-}
+    return null;
+};
 
-function deleteCookie(e) {
-    setCookie(e, "", -1)
-}
+const deleteCookie = (e) => {
+    setCookie(e, "", -1);
+};

@@ -1,4 +1,5 @@
 <?php
+$lang["you_must_login_to_use_the_cart"] = "Sepeti kullanmak için giriş yapmalısınız.";
 $lang["addToCart"] = "Sepete Ekle";
 $lang["shareProduct"] = "Ürünü Paylaş";
 $lang["outOfStock"] = "Stokta Yok";
@@ -104,6 +105,7 @@ $lang['searchSectors'] = 'Sektör Ara';
 $lang['latestServices'] = 'Diğer Hizmetler';
 $lang['latestSectors'] = 'Diğer Sektörler';
 $lang['productDescription'] = 'Ürün Açıklaması';
+$lang['productFeatures'] = 'Ürün Özellikleri';
 $lang['sortBy'] = 'Sırala';
 $lang['sortByNew'] = 'Yeniden Eskiye';
 $lang['sortByOld'] = 'Eskiden Yeniye';
@@ -178,3 +180,10 @@ $lang['routes_gallery'] = 'galeri';
 $lang['routes_contact'] = 'iletisim';
 $lang['routes_contact-form'] = 'iletisim-formu';
 $lang['routes_change-language'] = 'dil-degistir';
+$lang["routes_cart"] = "sepet";
+$lang["routes_cart-header"] = "ust";
+$lang["routes_cart-quantity"] = "adet";
+$lang["routes_add-to-cart"] = "ekle";
+$lang["routes_update-cart"] = "guncelle";
+$lang["routes_remove-from-cart"] = "sil";
+$lang["routes_clear-cart"] = "temizle";
