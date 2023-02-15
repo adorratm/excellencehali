@@ -102,7 +102,12 @@ class Cart extends MY_Controller
     public function add()
     {
         if (!get_active_user()) :
-            redirect(base_url("login"));
+            echo json_encode([
+                "success" => false,
+                "title" => lang("error"),
+                "message" => lang("you_must_login_to_use_the_cart")
+            ]);
+            return;
         endif;
     }
     /**
@@ -119,7 +124,12 @@ class Cart extends MY_Controller
     public function update()
     {
         if (!get_active_user()) :
-            redirect(base_url("login"));
+            echo json_encode([
+                "success" => false,
+                "title" => lang("error"),
+                "message" => lang("you_must_login_to_use_the_cart")
+            ]);
+            return;
         endif;
     }
     /**

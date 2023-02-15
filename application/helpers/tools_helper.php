@@ -1,8 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-use Stichoza\GoogleTranslate\GoogleTranslate;
-
 // Seo
 function seo($str = null, $options = [])
 {
@@ -967,15 +965,4 @@ function get_secondary_image($codes_id = null, $codes = null, $cover_url = null,
         return $cover_url;
     endif;
     return null;
-}
-
-function translate_color($color = null, $lang = "tr")
-{
-    if (empty($color) || str_word_count(str_replace("-", " ", seo($color))) > 1) {
-        $color = "linear-gradient(90deg, #fa4750 0%, #e24597 13%, #a550ff 25%, #6c7ff8 38%, #70bbfd 50%, #2effd4 61%, #57e4a0 73%, #d2ab48 86%, #fdde0a 100%)";
-    } else {
-        $tr = new GoogleTranslate('en', $lang);
-        $color = $tr->translate($color);
-    }
-    return $color;
 }

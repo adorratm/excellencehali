@@ -1,4 +1,5 @@
 <?php
+$lang["dealerLogin"] = "Bayi Girişi";
 $lang["you_must_login_to_use_the_cart"] = "Sepeti kullanmak için giriş yapmalısınız.";
 $lang["addToCart"] = "Sepete Ekle";
 $lang["shareProduct"] = "Ürünü Paylaş";

@@ -1,7 +1,6 @@
 {
     "require": {
         "swiftmailer/swiftmailer": "^6.0",
-        "symfony/intl": "^5.2",
-        "stichoza/google-translate-php": "^5.1"
+        "symfony/intl": "^5.2"
     }
 }

@@ -119,7 +119,7 @@
                             <div class="pcvContainer ms-2">
                                 <div class="pi01VCItem d-flex align-items-center align-self-center align-content-center">
                                     <input checked type="radio" name="color" value="<?= $product->color_id ?>" id="<?= seo($product->color) ?>-<?= $product->color_id ?>" />
-                                    <label for="<?= seo($product->color) ?>-<?= $product->color_id ?>"><span style="background: <?= translate_color($product->color) ?>;"></span></label>
+                                    <label for="<?= seo($product->color) ?>-<?= $product->color_id ?>"><span style="background: linear-gradient(90deg, #fa4750 0%, #e24597 13%, #a550ff 25%, #6c7ff8 38%, #70bbfd 50%, #2effd4 61%, #57e4a0 73%, #d2ab48 86%, #fdde0a 100%);"></span></label>
                                     <span class="ms-2"><?= $product->color ?></span>
                                 </div>
                             </div>
@@ -143,23 +143,25 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pcBtns align-items-center align-self-center align-content-center">
-                        <?php if (!empty($product->stock)) : ?>
-                            <div class="quantity clearfix">
-                                <button type="button" class="qtyBtn btnMinus"><i class="fa fa-minus"></i></button>
-                                <input type="number" class="carqty input-text qty text" name="quantity" min="1" value="1" max="<?= $product->stock ?>">
-                                <button type="button" class="qtyBtn btnPlus" data-max="<?= $product->stock ?>"><i class="fa fa-plus"></i></button>
+                    <?php if (get_active_user()) : ?>
+                        <div class="pcBtns align-items-center align-self-center align-content-center">
+                            <?php if (!empty($product->stock)) : ?>
+                                <div class="quantity clearfix">
+                                    <button type="button" class="qtyBtn btnMinus"><i class="fa fa-minus"></i></button>
+                                    <input type="number" class="carqty input-text qty text" name="quantity" min="1" value="1" max="<?= $product->stock ?>">
+                                    <button type="button" class="qtyBtn btnPlus" data-max="<?= $product->stock ?>"><i class="fa fa-plus"></i></button>
+                                </div>
+                            <?php endif ?>
+                            <div class="productRadingsStock clearfix mb-0 me-3">
+                                <div class="productStock float-start">
+                                    <span><?= lang("availableStock") ?> :</span> <b class="<?= !empty($product->stock) && $product->stock > 15 ? "text-dark" : "text-danger" ?> "><?= !empty($product->stock) ? $product->stock : lang("outOfStock") ?></b>
+                                </div>
                             </div>
-                        <?php endif ?>
-                        <div class="productRadingsStock clearfix mb-0 me-3">
-                            <div class="productStock float-start">
-                                <span><?= lang("availableStock") ?> :</span> <b class="<?= !empty($product->stock) && $product->stock > 15 ? "text-dark" : "text-danger" ?> "><?= !empty($product->stock) ? $product->stock : lang("outOfStock") ?></b>
-                            </div>
+                            <?php if (!empty($product->stock)) : ?>
+                                <button type="button" class="ulinaBTN addToCart" data-quantity="1" data-product-id="<?= $product->codes_id ?>" data-product-codes="<?= $product->codes ?>"><span><?= lang("addToCart") ?></span></button>
+                            <?php endif ?>
                         </div>
-                        <?php if (!empty($product->stock)) : ?>
-                            <button type="button" class="ulinaBTN addToCart" data-quantity="1" data-product-id="<?= $product->codes_id ?>" data-product-codes="<?= $product->codes ?>"><span><?= lang("addToCart") ?></span></button>
-                        <?php endif ?>
-                    </div>
+                    <?php endif ?>
                     <div class="pcMeta">
                         <p>
                             <span><?= lang("productBarcode") ?> : </span>
@@ -167,9 +169,9 @@
                         </p>
                         <p class="pcmSocial border rounded p-3" style="width: fit-content;">
                             <span class="me-2"><?= lang("shareProduct") ?> : </span>
-                            <a class="fac" rel="nofollow" title="Facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode(str_replace("tr/index.php/", "", current_url())) ?>&t=<?= urlencode(str_replace("tr/index.php/", "", current_url())) ?>"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a class="fac" rel="nofollow" title="Facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode(str_replace("tr/index.php/", "", current_url())) ?>&t=<?= urlencode(str_replace("tr/index.php/", "", current_url())) ?>"><i class="fa-brands fa-facebook"></i></a>
                             <a class="twi" rel="nofollow" title="Twitter" target="_blank" href="https://twitter.com/intent/tweet?text=<?= urlencode(str_replace("tr/index.php/", "", current_url())) ?>&t=<?= urlencode(str_replace("tr/index.php/", "", current_url())) ?>"><i class="fa-brands fa-twitter"></i></a>
-                            <a class="lin" rel="nofollow" title="Linkedin" target="_blank" href="https://www.linkedin.com/sharing/share-offsite/?url=<?= urlencode(str_replace("tr/index.php/", "", current_url())) ?>&title=<?= urlencode($product->title) ?>"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a class="lin" rel="nofollow" title="Linkedin" target="_blank" href="https://www.linkedin.com/sharing/share-offsite/?url=<?= urlencode(str_replace("tr/index.php/", "", current_url())) ?>&title=<?= urlencode($product->title) ?>"><i class="fa-brands fa-linkedin"></i></a>
                             <a class="ins" rel="nofollow" title="Pinterest" target="_blank" href="https://pinterest.com/pin/create/button/?url=<?= urlencode(str_replace("tr/index.php/", "", current_url())) ?>&description=<?= urlencode($product->title) ?>"><i class="fa-brands fa-pinterest"></i></a>
                             <a class="ins" rel="nofollow" title="Reddit" target="_blank" href="https://www.reddit.com/submit?url=<?= urlencode(str_replace("tr/index.php/", "", current_url())) ?>&title=<?= urlencode($product->title) ?>"><i class="fa-brands fa-reddit"></i></a>
                             <a class="ins" rel="nofollow" title="Whatsapp" target="_blank" href="https://wa.me/?text=<?= urlencode(str_replace("tr/index.php/", "", current_url())) ?>"><i class="fa-brands fa-whatsapp"></i></a>
@@ -219,6 +221,9 @@
 
 <script>
     window.addEventListener('DOMContentLoaded', () => {
+        $(".colorLabel").click();
+
+
         if (($('#lightgallery, .lightgallery').length > 0)) {
             $('#lightgallery, .lightgallery').lightGallery({
                 selector: '.lightimg',
@@ -285,7 +290,7 @@
                 if (response.success) {
                     iziToast.success({
                         title: response.title,
-                        message: response.msg,
+                        message: response.message,
                         position: "topCenter",
                     });
                     $(".cartWidgetArea").load('<?= base_url(lang("routes_cart") . "/" . lang("routes_cart-header")) ?>');
@@ -293,7 +298,7 @@
                 } else {
                     iziToast.error({
                         title: response.title,
-                        message: response.msg,
+                        message: response.message,
                         position: "topCenter",
                     });
                 }
