@@ -1,5 +1,37 @@
 <?php
+
+// LOGIN
+$lang["login"] = "Giriş Yap";
 $lang["dealerLogin"] = "Bayi Girişi";
+$lang['forgotPassword'] = 'Şifremi Unuttum';
+$lang['forgotPasswordReset'] = 'Şifremi Sıfırla';
+$lang['required'] = '<b>{field}</b> alanı doldurulmalıdır!';
+$lang['valid_email'] = 'Lütfen geçerli bir <b>e-mail</b> adresi giriniz!';
+$lang['min_length'] = 'Şifre alanı en az 6 karakterden oluşmalıdır.';
+$lang['samePassword'] = 'Şifrelerinizin Aynı Olduğundan Emin Olup, Lütfen Tekrar Deneyin.';
+$lang['emailExists'] = 'Bu Mail Hesabı Sistemde Mevcut, Lütfen Tekrar Deneyin.';
+$lang['phoneExists'] = 'Bu Telefon Numarası Sistemde Mevcut, Lütfen Tekrar Deneyin.';
+$lang['registerSuccessfully'] = 'Başarıyla Kayıt Oldunuz.';
+$lang['resetMailSuccessfully'] = 'Sıfırlama Linki Girmiş Olduğunuz Email Adresine Başarıyla Gönderildi.';
+$lang['resetSuccessfully'] = 'Şifreniz Başarıyla Güncelleştirildi. Artık Giriş Yapabilirsiniz.';
+$lang['updatedSuccessfully'] = 'Bilgileriniz Başarıyla Güncelleştirildi.';
+$lang['loginSuccessfully'] = 'Başarıyla Giriş Yaptınız.';
+$lang['activatedSuccessfully'] = 'Hesabınız Başarıyla Etkinleştirildi. Artık Giriş Yapabilirsiniz.';
+$lang['logoutSuccessfully'] = 'Hesabınızdan Başarıyla Çıkış Yaptınız.';
+$lang['errorOnRegister'] = 'Kayıt Olurken Bir Hata Oluştu. Bilgilerinizi Kontrol Edip, Lütfen Tekrar Deneyin.';
+$lang['errorOnForgotPassword'] = 'Şifreniz Sıfırlanırken Bir Hata Oluştu. Bilgilerinizi Kontrol Edip, Lütfen Tekrar Deneyin.';
+$lang['errorOnUpdate'] = 'Bilgileriniz Güncelleştirilirken Bir Hata Oluştu. Bilgilerinizi Kontrol Edip, Lütfen Tekrar Deneyin.';
+$lang['errorOnLogin'] = 'Giriş Yaparken Bir Hata Oluştu. Bilgilerinizi Kontrol Edip, Lütfen Tekrar Deneyin.';
+$lang['errorOnLoginActivation'] = 'Giriş Yaparken Bir Hata Oluştu. Hesabınızı Mailinize Gelen Aktivasyon Maili İle Aktif Ettiğinizden Emin Olup, Lütfen Tekrar Deneyin.';
+$lang['emptyFields'] = 'Alanları Doldurduğunuzdan Emin Olup, Lütfen Tekrar Deneyin.';
+$lang['emailMessage'] = 'Linke Tıklayıp Hesabınızı Aktifleştirebilirsiniz. Aktivasyon Linkiniz:';
+$lang['activationLinkText'] = 'Aktivasyon İçin Buraya Tıklayın.';
+$lang['resetLinkText'] = 'Şifrenizi Sıfırlamak İçin Buraya Tıklayın.';
+$lang['errorOnActivation'] = 'Hesap Etkinleştirilirken Hata Oluştu. Lütfen Tekrar Deneyin.';
+$lang['errorOnActivationLink'] = 'Geçerli Aktivasyon Linkine Sahip Olduğunuzdan Emin Olup, Lütfen Tekrar Deneyin.';
+// #LOGIN
+
+
 $lang["you_must_login_to_use_the_cart"] = "Sepeti kullanmak için giriş yapmalısınız.";
 $lang["addToCart"] = "Sepete Ekle";
 $lang["shareProduct"] = "Ürünü Paylaş";
@@ -188,3 +220,12 @@ $lang["routes_add-to-cart"] = "ekle";
 $lang["routes_update-cart"] = "guncelle";
 $lang["routes_remove-from-cart"] = "sil";
 $lang["routes_clear-cart"] = "temizle";
+
+// LOGIN
+$lang['routes_dealer-login'] = 'bayi-girisi';
+$lang['routes_login'] = 'giris';
+$lang['routes_dealer-register'] = 'bayi-kaydi';
+$lang['routes_register'] = 'kayit';
+$lang['routes_activation'] = 'aktivasyon';
+$lang['routes_forgot-password'] = 'sifremi-unuttum';
+$lang['routes_forgot-password-reset'] = 'sifremi-sifirla';

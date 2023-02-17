@@ -25,7 +25,7 @@ class Userop extends CI_Controller
         if (get_active_user()) :
             redirect(base_url());
         endif;
-        $this->form_validation->set_rules("user_email", "Kullanıcı Adı", "required|trim");
+        $this->form_validation->set_rules("user_email", "Email", "required|trim");
         $this->form_validation->set_rules("user_password", "Şifre", "required|trim|min_length[6]");
         $this->form_validation->set_message(
             [

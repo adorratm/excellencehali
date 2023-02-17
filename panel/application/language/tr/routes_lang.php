@@ -41,3 +41,13 @@ $lang['(:any)/sepet/temizle'] = 'cart/clear';
 $lang['(:any)/odeme'] = 'payment/index';
 $lang['(:any)/odeme/odeme-basarili'] = 'payment/payment_success';
 $lang['(:any)/odeme/odeme-basarisiz'] = 'payment/payment_fail';
+
+
+$lang["(:any)/bayi-girisi"] = "login/login_form";
+$lang["(:any)/giris"] = "login/login";
+$lang["(:any)/bayi-kaydi"] = "login/register_form";
+$lang["(:any)/kayit"] = "login/register";
+$lang["(:any)/aktivasyon"] = "login/activation";
+$lang["(:any)/oturumu-kapat"] = "login/logout";
+$lang["(:any)/sifremi-unuttum"] = "login/forgot_password_form";
+$lang["(:any)/sifremi-sifirla"] = "login/forgot_password";

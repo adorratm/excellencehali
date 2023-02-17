@@ -80,7 +80,7 @@
             <div class="accessNav">
                 <a href="javascript:void(0);" class="menuToggler"><i class="fa-solid fa-bars"></i> <span>Menu</span></a>
                 <div class="anItems">
-                    <div class="anUser"><a rel="dofollow" href="<?= base_url(lang("routes_login")) ?>" title="<?= lang("dealerLogin") ?>"><span><?= lang("dealerLogin") ?></span><i class="fa-solid fa-user"></i></a></div>
+                    <div class="anUser"><a rel="dofollow" href="<?= base_url(lang("routes_dealer-login")) ?>" title="<?= lang("dealerLogin") ?>"><span><i class="fa-solid fa-user me-2"></i> <?= lang("dealerLogin") ?></span></a></div>
                     <div class="anCart">
                         <a href="javascript:void(0);"><i class="fa-solid fa-shopping-cart"></i><span class="totalItemsCount"><?= $total_items ?></span></a>
                         <div class="cartWidgetArea">
