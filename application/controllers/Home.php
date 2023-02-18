@@ -53,7 +53,11 @@ class Home extends MY_Controller
          * Instagram Posts
          */
         $this->viewData->instagramPosts = $this->general_model->get_all("instagram_posts", null, "id ASC");
-
+        /**
+         * Product Collections
+         */
+        $this->viewData->product_collections = $this->general_model->get_all("product_collections", null, "rand()", ["isActive" => 1, "lang" => $this->viewData->lang],[],[],[8]);
+        
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("home"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
 

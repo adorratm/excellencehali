@@ -59,6 +59,40 @@
     <!-- END: Slider Section -->
 <?php endif ?>
 
+<?php if (!empty($product_collections)) : ?>
+    <!-- END: Collections Section -->
+    <section class="latestArrivalSection">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="secTitle text-center"><?= lang("productCollections") ?></h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="productCarousel  owl-carousel">
+                        <?php foreach ($product_collections as $k => $v) : ?>
+                            <div class="productItem01 w-100 border rounded p-3 h-100 shadow-sm">
+                                <div class="pi01Thumb">
+                                    <img data-src="<?= get_picture("product_collections_v", $v->img_url) ?>" class="img-fluid lazyload" alt="<?= $v->title ?>" title="<?= $v->title ?>" />
+                                    <img data-src="<?= get_picture("product_collections_v", $v->img_url) ?>" class="img-fluid lazyload" alt="<?= $v->title ?>" title="<?= $v->title ?>" />
+                                    <div class="pi01Actions">
+                                        <a href="<?= base_url(lang("routes_product_collections") . "/" . $v->codes . "/" . $v->seo_url) ?>" rel="dofollow" title="<?= lang("viewProducts") ?>"><i class="fa-solid fa-arrows-up-down-left-right"></i></a>
+                                    </div>
+                                </div>
+                                <div class="pi01Details">
+                                    <h3 class="secTitle text-center fw-medium fs-6"><a href="<?= base_url(lang("routes_product_collections") . "/" . $v->codes . "/" . $v->seo_url) ?>" rel="dofollow" title="<?= lang("viewProducts") ?>"><?= $v->title ?></a></h3>
+                                </div>
+                            </div>
+                        <?php endforeach ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END: Collections Section -->
+<?php endif ?>
+
 <!--=================  About Section Start Here ================= -->
 <?php if (!empty($pages[array_keys($pages)[0]])) : ?>
     <?php $aboutPage = $pages[array_keys($pages)[0]] ?>
