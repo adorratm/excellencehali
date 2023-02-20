@@ -37,10 +37,6 @@
             </div>
         </div>
     <?php endif ?>
-
-
-
-
     <?php $pages = $this->general_model->get_all("pages", null, "rank ASC", ["isActive" => 1, "type" => $item->type]); ?>
     <?php if ($item->type === "ABOUT") : ?>
         <?php $i = 0 ?>
@@ -125,7 +121,7 @@
         </div>
     <?php endif ?>
     <?php if ($item->type === "SIMPLE") : ?>
-        <div class="auto-container">
+        <div class="container py-4">
             <div class="row align-items-center align-self-center align-content-center">
                 <?php if (!empty($item->img_url)) : ?>
                     <div class="col-lg-12 h-100">

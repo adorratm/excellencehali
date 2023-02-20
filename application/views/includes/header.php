@@ -79,8 +79,24 @@
             </div>
             <div class="accessNav">
                 <a href="javascript:void(0);" class="menuToggler"><i class="fa-solid fa-bars"></i> <span>Menu</span></a>
-                <div class="anItems">
-                    <div class="anUser"><a rel="dofollow" href="<?= base_url(lang("routes_dealer-login")) ?>" title="<?= lang("dealerLogin") ?>"><span><i class="fa-solid fa-user me-2"></i> <?= lang("dealerLogin") ?></span></a></div>
+                <div class="anItems align-items-center align-self-center align-content-center">
+                    <div class="anUser">
+                        <?php if (get_active_user()) : ?>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary btn-md dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-user me-2"></i> <?= get_active_user()->full_name ?>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" rel="dofollow" title="<?= lang("account") ?>" href="<?= base_url(lang("routes_account")) ?>"><i class="fa-solid fa-user-circle me-2"></i> <?= lang("account") ?></a></li>
+                                    <li><a class="dropdown-item" rel="dofollow" title="<?= lang("orders") ?>" href="<?= base_url(lang("routes_orders")) ?>"><i class="fa-solid fa-boxes-stacked me-2"></i> <?= lang("orders") ?></a></li>
+                                    <li><a class="dropdown-item" rel="dofollow" title="<?= lang("logout") ?>" href="<?= base_url(lang("routes_logout")) ?>"><i class="fa-solid fa-power-off me-2"></i> <?= lang("logout") ?></a></li>
+                                </ul>
+                            </div>
+                        <?php endif ?>
+                        <?php if (!get_active_user()) : ?>
+                            <a rel="dofollow" href="<?= base_url(lang("routes_dealer-login")) ?>" title="<?= lang("dealerLogin") ?>"><span><i class="fa-solid fa-lock me-2"></i> <?= lang("dealerLogin") ?></span></a>
+                        <?php endif ?>
+                    </div>
                     <div class="anCart">
                         <a href="javascript:void(0);"><i class="fa-solid fa-shopping-cart"></i><span class="totalItemsCount"><?= $total_items ?></span></a>
                         <div class="cartWidgetArea">

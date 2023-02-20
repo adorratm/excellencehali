@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!-- BEGIN: Page Banner Section -->
-<section class="pageBannerSection" style="background-image: url(<?= get_picture("settings_v", $settings->product_logo) ?>);">
+<section class="pageBannerSection" style="background-image: url(<?= get_picture("settings_v", $settings->collection_logo) ?>);">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">

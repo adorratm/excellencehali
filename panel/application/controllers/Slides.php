@@ -59,7 +59,6 @@ class Slides extends MY_Controller
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "add";
         $viewData->pages = $this->general_model->get_all("pages",null,"rank ASC", ["isActive" => 1]);
-        $viewData->services = $this->general_model->get_all("services",null,"rank ASC", ["isActive" => 1]);
         $viewData->collections = $this->general_model->get_all("product_collections",null,"rank ASC", ["isActive" => 1]);
         $viewData->products = $this->general_model->get_all("products p","p.id,p.title","p.rank ASC", ["p.isActive" => 1,"pi.isCover" => 1],[],["product_collections pc" => ["p.collection_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]],[],[],true,["p.id"]);
         $viewData->settings = $this->general_model->get_all("settings", null, null, ["isActive" => 1]);
@@ -107,7 +106,6 @@ class Slides extends MY_Controller
         $viewData->subViewFolder = "update";
         $viewData->item = $this->slide_model->get(["id" => $id]);
         $viewData->pages = $this->general_model->get_all("pages",null,"rank ASC", ["isActive" => 1]);
-        $viewData->services = $this->general_model->get_all("services",null,"rank ASC", ["isActive" => 1]);
         $viewData->collections = $this->general_model->get_all("product_collections",null,"rank ASC", ["isActive" => 1]);
         $viewData->products = $this->general_model->get_all("products p","p.id,p.title","p.rank ASC", ["p.isActive" => 1,"pi.isCover" => 1],[],["product_collections pc" => ["p.collection_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]],[],[],true,["p.id"]);
         $viewData->settings = $this->general_model->get_all("settings", null, null, ["isActive" => 1]);

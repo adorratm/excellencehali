@@ -94,7 +94,7 @@ class Settings extends MY_Controller
             $product_logo = upload_picture("product_logo", "uploads/$this->viewFolder",[],"*");
             $product_detail_logo = upload_picture("product_detail_logo", "uploads/$this->viewFolder",[],"*");
             $gallery_logo = upload_picture("gallery_logo", "uploads/$this->viewFolder",[],"*");
-            $technical_information_logo = upload_picture("technical_information_logo", "uploads/$this->viewFolder",[],"*");
+            $collection_logo = upload_picture("collection_logo", "uploads/$this->viewFolder",[],"*");
             $technical_information_detail_logo = upload_picture("technical_information_detail_logo", "uploads/$this->viewFolder",[],"*");
             $getRank = $this->settings_model->rowCount();
             if ($logo["success"]) :
@@ -133,8 +133,8 @@ class Settings extends MY_Controller
             if ($product_detail_logo["success"]) :
                 $data["product_detail_logo"] = $product_detail_logo["file_name"];
             endif;
-            if ($technical_information_logo["success"]) :
-                $data["technical_information_logo"] = $technical_information_logo["file_name"];
+            if ($collection_logo["success"]) :
+                $data["collection_logo"] = $collection_logo["file_name"];
             endif;
             if ($technical_information_detail_logo["success"]) :
                 $data["technical_information_detail_logo"] = $technical_information_detail_logo["file_name"];
@@ -312,12 +312,12 @@ class Settings extends MY_Controller
                         die();
                     endif;
                 endif;
-                if (!empty($_FILES["technical_information_logo"]["name"])) :
-                    $image = upload_picture("technical_information_logo", "uploads/$this->viewFolder",[],"*");
+                if (!empty($_FILES["collection_logo"]["name"])) :
+                    $image = upload_picture("collection_logo", "uploads/$this->viewFolder",[],"*");
                     if ($image["success"]) :
-                        $data["technical_information_logo"] = $image["file_name"];
+                        $data["collection_logo"] = $image["file_name"];
                     else :
-                        echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ayar Güncelleştirilirken Hata Oluştu. Teknik Bilgiler Logosu Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+                        echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ayar Güncelleştirilirken Hata Oluştu. Koleksiyon Logosu Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
                         die();
                     endif;
                 endif;

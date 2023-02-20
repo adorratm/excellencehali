@@ -51,3 +51,10 @@ $lang["(:any)/aktivasyon"] = "login/activation";
 $lang["(:any)/oturumu-kapat"] = "login/logout";
 $lang["(:any)/sifremi-unuttum"] = "login/forgot_password_form";
 $lang["(:any)/sifremi-sifirla"] = "login/forgot_password";
+
+
+// Account
+
+$lang["(:any)/hesabim"] = "account/index";
+$lang["(:any)/hesabimi-guncelle"] = "account/update";
+$lang["(:any)/siparislerim"] = "account/orders";

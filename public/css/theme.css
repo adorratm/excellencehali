@@ -3217,7 +3217,7 @@
 .footer {
     position: relative;
     padding: 25px 0 0;
-    background: #4a5556;
+    background: #1c1833;
 }
 
 .footerMode2 {
@@ -3510,7 +3510,7 @@
 }
 
 .siteInfoSection {
-    background: #4a5556;
+    background: #1c1833;
 }
 
 .sisMode2 {
@@ -7748,7 +7748,6 @@
 /-----------------------------------------*/
 .pageBannerSection {
     background: #ecf5f4;
-    height: 200px;
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -7766,6 +7765,7 @@
     font-size: 36px;
     line-height: 82px;
     margin: 0 0 30px;
+    filter:drop-shadow(1px 1px 1px black);
 }
 
 .singleBlogPageBanner .pageBannerContent h2 {

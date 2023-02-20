@@ -2,6 +2,7 @@
 
 // LOGIN
 $lang["login"] = "Giriş Yap";
+$lang["logout"] = "Çıkış Yap";
 $lang["dealerLogin"] = "Bayi Girişi";
 $lang['forgotPassword'] = 'Şifremi Unuttum';
 $lang['forgotPasswordReset'] = 'Şifremi Sıfırla';
@@ -31,7 +32,11 @@ $lang['errorOnActivation'] = 'Hesap Etkinleştirilirken Hata Oluştu. Lütfen Te
 $lang['errorOnActivationLink'] = 'Geçerli Aktivasyon Linkine Sahip Olduğunuzdan Emin Olup, Lütfen Tekrar Deneyin.';
 // #LOGIN
 
-
+$lang["updateAccountDetails"] = "Hesap Bilgilerini Güncelle";
+$lang["password"] = "Şifre";
+$lang["passwordRepeat"] = "Tekrar Şifre";
+$lang["account"] = "Hesabım";
+$lang["orders"] = "Siparişlerim";
 $lang["you_must_login_to_use_the_cart"] = "Sepeti kullanmak için giriş yapmalısınız.";
 $lang["addToCart"] = "Sepete Ekle";
 $lang["shareProduct"] = "Ürünü Paylaş";
@@ -144,9 +149,9 @@ $lang['sortByNew'] = 'Yeniden Eskiye';
 $lang['sortByOld'] = 'Eskiden Yeniye';
 $lang['description'] = 'Açıklama';
 $lang['features'] = 'Özellikler';
-$lang['email'] = 'Email Adresiniz';
+$lang['email'] = 'Email';
 $lang['phone'] = 'Telefon Numaranız';
-$lang['fullName'] = 'Adınız ve Soyadınız';
+$lang['fullName'] = 'Ad Soyad';
 $lang['required'] = '<b>{field}</b> alanı doldurulmalıdır!';
 $lang['valid_email'] = 'Lütfen geçerli bir <b>e-mail</b> adresi giriniz!';
 $lang['min_length'] = 'Şifre alanı en az 6 karakterden oluşmalıdır.';
@@ -224,8 +229,13 @@ $lang["routes_clear-cart"] = "temizle";
 // LOGIN
 $lang['routes_dealer-login'] = 'bayi-girisi';
 $lang['routes_login'] = 'giris';
+$lang['routes_logout'] = 'oturumu-kapat';
 $lang['routes_dealer-register'] = 'bayi-kaydi';
 $lang['routes_register'] = 'kayit';
 $lang['routes_activation'] = 'aktivasyon';
 $lang['routes_forgot-password'] = 'sifremi-unuttum';
 $lang['routes_forgot-password-reset'] = 'sifremi-sifirla';
+
+// USER
+$lang["routes_account"] = "hesabim";
+$lang["routes_orders"] = "siparislerim";

@@ -30,12 +30,6 @@
                                         <?php $sUrl = base_url(lang("routes_product_collections") . "/" . $sPage->url) ?>
                                     <?php endif ?>
                                 <?php endif ?>
-                                <?php if (!empty($value->service_id) && $value->service_id > 0) : ?>
-                                    <?php $sService = $this->general_model->get("services", null, ["isActive" => 1, "id" => $value->service_id]); ?>
-                                    <?php if (!empty($sService)) : ?>
-                                        <?php $sUrl = base_url(lang("routes_services") . "/" . lang("routes_service_detail") . "/" . $sService->url) ?>
-                                    <?php endif ?>
-                                <?php endif ?>
                                 <?php if (!empty($value->sector_id) && $value->sector_id > 0) : ?>
                                     <?php $sSector = $this->general_model->get("sectors", null, ["isActive" => 1, "id" => $value->sector_id]); ?>
                                     <?php if (!empty($sSector)) : ?>
@@ -125,7 +119,7 @@
 <!--================= About Section End Here ================= -->
 
 <!-- Our Facts section -->
-<section class="featureSection2 mb117">
+<section class="featureSection2 mb117 d-none">
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-xl-3">
