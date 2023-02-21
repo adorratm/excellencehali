@@ -33,7 +33,7 @@ class Contact extends MY_Controller
     public function index()
     {
         $this->viewFolder = "contact_v/index";
-
+        $this->viewData->page_title = clean(strto("lower|ucwords", lang("contact")));
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("contact"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
 

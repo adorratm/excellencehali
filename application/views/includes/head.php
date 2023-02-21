@@ -11,15 +11,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes, shrink-to-fit=no,minimal-ui">
-    <meta name="description" content="<?= stripslashes(clean(@$meta_desc)) ?>">
-    <meta name="subject" content="<?= stripslashes(clean(@$meta_desc)) ?>">
+    <meta name="description" content="<?= @stripslashes(clean(@$meta_desc)) ?>">
+    <meta name="subject" content="<?= @stripslashes(clean(@$meta_desc)) ?>">
     <meta name="copyright" content="<?= $settings->company_name ?>">
     <meta name="language" content="<?= strto("lower|upper", $lang) ?>">
     <meta name="robots" content="all" />
     <meta name="revised" content="<?= turkishDate("d F Y, l H:i:s", date("Y-m-d H:i:s")) ?>" />
-    <meta name="abstract" content="<?= stripslashes(clean(@$meta_desc)) ?>">
-    <meta name="topic" content="<?= stripslashes(clean(@$meta_desc)) ?>">
-    <meta name="summary" content="<?= stripslashes(clean(@$meta_desc)) ?>">
+    <meta name="abstract" content="<?= @stripslashes(clean(@$meta_desc)) ?>">
+    <meta name="topic" content="<?= @stripslashes(clean(@$meta_desc)) ?>">
+    <meta name="summary" content="<?= @stripslashes(clean(@$meta_desc)) ?>">
     <meta name="Classification" content="Business">
     <meta name="author" content="Mutfak Yapım Dijital Reklam Ajansı, info@mutfakyapim.com">
     <meta name="designer" content="Mutfak Yapım Dijital Reklam Ajansı, info@mutfakyapim.com">
@@ -39,11 +39,11 @@
     <meta property="og:url" content="<?= (!empty($og_url) ? clean($og_url) : clean(base_url())) ?>" />
     <meta property="og:type" content="<?= (!empty($og_type) ? clean($og_type) : "website") ?>" />
     <meta property="og:title" content="<?= (!empty($meta_title) ? stripslashes($meta_title) : (!empty($og_title) ? stripslashes($og_title) : stripslashes($settings->company_name))) ?>" />
-    <meta property="og:description" content="<?= (!empty($og_description) ? stripslashes(clean($og_description)) : stripslashes(clean(@$meta_desc))) ?>" />
+    <meta property="og:description" content="<?= (!empty($og_description) ? @stripslashes(clean($og_description)) : @stripslashes(clean(@$meta_desc))) ?>" />
     <meta property="og:image" content="<?= clean(@$og_image) ?>" />
     <meta property="og:image:secure_url" content="<?= clean(@$og_image) ?>" />
     <meta name="twitter:title" content="<?= (!empty($meta_title) ? stripslashes($meta_title) : (!empty($og_title) ? stripslashes($og_title) : stripslashes($settings->company_name))) ?>">
-    <meta name="twitter:description" content="<?= (!empty($og_description) ? stripslashes(clean($og_description)) : stripslashes(clean(@$meta_desc))) ?>">
+    <meta name="twitter:description" content="<?= (!empty($og_description) ? @stripslashes(clean($og_description)) : @stripslashes(clean(@$meta_desc))) ?>">
     <meta name="twitter:image" content="<?= clean(@$og_image) ?>">
     <meta name="twitter:card" content="summary_large_image">
     <meta property="og:site_name" content="<?= (!empty($meta_title) ? stripslashes($meta_title) : (!empty($og_title) ? stripslashes($og_title) : stripslashes($settings->company_name))) ?>">

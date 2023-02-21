@@ -11,7 +11,7 @@ $explodedBrandChecks = !empty($_GET["brandChecks"]) ? array_map("intVal", explod
         <div class="row">
             <div class="col-lg-12">
                 <div class="pageBannerContent text-center">
-                    <h2 class="text-white mb-0"><?= !empty($products_collection) ? strto("lower|ucwords", $products_collection->title) : strto("lower|ucwords", lang("products")) ?></h2>
+                    <h2 class="text-white mb-0"><?= $page_title ?></h2>
                 </div>
             </div>
         </div>

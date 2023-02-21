@@ -21,7 +21,7 @@ class Home extends MY_Controller
      * ...:::!!! ============================== CONSTRUCTOR ============================== !!!:::...
      * ---------------------------------------------------------------------------------------------
      */
-    
+
     /**
      * -----------------------------------------------------------------------------------------------
      * ...:::!!! ================================== INDEX ================================== !!!:::...
@@ -56,8 +56,8 @@ class Home extends MY_Controller
         /**
          * Product Collections
          */
-        $this->viewData->product_collections = $this->general_model->get_all("product_collections", null, "rand()", ["isActive" => 1, "lang" => $this->viewData->lang],[],[],[8]);
-        
+        $this->viewData->product_collections = $this->general_model->get_all("product_collections", null, "rand()", ["isActive" => 1, "lang" => $this->viewData->lang], [], [], [8]);
+
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("home"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
 
@@ -298,7 +298,7 @@ class Home extends MY_Controller
      * ...:::!!! ========================== FACEBOOK CATALOG MODULE ========================= !!!:::...
      * ------------------------------------------------------------------------------------------------
      */
-    function catalog()
+    function facebook_catalog()
     {
         $settings = get_settings();
 
@@ -327,8 +327,8 @@ class Home extends MY_Controller
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
-        $joins = ["product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
-        $select = "p.id,p.title,p.seo_url,pi.url img_url,p.description description,p.isActive";
+        $joins = ["product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"], "product_details pd" => ["pd.codes_id = p.codes_id AND pd.codes = p.codes", "left"]];
+        $select = "p.stock,p.codes,pd.description,p.id,p.title,p.seo_url,pi.url img_url,p.isActive";
         $distinct = true;
         $groupBy = ["p.id"];
         /** 
@@ -344,24 +344,14 @@ class Home extends MY_Controller
                 xml_add_child($item, 'g:id', $prod->id);
                 xml_add_child($item, 'g:title', strto("lower|ucwords", $prod->title));
                 xml_add_child($item, 'g:description', strto("lower|ucwords", $prod->title));
-                xml_add_child($item, 'g:link',  base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/{$prod->url}"));
+                xml_add_child($item, 'g:link',  base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/" . $prod->codes . "/" . $prod->seo_url));
                 xml_add_child($item, 'g:image_link', get_picture("products_v", $prod->img_url));
                 xml_add_child($item, 'g:brand', strto("lower|ucwords", $settings->company_name));
                 xml_add_child($item, 'g:condition', 'new');
                 xml_add_child($item, 'g:availability', ($prod->stock > 0 ? 'in stock' : 'out stock'));
                 xml_add_child($item, 'g:price',  '0 ' . $this->viewData->currency);
                 //https://www.google.com/basepages/producttype/taxonomy-with-ids.en-US.txt
-                /**
-                 * Get All Collections
-                 */
-                $collections = $this->general_model->get_all("product_collections", null, "rank ASC", ["isActive" => 1, "lang" => $this->viewData->lang], [], [], []);
-                $collection = null;
-                foreach ($collections as $k => $v) :
-                    if ($v->id == $prod->collection_id) :
-                        $collection = $v->title;
-                    endif;
-                endforeach;
-                xml_add_child($item, 'g:google_product_category', strto("lower|ucwords", $collection));
+                xml_add_child($item, 'g:google_product_category', 2826);
             //xml_add_child($item, 'g:custom_label_0', $prod->);
             endforeach;
         endif;
@@ -371,5 +361,105 @@ class Home extends MY_Controller
      * ------------------------------------------------------------------------------------------------
      * ...:::!!! ========================== FACEBOOK CATALOG MODULE ========================= !!!:::...
      * ------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * ------------------------------------------------------------------------------------------------
+     * ...:::!!! ========================== GOOGLE CATALOG MODULE ========================= !!!:::...
+     * ------------------------------------------------------------------------------------------------
+     */
+    function google_catalog()
+    {
+        $settings = get_settings();
+
+        $dom = xml_dom();
+        $rss = xml_add_child($dom, 'rss');
+        xml_add_attribute($rss, 'xmlns:g', 'https://base.google.com/ns/1.0');
+        xml_add_attribute($rss, 'version', '2.0');
+
+        $channel = xml_add_child($rss, 'channel');
+        xml_add_child($channel, 'title', stripslashes($settings->company_name));
+        xml_add_child($channel, 'link', base_url());
+        xml_add_child($channel, 'description', clean($settings->meta_description));
+
+        /**
+         * Order
+         */
+        $order = "p.id DESC";
+        /**
+         * Likes
+         */
+        $likes = [];
+        $wheres = [];
+        /**
+         * Wheres
+         */
+        $wheres["p.isActive"] = 1;
+        $wheres["pi.isCover"] = 1;
+        $wheres["p.lang"] = $this->viewData->lang;
+        $joins = ["product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"], "product_details pd" => ["pd.codes_id = p.codes_id AND pd.codes = p.codes", "left"]];
+        $select = "p.stock,p.codes,pd.description,p.id,p.title,p.seo_url,pi.url img_url,p.isActive";
+        $distinct = true;
+        $groupBy = ["p.id"];
+        /** 
+         * Get Products
+         */
+        $products = $this->general_model->get_all("products p", $select, $order, $wheres, $likes, $joins, [], [], $distinct, $groupBy);
+        $this->viewData->products = $products;
+
+        //logg($prods);
+        if (!empty($products)) :
+            foreach ($products as $key => $prod) :
+                $item = xml_add_child($channel, 'item');
+                xml_add_child($item, 'g:id', $prod->id);
+                $gtin = rand(100000000000, 999999999999);
+                xml_add_child($item, 'g:title', strto("lower|ucwords", $prod->title));
+                xml_add_child($item, 'g:description', strto("lower|ucwords", (!empty($prod->description) ? clean(@mb_word_wrap($prod->description, 500, "...")) : $prod->title)));
+                xml_add_child($item, 'g:link',  base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/" . $prod->codes . "/" . $prod->seo_url));
+                xml_add_child($item, 'g:image_link', get_picture("products_v", $prod->img_url));
+                xml_add_child($item, 'g:additional_image_link', get_picture("products_v", $prod->img_url));
+                xml_add_child($item, 'g:brand', strto("lower|ucwords", stripslashes($settings->company_name)));
+                xml_add_child($item, 'g:condition', 'new');
+                xml_add_child($item, 'g:availability', ($prod->stock > 0 ? 'in stock' : 'out of stock'));
+                xml_add_child($item, 'g:price', @number_format($prod->newPrice, 2) . ' ' . $this->viewData->currency);
+                xml_add_child($item, 'g:sale_price', @number_format($prod->discountedPrice, 2) . ' ' . $this->viewData->currency);
+                xml_add_child($item, 'g:mpn', $gtin);
+                xml_add_child($item, 'g:identifier_exists', "no");
+                $shipping = xml_add_child($item, 'g:shipping');
+                xml_add_child($shipping, 'g:country', "TR");
+                xml_add_child($shipping, 'g:service', "Standard");
+                xml_add_child($shipping, 'g:price', 0 . ' ' . $this->viewData->currency);
+                //https://www.google.com/basepages/producttype/taxonomy-with-ids.en-US.txt
+                xml_add_child($item, 'g:google_product_category', 2826);
+            //xml_add_child($item, 'g:custom_label_0', $prod->);
+            endforeach;
+        endif;
+        $this->output->set_content_type('application/xml')->set_output(xml_print($dom, true));
+    }
+    /**
+     * ------------------------------------------------------------------------------------------------
+     * ...:::!!! ========================== GOOGLE CATALOG MODULE ========================= !!!:::...
+     * ------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * ------------------------------------------------------------------------------------------------
+     * ...:::!!! ========================== CATALOG ========================= !!!:::...
+     */
+    function catalog()
+    {
+        
+        $this->ci_minifier->set_domparser(0);
+        $this->ci_minifier->init(1);
+        $filepath = get_picture("settings_v", $this->viewData->settings->catalog);
+
+        $this->output
+            ->set_header("Content-Disposition: inline; filename={$this->viewData->settings->company_name}.pdf")
+            ->set_content_type('application/pdf')
+            ->set_output(file_get_contents($filepath));
+    }
+    /**
+     * ------------------------------------------------------------------------------------------------
+     * ...:::!!! ========================== CATALOG ========================= !!!:::...
      */
 }

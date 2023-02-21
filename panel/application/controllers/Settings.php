@@ -95,7 +95,7 @@ class Settings extends MY_Controller
             $product_detail_logo = upload_picture("product_detail_logo", "uploads/$this->viewFolder",[],"*");
             $gallery_logo = upload_picture("gallery_logo", "uploads/$this->viewFolder",[],"*");
             $collection_logo = upload_picture("collection_logo", "uploads/$this->viewFolder",[],"*");
-            $technical_information_detail_logo = upload_picture("technical_information_detail_logo", "uploads/$this->viewFolder",[],"*");
+            $catalog = upload_picture("catalog", "uploads/$this->viewFolder",[],"*");
             $getRank = $this->settings_model->rowCount();
             if ($logo["success"]) :
                 $data["logo"] = $logo["file_name"];
@@ -136,8 +136,8 @@ class Settings extends MY_Controller
             if ($collection_logo["success"]) :
                 $data["collection_logo"] = $collection_logo["file_name"];
             endif;
-            if ($technical_information_detail_logo["success"]) :
-                $data["technical_information_detail_logo"] = $technical_information_detail_logo["file_name"];
+            if ($catalog["success"]) :
+                $data["catalog"] = $catalog["file_name"];
             endif;
             $data["favicon"] = $favicon["file_name"];
             $data["isActive"] = 1;
@@ -321,12 +321,12 @@ class Settings extends MY_Controller
                         die();
                     endif;
                 endif;
-                if (!empty($_FILES["technical_information_detail_logo"]["name"])) :
-                    $image = upload_picture("technical_information_detail_logo", "uploads/$this->viewFolder",[],"*");
+                if (!empty($_FILES["catalog"]["name"])) :
+                    $image = upload_picture("catalog", "uploads/$this->viewFolder",[],"*");
                     if ($image["success"]) :
-                        $data["technical_information_detail_logo"] = $image["file_name"];
+                        $data["catalog"] = $image["file_name"];
                     else :
-                        echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ayar Güncelleştirilirken Hata Oluştu. Teknik Bilgi Detay Logosu Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+                        echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ayar Güncelleştirilirken Hata Oluştu. Katalog PDF Dosyası Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
                         die();
                     endif;
                 endif;

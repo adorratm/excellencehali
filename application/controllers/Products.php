@@ -190,7 +190,7 @@ class Products extends MY_Controller
         /**
          * Meta
          */
-        $this->viewData->page_title = (!empty($collection) ? $collection->title : lang("products"));
+        $this->viewData->page_title = (!empty($collection) ? strto("lower|ucwords", $collection->title) : strto("lower|ucwords", lang("products")));
         $this->viewData->meta_title = strto("lower|ucwords", (!empty($collection) ? $collection->title : lang("products"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
         $this->viewData->og_url                 = clean(base_url(lang("routes_product_collections")));
@@ -258,6 +258,7 @@ class Products extends MY_Controller
             /**
              * Meta
              */
+            $this->viewData->page_title = strto("lower|ucwords", $this->viewData->product->title);
             $this->viewData->meta_title = strto("lower|ucwords", $this->viewData->product->title) . " - " . $this->viewData->settings->company_name;
             $this->viewData->meta_desc  = !empty($this->viewData->product->content) ? str_replace("”", "\"", @stripslashes($this->viewData->product->content)) : str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
             $this->viewData->og_url                 = clean(base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/" . $seo_url));

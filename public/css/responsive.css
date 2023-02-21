@@ -1780,10 +1780,6 @@
         margin-right: 0;
     }
 
-    .anItems>div.anSearch {
-        display: none;
-    }
-
     .cartWidgetArea {
         width: 290px;
         padding: 25px 15px;

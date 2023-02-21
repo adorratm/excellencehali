@@ -80,6 +80,7 @@
             <div class="accessNav">
                 <a href="javascript:void(0);" class="menuToggler"><i class="fa-solid fa-bars"></i> <span>Menu</span></a>
                 <div class="anItems align-items-center align-self-center align-content-center">
+                    <div class="anSearch"><a href="javascript:void(0);"><i class="fa-solid fa-search"></i></a></div>
                     <div class="anUser">
                         <?php if (get_active_user()) : ?>
                             <div class="dropdown">
@@ -110,3 +111,46 @@
 </header>
 <div class="blankHeader"></div>
 <!-- END: Section -->
+
+
+<!-- BEGIN: Search Popup Section -->
+<section class="popup_search_sec">
+    <div class="popup_search_overlay"></div>
+    <div class="pop_search_background">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="popup_logo">
+                        <a rel="dofollow" title="<?= $settings->company_name ?>" href="<?= base_url() ?>"><img class="img-fluid lazyload" data-src="<?= get_picture("settings_v", $settings->mobile_logo) ?>" alt="<?= $settings->company_name ?>"></a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <a href="javascript:void(0);" id="search_Closer" class="search_Closer"></a>
+                </div>
+            </div>
+        </div>
+        <div class="middle_search">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="popup_search_form">
+                            <form class="w-100" id="searchCollectionFormHeader" action="<?= base_url(lang("routes_product_collections")) ?>" method="GET" enctype="multipart/form-data">
+
+                                <div class="input-group">
+                                    <input type="hidden" name="orderBy" value="1">
+                                    <input style="padding-right:37px" class="form-control" placeholder="<?= lang("searchCollections") ?>" type="text" name="search" value="<?= (!empty($_GET["search"]) ? $_GET["search"] : null) ?>">
+                                    <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
+                                    <button type="button" class="btn bg-transparent rounded-0" style="margin-left: -37px; z-index: 100;" onclick="$('#searchCollectionFormHeader').find('input[name=search]').val('');$('#searchCollectionFormHeader').submit()">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- END: Search Popup Section -->

@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="pageBannerContent text-center">
-                    <h2 class="text-white mb-0"><?= lang("dealerLogin") ?></h2>
+                    <h2 class="text-white mb-0"><?= $page_title ?></h2>
                 </div>
             </div>
         </div>
@@ -25,13 +25,22 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <input type="email" name="email" placeholder="<?= lang("email") ?>" required />
+                            <div class="row align-items-center align-self-center align-content-center mb-3">
+                                <label for="email" class="col-lg-2 col-form-label"><?= lang("email") ?> : </label>
+                                <div class="col-lg-10">
+                                    <input class="mb-0" id="email" type="email" name="email" placeholder="<?= lang("email") ?>" required value="<?= get_cookie("rememberme", true) == "on" ? get_cookie("email", true) : set_value("email") ?>" />
                                 </div>
-                                <div class="col-lg-12">
-                                    <input type="password" name="password" placeholder="<?= lang("password") ?>" required />
+                            </div>
+                            <div class="row align-items-center align-self-center align-content-center mb-3">
+                                <label for="password" class="col-lg-2 col-form-label"><?= lang("password") ?> : </label>
+                                <div class="col-lg-10">
+                                    <input class="mb-0" id="password" type="password" name="password" placeholder="<?= lang("password") ?>" required value="<?= get_cookie("rememberme", true) == "on" ? base64_decode(get_cookie("password", true)) : set_value("password") ?>" />
                                 </div>
+                            </div>
+
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="rememberme" id="rememberme" <?= get_cookie("rememberme", true) ? "checked" : NULL ?>>
+                                <label for="rememberme" class="form-check-label"><?= lang("rememberMe") ?></label>
                             </div>
                         </div>
                         <div class="card-footer">

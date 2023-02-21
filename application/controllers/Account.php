@@ -51,6 +51,7 @@ class Account extends MY_Controller
             redirect(base_url(lang("routes_login")));
         endif;
         $this->viewFolder = "account_v/index";
+        $this->viewData->page_title = clean(strto("lower|ucwords", lang("account")));
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("account"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", stripslashes($this->viewData->settings->meta_description));
         $this->viewData->og_url                 = clean(base_url(lang("routes_account")));

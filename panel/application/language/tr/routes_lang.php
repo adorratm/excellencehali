@@ -3,7 +3,9 @@ $lang['(:any)'] = 'home/index';
 $lang['(:any)/404.html'] = "my_controller/error";
 $lang["(:any)/sitemap.xml"] = "home/sitemap";
 $lang["(:any)/sitemapindex.xml"] = "home/sitemapindex";
-$lang["(:any)/facebook-katalog.xml"] = "home/catalog";
+$lang["(:any)/facebook-katalog.xml"] = "home/facebook_catalog";
+$lang["(:any)/google-katalog.xml"] = "home/google_catalog";
+$lang["(:any)/katalog"] = "home/catalog";
 
 $lang["(:any)/blog"] = "blog/index";
 $lang["(:any)/blog/(:num)"] = "blog/index/$2";
@@ -16,6 +18,7 @@ $lang["(:any)/koleksiyonlar/(:num)"] = "product_collections/index/$2";
 $lang["(:any)/koleksiyonlar/(:num)/(:any)"] = "products/index/$2/$3";
 $lang["(:any)/koleksiyonlar/(:num)/(:any)/(:num)"] = "products/index/$2/$3/$4";
 $lang["(:any)/koleksiyonlar/urun/(:num)/(:any)"] = "products/product_detail/$2/$3";
+$lang["(:any)/yeni-koleksiyonlar"] = "product_collections/new";
 
 $lang["(:any)/galeriler"] = "galleries/index";
 $lang["(:any)/galeriler/(:num)"] = "galleries/index/$2";

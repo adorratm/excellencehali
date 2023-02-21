@@ -36,6 +36,7 @@ class Login extends MY_Controller
             redirect(base_url());
         endif;
         $this->viewFolder = "login_v/index";
+        $this->viewData->page_title = clean(strto("lower|ucwords", lang("dealerLogin")));
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("dealerLogin"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", stripslashes($this->viewData->settings->meta_description));
         $this->viewData->og_url                 = clean(base_url(lang("routes_dealer-login")));
@@ -69,6 +70,16 @@ class Login extends MY_Controller
             $user = $this->general_model->get("users", null, ["email" => $data["email"], "password" => $data["password"]]);
             if (!empty($user)) :
                 if ($user->isActive) :
+                    if ($data["rememberme"]) :
+                        set_cookie("email", $data["email"], 3600 * 24 * 30);
+                        set_cookie("password", base64_encode(clean($_POST["password"])), 3600 * 24 * 30);
+                        set_cookie("rememberme", $data["rememberme"], 3600 * 24 * 30);
+                    endif;
+                    if (!$data["rememberme"]) :
+                        delete_cookie("email");
+                        delete_cookie("password");
+                        delete_cookie("rememberme");
+                    endif;
                     $this->session->set_userdata("user", $user);
                     userRole();
                     $alert = ["success" => true, "title" => lang("success"), "msg" => lang("welcomeMessage") . " <b>" . $user->full_name . "</b>"];
@@ -94,6 +105,7 @@ class Login extends MY_Controller
             redirect(base_url());
         endif;
         $this->viewFolder = "register_v/index";
+        $this->viewData->page_title = clean(strto("lower|ucwords", lang("register")));
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("register"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", stripslashes($this->viewData->settings->meta_description));
         $this->viewData->og_url                 = clean(base_url(lang("routes_dealer-register")));
@@ -166,7 +178,7 @@ class Login extends MY_Controller
             redirect(base_url());
         endif;
         $this->viewFolder = "forgot_password_v/index";
-
+        $this->viewData->page_title = clean(strto("lower|ucwords", lang("forgotPassword")));
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("forgotPassword"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", stripslashes($this->viewData->settings->meta_description));
         $this->viewData->og_url                 = clean(base_url(lang("routes_forgot-password")));

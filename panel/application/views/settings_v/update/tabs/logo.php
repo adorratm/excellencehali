@@ -274,20 +274,20 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-3">
-            <picture>
-                <img src="<?= get_picture($viewFolder, $item->technical_information_detail_logo); ?>" alt="<?= $item->company_name; ?>" class="img-fluid" style="margin: 0px auto">
-            </picture>
+        <div class="col-12">
+            <object class="w-100" data="<?= get_picture($viewFolder, $item->catalog); ?>" type="application/pdf">
+                <embed width="100%" height="500" src="<?= get_picture($viewFolder, $item->catalog); ?>" alt="<?= $item->company_name; ?>" class="img-fluid w-100"></embed>
+            </object>
         </div>
-        <div class="form-group col-9">
+        <div class="form-group col-12">
             <div class="fileinput fileinput-new input-group" data-provides="fileinput">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">Teknik Bilgi Detay Görseli Seçimi</span>
+                    <span class="input-group-text">Katalog PDF Seçimi</span>
                 </div>
                 <div class="form-control rounded-0 text-truncate" data-trigger="fileinput"><i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
                 <span class="input-group-append">
                     <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Değiştir</span>
-                        <input type="hidden"><input type="file" name="technical_information_detail_logo">
+                        <input type="hidden"><input type="file" name="catalog">
                     </span>
                     <a href="#" class="btn btn-outline-danger rounded-0 fileinput-exists" data-dismiss="fileinput">Kaldır</a>
                 </span>

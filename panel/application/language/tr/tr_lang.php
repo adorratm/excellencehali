@@ -30,6 +30,7 @@ $lang['activationLinkText'] = 'Aktivasyon İçin Buraya Tıklayın.';
 $lang['resetLinkText'] = 'Şifrenizi Sıfırlamak İçin Buraya Tıklayın.';
 $lang['errorOnActivation'] = 'Hesap Etkinleştirilirken Hata Oluştu. Lütfen Tekrar Deneyin.';
 $lang['errorOnActivationLink'] = 'Geçerli Aktivasyon Linkine Sahip Olduğunuzdan Emin Olup, Lütfen Tekrar Deneyin.';
+$lang["rememberMe"] = "Beni Hatırla";
 // #LOGIN
 
 $lang["updateAccountDetails"] = "Hesap Bilgilerini Güncelle";
@@ -199,13 +200,13 @@ $lang['successMessageText'] = 'İletişim Formu Başarıyla Gönderildi. Gönder
 $lang['errorEmailMessageText'] = 'İletişim Formu E-Maili Gönderilirken Hata Oluştu. Lütfen Tekrar Deneyin.';
 $lang['products'] = 'Ürünler';
 $lang['product_collections'] = 'Koleksiyonlar';
+$lang['new_product_collections'] = 'Yeni Koleksiyonlar';
 $lang['product'] = 'ÜRÜN';
 $lang['technicalInformations'] = 'TEKNİK BİLGİLER';
 $lang['technicalInformation'] = 'TEKNİK BİLGİ';
+$lang['routes_new_product_collections'] = 'yeni-koleksiyonlar';
 $lang['routes_product_collections'] = 'koleksiyonlar';
 $lang['routes_product'] = 'urun';
-$lang['routes_technical_informations'] = 'teknik-bilgiler';
-$lang['routes_technical_information'] = 'teknik-bilgi';
 $lang['routes_page'] = 'sayfa';
 $lang['routes_blog'] = 'blog';
 $lang['routes_blog_detail'] = 'detay';
@@ -225,6 +226,7 @@ $lang["routes_add-to-cart"] = "ekle";
 $lang["routes_update-cart"] = "guncelle";
 $lang["routes_remove-from-cart"] = "sil";
 $lang["routes_clear-cart"] = "temizle";
+$lang["routes_catalog"] = "katalog";
 
 // LOGIN
 $lang['routes_dealer-login'] = 'bayi-girisi';
@@ -238,4 +240,5 @@ $lang['routes_forgot-password-reset'] = 'sifremi-sifirla';
 
 // USER
 $lang["routes_account"] = "hesabim";
+$lang["routes_account-update"] = "hesabimi-guncelle";
 $lang["routes_orders"] = "siparislerim";

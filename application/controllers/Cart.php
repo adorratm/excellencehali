@@ -40,6 +40,7 @@ class Cart extends MY_Controller
             $this->session->set_flashdata("alert", $alert);
             redirect(base_url("login"));
         endif;
+        $this->viewData->page_title = clean(strto("lower|ucwords", lang("cart")));
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("cart"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
 

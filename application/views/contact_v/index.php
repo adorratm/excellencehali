@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="pageBannerContent text-center">
-                    <h2 class="text-white mb-0"><?= lang("contact") ?></h2>
+                    <h2 class="text-white mb-0"><?= $page_title ?></h2>
                 </div>
             </div>
         </div>
@@ -195,8 +195,8 @@
                         <div class="col-md-12">
                             <textarea name="comment" id="comment" cols="30" rows="8" placeholder="<?= lang("message") ?>" required></textarea>
                         </div>
-                        <?php $securityPolicy = $this->general_model->get("pages", null, ["isActive" => 1, "id" => 9]) ?>
-                        <?php $kvkk = $this->general_model->get("pages", null, ["isActive" => 1, "id" => 12]) ?>
+                        <?php $securityPolicy = $this->general_model->get("pages", null, ["isActive" => 1, "id" => 6]) ?>
+                        <?php $kvkk = $this->general_model->get("pages", null, ["isActive" => 1, "id" => 9]) ?>
                         <?php $securityPolicyUrl = '<a href="' . base_url(lang("routes_page") . "/" . $securityPolicy->url) . '" rel="dofollow" title="' . $securityPolicy->title . '">' . $securityPolicy->title . '</a>'; ?>
                         <?php $kvkkUrl = '<a href="' . base_url(lang("routes_page") . "/" . $kvkk->url) . '" rel="dofollow" title="' . $kvkk->title . '">' . $kvkk->title . '</a>'; ?>
                         <?php $companyName = '<a href="' . base_url() . '" rel="dofollow" title="' . $settings->company_name . '">' . $settings->company_name . '</a>'; ?>

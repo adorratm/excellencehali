@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="pageBannerContent text-center">
-                    <h2 class="text-white mb-0"><?= strto("lower|ucwords", $blog->title); ?></h2>
+                    <h2 class="text-white mb-0"><?= $page_title; ?></h2>
                 </div>
             </div>
         </div>

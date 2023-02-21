@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="pageBannerContent text-center">
-                    <h2 class="text-white mb-0"><?= lang("account") ?></h2>
+                    <h2 class="text-white mb-0"><?= $page_title ?></h2>
                 </div>
             </div>
         </div>
@@ -73,7 +73,8 @@
 
                             <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-2"></div>
+                                <div class="col-10">
                                     <button aria-label="<?= $settings->company_name ?>" class="ulinaBTN px-3" type="submit"><span><?= lang("updateAccountDetails") ?></span></button>
                                 </div>
                             </div>

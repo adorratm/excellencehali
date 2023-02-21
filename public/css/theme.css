@@ -875,7 +875,7 @@
 .pop_search_background {
     background: #52586d;
     width: 100%;
-    height: 400px;
+    height: 300px;
     top: -100%;
     z-index: 9992;
     position: fixed;
@@ -1098,7 +1098,7 @@
 
 .middle_search {
     position: relative;
-    top: 43%;
+    top: 30%;
     transform: translateY(-50%);
     -moz-transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
@@ -1120,11 +1120,10 @@
 
 .popup_logo {
     position: relative;
-    margin: 30px 0 0;
 }
 
 .popup_logo img {
-    height: 42px;
+    height: 90px;
     width: auto;
 }
 
