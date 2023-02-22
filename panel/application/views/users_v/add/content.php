@@ -1,8 +1,12 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <form id="createUser" onsubmit="return false" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label>Ad Soyad</label>
-        <input class="form-control form-control-sm rounded-0" placeholder="Ad Soyad" name="full_name" value="<?= isset($form_error) ? set_value("full_name") : ""; ?>">
+        <label>Ad</label>
+        <input class="form-control form-control-sm rounded-0" placeholder="Ad" name="first_name" value="<?= isset($form_error) ? set_value("first_name") : ""; ?>">
+    </div>
+    <div class="form-group">
+        <label>Soyad</label>
+        <input class="form-control form-control-sm rounded-0" placeholder="Soyad" name="last_name" value="<?= isset($form_error) ? set_value("last_name") : ""; ?>">
     </div>
     <div class="form-group">
         <label>Email</label>

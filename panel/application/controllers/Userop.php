@@ -53,7 +53,7 @@ class Userop extends CI_Controller
             if (!empty($user)) :
                 $alert = [
                     "title" => "İşlem Başarıyla Gerçekleşti.",
-                    "text" => "$user->full_name Hoşgeldiniz...",
+                    "text" => "$user->first_name $user->last_name Hoşgeldiniz...",
                     "type" => "success"
                 ];
                 $this->session->set_userdata("user", $user);

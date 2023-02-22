@@ -7,9 +7,9 @@ class Order_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
-        $this->column_order = array('orders.id', 'users.full_name', 'users.email', 'orders.phone', 'orders.total', 'orders.status', 'orders.paymentType', 'orders.shippingStatus', 'orders.isActive', 'orders.createdAt', 'orders.updatedAt');
+        $this->column_order = array('orders.id', 'users.first_name', 'users.last_name', 'users.email', 'orders.phone', 'orders.total', 'orders.status', 'orders.paymentType', 'orders.shippingStatus', 'orders.isActive', 'orders.createdAt', 'orders.updatedAt');
         // Set searchable column fields
-        $this->column_search = array('orders.id', 'users.full_name', 'users.email', 'orders.phone', 'orders.total', 'orders.status', 'orders.paymentType', 'orders.shippingStatus', 'orders.isActive', 'orders.createdAt', 'orders.updatedAt');
+        $this->column_search = array('orders.id', 'users.first_name', 'users.last_name', 'users.email', 'orders.phone', 'orders.total', 'orders.status', 'orders.paymentType', 'orders.shippingStatus', 'orders.isActive', 'orders.createdAt', 'orders.updatedAt');
         // Set default order
         $this->order = array('orders.id' => 'DESC');
     }
@@ -49,7 +49,8 @@ class Order_model extends CI_Model
         $this->db->where(["orders.id!=" => null]);
         $this->db->select('
         orders.id id,
-		users.full_name full_name,
+		users.first_name first_name,
+		users.last_name last_name,
         users.email email,
 		orders.phone phone,
         orders.total total,

@@ -1,8 +1,12 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <form id="updateUser" onsubmit="return false" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label>Ad Soyad</label>
-        <input class="form-control form-control-sm rounded-0" placeholder="Ad Soyad" name="full_name" value="<?= $item->full_name ?>">
+        <label>Ad</label>
+        <input class="form-control form-control-sm rounded-0" placeholder="Ad" name="first_name" value="<?= $item->first_name ?>">
+    </div>
+    <div class="form-group">
+        <label>Soyad</label>
+        <input class="form-control form-control-sm rounded-0" placeholder="Soyad" name="last_name" value="<?= $item->last_name ?>">
     </div>
     <div class="form-group">
         <label>Yetki</label>

@@ -190,8 +190,6 @@ input:focus, select:focus, textarea:focus, button:focus{
 /-----------------------------------------*/
 .secTitle{
     font-size: 36px;
-    line-height: 48px;
-    margin: 0 0 6px;
 }
 .secDesc{
     margin: 0;

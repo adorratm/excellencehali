@@ -966,3 +966,40 @@ function get_secondary_image($codes_id = null, $codes = null, $cover_url = null,
     endif;
     return null;
 }
+
+function curl_request($url = null, $port = null, $endpoint = null, $data = [], $header = ['Content-Type: application/json', 'Accept: application/json'])
+{
+    /* Endpoint */
+    if (!empty($port)) {
+        $url .= ":" . $port;
+    }
+
+    if (!empty($endpoint)) {
+        $url .= "/" . $endpoint;
+    }
+
+    /* Create Curl */
+    $curl = curl_init();
+
+
+
+    /* Set JSON data to POST */
+    if (!empty($data)) {
+        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+    }
+
+    if (!empty($header)) {
+        /* Define content type */
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+    }
+    curl_setopt($curl, CURLOPT_URL, $url);
+    /* Return json */
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+    /* Make Request */
+    $result = json_decode(curl_exec($curl));
+
+    /* Close Curl */
+    curl_close($curl);
+
+    return $result;
+}

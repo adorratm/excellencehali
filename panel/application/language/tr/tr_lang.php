@@ -1,9 +1,11 @@
 <?php
 
-// LOGIN
+// LOGIN REGISTER FORGOT PASSWORD RESET
+$lang["register"] = "Kayıt Ol";
 $lang["login"] = "Giriş Yap";
 $lang["logout"] = "Çıkış Yap";
 $lang["dealerLogin"] = "Bayi Girişi";
+$lang["dealerRegister"] = "Bayi Kaydı";
 $lang['forgotPassword'] = 'Şifremi Unuttum';
 $lang['forgotPasswordReset'] = 'Şifremi Sıfırla';
 $lang['required'] = '<b>{field}</b> alanı doldurulmalıdır!';
@@ -12,12 +14,12 @@ $lang['min_length'] = 'Şifre alanı en az 6 karakterden oluşmalıdır.';
 $lang['samePassword'] = 'Şifrelerinizin Aynı Olduğundan Emin Olup, Lütfen Tekrar Deneyin.';
 $lang['emailExists'] = 'Bu Mail Hesabı Sistemde Mevcut, Lütfen Tekrar Deneyin.';
 $lang['phoneExists'] = 'Bu Telefon Numarası Sistemde Mevcut, Lütfen Tekrar Deneyin.';
-$lang['registerSuccessfully'] = 'Başarıyla Kayıt Oldunuz.';
+$lang['registerSuccessfully'] = 'Bayilik Başvurunuz Alındı. Lütfen Yetkililerimizin Aktivasyon Onayını Bekleyin.';
 $lang['resetMailSuccessfully'] = 'Sıfırlama Linki Girmiş Olduğunuz Email Adresine Başarıyla Gönderildi.';
 $lang['resetSuccessfully'] = 'Şifreniz Başarıyla Güncelleştirildi. Artık Giriş Yapabilirsiniz.';
 $lang['updatedSuccessfully'] = 'Bilgileriniz Başarıyla Güncelleştirildi.';
 $lang['loginSuccessfully'] = 'Başarıyla Giriş Yaptınız.';
-$lang['activatedSuccessfully'] = 'Hesabınız Başarıyla Etkinleştirildi. Artık Giriş Yapabilirsiniz.';
+$lang['activatedSuccessfully'] = 'Bayi Hesabı Başarıyla Etkinleştirildi. Bayiniz Artık Giriş Yapabilir.';
 $lang['logoutSuccessfully'] = 'Hesabınızdan Başarıyla Çıkış Yaptınız.';
 $lang['errorOnRegister'] = 'Kayıt Olurken Bir Hata Oluştu. Bilgilerinizi Kontrol Edip, Lütfen Tekrar Deneyin.';
 $lang['errorOnForgotPassword'] = 'Şifreniz Sıfırlanırken Bir Hata Oluştu. Bilgilerinizi Kontrol Edip, Lütfen Tekrar Deneyin.';
@@ -25,14 +27,21 @@ $lang['errorOnUpdate'] = 'Bilgileriniz Güncelleştirilirken Bir Hata Oluştu. B
 $lang['errorOnLogin'] = 'Giriş Yaparken Bir Hata Oluştu. Bilgilerinizi Kontrol Edip, Lütfen Tekrar Deneyin.';
 $lang['errorOnLoginActivation'] = 'Giriş Yaparken Bir Hata Oluştu. Hesabınızı Mailinize Gelen Aktivasyon Maili İle Aktif Ettiğinizden Emin Olup, Lütfen Tekrar Deneyin.';
 $lang['emptyFields'] = 'Alanları Doldurduğunuzdan Emin Olup, Lütfen Tekrar Deneyin.';
-$lang['emailMessage'] = 'Linke Tıklayıp Hesabınızı Aktifleştirebilirsiniz. Aktivasyon Linkiniz:';
+$lang['registerEmailMessage'] = 'Linke Tıklayıp Başvuruda Bulunan Bayi Hesabını Aktifleştirebilirsiniz. Aktivasyon Linki:';
 $lang['activationLinkText'] = 'Aktivasyon İçin Buraya Tıklayın.';
 $lang['resetLinkText'] = 'Şifrenizi Sıfırlamak İçin Buraya Tıklayın.';
 $lang['errorOnActivation'] = 'Hesap Etkinleştirilirken Hata Oluştu. Lütfen Tekrar Deneyin.';
 $lang['errorOnActivationLink'] = 'Geçerli Aktivasyon Linkine Sahip Olduğunuzdan Emin Olup, Lütfen Tekrar Deneyin.';
 $lang["rememberMe"] = "Beni Hatırla";
-// #LOGIN
+$lang["activationEmailMessage"] = "Bayi Hesabınız Aktif Edildi. Artık Sisteme Giriş Yapabilirsiniz.";
+$lang['activationMailTitle'] = 'Bayi Kayıt Aktivasyon İşlemi';
+$lang['registerMailTitle'] = 'Yeni Bayilik Başvurusu Var! - Bayi Kayıt Aktivasyon İşlemi';
+$lang['forgotMailTitle'] = 'Şifre Sıfırlama İşlemi';
+// #LOGIN REGISTER FORGOT PASSWORD RESET
 
+$lang["company_name"] = "Firma Adı";
+$lang["tax_number"] = "Vergi Numarası";
+$lang["tax_administration"] = "Vergi Dairesi";
 $lang["updateAccountDetails"] = "Hesap Bilgilerini Güncelle";
 $lang["password"] = "Şifre";
 $lang["passwordRepeat"] = "Tekrar Şifre";
@@ -152,7 +161,8 @@ $lang['description'] = 'Açıklama';
 $lang['features'] = 'Özellikler';
 $lang['email'] = 'Email';
 $lang['phone'] = 'Telefon Numaranız';
-$lang['fullName'] = 'Ad Soyad';
+$lang["first_name"] = "Ad";
+$lang["last_name"] = "Soyad";
 $lang['required'] = '<b>{field}</b> alanı doldurulmalıdır!';
 $lang['valid_email'] = 'Lütfen geçerli bir <b>e-mail</b> adresi giriniz!';
 $lang['min_length'] = 'Şifre alanı en az 6 karakterden oluşmalıdır.';
@@ -202,8 +212,8 @@ $lang['products'] = 'Ürünler';
 $lang['product_collections'] = 'Koleksiyonlar';
 $lang['new_product_collections'] = 'Yeni Koleksiyonlar';
 $lang['product'] = 'ÜRÜN';
-$lang['technicalInformations'] = 'TEKNİK BİLGİLER';
-$lang['technicalInformation'] = 'TEKNİK BİLGİ';
+
+// ROUTES
 $lang['routes_new_product_collections'] = 'yeni-koleksiyonlar';
 $lang['routes_product_collections'] = 'koleksiyonlar';
 $lang['routes_product'] = 'urun';

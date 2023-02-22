@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php if (!empty($slides)) : ?>
     <!-- BEGIN: Slider Section -->
     <section class="sliderSection02 mb117">
@@ -59,7 +60,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2 class="secTitle text-center"><?= lang("productCollections") ?></h2>
+                    <h2 class="secTitle text-center mb-5"><?= lang("productCollections") ?></h2>
                 </div>
             </div>
             <div class="row">

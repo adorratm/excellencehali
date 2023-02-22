@@ -7,9 +7,9 @@ class User_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
-        $this->column_order = ['rank', 'id', 'id', 'full_name', 'email', 'isActive', 'createdAt', 'updatedAt'];
+        $this->column_order = ['rank', 'id', 'id', 'first_name', 'last_name', 'email', 'isActive', 'createdAt', 'updatedAt'];
         // Set searchable column fields
-        $this->column_search = ['rank', 'id', 'id', 'full_name', 'email', 'isActive', 'createdAt', 'updatedAt'];
+        $this->column_search = ['rank', 'id', 'id', 'first_name', 'last_name', 'email', 'isActive', 'createdAt', 'updatedAt'];
         // Set default order
         $this->order = ['rank' => 'ASC'];
     }

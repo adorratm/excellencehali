@@ -6,6 +6,7 @@ $lang["(:any)/sitemapindex.xml"] = "home/sitemapindex";
 $lang["(:any)/facebook-katalog.xml"] = "home/facebook_catalog";
 $lang["(:any)/google-katalog.xml"] = "home/google_catalog";
 $lang["(:any)/katalog"] = "home/catalog";
+$lang['(:any)/cronjob'] = 'cronjob/index';
 
 $lang["(:any)/blog"] = "blog/index";
 $lang["(:any)/blog/(:num)"] = "blog/index/$2";

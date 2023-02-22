@@ -281,4 +281,9 @@ class General_model extends CI_Model
 		$query = $this->db->count_all_results($tableName);
 		return $query;
 	}
+
+	public function replace($tableName = null, $data = [])
+	{
+		$this->db->replace($tableName, $data);
+	}
 }

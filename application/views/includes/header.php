@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!-- BEGIN: TopBar Section -->
 <section class="topbarSection">
     <div class="container-fluid">
@@ -85,7 +86,7 @@
                         <?php if (get_active_user()) : ?>
                             <div class="dropdown">
                                 <button class="btn btn-secondary btn-md dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-user me-2"></i> <?= get_active_user()->full_name ?>
+                                    <i class="fa-solid fa-user me-2"></i> <?= get_active_user()->first_name ?> <?= get_active_user()->last_name ?>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li><a class="dropdown-item" rel="dofollow" title="<?= lang("account") ?>" href="<?= base_url(lang("routes_account")) ?>"><i class="fa-solid fa-user-circle me-2"></i> <?= lang("account") ?></a></li>

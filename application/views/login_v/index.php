@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!-- BEGIN: Page Banner Section -->
 <section class="pageBannerSection" style="background-image: url(<?= get_picture("settings_v", $settings->about_logo) ?>);">
     <div class="container">
@@ -37,17 +38,27 @@
                                     <input class="mb-0" id="password" type="password" name="password" placeholder="<?= lang("password") ?>" required value="<?= get_cookie("rememberme", true) == "on" ? base64_decode(get_cookie("password", true)) : set_value("password") ?>" />
                                 </div>
                             </div>
-
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="rememberme" id="rememberme" <?= get_cookie("rememberme", true) ? "checked" : NULL ?>>
-                                <label for="rememberme" class="form-check-label"><?= lang("rememberMe") ?></label>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="rememberme" id="rememberme" <?= get_cookie("rememberme", true) ? "checked" : NULL ?>>
+                                        <label for="rememberme" class="form-check-label"><?= lang("rememberMe") ?></label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <a class="d-flex justify-content-end" rel="dofollow" title="<?= lang("forgotPassword") ?>" href="<?= base_url(lang("routes_forgot-password")) ?>"><?= lang("forgotPassword") ?></a>
+                                </div>
                             </div>
+
                         </div>
                         <div class="card-footer">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                     <button type="submit" class="ulinaBTN w-100"><span><?= lang("login") ?></span></button>
+                                </div>
+                                <div class="col-lg-6">
+                                    <a href="<?= base_url(lang("routes_dealer-register")) ?>" class="ulinaBTN w-100"><span><?= lang("dealerRegister") ?></span></a>
                                 </div>
                             </div>
                         </div>

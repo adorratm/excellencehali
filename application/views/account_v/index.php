@@ -36,9 +36,15 @@
                         <form action="<?= base_url(lang("routes_account-update")) ?>" method="POST" enctype="multipart/form-data">
 
                             <div class="row mb-3">
-                                <label class="col-lg-2 col-form-label"><?= lang("fullName") ?> : </label>
+                                <label class="col-lg-2 col-form-label"><?= lang("first_name") ?> : </label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" name="full_name" placeholder="<?= lang("fullName") ?>" maxlength="70" minlength="4" value="<?= !empty(set_value('full_name')) ? set_value('full_name') : $user->full_name ?>" required>
+                                    <input type="text" class="form-control" name="first_name" placeholder="<?= lang("first_name") ?>" maxlength="70" minlength="4" value="<?= !empty(set_value('first_name')) ? set_value('first_name') : $user->first_name ?>" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-lg-2 col-form-label"><?= lang("last_name") ?> : </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" name="last_name" placeholder="<?= lang("last_name") ?>" maxlength="70" minlength="4" value="<?= !empty(set_value('last_name')) ? set_value('last_name') : $user->last_name ?>" required>
                                 </div>
                             </div>
 

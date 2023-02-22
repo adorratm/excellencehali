@@ -1,10 +1,10 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');?>
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php $settings = get_settings(); ?>
 <?php $user = get_active_user(); ?>
 <!-- Top Navbar -->
 <nav class="navbar navbar-expand-xl navbar-dark fixed-top hk-navbar">
     <a id="navbar_toggle_btn" class="navbar-toggle-btn btn-sm nav-link-hover" href="javascript:void(0);"><i class="fa fa-list"></i></a>
-    <a class="navbar-brand" href="<?=base_url()?>">
+    <a class="navbar-brand" href="<?= base_url() ?>">
         <picture><img class="brand-img img-fluid" width="160" src="https://mutfakyapim.com/images/mutfak/logo.png" alt="Mutfak Yapım" /></picture>
     </a>
     <ul class="navbar-nav hk-navbar-content">
@@ -72,7 +72,7 @@
         </li>
         */ ?>
         <li class="nav-item dropdown dropdown-authentication">
-            <a class="nav-link dropdown-toggle no-caret" href="javascript:void(0)" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i><span class="badge-wrap"><span class="badge badge-success badge-indicator badge-indicator-sm badge-pill pulse ml-1 mr-1"></span></span><small class="d-none d-sm-inline"><?= $user->full_name; ?> <i class="ml-1 fa fa-chevron-down"></i></small></a>
+            <a class="nav-link dropdown-toggle no-caret" href="javascript:void(0)" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i><span class="badge-wrap"><span class="badge badge-success badge-indicator badge-indicator-sm badge-pill pulse ml-1 mr-1"></span></span><small class="d-none d-sm-inline"><?= $user->first_name; ?> <?= $user->last_name ?> <i class="ml-1 fa fa-chevron-down"></i></small></a>
             <div class="dropdown-menu rounded-0 dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
                 <a class="dropdown-item updateUserBtnNav" href="javascript:void(0)" data-url="<?= base_url("users/update_form/$user->id"); ?>"><i class="dropdown-icon fa fa-user"></i><span>Profilim</span></a>
                 <div class="dropdown-divider"></div>
