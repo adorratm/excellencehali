@@ -36,6 +36,8 @@ class Cronjob extends MY_Controller
     public function index()
     {
         $responseArr = [];
+        $responseStock = $this->getStocks();
+        $responseArr["stocks"] = json_decode($responseStock);
         $responseCollection = $this->getCollections();
         $responseArr["collections"] = json_decode($responseCollection);
         $responseColor = $this->getColors();
@@ -44,8 +46,7 @@ class Cronjob extends MY_Controller
         $responseArr["dimensions"] = json_decode($responseDimension);
         $responsePattern = $this->getPatterns();
         $responseArr["patterns"] = json_decode($responsePattern);
-        $responseStock = $this->getStocks();
-        $responseArr["stocks"] = json_decode($responseStock);
+
         echo json_encode($responseArr);
     }
 
@@ -55,15 +56,15 @@ class Cronjob extends MY_Controller
             if (!empty($this->codesConnections)) {
                 $rank = 1;
                 foreach ($this->codesConnections as $codesConnectionsKey => $codesConnectionsValue) {
-                    $data = @curl_request($codesConnectionsValue->host, $codesConnectionsValue->port, "kalite", [], ['Content-Type: application/json', 'Accept: application/json', 'X-TOKEN: ' . $codesConnectionsValue->token])->data;
-                    if (!empty($data)) {
-                        foreach ($data as $returnKey => $returnValue) {
+                    $products = $this->general_model->get_all("products", null, null, ["isActive" => 1, "codes" => $codesConnectionsValue->id], [], [], [], [], true, ["collection_id"]);
+                    if (!empty($products)) {
+                        foreach ($products as $returnKey => $returnValue) {
                             $this->general_model->replace("product_collections", [
                                 'id' => $rank,
-                                'codes_id' => intval(clean($returnValue->Id)) ?? NULL,
-                                'title' => clean($returnValue->Kod) ?? NULL,
-                                'seo_url' => clean(seo($returnValue->Kod)) ?? NULL,
-                                'isActive' => clean($returnValue->Durum) == 0 ? 1 : 0,
+                                'codes_id' => intval(clean($returnValue->collection_id)) ?? NULL,
+                                'title' => clean($returnValue->collection) ?? NULL,
+                                'seo_url' => clean(seo($returnValue->collection)) ?? NULL,
+                                'isActive' => 1,
                                 'rank' => $rank,
                                 'codes' => clean($codesConnectionsValue->id) ?? NULL
                             ]);
@@ -84,15 +85,15 @@ class Cronjob extends MY_Controller
             if (!empty($this->codesConnections)) {
                 $rank = 1;
                 foreach ($this->codesConnections as $codesConnectionsKey => $codesConnectionsValue) {
-                    $data = @curl_request($codesConnectionsValue->host, $codesConnectionsValue->port, "renk", [], ['Content-Type: application/json', 'Accept: application/json', 'X-TOKEN: ' . $codesConnectionsValue->token])->data;
-                    if (!empty($data)) {
-                        foreach ($data as $returnKey => $returnValue) {
+                    $products = $this->general_model->get_all("products", null, null, ["isActive" => 1, "codes" => $codesConnectionsValue->id], [], [], [], [], true, ["color_id"]);
+                    if (!empty($products)) {
+                        foreach ($products as $returnKey => $returnValue) {
                             $this->general_model->replace("product_colors", [
                                 'id' => $rank,
-                                'codes_id' => intval(clean($returnValue->Id)) ?? NULL,
-                                'title' => clean($returnValue->Kod) ?? NULL,
-                                'seo_url' => clean(seo($returnValue->Kod)) ?? NULL,
-                                'isActive' => clean($returnValue->Durum) == 0 ? 1 : 0,
+                                'codes_id' => intval(clean($returnValue->color_id)) ?? NULL,
+                                'title' => clean($returnValue->color) ?? NULL,
+                                'seo_url' => clean(seo($returnValue->color)) ?? NULL,
+                                'isActive' => 1,
                                 'rank' => $rank,
                                 'codes' => clean($codesConnectionsValue->id) ?? NULL
                             ]);
@@ -113,15 +114,15 @@ class Cronjob extends MY_Controller
             if (!empty($this->codesConnections)) {
                 $rank = 1;
                 foreach ($this->codesConnections as $codesConnectionsKey => $codesConnectionsValue) {
-                    $data = @curl_request($codesConnectionsValue->host, $codesConnectionsValue->port, "ebat", [], ['Content-Type: application/json', 'Accept: application/json', 'X-TOKEN: ' . $codesConnectionsValue->token])->data;
-                    if (!empty($data)) {
-                        foreach ($data as $returnKey => $returnValue) {
+                    $products = $this->general_model->get_all("products", null, null, ["isActive" => 1, "codes" => $codesConnectionsValue->id], [], [], [], [], true, ["dimension_id"]);
+                    if (!empty($products)) {
+                        foreach ($products as $returnKey => $returnValue) {
                             $this->general_model->replace("product_dimensions", [
                                 'id' => $rank,
-                                'codes_id' => intval(clean($returnValue->Id)) ?? NULL,
-                                'title' => clean($returnValue->Kod) ?? NULL,
-                                'seo_url' => clean(seo($returnValue->Kod)) ?? NULL,
-                                'isActive' => clean($returnValue->Durum) == 0 ? 1 : 0,
+                                'codes_id' => intval(clean($returnValue->dimension_id)) ?? NULL,
+                                'title' => clean($returnValue->dimension) ?? NULL,
+                                'seo_url' => clean(seo($returnValue->dimension)) ?? NULL,
+                                'isActive' => 1,
                                 'rank' => $rank,
                                 'codes' => clean($codesConnectionsValue->id) ?? NULL
                             ]);
@@ -142,15 +143,15 @@ class Cronjob extends MY_Controller
             if (!empty($this->codesConnections)) {
                 $rank = 1;
                 foreach ($this->codesConnections as $codesConnectionsKey => $codesConnectionsValue) {
-                    $data = @curl_request($codesConnectionsValue->host, $codesConnectionsValue->port, "desen", [], ['Content-Type: application/json', 'Accept: application/json', 'X-TOKEN: ' . $codesConnectionsValue->token])->data;
-                    if (!empty($data)) {
-                        foreach ($data as $returnKey => $returnValue) {
+                    $products = $this->general_model->get_all("products", null, null, ["isActive" => 1, "codes" => $codesConnectionsValue->id], [], [], [], [], true, ["pattern_id"]);
+                    if (!empty($products)) {
+                        foreach ($products as $returnKey => $returnValue) {
                             $this->general_model->replace("product_patterns", [
                                 'id' => $rank,
-                                'codes_id' => intval(clean($returnValue->Id)) ?? NULL,
-                                'title' => clean($returnValue->Kod) ?? NULL,
-                                'seo_url' => clean(seo($returnValue->Kod)) ?? NULL,
-                                'isActive' => clean($returnValue->Durum) == 0 ? 1 : 0,
+                                'codes_id' => intval(clean($returnValue->pattern_id)) ?? NULL,
+                                'title' => clean($returnValue->pattern) ?? NULL,
+                                'seo_url' => clean(seo($returnValue->pattern)) ?? NULL,
+                                'isActive' => 1,
                                 'rank' => $rank,
                                 'codes' => clean($codesConnectionsValue->id) ?? NULL
                             ]);

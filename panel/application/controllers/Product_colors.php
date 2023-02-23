@@ -159,30 +159,33 @@ class Product_colors extends MY_Controller
 
     public function getColors()
     {
-        set_time_limit(0);
-        ini_set('memory_limit', '-1');
-        $codesConnections = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
-
-        if (!empty($codesConnections)) {
-            $rank = 1;
-            foreach ($codesConnections as $codesConnectionsKey => $codesConnectionsValue) {
-                $data = @curl_request($codesConnectionsValue->host, $codesConnectionsValue->port, "renk", [], ['Content-Type: application/json', 'Accept: application/json', 'X-TOKEN: ' . $codesConnectionsValue->token])->data;
-                if (!empty($data)) {
-                    foreach ($data as $returnKey => $returnValue) {
-                        $this->general_model->replace("product_colors", [
-                            'id' => $rank,
-                            'codes_id' => intval(clean($returnValue->Id)) ?? NULL,
-                            'title' => clean($returnValue->Kod) ?? NULL,
-                            'seo_url' => clean(seo($returnValue->Kod)) ?? NULL,
-                            'isActive' => clean($returnValue->Durum) == 0 ? 1 : 0,
-                            'rank' => $rank,
-                            'codes' => clean($codesConnectionsValue->id) ?? NULL
-                        ]);
-                        $rank++;
+        try {
+            set_time_limit(0);
+            ini_set('memory_limit', '-1');
+            $codesConnections = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
+            if (!empty($codesConnections)) {
+                $rank = 1;
+                foreach ($codesConnections as $codesConnectionsKey => $codesConnectionsValue) {
+                    $products = $this->general_model->get_all("products", null, null, ["isActive" => 1, "codes" => $codesConnectionsValue->id], [], [], [], [], true, ["color_id"]);
+                    if (!empty($products)) {
+                        foreach ($products as $returnKey => $returnValue) {
+                            $this->general_model->replace("product_colors", [
+                                'id' => $rank,
+                                'codes_id' => intval(clean($returnValue->color_id)) ?? NULL,
+                                'title' => clean($returnValue->color) ?? NULL,
+                                'seo_url' => clean(seo($returnValue->color)) ?? NULL,
+                                'isActive' => 1,
+                                'rank' => $rank,
+                                'codes' => clean($codesConnectionsValue->id) ?? NULL
+                            ]);
+                            $rank++;
+                        }
                     }
                 }
             }
+            echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Renkleri Codes İle Başarıyla Eşitlendi."]);
+        } catch (Exception $e) {
+            echo json_encode(["success" => false, "title" => "Hata!", "message" => $e->getMessage()]);
         }
-        echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Renkleri Codes İle Başarıyla Eşitlendi."]);
     }
 }

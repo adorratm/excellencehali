@@ -159,30 +159,33 @@ class Product_dimensions extends MY_Controller
     }
     public function getDimensions()
     {
-        set_time_limit(0);
-        ini_set('memory_limit', '-1');
-        $codesConnections = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
-
-        if (!empty($codesConnections)) {
-            $rank = 1;
-            foreach ($codesConnections as $codesConnectionsKey => $codesConnectionsValue) {
-                $data = @curl_request($codesConnectionsValue->host, $codesConnectionsValue->port, "ebat", [], ['Content-Type: application/json', 'Accept: application/json', 'X-TOKEN: ' . $codesConnectionsValue->token])->data;
-                if (!empty($data)) {
-                    foreach ($data as $returnKey => $returnValue) {
-                        $this->general_model->replace("product_dimensions", [
-                            'id' => $rank,
-                            'codes_id' => intval(clean($returnValue->Id)) ?? NULL,
-                            'title' => clean($returnValue->Kod) ?? NULL,
-                            'seo_url' => clean(seo($returnValue->Kod)) ?? NULL,
-                            'isActive' => clean($returnValue->Durum) == 0 ? 1 : 0,
-                            'rank' => $rank,
-                            'codes' => clean($codesConnectionsValue->id) ?? NULL
-                        ]);
-                        $rank++;
+        try {
+            set_time_limit(0);
+            ini_set('memory_limit', '-1');
+            $codesConnections = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
+            if (!empty($codesConnections)) {
+                $rank = 1;
+                foreach ($codesConnections as $codesConnectionsKey => $codesConnectionsValue) {
+                    $products = $this->general_model->get_all("products", null, null, ["isActive" => 1, "codes" => $codesConnectionsValue->id], [], [], [], [], true, ["dimension_id"]);
+                    if (!empty($products)) {
+                        foreach ($products as $returnKey => $returnValue) {
+                            $this->general_model->replace("product_dimensions", [
+                                'id' => $rank,
+                                'codes_id' => intval(clean($returnValue->dimension_id)) ?? NULL,
+                                'title' => clean($returnValue->dimension) ?? NULL,
+                                'seo_url' => clean(seo($returnValue->dimension)) ?? NULL,
+                                'isActive' => 1,
+                                'rank' => $rank,
+                                'codes' => clean($codesConnectionsValue->id) ?? NULL
+                            ]);
+                            $rank++;
+                        }
                     }
                 }
             }
+            echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Ebatları Codes İle Başarıyla Eşitlendi."]);
+        } catch (Exception $e) {
+            echo json_encode(["success" => false, "title" => "Hata!", "message" => $e->getMessage()]);
         }
-        echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Ebatları Codes İle Başarıyla Eşitlendi."]);
     }
 }

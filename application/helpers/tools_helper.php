@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 // Seo
 function seo($str = null, $options = [])
 {
-    $str = mb_convert_encoding($str, "UTF-8");
+    $str = @mb_convert_encoding($str, "UTF-8");
     $defaults = [
         'delimiter' => '-',
         'limit' => null,

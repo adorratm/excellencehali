@@ -54,8 +54,8 @@ class Login extends MY_Controller
         if (get_active_user()) :
             redirect(base_url());
         endif;
-        $this->form_validation->set_rules("email", lang("email"), "required|trim|valid_email");
-        $this->form_validation->set_rules("password", lang("password"), "required|trim|min_length[6]");
+        $this->form_validation->set_rules("email", lang("email"), "required|trim|valid_email|xss_clean");
+        $this->form_validation->set_rules("password", lang("password"), "required|trim|min_length[6]|xss_clean");
         $this->form_validation->set_message(["required"  => lang("required"), "valid_email" => lang("valid_email"), "min_length" => lang("min_length"),]);
         $this->form_validation->set_error_delimiters('', ',');
         $alert = [
@@ -123,15 +123,18 @@ class Login extends MY_Controller
         if (get_active_user()) :
             redirect(base_url());
         endif;
-        $this->form_validation->set_rules("email", lang("email"), "required|trim|valid_email");
-        $this->form_validation->set_rules("phone", lang("phone"), "required|trim|min_length[11]|max_length[20]");
-        $this->form_validation->set_rules("company_name", lang("phone"), "required|trim|min_length[2]|max_length[255]");
-        $this->form_validation->set_rules("tax_number", lang("tax_number"), "required|trim|min_length[10]|max_length[11]");
-        $this->form_validation->set_rules("tax_administration", lang("tax_administration"), "required|trim|min_length[2]|max_length[255]");
-        $this->form_validation->set_rules("address", lang("address"), "required|trim|min_length[2]");
-        $this->form_validation->set_rules("password", lang("password"), "required|trim|min_length[6]");
-        $this->form_validation->set_rules("passwordRepeat", lang("passwordRepeat"), "required|trim|min_length[6]");
-        $this->form_validation->set_message(["required"  => lang("required"), "valid_email" => lang("valid_email"), "min_length" => lang("min_length"),]);
+        $this->form_validation->set_rules("first_name", lang("first_name"), "required|trim|min_length[2]|max_length[50]|xss_clean");
+        $this->form_validation->set_rules("last_name", lang("last_name"), "required|trim|min_length[2]|max_length[50]|xss_clean");
+        $this->form_validation->set_rules("email", lang("email"), "required|trim|valid_email|xss_clean|is_unique[users.email]");
+        $this->form_validation->set_rules("phone", lang("phone"), "required|trim|min_length[11]|max_length[20]|xss_clean");
+        $this->form_validation->set_rules("company_name", lang("company_name"), "required|trim|min_length[2]|max_length[255]|xss_clean");
+        $this->form_validation->set_rules("tax_number", lang("tax_number"), "required|trim|min_length[10]|max_length[11]|xss_clean");
+        $this->form_validation->set_rules("tax_administration", lang("tax_administration"), "required|trim|min_length[2]|max_length[255]|xss_clean");
+        $this->form_validation->set_rules("address", lang("address"), "required|trim|min_length[2]|xss_clean");
+        $this->form_validation->set_rules("password", lang("password"), "required|trim|min_length[6]|xss_clean");
+        $this->form_validation->set_rules("passwordRepeat", lang("passwordRepeat"), "required|trim|min_length[6]|matches[password]|xss_clean");
+        $this->form_validation->set_message(["required"  => lang("required"), "valid_email" => lang("valid_email"), "min_length" => lang("min_length"), "matches" => lang("matches"),"is_unique" => lang("is_unique")]);
+        $this->form_validation->set_error_delimiters('', ',');
         $alert = [
             "title" => lang("error"),
             "msg" => lang("errorOnRegister"),
@@ -139,10 +142,6 @@ class Login extends MY_Controller
         ];
         if ($this->form_validation->run()) :
             $data = rClean($_POST);
-            if ($data["password"] !== $data["passwordRepeat"]) :
-                $alert["msg"] = lang("samePassword");
-                redirect(base_url(lang("routes_dealer-register")));
-            endif;
             if (!empty($this->general_model->get("users", null, ["email" => $data["email"]]))) :
                 $alert["msg"] = lang("emailExists");
                 redirect(base_url(lang("routes_dealer-register")));
@@ -151,6 +150,16 @@ class Login extends MY_Controller
                 $alert["msg"] = lang("phoneExists");
                 redirect(base_url(lang("routes_dealer-register")));
             endif;
+            $registeredEmailMessage = "<h2>" . lang("dealerInformations") . "</h2>";
+            $registeredEmailMessage .= "<hr>";
+            $registeredEmailMessage .= "<p><b>" . lang("first_name") . " " . lang("last_name") . ":</b> " . $data["first_name"] . " " . $data["last_name"] . "</p>";
+            $registeredEmailMessage .= "<p><b>" . lang("email") . ":</b> " . $data["email"] . "</p>";
+            $registeredEmailMessage .= "<p><b>" . lang("password") . ":</b> " . $data["password"] . "</p>";
+            $registeredEmailMessage .= "<p><b>" . lang("phone") . ":</b> " . $data["phone"] . "</p>";
+            $registeredEmailMessage .= "<p><b>" . lang("company_name") . ":</b> " . $data["company_name"] . "</p>";
+            $registeredEmailMessage .= "<p><b>" . lang("tax_number") . ":</b> " . $data["tax_number"] . "</p>";
+            $registeredEmailMessage .= "<p><b>" . lang("tax_administration") . ":</b> " . $data["tax_administration"] . "</p>";
+            $registeredEmailMessage .= "<p><b>" . lang("address") . ":</b> " . $data["address"] . "</p>";
             // Unset passwordRepeat
             unset($data["passwordRepeat"]);
             // Create md5 password
@@ -161,7 +170,7 @@ class Login extends MY_Controller
             if ($this->general_model->add("users", $data)) :
                 $alert = ["success" => true, "title" => lang("success"), "msg" => lang("registerSuccessfully")];
                 $activationLink = "<a href='" . base_url(lang("routes_activation") . "/?email=" . $data["email"] . "&phone=" . $data["phone"] . "&token=" . $data["token"]) . "' rel='dofollow' target='_blank'>" . lang("activationLinkText") . "</a>";
-                $message = lang("registerEmailMessage") . $activationLink;
+                $message = lang("registerEmailMessage") . $activationLink . "<hr>" . $registeredEmailMessage;
                 $message = $this->load->view("includes/simple_mail_template", ["settings" => get_settings(), "subject" => $this->viewData->settings->company_name . " " . lang("registerMailTitle"), "message" => $message, "lang" => $this->viewData->lang], true);
                 send_emailv2([], $this->viewData->settings->company_name . " " . lang("registerMailTitle"), $message, [], $this->viewData->lang);
             endif;
@@ -201,8 +210,9 @@ class Login extends MY_Controller
         endif;
 
         if (!empty($_POST["email"]) && empty($_POST["token"])) :
-            $this->form_validation->set_rules("email", lang("email"), "required|trim|valid_email");
+            $this->form_validation->set_rules("email", lang("email"), "required|trim|valid_email|xss_clean");
             $this->form_validation->set_message(["required"  => lang("required"), "valid_email" => lang("valid_email"), "min_length" => lang("min_length"),]);
+            $this->form_validation->set_error_delimiters('', ',');
             $alert = ["success" => false, "title" => lang("error"), "msg" => lang("errorOnForgotPassword")];
             if ($this->form_validation->run()) :
                 $data = rClean($_POST);
@@ -239,7 +249,7 @@ class Login extends MY_Controller
                         redirect(base_url(lang("routes_forgot-password")));
                     endif;
                 else :
-                    $this->session->set_flashdata("alert", ["success" => false, "title" => lang("error"), "msg" => lang("samePassword")]);
+                    $this->session->set_flashdata("alert", ["success" => false, "title" => lang("error"), "msg" => lang("matches")]);
                     redirect(base_url(lang("routes_forgot-password-reset") . "?email=" . $data["email"] . "&phone=" . $data["phone"] . "&token=" . $data["token"]));
                 endif;
             else :

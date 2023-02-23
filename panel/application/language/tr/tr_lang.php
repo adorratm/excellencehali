@@ -11,7 +11,6 @@ $lang['forgotPasswordReset'] = 'Şifremi Sıfırla';
 $lang['required'] = '<b>{field}</b> alanı doldurulmalıdır!';
 $lang['valid_email'] = 'Lütfen geçerli bir <b>e-mail</b> adresi giriniz!';
 $lang['min_length'] = 'Şifre alanı en az 6 karakterden oluşmalıdır.';
-$lang['samePassword'] = 'Şifrelerinizin Aynı Olduğundan Emin Olup, Lütfen Tekrar Deneyin.';
 $lang['emailExists'] = 'Bu Mail Hesabı Sistemde Mevcut, Lütfen Tekrar Deneyin.';
 $lang['phoneExists'] = 'Bu Telefon Numarası Sistemde Mevcut, Lütfen Tekrar Deneyin.';
 $lang['registerSuccessfully'] = 'Bayilik Başvurunuz Alındı. Lütfen Yetkililerimizin Aktivasyon Onayını Bekleyin.';
@@ -27,7 +26,7 @@ $lang['errorOnUpdate'] = 'Bilgileriniz Güncelleştirilirken Bir Hata Oluştu. B
 $lang['errorOnLogin'] = 'Giriş Yaparken Bir Hata Oluştu. Bilgilerinizi Kontrol Edip, Lütfen Tekrar Deneyin.';
 $lang['errorOnLoginActivation'] = 'Giriş Yaparken Bir Hata Oluştu. Hesabınızı Mailinize Gelen Aktivasyon Maili İle Aktif Ettiğinizden Emin Olup, Lütfen Tekrar Deneyin.';
 $lang['emptyFields'] = 'Alanları Doldurduğunuzdan Emin Olup, Lütfen Tekrar Deneyin.';
-$lang['registerEmailMessage'] = 'Linke Tıklayıp Başvuruda Bulunan Bayi Hesabını Aktifleştirebilirsiniz. Aktivasyon Linki:';
+$lang['registerEmailMessage'] = 'Linke Tıklayıp Başvuruda Bulunan Bayi Hesabını Aktifleştirebilirsiniz. Linke Tıklamadan Önce Sistemde Yönetici Hesabınızla Oturum Açtığınızdan Emin Olun. Aktivasyon Linki:';
 $lang['activationLinkText'] = 'Aktivasyon İçin Buraya Tıklayın.';
 $lang['resetLinkText'] = 'Şifrenizi Sıfırlamak İçin Buraya Tıklayın.';
 $lang['errorOnActivation'] = 'Hesap Etkinleştirilirken Hata Oluştu. Lütfen Tekrar Deneyin.';
@@ -37,6 +36,9 @@ $lang["activationEmailMessage"] = "Bayi Hesabınız Aktif Edildi. Artık Sisteme
 $lang['activationMailTitle'] = 'Bayi Kayıt Aktivasyon İşlemi';
 $lang['registerMailTitle'] = 'Yeni Bayilik Başvurusu Var! - Bayi Kayıt Aktivasyon İşlemi';
 $lang['forgotMailTitle'] = 'Şifre Sıfırlama İşlemi';
+$lang['dealerInformations'] = 'Bayi Bilgileri';
+$lang['matches'] = 'Şifrelerinizin Aynı Olduğundan Emin Olup, Lütfen Tekrar Deneyin.';
+$lang['is_unique'] = '<b>{field}</b> alanına ait bilgi sistemde mevcut. Lütfen farklı bir bilgi giriniz.';
 // #LOGIN REGISTER FORGOT PASSWORD RESET
 
 $lang["company_name"] = "Firma Adı";
@@ -47,8 +49,17 @@ $lang["password"] = "Şifre";
 $lang["passwordRepeat"] = "Tekrar Şifre";
 $lang["account"] = "Hesabım";
 $lang["orders"] = "Siparişlerim";
+// CART
 $lang["you_must_login_to_use_the_cart"] = "Sepeti kullanmak için giriş yapmalısınız.";
+$lang["cart"] = "Sepetim";
 $lang["addToCart"] = "Sepete Ekle";
+$lang["youCannotAddThisItemMoreToCart"] = "Bu Ürünü Sepete Daha Fazla Ekleyemezsiniz.";
+$lang["itemAddedToCart"] = "Ürün Sepete Eklendi.";
+$lang["vat"] = "KDV";
+$lang["total"] = "Toplam";
+$lang["subTotal"] = "Ara Toplam";
+// #CART
+
 $lang["shareProduct"] = "Ürünü Paylaş";
 $lang["outOfStock"] = "Stokta Yok";
 $lang["availableStock"] = "Stok";
@@ -210,11 +221,9 @@ $lang['successMessageText'] = 'İletişim Formu Başarıyla Gönderildi. Gönder
 $lang['errorEmailMessageText'] = 'İletişim Formu E-Maili Gönderilirken Hata Oluştu. Lütfen Tekrar Deneyin.';
 $lang['products'] = 'Ürünler';
 $lang['product_collections'] = 'Koleksiyonlar';
-$lang['new_product_collections'] = 'Yeni Koleksiyonlar';
 $lang['product'] = 'ÜRÜN';
 
 // ROUTES
-$lang['routes_new_product_collections'] = 'yeni-koleksiyonlar';
 $lang['routes_product_collections'] = 'koleksiyonlar';
 $lang['routes_product'] = 'urun';
 $lang['routes_page'] = 'sayfa';

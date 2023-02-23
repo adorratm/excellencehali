@@ -83,11 +83,11 @@
                     <h2><?= $product->title ?></h2>
                     <?php if (get_active_user()) : ?>
                         <div class="pi01Price">
-                            <?php if ($product->price) : ?>
-                                <ins><?= $product->price ?> <?= $symbol ?></ins>
+                            <?php if (!empty($product->price) || !empty($product->discounted_price)) : ?>
+                                <ins><?= !empty($product->discounted_price) ? $product->discounted_price : $product->price ?> <?= $symbol ?></ins>
                             <?php endif ?>
-                            <?php if ($product->discounted_price) : ?>
-                                <del><?= $product->discounted_price ?> <?= $symbol ?></del>
+                            <?php if (!empty($product->discounted_price) && $product->discounted_price > 0) : ?>
+                                <del><?= $product->price ?> <?= $symbol ?></del>
                             <?php endif ?>
                         </div>
                     <?php endif ?>
@@ -158,7 +158,7 @@
                                 </div>
                             </div>
                             <?php if (!empty($product->stock)) : ?>
-                                <button type="button" class="ulinaBTN addToCart" data-quantity="1" data-product-id="<?= $product->codes_id ?>" data-product-codes="<?= $product->codes ?>"><span><?= lang("addToCart") ?></span></button>
+                                <button type="button" class="ulinaBTN addToCart" data-quantity="1" data-codes-id="<?= $product->codes_id ?>" data-codes="<?= $product->codes ?>"><span><?= lang("addToCart") ?></span></button>
                             <?php endif ?>
                         </div>
                     <?php endif ?>
@@ -221,9 +221,6 @@
 
 <script>
     window.addEventListener('DOMContentLoaded', () => {
-        $(".colorLabel").click();
-
-
         if (($('#lightgallery, .lightgallery').length > 0)) {
             $('#lightgallery, .lightgallery').lightGallery({
                 selector: '.lightimg',
@@ -278,14 +275,14 @@
             e.stopImmediatePropagation();
             let $this = $(this);
             $this.attr("disabled", "disabled");
-            let productId = $this.data("product-id");
-            let codes = $this.data("product-codes");
+            let codes_id = $this.data("codes-id");
+            let codes = $this.data("codes");
             let quantity = $this.data("quantity");
             $.post('<?= base_url(lang("routes_cart") . "/" . lang("routes_add-to-cart")) ?>', {
-                "codes_id": productId,
+                "codes_id": codes_id,
                 "codes": codes,
                 "quantity": quantity,
-                "<?= $this->security->get_csrf_token_name() ?>": "<?= $this->security->get_csrf_hash() ?>"
+                "<?= $this->security->get_csrf_token_name() ?>": "<?= $this->security->get_csrf_hash() ?>",
             }, function(response) {
                 if (response.success) {
                     iziToast.success({
@@ -294,7 +291,7 @@
                         position: "topCenter",
                     });
                     $(".cartWidgetArea").load('<?= base_url(lang("routes_cart") . "/" . lang("routes_cart-header")) ?>');
-                    element.load('<?= base_url(lang("routes_cart") . "/" . lang("routes_cart-quantity")) ?>');
+                    $(".totalItemsCount").load('<?= base_url(lang("routes_cart") . "/" . lang("routes_cart-quantity")) ?>');
                 } else {
                     iziToast.error({
                         title: response.title,

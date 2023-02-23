@@ -19,7 +19,6 @@ $lang["(:any)/koleksiyonlar/(:num)"] = "product_collections/index/$2";
 $lang["(:any)/koleksiyonlar/(:num)/(:any)"] = "products/index/$2/$3";
 $lang["(:any)/koleksiyonlar/(:num)/(:any)/(:num)"] = "products/index/$2/$3/$4";
 $lang["(:any)/koleksiyonlar/urun/(:num)/(:any)"] = "products/product_detail/$2/$3";
-$lang["(:any)/yeni-koleksiyonlar"] = "product_collections/new";
 
 $lang["(:any)/galeriler"] = "galleries/index";
 $lang["(:any)/galeriler/(:num)"] = "galleries/index/$2";

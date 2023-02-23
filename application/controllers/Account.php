@@ -48,7 +48,7 @@ class Account extends MY_Controller
     public function index()
     {
         if (!get_active_user()) :
-            redirect(base_url(lang("routes_login")));
+            redirect(base_url(lang("routes_dealer-login")));
         endif;
         $this->viewFolder = "account_v/index";
         $this->viewData->page_title = clean(strto("lower|ucwords", lang("account")));
@@ -65,14 +65,14 @@ class Account extends MY_Controller
     public function update()
     {
         if (!get_active_user()) :
-            redirect(base_url(lang("routes_login")));
+            redirect(base_url(lang("routes_dealer-login")));
         endif;
-        $this->form_validation->set_rules("email", lang("email"), "required|trim|valid_email");
+        $this->form_validation->set_rules("email", lang("email"), "required|trim|valid_email|xss_clean");
         if (!empty(clean($_POST["password"]))) :
-            $this->form_validation->set_rules("password", lang("password"), "required|trim|min_length[6]");
-            $this->form_validation->set_rules("passwordRepeat", lang("passwordRepeat"), "required|trim|min_length[6]");
+            $this->form_validation->set_rules("password", lang("password"), "required|trim|min_length[6]|xss_clean");
+            $this->form_validation->set_rules("passwordRepeat", lang("passwordRepeat"), "required|trim|min_length[6]|matches[password]|xss_clean");
         endif;
-        $this->form_validation->set_message(["required"  => lang("required"), "valid_email" => lang("valid_email"), "min_length" => lang("min_length"),]);
+        $this->form_validation->set_message(["required"  => lang("required"), "valid_email" => lang("valid_email"), "min_length" => lang("min_length"),"matches" => lang("matches")]);
         $this->form_validation->set_error_delimiters('', ',');
         $alert = [
             "title" => lang("error"),
@@ -81,10 +81,6 @@ class Account extends MY_Controller
         ];
         if ($this->form_validation->run()) :
             $data = rClean($_POST);
-            if (!empty(clean($_POST["password"])) && !empty(clean($_POST["passwordRepeat"])) && $data["password"] !== $data["passwordRepeat"]) :
-                $alert["msg"] = lang("samePassword");
-                redirect(base_url(lang("routes_account")));
-            endif;
             if (!empty(clean($_POST["password"]))) :
                 // Create md5 password
                 $data["password"] = mb_substr(sha1(md5($data["password"])), 0, 32);

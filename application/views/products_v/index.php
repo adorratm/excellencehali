@@ -168,7 +168,7 @@ $explodedBrandChecks = !empty($_GET["brandChecks"]) ? array_map("intVal", explod
                                             <div class="pi01Actions">
                                                 <a href="<?= base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/" . $value->codes . "/" . $value->seo_url) ?>" rel="dofollow" title="<?= $value->title ?>"><i class="fa-solid fa-arrows-up-down-left-right"></i></a>
                                             </div>
-                                            <?php if (!empty($value->discounted_price)) : ?>
+                                            <?php if (get_active_user() && !empty($value->discounted_price)) : ?>
                                                 <div class="productLabels clearfix">
                                                     <span class="plDis">- <?= $value->price - $value->discounted_price ?><?= $symbol ?></span>
                                                     <span class="plSale"><?= lang("discountedProduct") ?></span>

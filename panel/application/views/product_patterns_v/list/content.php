@@ -73,13 +73,15 @@
             });
             button.text("Eşitleme İşlemi Yapılıyor Lütfen Bekleyin...");
             button.prop("disabled", true);
-            createAjax(url, formData, function() {
-                reloadTable("productPatternTable");
-                button.text("Eşitleme İşlemi Tamamlandı");
-                setTimeout(function() {
-                    button.text("Ürün Desenlerini Codes İle Eşitle");
-                    button.prop("disabled", false);
-                }, 1000);
+            $.get("<?= base_url("products/getStocks"); ?>", () => {
+                createAjax(url, formData, function() {
+                    reloadTable("productPatternTable");
+                    button.text("Eşitleme İşlemi Tamamlandı");
+                    setTimeout(function() {
+                        button.text("Ürün Desenlerini Codes İle Eşitle");
+                        button.prop("disabled", false);
+                    }, 1000);
+                });
             });
         });
         $(document).on("click", ".updateProductPatternBtn", function(e) {

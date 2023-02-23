@@ -159,31 +159,35 @@ class product_collections extends MY_Controller
         endif;
     }
 
-    public function getCollections(){
-        set_time_limit(0);
-        ini_set('memory_limit', '-1');
-        $codesConnections = $this->general_model->get_all("codes",null, null, ["isActive" => 1]);
-
-        if (!empty($codesConnections)) {
-            $rank = 1;
-            foreach ($codesConnections as $codesConnectionsKey => $codesConnectionsValue) {
-                $data = @curl_request($codesConnectionsValue->host, $codesConnectionsValue->port, "kalite", [], ['Content-Type: application/json', 'Accept: application/json', 'X-TOKEN: ' . $codesConnectionsValue->token])->data;
-                if (!empty($data)) {
-                    foreach ($data as $returnKey => $returnValue) {
-                        $this->general_model->replace("product_collections",[
-                            'id' => $rank,
-                            'codes_id' => intval(clean($returnValue->Id)) ?? NULL,
-                            'title' => clean($returnValue->Kod) ?? NULL,
-                            'seo_url' => clean(seo($returnValue->Kod)) ?? NULL,
-                            'isActive' => clean($returnValue->Durum) == 0 ? 1 : 0,
-                            'rank' => $rank,
-                            'codes' => clean($codesConnectionsValue->id) ?? NULL
-                        ]);
-                        $rank++;
+    public function getCollections()
+    {
+        try {
+            set_time_limit(0);
+            ini_set('memory_limit', '-1');
+            $codesConnections = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
+            if (!empty($codesConnections)) {
+                $rank = 1;
+                foreach ($codesConnections as $codesConnectionsKey => $codesConnectionsValue) {
+                    $products = $this->general_model->get_all("products", null, null, ["isActive" => 1, "codes" => $codesConnectionsValue->id], [], [], [], [], true, ["collection_id"]);
+                    if (!empty($products)) {
+                        foreach ($products as $returnKey => $returnValue) {
+                            $this->general_model->replace("product_collections", [
+                                'id' => $rank,
+                                'codes_id' => intval(clean($returnValue->collection_id)) ?? NULL,
+                                'title' => clean($returnValue->collection) ?? NULL,
+                                'seo_url' => clean(seo($returnValue->collection)) ?? NULL,
+                                'isActive' => 1,
+                                'rank' => $rank,
+                                'codes' => clean($codesConnectionsValue->id) ?? NULL
+                            ]);
+                            $rank++;
+                        }
                     }
                 }
             }
+            echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Koleksiyonları Codes İle Başarıyla Eşitlendi."]);
+        } catch (Exception $e) {
+            echo json_encode(["success" => false, "title" => "Hata!", "message" => $e->getMessage()]);
         }
-        echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ürün Koleksiyonları Codes İle Başarıyla Eşitlendi."]);
     }
 }

@@ -740,14 +740,11 @@
 
 .cartWidgetProduct a {
     font-family: 'Roboto', sans-serif;
-    display: block;
     font-size: 16px;
     line-height: 20px;
-    position: relative;
     bottom: auto;
     color: #52586d;
     margin: 0 0 6px;
-    top: -2px;
 }
 
 .cartWidgetProduct a:hover {
