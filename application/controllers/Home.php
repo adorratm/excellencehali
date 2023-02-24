@@ -152,7 +152,7 @@ class Home extends MY_Controller
         if (!empty($product_collections)) :
             foreach ($product_collections as $k => $v) :
                 if (!empty($v->seo_url)) :
-                    $this->sitemapmodel->add(base_url(lang("routes_product_collections") . "/{$v->seo_url}"), NULL, 'always', 1);
+                    $this->sitemapmodel->add(base_url(lang("routes_product-collections") . "/{$v->seo_url}"), NULL, 'always', 1);
                 endif;
             endforeach;
         endif;
@@ -170,7 +170,7 @@ class Home extends MY_Controller
         if (!empty($products)) :
             foreach ($products as $k => $v) :
                 if (!empty($v->url)) :
-                    $this->sitemapmodel->add(base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/{$v->url}"), NULL, 'always', 1);
+                    $this->sitemapmodel->add(base_url(lang("routes_product-collections") . "/" . lang("routes_product") . "/{$v->url}"), NULL, 'always', 1);
                 endif;
             endforeach;
         endif;
@@ -242,7 +242,7 @@ class Home extends MY_Controller
         if (!empty($product_collections)) :
             foreach ($product_collections as $k => $v) :
                 if (!empty($v->seo_url)) :
-                    $this->sitemapmodel->add(base_url(lang("routes_product_collections") . "/{$v->seo_url}"), NULL, 'always', 1);
+                    $this->sitemapmodel->add(base_url(lang("routes_product-collections") . "/{$v->seo_url}"), NULL, 'always', 1);
                 endif;
             endforeach;
         endif;
@@ -260,7 +260,7 @@ class Home extends MY_Controller
         if (!empty($products)) :
             foreach ($products as $k => $v) :
                 if (!empty($v->url)) :
-                    $this->sitemapmodel->add(base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/{$v->url}"), NULL, 'always', 1);
+                    $this->sitemapmodel->add(base_url(lang("routes_product-collections") . "/" . lang("routes_product") . "/{$v->url}"), NULL, 'always', 1);
                 endif;
             endforeach;
         endif;
@@ -344,7 +344,7 @@ class Home extends MY_Controller
                 xml_add_child($item, 'g:id', $prod->id);
                 xml_add_child($item, 'g:title', strto("lower|ucwords", $prod->title));
                 xml_add_child($item, 'g:description', strto("lower|ucwords", $prod->title));
-                xml_add_child($item, 'g:link',  base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/" . $prod->codes . "/" . $prod->seo_url));
+                xml_add_child($item, 'g:link',  base_url(lang("routes_product-collections") . "/" . lang("routes_product") . "/" . $prod->codes . "/" . $prod->seo_url));
                 xml_add_child($item, 'g:image_link', get_picture("products_v", $prod->img_url));
                 xml_add_child($item, 'g:brand', strto("lower|ucwords", $settings->company_name));
                 xml_add_child($item, 'g:condition', 'new');
@@ -415,7 +415,7 @@ class Home extends MY_Controller
                 $gtin = rand(100000000000, 999999999999);
                 xml_add_child($item, 'g:title', strto("lower|ucwords", $prod->title));
                 xml_add_child($item, 'g:description', strto("lower|ucwords", (!empty($prod->description) ? clean(@mb_word_wrap($prod->description, 500, "...")) : $prod->title)));
-                xml_add_child($item, 'g:link',  base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/" . $prod->codes . "/" . $prod->seo_url));
+                xml_add_child($item, 'g:link',  base_url(lang("routes_product-collections") . "/" . lang("routes_product") . "/" . $prod->codes . "/" . $prod->seo_url));
                 xml_add_child($item, 'g:image_link', get_picture("products_v", $prod->img_url));
                 xml_add_child($item, 'g:additional_image_link', get_picture("products_v", $prod->img_url));
                 xml_add_child($item, 'g:brand', strto("lower|ucwords", stripslashes($settings->company_name)));

@@ -686,7 +686,7 @@
     background: #fff;
     text-align: left;
     box-shadow: 0 0 50px 0 rgba(29, 35, 58, .08);
-    padding: 30px 30px;
+    padding: 15px 15px;
     opacity: 0;
     visibility: hidden;
     z-index: 99;
@@ -1633,7 +1633,7 @@
 .pi01Price {
     font-family: 'Roboto', sans-serif;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
 
     font-size: 21px;
@@ -5321,11 +5321,11 @@
 }
 
 .woocommerce .shop_table.cart_table tbody tr td.product-thumbnail {
-    width: 103px;
+    width: 120px;
 }
 
 .woocommerce .shop_table.cart_table tbody tr td.product-thumbnail img {
-    width: 103px;
+    width: 120px;
     height: 120px;
     border-radius: 5px;
     margin: 0;

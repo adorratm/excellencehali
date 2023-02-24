@@ -916,7 +916,7 @@ function show_collections($lang = "tr")
     foreach ($result as $key => $value) :
         $html .= '<li>';
         $html .= '<a rel="dofollow" ' .
-            ($t->uri->segment(3) == $value->seo_url ? "class='active link'" : "class='link'") . ' href="' . base_url(lang("routes_product_collections") . "/{$value->seo_url}") . '" title="' . $value->title . '"><i class="bx bx-chevron-right"></i> ' . $value->title . '</a>';
+            ($t->uri->segment(3) == $value->seo_url ? "class='active link'" : "class='link'") . ' href="' . base_url(lang("routes_product-collections") . "/{$value->seo_url}") . '" title="' . $value->title . '"><i class="bx bx-chevron-right"></i> ' . $value->title . '</a>';
         $html .= show_collections($value->id, $lang);
         $html .= "</li>";
     endforeach;
@@ -946,7 +946,7 @@ function show_header_collections($lang = "tr")
     foreach ($result as $key => $value) :
         $html .= '<li class="nav-item">';
         $html .= '<a rel="dofollow"' .
-            ($t->uri->segment(3) == $value->seo_url ? "active nav-link" : "nav-link") . '" href="' . base_url(lang("routes_product_collections") . "/{$value->seo_url}") . '" title="' . $value->title . '">' . $value->title . '</a>';
+            ($t->uri->segment(3) == $value->seo_url ? "active nav-link" : "nav-link") . '" href="' . base_url(lang("routes_product-collections") . "/{$value->seo_url}") . '" title="' . $value->title . '">' . $value->title . '</a>';
         $html .= show_header_collections($value->id, $lang);
         $html .= "</li>";
     endforeach;

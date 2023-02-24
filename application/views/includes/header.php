@@ -135,7 +135,7 @@
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <div class="popup_search_form">
-                            <form class="w-100" id="searchCollectionFormHeader" action="<?= base_url(lang("routes_product_collections")) ?>" method="GET" enctype="multipart/form-data">
+                            <form class="w-100" id="searchCollectionFormHeader" action="<?= base_url(lang("routes_product-collections")) ?>" method="GET" enctype="multipart/form-data">
 
                                 <div class="input-group">
                                     <input type="hidden" name="orderBy" value="1">

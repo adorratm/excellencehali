@@ -16,19 +16,19 @@
                                 <?php if (!empty($value->collection_id) && $value->collection_id > 0) : ?>
                                     <?php $sCollection = $this->general_model->get("product_collections", null, ["isActive" => 1, "id" => $value->collection_id]); ?>
                                     <?php if (!empty($sCollection)) : ?>
-                                        <?php $sUrl = base_url(lang("routes_product_collections") . "/" . $sCollection->seo_url) ?>
+                                        <?php $sUrl = base_url(lang("routes_product-collections") . "/" . $sCollection->seo_url) ?>
                                     <?php endif ?>
                                 <?php endif ?>
                                 <?php if (!empty($value->product_id) && $value->product_id > 0) : ?>
                                     <?php $sProduct = $this->general_model->get("products", null, ["isActive" => 1, "id" => $value->product_id]); ?>
                                     <?php if (!empty($sProduct)) : ?>
-                                        <?php $sUrl = base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/" . $sProduct->url) ?>
+                                        <?php $sUrl = base_url(lang("routes_product-collections") . "/" . lang("routes_product") . "/" . $sProduct->url) ?>
                                     <?php endif ?>
                                 <?php endif ?>
                                 <?php if (!empty($value->page_id) && $value->page_id > 0) : ?>
                                     <?php $sPage = $this->general_model->get("product_collections", null, ["isActive" => 1, "id" => $value->page_id]); ?>
                                     <?php if (!empty($sPage)) : ?>
-                                        <?php $sUrl = base_url(lang("routes_product_collections") . "/" . $sPage->url) ?>
+                                        <?php $sUrl = base_url(lang("routes_product-collections") . "/" . $sPage->url) ?>
                                     <?php endif ?>
                                 <?php endif ?>
                                 <?php if (!empty($value->sector_id) && $value->sector_id > 0) : ?>
@@ -72,11 +72,11 @@
                                     <img data-src="<?= get_picture("product_collections_v", $v->img_url) ?>" class="img-fluid lazyload" alt="<?= $v->title ?>" title="<?= $v->title ?>" />
                                     <img data-src="<?= get_picture("product_collections_v", $v->img_url) ?>" class="img-fluid lazyload" alt="<?= $v->title ?>" title="<?= $v->title ?>" />
                                     <div class="pi01Actions">
-                                        <a href="<?= base_url(lang("routes_product_collections") . "/" . $v->codes . "/" . $v->seo_url) ?>" rel="dofollow" title="<?= lang("viewProducts") ?>"><i class="fa-solid fa-arrows-up-down-left-right"></i></a>
+                                        <a href="<?= base_url(lang("routes_product-collections") . "/" . $v->codes . "/" . $v->seo_url) ?>" rel="dofollow" title="<?= lang("viewProducts") ?>"><i class="fa-solid fa-arrows-up-down-left-right"></i></a>
                                     </div>
                                 </div>
                                 <div class="pi01Details">
-                                    <h3 class="secTitle text-center fw-medium fs-6"><a href="<?= base_url(lang("routes_product_collections") . "/" . $v->codes . "/" . $v->seo_url) ?>" rel="dofollow" title="<?= lang("viewProducts") ?>"><?= $v->title ?></a></h3>
+                                    <h3 class="secTitle text-center fw-medium fs-6"><a href="<?= base_url(lang("routes_product-collections") . "/" . $v->codes . "/" . $v->seo_url) ?>" rel="dofollow" title="<?= lang("viewProducts") ?>"><?= $v->title ?></a></h3>
                                 </div>
                             </div>
                         <?php endforeach ?>

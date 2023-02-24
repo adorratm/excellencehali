@@ -77,7 +77,7 @@
                 <div class="productContent">
                     <?php if ($product->collection_title) : ?>
                         <div class="pcCategory">
-                            <a rel="dofollow" title="<?= $product->collection_title ?>" href="<?= base_url(lang("routes_product_collections") . "/" . $product->collection_codes . "/" . $product->collection_seo_url) ?>"><?= $product->collection_title ?></a>
+                            <a rel="dofollow" title="<?= $product->collection_title ?>" href="<?= base_url(lang("routes_product-collections") . "/" . $product->collection_codes . "/" . $product->collection_seo_url) ?>"><?= $product->collection_title ?></a>
                         </div>
                     <?php endif ?>
                     <h2><?= $product->title ?></h2>
@@ -145,7 +145,7 @@
                     </div>
                     <?php if (get_active_user()) : ?>
                         <div class="pcBtns align-items-center align-self-center align-content-center">
-                            <?php if (!empty($product->stock)) : ?>
+                            <?php if (!empty($product->stock) && ($product->price > 0 || $product->discounted_price > 0)) : ?>
                                 <div class="quantity clearfix">
                                     <button type="button" class="qtyBtn btnMinus"><i class="fa fa-minus"></i></button>
                                     <input type="number" class="carqty input-text qty text" name="quantity" min="1" value="1" max="<?= $product->stock ?>">
@@ -157,7 +157,7 @@
                                     <span><?= lang("availableStock") ?> :</span> <b class="<?= !empty($product->stock) && $product->stock > 15 ? "text-dark" : "text-danger" ?> "><?= !empty($product->stock) ? $product->stock : lang("outOfStock") ?></b>
                                 </div>
                             </div>
-                            <?php if (!empty($product->stock)) : ?>
+                            <?php if (!empty($product->stock) && ($product->price > 0 || $product->discounted_price > 0)) : ?>
                                 <button type="button" class="ulinaBTN addToCart" data-quantity="1" data-codes-id="<?= $product->codes_id ?>" data-codes="<?= $product->codes ?>"><span><?= lang("addToCart") ?></span></button>
                             <?php endif ?>
                         </div>
@@ -165,7 +165,7 @@
                     <div class="pcMeta">
                         <p>
                             <span><?= lang("productBarcode") ?> : </span>
-                            <a href="javascript:void(0);"><?= $product->barcode ?></a>
+                            <a class="ms-2" href="javascript:void(0);"><?= $product->barcode ?></a>
                         </p>
                         <p class="pcmSocial border rounded p-3" style="width: fit-content;">
                             <span class="me-2"><?= lang("shareProduct") ?> : </span>
@@ -290,8 +290,7 @@
                         message: response.message,
                         position: "topCenter",
                     });
-                    $(".cartWidgetArea").load('<?= base_url(lang("routes_cart") . "/" . lang("routes_cart-header")) ?>');
-                    $(".totalItemsCount").load('<?= base_url(lang("routes_cart") . "/" . lang("routes_cart-quantity")) ?>');
+                    headerCart();
                 } else {
                     iziToast.error({
                         title: response.title,

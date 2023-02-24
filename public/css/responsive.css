@@ -1531,6 +1531,7 @@
         position: absolute;
         left: 0;
         top: 24px;
+        width: auto;
     }
 
     .woocommerce .shop_table.cart_table tbody tr td.product-thumbnail img {

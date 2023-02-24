@@ -23,10 +23,13 @@
 			<table class="table table-hover table-striped table-bordered content-container userTable">
 
 				<thead>
-					<th class="order"><i class="fa fa-reorder"></i></th>
-					<th class="order"><i class="fa fa-reorder"></i></th>
 					<th class="w50">#id</th>
-					<th>Ad Soyad</th>
+					<th>Ad</th>
+					<th>Soyad</th>
+					<th>Firma</th>
+					<th>Vergi Dairesi</th>
+					<th>Vergi No</th>
+					<th>Telefon</th>
 					<th>E-Posta</th>
 					<th>Durum</th>
 					<th>Oluşturulma Tarihi</th>

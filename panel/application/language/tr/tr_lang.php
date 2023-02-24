@@ -58,6 +58,19 @@ $lang["itemAddedToCart"] = "Ürün Sepete Eklendi.";
 $lang["vat"] = "KDV";
 $lang["total"] = "Toplam";
 $lang["subTotal"] = "Ara Toplam";
+$lang["errorWhileRemovingCartItem"] = "Sepetinizden Ürün Kaldırılırken Bir Hata Oluştu. Lütfen Tekrar Deneyin.";
+$lang["emptyCartSuccessfully"] = "Sepetiniz Başarıyla Temizlendi.";
+$lang["removedFromCartSuccessfully"] = "Ürün Sepetinizden Başarıyla Kaldırıldı.";
+$lang["cartItemUpdated"] = "Ürün Sepetinizde Güncellendi.";
+$lang["productThumbnail"] = "Ürün Resmi";
+$lang["productName"] = "Ürün Adı";
+$lang["productPrice"] = "Ürün Fiyatı";
+$lang["productQuantity"] = "Ürün Adedi";
+$lang["actions"] = "İşlemler";
+$lang["clearCart"] = "Sepeti Temizle";
+$lang["updateCart"] = "Sepeti Güncelle";
+$lang["emptyCart"] = "Alışveriş Sepetiniz Boş";
+$lang["proceedToCheckoutOne"] = "Sipariş Ver";
 // #CART
 
 $lang["shareProduct"] = "Ürünü Paylaş";
@@ -224,7 +237,7 @@ $lang['product_collections'] = 'Koleksiyonlar';
 $lang['product'] = 'ÜRÜN';
 
 // ROUTES
-$lang['routes_product_collections'] = 'koleksiyonlar';
+$lang['routes_product-collections'] = 'koleksiyonlar';
 $lang['routes_product'] = 'urun';
 $lang['routes_page'] = 'sayfa';
 $lang['routes_blog'] = 'blog';
@@ -245,6 +258,9 @@ $lang["routes_add-to-cart"] = "ekle";
 $lang["routes_update-cart"] = "guncelle";
 $lang["routes_remove-from-cart"] = "sil";
 $lang["routes_clear-cart"] = "temizle";
+$lang["routes_cart-page"] = "sepet-sayfasi";
+$lang["routes_cart-checkout-one"] = "siparis";
+$lang["routes_cart-checkout"] = "alisverisi-tamamla";
 $lang["routes_catalog"] = "katalog";
 
 // LOGIN

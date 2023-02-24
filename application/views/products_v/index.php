@@ -22,7 +22,7 @@ $explodedBrandChecks = !empty($_GET["brandChecks"]) ? array_map("intVal", explod
 
 
 <!-- END: Collections Section -->
-<form class="w-100" id="searchProductForm" action="<?= !empty($this->uri->segment(4) && !is_numeric($this->uri->segment(5))) ? base_url(lang("routes_product_collections") . "/" . $this->uri->segment(3) . "/" . $this->uri->segment(4) . "/" . $this->uri->segment(5)) : base_url(lang("routes_product_collections") . "/" . $this->uri->segment(3) . "/" . $this->uri->segment(4)) ?>" method="GET" enctype="multipart/form-data">
+<form class="w-100" id="searchProductForm" action="<?= !empty($this->uri->segment(4) && !is_numeric($this->uri->segment(5))) ? base_url(lang("routes_product-collections") . "/" . $this->uri->segment(3) . "/" . $this->uri->segment(4) . "/" . $this->uri->segment(5)) : base_url(lang("routes_product-collections") . "/" . $this->uri->segment(3) . "/" . $this->uri->segment(4)) ?>" method="GET" enctype="multipart/form-data">
     <section class="collectionsSections">
         <div class="container-fluid px-5">
             <div class="row shopAccessRow align-items-center align-content-center align-self-center shadow p-2">
@@ -148,7 +148,7 @@ $explodedBrandChecks = !empty($_GET["brandChecks"]) ? array_map("intVal", explod
                         <aside class="widget">
                             <button role="button" class="fs-5 btn btn-outline-secondary w-100"><?= lang("productFilter") ?></button>
                             <?php if (!empty($_GET)) : ?>
-                                <a rel="dofollow" title="<?= lang("clearFilter") ?>" class="btn btn-outline-danger mt-2 text-center w-100 fs-5" href="<?= base_url(lang("routes_product_collections") . "/" . $this->uri->segment(3) . "/" . $this->uri->segment(4)) ?>"><?= lang("clearFilter") ?></a>
+                                <a rel="dofollow" title="<?= lang("clearFilter") ?>" class="btn btn-outline-danger mt-2 text-center w-100 fs-5" href="<?= base_url(lang("routes_product-collections") . "/" . $this->uri->segment(3) . "/" . $this->uri->segment(4)) ?>"><?= lang("clearFilter") ?></a>
                             <?php endif ?>
                         </aside>
                     </div>
@@ -166,7 +166,7 @@ $explodedBrandChecks = !empty($_GET["brandChecks"]) ? array_map("intVal", explod
                                                 <img loading="lazy" width="1000" height="1000" data-src="<?= get_picture("products_v", $secondaryImage) ?>" alt="<?= $value->title ?>" title="<?= $value->title ?>" class="img-fluid lazyload">
                                             <?php endif ?>
                                             <div class="pi01Actions">
-                                                <a href="<?= base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/" . $value->codes . "/" . $value->seo_url) ?>" rel="dofollow" title="<?= $value->title ?>"><i class="fa-solid fa-arrows-up-down-left-right"></i></a>
+                                                <a href="<?= base_url(lang("routes_product-collections") . "/" . lang("routes_product") . "/" . $value->codes . "/" . $value->seo_url) ?>" rel="dofollow" title="<?= $value->title ?>"><i class="fa-solid fa-arrows-up-down-left-right"></i></a>
                                             </div>
                                             <?php if (get_active_user() && !empty($value->discounted_price)) : ?>
                                                 <div class="productLabels clearfix">
@@ -176,9 +176,9 @@ $explodedBrandChecks = !empty($_GET["brandChecks"]) ? array_map("intVal", explod
                                             <?php endif ?>
                                         </div>
                                         <div class="pi01Details">
-                                            <h3 class="text-center fw-medium fs-6"><a href="<?= base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/" . $value->codes . "/" . $value->seo_url) ?>" rel="dofollow" title="<?= $value->title ?>"><?= $value->title ?></a></h3>
+                                            <h3 class="text-center fw-medium fs-6"><a href="<?= base_url(lang("routes_product-collections") . "/" . lang("routes_product") . "/" . $value->codes . "/" . $value->seo_url) ?>" rel="dofollow" title="<?= $value->title ?>"><?= $value->title ?></a></h3>
                                             <?php if (get_active_user()) : ?>
-                                                <div class="pi01Price">
+                                                <div class="pi01Price text-center d-flex mx-auto justify-content-center">
                                                     <?php if (!empty($value->price) || !empty($value->discounted_price)) : ?>
                                                         <ins><?= !empty($value->discounted_price) ? $value->discounted_price : $value->price ?> <?= $symbol ?></ins>
                                                     <?php endif ?>

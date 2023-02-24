@@ -121,7 +121,7 @@ class Products extends MY_Controller
          * Pagination
          */
         $config = [];
-        $config['base_url'] = (!empty($seo_url) && !is_numeric($seo_url) ? base_url(lang("routes_product_collections") . "/" . $this->uri->segment(3) . "/{$seo_url}/") : base_url(lang("routes_product_collections") . "/" . $this->uri->segment(3) . "/"));
+        $config['base_url'] = (!empty($seo_url) && !is_numeric($seo_url) ? base_url(lang("routes_product-collections") . "/" . $this->uri->segment(3) . "/{$seo_url}/") : base_url(lang("routes_product-collections") . "/" . $this->uri->segment(3) . "/"));
         $config['uri_segment'] = (!empty($seo_url) && !is_numeric($seo_url) && !empty($this->uri->segment(5)) ? 5 : (is_numeric($this->uri->segment(4)) ? 4 : 2));
         $config['use_page_numbers'] = TRUE;
         $config["full_tag_open"] = "<ul class='pagination justify-content-center'>";
@@ -193,7 +193,7 @@ class Products extends MY_Controller
         $this->viewData->page_title = (!empty($collection) ? strto("lower|ucwords", $collection->title) : strto("lower|ucwords", lang("products")));
         $this->viewData->meta_title = strto("lower|ucwords", (!empty($collection) ? $collection->title : lang("products"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-        $this->viewData->og_url                 = clean(base_url(lang("routes_product_collections")));
+        $this->viewData->og_url                 = clean(base_url(lang("routes_product-collections")));
         $this->viewData->og_image           = clean(get_picture("settings_v", $this->viewData->settings->logo));
         $this->viewData->og_type          = "product";
         $this->viewData->og_title           = strto("lower|ucwords", (!empty($collection) ? $collection->title : lang("products"))) . " - " . $this->viewData->settings->company_name;
@@ -261,7 +261,7 @@ class Products extends MY_Controller
             $this->viewData->page_title = strto("lower|ucwords", $this->viewData->product->title);
             $this->viewData->meta_title = strto("lower|ucwords", $this->viewData->product->title) . " - " . $this->viewData->settings->company_name;
             $this->viewData->meta_desc  = !empty($this->viewData->product->content) ? str_replace("”", "\"", @stripslashes($this->viewData->product->content)) : str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
-            $this->viewData->og_url                 = clean(base_url(lang("routes_product_collections") . "/" . lang("routes_product") . "/" . $seo_url));
+            $this->viewData->og_url                 = clean(base_url(lang("routes_product-collections") . "/" . lang("routes_product") . "/" . $seo_url));
             $this->viewData->og_image           = clean(get_picture("products_v", $imgURL));
             $this->viewData->og_type          = "product.item";
             $this->viewData->og_title           = strto("lower|ucwords", $this->viewData->product->title) . " - " . $this->viewData->settings->company_name;

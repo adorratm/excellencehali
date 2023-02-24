@@ -40,6 +40,11 @@ $lang['(:any)/sepet/ekle'] = 'cart/add';
 $lang['(:any)/sepet/guncelle'] = 'cart/update';
 $lang['(:any)/sepet/sil'] = 'cart/delete';
 $lang['(:any)/sepet/temizle'] = 'cart/clear';
+$lang['(:any)/sepet/sepet-sayfasi'] = 'cart/cart_page';
+$lang['(:any)/sepet/siparis'] = 'cart/order';
+$lang['(:any)/sepet/siparis-olustur'] = 'cart/create_order';
+$lang['(:any)/sepet/alisverisi-tamamla'] = 'cart/complete_order';
+
 
 $lang['(:any)/odeme'] = 'payment/index';
 $lang['(:any)/odeme/odeme-basarili'] = 'payment/payment_success';

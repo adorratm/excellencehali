@@ -218,8 +218,15 @@
 
 <!-- SCRIPTS -->
 <script>
+    const headerCart = () => {
+        $(".cartWidgetArea").load('<?= base_url(lang("routes_cart") . "/" . lang("routes_cart-header")) ?>');
+        $(".totalItemsCount").load('<?= base_url(lang("routes_cart") . "/" . lang("routes_cart-quantity")) ?>');
+        if ($(".cartPageSection").length) {
+            $(".cartPageSection").load('<?= base_url(lang("routes_cart") . "/" . lang("routes_cart-page")) ?>');
+        }
+    };
     window.addEventListener('DOMContentLoaded', () => {
-        $(document).on("click", ".map-address", (e) => {
+        $(document).on("click", ".map-address", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let dest = $(this).data("destination");
@@ -240,11 +247,8 @@
                 });
             }
         });
-        const headerCart = () => {
-            $(".cartWidgetArea").load('<?= base_url(lang("routes_cart") . "/" . lang("routes_cart-header")) ?>');
-        };
         headerCart();
-        $(document).on("click", ".emptyCart", (e) => {
+        $(document).on("click", ".emptyCart", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let $this = $(this);
@@ -253,6 +257,23 @@
                 let formData = new FormData();
                 formData.append("<?= $this->security->get_csrf_token_name() ?>", "<?= $this->security->get_csrf_hash() ?>");
                 createAjax("<?= base_url(lang("routes_cart") . "/" . lang("routes_clear-cart")) ?>", formData, () => {
+                    headerCart();
+                    $this.prop("disabled", false);
+                }, () => {
+                    $this.prop("disabled", false);
+                });
+            }
+        });
+        $(document).on("click", ".cartRemoveProducts", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let $this = $(this);
+            if ($this.prop("disabled") == false || $this.prop("disabled") == undefined) {
+                $this.prop("disabled", true);
+                let formData = new FormData();
+                formData.append("<?= $this->security->get_csrf_token_name() ?>", "<?= $this->security->get_csrf_hash() ?>");
+                formData.append("rowid", $this.data("rowid"));
+                createAjax("<?= base_url(lang("routes_cart") . "/" . lang("routes_remove-from-cart")) ?>", formData, () => {
                     headerCart();
                     $this.prop("disabled", false);
                 }, () => {
