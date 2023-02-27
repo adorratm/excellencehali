@@ -41,7 +41,13 @@ $lang['(:any)/sepet/guncelle'] = 'cart/update';
 $lang['(:any)/sepet/sil'] = 'cart/delete';
 $lang['(:any)/sepet/temizle'] = 'cart/clear';
 $lang['(:any)/sepet/sepet-sayfasi'] = 'cart/cart_page';
-$lang['(:any)/sepet/siparis'] = 'cart/order';
+$lang['(:any)/sepet/siparis-adresi-secimi'] = 'cart/order_address';
+$lang['(:any)/sepet/siparis-adresi-getir'] = 'cart/get_order_address';
+$lang['(:any)/sepet/siparis-adresi-ekle'] = 'cart/add_order_address';
+$lang['(:any)/sepet/siparis-adresi-guncelle/(:num)'] = 'cart/update_order_address/$2';
+$lang['(:any)/sepet/siparis-adresi-sil/(:num)'] = 'cart/delete_order_address/$2';
+$lang['(:any)/sepet/siparis-adresi-degistir'] = 'cart/change_order_address';
+
 $lang['(:any)/sepet/siparis-olustur'] = 'cart/create_order';
 $lang['(:any)/sepet/alisverisi-tamamla'] = 'cart/complete_order';
 

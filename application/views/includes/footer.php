@@ -212,6 +212,7 @@
 <script defer src="<?= asset_url("public/js/extensions/revolution.extension.video.min.js") ?>"></script>
 
 <script async defer src="<?= asset_url("public/js/sweetalert.min.js") ?>"></script>
+<script async defer src="<?= asset_url("public/js/iziModal.min.js") ?>"></script>
 <script defer src="<?= asset_url("public/js/theme.js") ?>"></script>
 <script defer src="<?= asset_url("public/js/app.js") ?>"></script>
 <!-- #Site Scripts -->

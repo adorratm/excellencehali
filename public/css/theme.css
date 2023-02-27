@@ -8268,3 +8268,15 @@ form.contactForm button.ulinaBTN {
     display: flex;
     flex: 1 0 auto;
 }
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background-color: #3b3f6c;
+}
+
+.nav-pills .nav-link{
+    color: #3b3f6c;
+}
+
+.dropdown-item.active, .dropdown-item:active{
+    background-color: #3b3f6c;
+}

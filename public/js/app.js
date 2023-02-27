@@ -27,6 +27,51 @@ window.addEventListener('DOMContentLoaded', () => {
     }, 1000);
 });
 
+/** createModal */
+function createModal(modalClass = null, modalTitle = null, modalSubTitle = null, width = 600, bodyOverflow = true, padding = "20px", radius = 0, headerColor = "#1c1833", background = "#fff", zindex = 1040, onOpening = function () { }, onOpened = function () { }, onClosing = function () { }, onClosed = function () { }, afterRender = function () { }, onFullScreen = function () { }, onResize = function () { }, fullscreen = true, openFullscreen = false, closeOnEscape = true, closeButton = true, overlayClose = false, autoOpen = 0) {
+    if (modalClass !== "" || modalClass !== null) {
+        $(modalClass).iziModal({
+            title: modalTitle,
+            subtitle: modalSubTitle,
+            headerColor: headerColor,
+            background: background,
+            width: width,
+            zindex: zindex,
+            fullscreen: fullscreen,
+            openFullscreen: openFullscreen,
+            closeOnEscape: closeOnEscape,
+            closeButton: closeButton,
+            overlayClose: overlayClose,
+            autoOpen: autoOpen,
+            padding: padding,
+            bodyOverflow: bodyOverflow,
+            radius: radius,
+            onFullScreen: onFullScreen,
+            onResize: onResize,
+            onOpening: onOpening,
+            onOpened: onOpened,
+            onClosing: onClosing,
+            onClosed: onClosed,
+            afterRender: afterRender
+        });
+    }
+    $(modalClass).iziModal('setFullscreen', false);
+}
+/** createModal */
+
+/** openModal */
+function openModal(modalClass = null, event = function () { }) {
+    $(modalClass).iziModal('open', event);
+    $(modalClass).iziModal('setFullscreen', false);
+}
+/** openModal */
+
+/** closeModal */
+function closeModal(modalClass = null, event = function () { }) {
+    $(modalClass).iziModal('setFullscreen', false);
+    $(modalClass).iziModal('close', event);
+}
+/** closeModal */
 
 
 const createAjax = (e, t, n = () => { }, o = () => { }) => {

@@ -76,7 +76,7 @@ class Account extends MY_Controller
         $this->form_validation->set_error_delimiters('', ',');
         $alert = [
             "title" => lang("error"),
-            "msg" => lang("errorOnUpdate"),
+            "message" => lang("errorOnUpdate"),
             "type" => "error"
         ];
         if ($this->form_validation->run()) :
@@ -93,18 +93,18 @@ class Account extends MY_Controller
             $data["token"] = random_string('alnum', 255);
             $data["phone"] = str_replace(" ", "", $data["phone"]);
             if (!empty($this->general_model->get("users", null, ["email" => $data["email"], "id!=" => get_active_user()->id]))) :
-                $alert["msg"] = lang("emailExists");
+                $alert["message"] = lang("emailExists");
                 $this->session->set_flashdata("alert", $alert);
                 redirect(base_url(lang("routes_account")));
             endif;
             if (!empty($this->general_model->get("users", null, ["phone" => $data["phone"], "id!=" => get_active_user()->id]))) :
-                $alert["msg"] = lang("phoneExists");
+                $alert["message"] = lang("phoneExists");
                 $this->session->set_flashdata("alert", $alert);
                 redirect(base_url(lang("routes_account")));
             endif;
             unset($data[$this->security->get_csrf_token_name()]);
             if ($this->general_model->update("users", ["id" => get_active_user()->id], $data)) :
-                $alert = ["success" => true, "title" => lang("success"), "msg" => lang("updatedSuccessfully")];
+                $alert = ["success" => true, "title" => lang("success"), "message" => lang("updatedSuccessfully")];
                 $this->session->set_flashdata("alert", $alert);
                 $user = $this->general_model->get("users", null, ["email" => $data["email"], "phone" => $data["phone"]]);
                 $this->session->set_userdata("user", $user);
@@ -112,7 +112,7 @@ class Account extends MY_Controller
             endif;
         endif;
         if (validation_errors()) :
-            $alert["msg"] =  str_replace("<br />\n", "", nl2br(implode(",", array_filter(explode(",", validation_errors()), 'clean'))));
+            $alert["message"] =  str_replace("<br />\n", "", nl2br(implode(",", array_filter(explode(",", validation_errors()), 'clean'))));
         endif;
         $this->session->set_flashdata("alert", $alert);
         redirect(base_url(lang("routes_account")));

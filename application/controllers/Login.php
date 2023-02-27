@@ -60,7 +60,7 @@ class Login extends MY_Controller
         $this->form_validation->set_error_delimiters('', ',');
         $alert = [
             "title" => lang("error"),
-            "msg" => lang("errorOnLogin"),
+            "message" => lang("errorOnLogin"),
             "type" => "error"
         ];
         if ($this->form_validation->run()) :
@@ -82,16 +82,16 @@ class Login extends MY_Controller
                     endif;
                     $this->session->set_userdata("user", $user);
                     userRole();
-                    $alert = ["success" => true, "title" => lang("success"), "msg" => lang("welcomeMessage") . " <b>" . $user->first_name . " " . $user->last_name . "</b>"];
+                    $alert = ["success" => true, "title" => lang("success"), "message" => lang("welcomeMessage") . " <b>" . $user->first_name . " " . $user->last_name . "</b>"];
                     $this->session->set_flashdata("alert", $alert);
                     redirect(base_url());
                 endif;
-                $alert["msg"] = lang("errorOnLoginActivation");
+                $alert["message"] = lang("errorOnLoginActivation");
             endif;
-            $alert["msg"] = lang("errorOnLogin");
+            $alert["message"] = lang("errorOnLogin");
         endif;
         if (validation_errors()) :
-            $alert["msg"] =  str_replace("<br />\n", "", nl2br(implode(",", array_filter(explode(",", validation_errors()), 'clean'))));
+            $alert["message"] =  str_replace("<br />\n", "", nl2br(implode(",", array_filter(explode(",", validation_errors()), 'clean'))));
         endif;
         $this->session->set_flashdata("alert", $alert);
         redirect(base_url(lang("routes_dealer-login")));
@@ -137,17 +137,17 @@ class Login extends MY_Controller
         $this->form_validation->set_error_delimiters('', ',');
         $alert = [
             "title" => lang("error"),
-            "msg" => lang("errorOnRegister"),
+            "message" => lang("errorOnRegister"),
             "type" => "error"
         ];
         if ($this->form_validation->run()) :
             $data = rClean($_POST);
             if (!empty($this->general_model->get("users", null, ["email" => $data["email"]]))) :
-                $alert["msg"] = lang("emailExists");
+                $alert["message"] = lang("emailExists");
                 redirect(base_url(lang("routes_dealer-register")));
             endif;
             if (!empty($this->general_model->get("users", null, ["phone" => $data["phone"]]))) :
-                $alert["msg"] = lang("phoneExists");
+                $alert["message"] = lang("phoneExists");
                 redirect(base_url(lang("routes_dealer-register")));
             endif;
             $registeredEmailMessage = "<h2>" . lang("dealerInformations") . "</h2>";
@@ -168,7 +168,7 @@ class Login extends MY_Controller
             $data["phone"] = str_replace(" ", "", $data["phone"]);
             unset($data[$this->security->get_csrf_token_name()]);
             if ($this->general_model->add("users", $data)) :
-                $alert = ["success" => true, "title" => lang("success"), "msg" => lang("registerSuccessfully")];
+                $alert = ["success" => true, "title" => lang("success"), "message" => lang("registerSuccessfully")];
                 $activationLink = "<a href='" . base_url(lang("routes_activation") . "/?email=" . $data["email"] . "&phone=" . $data["phone"] . "&token=" . $data["token"]) . "' rel='dofollow' target='_blank'>" . lang("activationLinkText") . "</a>";
                 $message = lang("registerEmailMessage") . $activationLink . "<hr>" . $registeredEmailMessage;
                 $message = $this->load->view("includes/simple_mail_template", ["settings" => get_settings(), "subject" => $this->viewData->settings->company_name . " " . lang("registerMailTitle"), "message" => $message, "lang" => $this->viewData->lang], true);
@@ -176,7 +176,7 @@ class Login extends MY_Controller
             endif;
         endif;
         if (validation_errors()) :
-            $alert["msg"] =  str_replace("<br />\n", "", nl2br(implode(",", array_filter(explode(",", validation_errors()), 'clean'))));
+            $alert["message"] =  str_replace("<br />\n", "", nl2br(implode(",", array_filter(explode(",", validation_errors()), 'clean'))));
         endif;
         $this->session->set_flashdata("alert", $alert);
         redirect(base_url(lang("routes_dealer-register")));
@@ -213,7 +213,7 @@ class Login extends MY_Controller
             $this->form_validation->set_rules("email", lang("email"), "required|trim|valid_email|xss_clean");
             $this->form_validation->set_message(["required"  => lang("required"), "valid_email" => lang("valid_email"), "min_length" => lang("min_length"),]);
             $this->form_validation->set_error_delimiters('', ',');
-            $alert = ["success" => false, "title" => lang("error"), "msg" => lang("errorOnForgotPassword")];
+            $alert = ["success" => false, "title" => lang("error"), "message" => lang("errorOnForgotPassword")];
             if ($this->form_validation->run()) :
                 $data = rClean($_POST);
                 $user = $this->general_model->get("users", null, ["isActive" => 1, "email" => $data["email"]]);
@@ -223,14 +223,14 @@ class Login extends MY_Controller
                     $message = $this->load->view("includes/simple_mail_template", ["settings" => get_settings(), "subject" => $this->viewData->settings->company_name . " " . lang("forgotMailTitle"), "message" => $message, "lang" => $this->viewData->lang], true);
                     if (send_emailv2([$data["email"]], $this->viewData->settings->company_name . " " . lang("forgotMailTitle"), $message, [], $this->viewData->lang)) :
                         $this->general_model->update("users", ["email" => $data["email"]], ["token" => $data["token"]]);
-                        $alert = ["success" => true, "title" => lang("success"), "msg" => lang("resetMailSuccessfully")];
+                        $alert = ["success" => true, "title" => lang("success"), "message" => lang("resetMailSuccessfully")];
                         $this->session->set_flashdata("alert", $alert);
                         redirect(base_url(lang("routes_dealer-login")));
                     endif;
                 endif;
             endif;
             if (validation_errors()) :
-                $alert["msg"] =  str_replace("<br />\n", "", nl2br(implode(",", array_filter(explode(",", validation_errors()), 'clean'))));
+                $alert["message"] =  str_replace("<br />\n", "", nl2br(implode(",", array_filter(explode(",", validation_errors()), 'clean'))));
             endif;
             $this->session->set_flashdata("alert", $alert);
             redirect(base_url(lang("routes_forgot-password")));
@@ -242,18 +242,18 @@ class Login extends MY_Controller
                 if ($data["password"] === $data["passwordRepeat"]) :
                     $data["password"] = mb_substr(sha1(md5($data["password"])), 0, 32);
                     if ($this->general_model->update("users", ["token" => $data["token"], "email" => $data["email"], "phone" => $data["phone"]], ["password" => $data["password"], "token" => random_string("alnum", 255)])) :
-                        $this->session->set_flashdata("alert", ["success" => true, "title" => lang("success"), "msg" => lang("resetSuccessfully")]);
+                        $this->session->set_flashdata("alert", ["success" => true, "title" => lang("success"), "message" => lang("resetSuccessfully")]);
                         redirect(base_url(lang("routes_dealer-login")));
                     else :
-                        $this->session->set_flashdata("alert", ["success" => false, "title" => lang("error"), "msg" => lang("errorOnForgotPassword")]);
+                        $this->session->set_flashdata("alert", ["success" => false, "title" => lang("error"), "message" => lang("errorOnForgotPassword")]);
                         redirect(base_url(lang("routes_forgot-password")));
                     endif;
                 else :
-                    $this->session->set_flashdata("alert", ["success" => false, "title" => lang("error"), "msg" => lang("matches")]);
+                    $this->session->set_flashdata("alert", ["success" => false, "title" => lang("error"), "message" => lang("matches")]);
                     redirect(base_url(lang("routes_forgot-password-reset") . "?email=" . $data["email"] . "&phone=" . $data["phone"] . "&token=" . $data["token"]));
                 endif;
             else :
-                $this->session->set_flashdata("alert", ["success" => false, "title" => lang("error"), "msg" => lang("errorOnForgotPassword")]);
+                $this->session->set_flashdata("alert", ["success" => false, "title" => lang("error"), "message" => lang("errorOnForgotPassword")]);
                 redirect(base_url(lang("routes_forgot-password")));
             endif;
         endif;
@@ -277,7 +277,7 @@ class Login extends MY_Controller
         if (!get_active_user() || get_active_user()->role_id != 1) :
             redirect(base_url());
         endif;
-        $alert = ["success" => false, "title" => lang("error"), "msg" => lang("errorOnActivation")];
+        $alert = ["success" => false, "title" => lang("error"), "message" => lang("errorOnActivation")];
         if (!empty($_GET["email"]) && !empty($_GET["phone"]) && !empty($_GET["token"])) :
             $getUser = $this->general_model->get("users", null, ["isActive" => 0, "email" => clean($_GET["email"]), "phone" => clean($_GET["phone"]), "token" => clean($_GET["token"])]);
             if (!empty($getUser)) :
@@ -285,12 +285,12 @@ class Login extends MY_Controller
                     $message = lang("activationEmailMessage");
                     $message = $this->load->view("includes/simple_mail_template", ["settings" => get_settings(), "subject" => $this->viewData->settings->company_name . " " . lang("activationMailTitle"), "message" => $message, "lang" => $this->viewData->lang], true);
                     send_emailv2([$getUser->email], $this->viewData->settings->company_name . " " . lang("activationMailTitle"), $message, [], $this->viewData->lang);
-                    $alert  = ["success" => true, "title" => lang("success"), "msg" => lang("activatedSuccessfully")];
+                    $alert  = ["success" => true, "title" => lang("success"), "message" => lang("activatedSuccessfully")];
                     $this->session->set_flashdata("alert", $alert);
                     redirect(base_url());
                 endif;
             endif;
-            $alert["msg"] = lang("errorOnActivationLink");
+            $alert["message"] = lang("errorOnActivationLink");
         endif;
         $this->session->set_flashdata("alert", $alert);
         redirect(base_url());
@@ -305,7 +305,7 @@ class Login extends MY_Controller
         endif;
         $this->session->unset_userdata("user");
         $this->session->unset_userdata("user_roles");
-        $this->session->set_flashdata("alert", ["success" => true, "title" => lang("success"), "msg" => lang("logoutSuccessfully")]);
+        $this->session->set_flashdata("alert", ["success" => true, "title" => lang("success"), "message" => lang("logoutSuccessfully")]);
         redirect(base_url());
     }
 }

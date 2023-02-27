@@ -81,6 +81,7 @@
     <link type="text/css" href="<?= asset_url("public/css/responsive.css") ?>" rel="stylesheet">
     <link type="text/css" href="<?= asset_url("public/css/lightgallery.min.css") ?>" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link type="text/css" href="<?= asset_url("public/css/sweetalert.min.css") ?>" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link type="text/css" href="<?= asset_url("public/css/iziModal.min.css") ?>" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <style>
         .fixed-phone {
             position: fixed;
@@ -165,6 +166,61 @@
         .owl-thumbs .active {
             border-color: #7f8495 !important;
             border-radius: 0.375rem;
+        }
+
+        .address[type=radio]:checked,
+        .address[type=radio]:not(:checked) {
+            position: absolute;
+            left: -9999px
+        }
+
+        .address[type=radio]:checked+label,
+        .address[type=radio]:not(:checked)+label {
+            position: relative;
+            padding-left: 40px;
+            cursor: pointer;
+            line-height: 36px;
+            display: inline-block;
+            color: #1c1833
+        }
+
+        .address[type=radio]:checked+label:before,
+        .address[type=radio]:not(:checked)+label:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 36px;
+            height: 36px;
+            border: 1px solid #ddd;
+            border-radius: 100%;
+            background: #fff
+        }
+
+        .address[type=radio]:checked+label:after,
+        .address[type=radio]:not(:checked)+label:after {
+            content: "";
+            width: 28px;
+            height: 28px;
+            background: #4b5373;
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            border-radius: 100%;
+            -webkit-transition: all .2s ease;
+            transition: all .2s ease
+        }
+
+        .address[type=radio]:not(:checked)+label:after {
+            opacity: 0;
+            -webkit-transform: scale(0);
+            transform: scale(0)
+        }
+
+        .address[type=radio]:checked+label:after {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            transform: scale(1)
         }
     </style>
 

@@ -192,9 +192,9 @@ class Galleries extends MY_Controller
         if (!empty($id)) :
             $isActive = (intval($this->input->post("data")) === 1) ? 1 : 0;
             if ($this->gallery_model->update(["id" => $id], ["isActive" => $isActive])) :
-                echo json_encode(["success" => True, "title" => "İşlem Başarıyla Gerçekleşti", "msg" => "Güncelleme İşlemi Yapıldı"]);
+                echo json_encode(["success" => True, "title" => "İşlem Başarıyla Gerçekleşti", "message" => "Güncelleme İşlemi Yapıldı"]);
             else :
-                echo json_encode(["success" => False, "title" => "İşlem Başarısız Oldu", "msg" => "Güncelleme İşlemi Yapılamadı"]);
+                echo json_encode(["success" => False, "title" => "İşlem Başarısız Oldu", "message" => "Güncelleme İşlemi Yapılamadı"]);
             endif;
         endif;
     }
@@ -429,9 +429,9 @@ class Galleries extends MY_Controller
             $modelName = ($gallery_type == "images" ? "image_model" : ($gallery_type == "files" ? "file_model" : ($gallery_type == "videos" ? "video_model" : "video_url_model")));
             $isActive = (intval($this->input->post("data")) === 1) ? 1 : 0;
             if ($this->$modelName->update(["id" => $id], ["isActive" => $isActive])) :
-                echo json_encode(["success" => True, "title" => "İşlem Başarıyla Gerçekleşti", "msg" => "Güncelleme İşlemi Yapıldı"]);
+                echo json_encode(["success" => True, "title" => "İşlem Başarıyla Gerçekleşti", "message" => "Güncelleme İşlemi Yapıldı"]);
             else :
-                echo json_encode(["success" => False, "title" => "İşlem Başarısız Oldu", "msg" => "Güncelleme İşlemi Yapılamadı"]);
+                echo json_encode(["success" => False, "title" => "İşlem Başarısız Oldu", "message" => "Güncelleme İşlemi Yapılamadı"]);
             endif;
         endif;
     }

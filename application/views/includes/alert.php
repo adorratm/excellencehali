@@ -6,7 +6,7 @@
 			window.addEventListener('DOMContentLoaded', function() {
 				iziToast.success({
 					title: '<?= $alert["title"]; ?>',
-					message: '<?= $alert["msg"]; ?>',
+					message: '<?= $alert["message"]; ?>',
 					position: "topCenter"
 				});
 			});
@@ -16,7 +16,7 @@
 			window.addEventListener('DOMContentLoaded', function() {
 				iziToast.error({
 					title: '<?= $alert["title"]; ?>',
-					message: '<?= $alert["msg"]; ?>',
+					message: '<?= $alert["message"]; ?>',
 					position: "topCenter"
 				});
 			});

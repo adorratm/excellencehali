@@ -112,9 +112,9 @@ class Products extends MY_Controller
         if (!empty($id)) :
             $isActive = (intval($this->input->post("data")) === 1) ? 1 : 0;
             if ($this->product_model->update(["id" => $id], ["isActive" => $isActive])) :
-                echo json_encode(["success" => True, "title" => "İşlem Başarıyla Gerçekleşti", "msg" => "Güncelleme İşlemi Yapıldı."]);
+                echo json_encode(["success" => True, "title" => "İşlem Başarıyla Gerçekleşti", "message" => "Güncelleme İşlemi Yapıldı."]);
             else :
-                echo json_encode(["success" => False, "title" => "İşlem Başarısız Oldu", "msg" => "Güncelleme İşlemi Yapılamadı."]);
+                echo json_encode(["success" => False, "title" => "İşlem Başarısız Oldu", "message" => "Güncelleme İşlemi Yapılamadı."]);
             endif;
         endif;
     }
@@ -202,9 +202,9 @@ class Products extends MY_Controller
         if (!empty($id)) :
             $isActive = (intval($this->input->post("data")) === 1) ? 1 : 0;
             if ($this->product_image_model->update(["id" => $id], ["isActive" => $isActive])) :
-                echo json_encode(["success" => True, "title" => "İşlem Başarıyla Gerçekleşti", "msg" => "Güncelleme İşlemi Yapıldı"]);
+                echo json_encode(["success" => True, "title" => "İşlem Başarıyla Gerçekleşti", "message" => "Güncelleme İşlemi Yapıldı"]);
             else :
-                echo json_encode(["success" => False, "title" => "İşlem Başarısız Oldu", "msg" => "Güncelleme İşlemi Yapılamadı"]);
+                echo json_encode(["success" => False, "title" => "İşlem Başarısız Oldu", "message" => "Güncelleme İşlemi Yapılamadı"]);
             endif;
         endif;
     }
@@ -230,9 +230,9 @@ class Products extends MY_Controller
             $isCover = (intval($this->input->post("data")) === 1) ? 1 : 0;
             if ($this->product_image_model->update(["id" => $id, "codes_id" => $codes_id, "codes" => $codes], ["isCover" => $isCover, "lang" => $lang])) :
                 $this->product_image_model->update(["id!=" => $id, "codes_id" => $codes_id, "codes" => $codes], ["isCover" => 0, "lang" => $lang]);
-                echo json_encode(["success" => True, "title" => "İşlem Başarıyla Gerçekleşti", "msg" => "Güncelleme İşlemi Yapıldı"]);
+                echo json_encode(["success" => True, "title" => "İşlem Başarıyla Gerçekleşti", "message" => "Güncelleme İşlemi Yapıldı"]);
             else :
-                echo json_encode(["success" => False, "title" => "İşlem Başarısız Oldu", "msg" => "Güncelleme İşlemi Yapılamadı"]);
+                echo json_encode(["success" => False, "title" => "İşlem Başarısız Oldu", "message" => "Güncelleme İşlemi Yapılamadı"]);
             endif;
         endif;
     }

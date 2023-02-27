@@ -149,7 +149,6 @@
                     formData.append("<?= $this->security->get_csrf_token_name() ?>", "<?= $this->security->get_csrf_hash() ?>");
                     createAjax(url, formData, function() {
                         $("#addressPull").load("<?= asset_url("home/get_address") ?>");
-                        $("#addressPull2").load("<?= asset_url("home/get_address/chooseable") ?>");
                     });
                 }
             })

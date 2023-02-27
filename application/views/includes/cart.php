@@ -150,8 +150,8 @@
                 ];
                 $this->session->set_userdata("checkout", $checkoutData);
                 ?>
-                <a href="<?= base_url(lang("routes_cart") . "/" . lang("routes_cart-checkout-one")) ?>" class="checkout-button ulinaBTN">
-                    <span><?= lang("proceedToCheckoutOne") ?></span>
+                <a href="<?= base_url(lang("routes_cart") . "/" . lang("routes_order-address")) ?>" class="checkout-button ulinaBTN">
+                    <span><?= lang("proceedToCheckout") ?></span>
                 </a>
             </div>
         </div>

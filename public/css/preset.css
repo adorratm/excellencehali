@@ -171,14 +171,14 @@ input:focus, select:focus, textarea:focus, button:focus{
     position: relative;
     display: inline-block;
     min-width: 111px;
-    height: 42px;
+    height: 48px;
     border: 1px solid #c5d0cf;
     border-radius: 42px;
     text-align: center;
     font-size: 14px;
     font-weight: 500;
     color: #52586d;
-    line-height: 40px;
+    line-height: 50px;
 }
 .ulinaBTN2:hover{
     color: #52586d;
