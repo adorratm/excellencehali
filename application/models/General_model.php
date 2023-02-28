@@ -13,7 +13,7 @@ class General_model extends CI_Model
 	 * @param array // Where Parametreleri key => value
 	 * @param array // Tablo Adı:tabloadı Eşleşeceği ID: c.1tabloid=p.2tabloid Eşleşme Tipi : Left  
 	 */
-	public function get($tableName = null, $select = null, $where = [], $joinTable = [], $likes = [],$wherein = [], $distinct = null, $groupBy = null)
+	public function get($tableName = null, $select = null, $where = [], $joinTable = [], $likes = [], $wherein = [], $distinct = null, $groupBy = null)
 	{
 		if (!empty($select)) :
 			$this->db->select($select);
@@ -285,5 +285,10 @@ class General_model extends CI_Model
 	public function replace($tableName = null, $data = [])
 	{
 		$this->db->replace($tableName, $data);
+	}
+
+	public function insert_batch($tableName = null, $data = [])
+	{
+		$this->db->insert_batch($tableName, $data);
 	}
 }

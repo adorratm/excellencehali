@@ -46,6 +46,7 @@ $lang['matches'] = 'Şifrelerinizin Aynı Olduğundan Emin Olup, Lütfen Tekrar 
 $lang['is_unique'] = '<b>{field}</b> alanına ait bilgi sistemde mevcut. Lütfen farklı bir bilgi giriniz.';
 $lang["saveAddressInformation"] = "Adres Bilgilerimi Kaydet";
 $lang["updateAddressInformation"] = "Adres Bilgilerimi Güncelle";
+$lang["no_choosed_address_found"] =  "Seçili Adres Bulunamadı.";
 // #LOGIN REGISTER FORGOT PASSWORD RESET
 
 $lang["company_name"] = "Firma Adı";
@@ -90,6 +91,21 @@ $lang["errorWhileChangingOrderAddress"] = "Teslimat & Fatura Adresi Değiştiril
 $lang["orderAddressChangedSuccessfully"] = "Teslimat & Fatura Adresi Başarıyla Değiştirildi.";
 $lang["errorWhileDeleteAddress"] = "Teslimat & Fatura Adresi Silinirken Bir Hata Oluştu. Lütfen Tekrar Deneyin.";
 $lang["orderAddressDeletedSuccessfully"] = "Teslimat & Fatura Adresi Başarıyla Silindi.";
+$lang["choose_payment_method"] = "Ödeme Yöntemi Seçimi";
+$lang["payment_methods"] = "Ödeme Yöntemleri";
+$lang["choose_payment_method_text"] = "Lütfen Ödeme Yönteminizi Seçiniz.";
+$lang["payment_method_1"] = "Selge Halı Online Ödeme";
+$lang["payment_method_2"] = "Yalçınkaya Halı Online Ödeme";
+$lang["chooseThisPaymentMethod"] = "Bu Ödeme Yöntemini Seç";
+$lang["payment_method_changed"] = "Ödeme Yöntemi Değiştirildi";
+$lang["payment_method_not_found"] = "Ödeme Yöntemi Bulunamadı";
+$lang["an_error_occured_while_creating_order"] = "Sipariş Oluşturulurken Bir Hata Oluştu. Lütfen Tekrar Deneyin.";
+$lang["product_not_in_stock_and_removed_from_cart"] = "İsimli Ürün Stoğumuzda Tükendi ve Sepetinizden Kaldırıldı.";
+$lang["product_not_in_stock_and_removed_from_cart"] = "İsimli Ürünün Maximum Stok Sınırı Aşıldığı İçin Tekrar Sepetinize Yönlendirildiniz. Alışverişinize Bu Ürünün Maximum Stoğu İle Devam Edebilirsiniz.";
+$lang["codes_not_found"] = "Cari Kodunuz Mevcut Değil. Lütfen Yetkililerimiz İle İletişime Geçip Tekrar Deneyin.";
+$lang["order_received"] = "Siparişiniz Alındı. Sipariş Numaranız: ";
+$lang["your_order_has_been_received"] = "Siparişiniz Alındı!";
+$lang["new_order_has_been_received"] = "Yeni Bir Siparişiniz Var!";
 // #CART
 
 $lang["shareProduct"] = "Ürünü Paylaş";
@@ -282,7 +298,11 @@ $lang["routes_order-address-add"] = "siparis-adresi-ekle";
 $lang["routes_order-address-update"] = "siparis-adresi-guncelle";
 $lang["routes_order-address-delete"] = "siparis-adresi-sil";
 $lang["routes_order-address-change"] = "siparis-adresi-degistir";
-
+$lang["routes_choose-payment-method"] = "odeme-yontemi-secimi";
+$lang["routes_payment-method-change"] = "odeme-yontemi-degistir";
+$lang["routes_create-order"] = "siparis-olustur";
+$lang["routes_order-success"] = "siparis-basarili";
+$lang["routes_order-fail"] = "siparis-basarisiz";
 $lang["routes_cart-checkout"] = "alisverisi-tamamla";
 $lang["routes_catalog"] = "katalog";
 

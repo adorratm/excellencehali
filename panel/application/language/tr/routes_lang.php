@@ -48,13 +48,12 @@ $lang['(:any)/sepet/siparis-adresi-guncelle/(:num)'] = 'cart/update_order_addres
 $lang['(:any)/sepet/siparis-adresi-sil/(:num)'] = 'cart/delete_order_address/$2';
 $lang['(:any)/sepet/siparis-adresi-degistir'] = 'cart/change_order_address';
 
-$lang['(:any)/sepet/siparis-olustur'] = 'cart/create_order';
-$lang['(:any)/sepet/alisverisi-tamamla'] = 'cart/complete_order';
 
 
-$lang['(:any)/odeme'] = 'payment/index';
-$lang['(:any)/odeme/odeme-basarili'] = 'payment/payment_success';
-$lang['(:any)/odeme/odeme-basarisiz'] = 'payment/payment_fail';
+$lang['(:any)/odeme-yontemi-secimi'] = 'payment/index';
+$lang['(:any)/odeme-yontemi-degistir'] = 'payment/payment_method_change';
+
+$lang['(:any)/siparis-olustur'] = 'payment/order';
 
 
 $lang["(:any)/bayi-girisi"] = "login/login_form";

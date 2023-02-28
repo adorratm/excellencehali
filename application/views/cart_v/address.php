@@ -36,7 +36,7 @@
                     <div class="text-end justify-content-end d-flex flex-wrap">
                         <a rel="dofollow" href="<?= base_url(lang("routes_product-collections")) ?>" title="<?= lang("continueShopping") ?>" class="ulinaBTN2 px-3 me-1"><span><?= lang("continueShopping") ?></span></a>
                         <a rel="dofollow" href="<?= base_url(lang("routes_cart")) ?>" title="<?= lang("cart") ?>" class="ulinaBTN2 me-1 px-3"><span><?= lang("cart") ?></span></a>
-                        <a rel="dofollow" href="<?= base_url(lang("routes_choose-payment-type")) ?>" title="<?= lang("proceedToCheckout") ?>" class="ulinaBTN px-3"><span><?= lang("proceedToCheckout") ?></span></a>
+                        <a rel="dofollow" href="<?= base_url(lang("routes_choose-payment-method")) ?>" title="<?= lang("proceedToCheckout") ?>" class="ulinaBTN px-3"><span><?= lang("proceedToCheckout") ?></span></a>
                     </div>
                 </div>
 

@@ -306,6 +306,15 @@ class Cart extends MY_Controller
             $this->session->set_flashdata("alert", $alert);
             redirect(base_url(lang("dealer-login")));
         endif;
+        if (empty($this->cart->contents())) :
+            $alert = [
+                "success" => false,
+                "title" => lang("error"),
+                "message" => lang("emptyCart")
+            ];
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url(lang("routes_cart")));
+        endif;
         $this->viewData->page_title = clean(strto("lower|ucwords", lang("choose_order_address")));
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("choose_order_address"))) . " - " . $this->viewData->settings->company_name;
         $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
@@ -329,6 +338,14 @@ class Cart extends MY_Controller
             ]);
             return;
         endif;
+        if (empty($this->cart->contents())) :
+            echo json_encode([
+                "success" => false,
+                "title" => lang("error"),
+                "message" => lang("emptyCart")
+            ]);
+            return;
+        endif;
         $this->viewData->address_informations = $this->general_model->get_all("user_addresses", null, null, ["isActive" => 1, "user_id" => get_active_user()->id]);
         $this->load->view("cart_v/addressChooseable", (array)$this->viewData);
     }
@@ -340,6 +357,14 @@ class Cart extends MY_Controller
                 "success" => false,
                 "title" => lang("error"),
                 "message" => lang("you_must_login_to_use_the_cart")
+            ]);
+            return;
+        endif;
+        if (empty($this->cart->contents())) :
+            echo json_encode([
+                "success" => false,
+                "title" => lang("error"),
+                "message" => lang("emptyCart")
             ]);
             return;
         endif;
@@ -465,8 +490,7 @@ class Cart extends MY_Controller
             ]);
             return;
         endif;
-
-        if ($this->input->post() && !empty($id) && is_numeric($id)) :
+        if (!empty($id) && is_numeric($id)) :
             $alert = [
                 "title" => lang("error"),
                 "message" => lang("errorWhileDeleteAddress"),

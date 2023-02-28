@@ -223,6 +223,11 @@ class Products extends MY_Controller
          * Get Product Detail
          */
         $this->viewData->product = $this->general_model->get("products p", $select, $wheres, $joins, [], [], $distinct, $groupBy);
+        /**
+         * Stock Checker
+         */
+        //@getStock($this->viewData->product->codes_id, $this->viewData->product->codes);
+        //$this->viewData->product = $this->general_model->get("products p", $select, $wheres, $joins, [], [], $distinct, $groupBy);
 
         if (!empty($this->viewData->product)) :
             /**
