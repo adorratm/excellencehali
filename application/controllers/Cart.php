@@ -38,7 +38,7 @@ class Cart extends MY_Controller
                 "message" => lang("you_must_login_to_use_the_cart")
             ];
             $this->session->set_flashdata("alert", $alert);
-            redirect(base_url(lang("dealer-login")));
+            redirect(base_url(lang("routes_dealer-login")));
         endif;
         $this->viewData->page_title = clean(strto("lower|ucwords", lang("cart")));
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("cart"))) . " - " . $this->viewData->settings->company_name;
@@ -304,7 +304,7 @@ class Cart extends MY_Controller
                 "message" => lang("you_must_login_to_use_the_cart")
             ];
             $this->session->set_flashdata("alert", $alert);
-            redirect(base_url(lang("dealer-login")));
+            redirect(base_url(lang("routes_dealer-login")));
         endif;
         if (empty($this->cart->contents())) :
             $alert = [

@@ -54,6 +54,7 @@ $lang['(:any)/odeme-yontemi-secimi'] = 'payment/index';
 $lang['(:any)/odeme-yontemi-degistir'] = 'payment/payment_method_change';
 
 $lang['(:any)/siparis-olustur'] = 'payment/order';
+$lang['(:any)/siparis-basarili/(:any)'] = 'payment/order_success/$2';
 
 
 $lang["(:any)/bayi-girisi"] = "login/login_form";
@@ -71,3 +72,5 @@ $lang["(:any)/sifremi-sifirla"] = "login/forgot_password";
 $lang["(:any)/hesabim"] = "account/index";
 $lang["(:any)/hesabimi-guncelle"] = "account/update";
 $lang["(:any)/siparislerim"] = "account/orders";
+$lang["(:any)/siparis-detayi/(:any)"] = "account/order_detail/$2";
+$lang["(:any)/siparis-iptal-et/(:any)"] = "account/cancel_order/$2";

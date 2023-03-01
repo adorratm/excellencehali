@@ -11506,61 +11506,60 @@
         <div class="d-flex flex-wrap text-center align-middle align-items-center justify-content-center w-100 mb-3">
             <img src="<?= get_picture("settings_v", $settings->logo) ?>" class="img-fluid text-center align-middle align-items-center justify-content-center mx-auto px-auto mb-3" style="max-width: 250px;max-height:250px;" width="250" height="250">
         </div>
-        <p><?= $message ?></p>
-        <br>
-        <h3 class="text-center justify-content-center align-items-center align-middle mb-3"><?= lang("deliveryAndInvoiceAddress") ?></h3>
-        <h6><?= lang("addressTitle") ?> : <b><?= $address_title ?></b></h6>
-        <b><?= lang("address") ?> : </b>
-        <address><?= $address ?></address>
-        <hr>
+        <?php if (!empty($message)) : ?>
+            <p><?= $message ?></p>
+            <br>
+        <?php endif ?>
         <?php if (!empty($order_data)) : ?>
+            <h3 class="text-center justify-content-center align-items-center align-middle mb-3"><?= lang("deliveryAndInvoiceAddress") ?></h3>
+            <h6><?= lang("addressTitle") ?> : <b><?= $order_data["address_title"] ?></b></h6>
+            <b><?= lang("address") ?> : </b>
+            <address><?= $order_data["address"] ?></address>
+            <hr>
             <h2 class="font-weight-bold text-center align-items-center justify-content-center align-middle mb-3"><?= lang("orderDetail") ?></h2>
             <div class='table-responsive'>
                 <table class="table table-bordered table-striped table-hover w-100" width="100%" border="1">
                     <thead>
                         <tr>
-                            <th class='font-weight-bold text-center align-middle justify-content-center mx-auto px-auto'><?= lang("image") ?></th>
+                            <th class='font-weight-bold text-center align-middle justify-content-center mx-auto px-auto'><?= lang("productThumbnail") ?></th>
                             <th class='font-weight-bold text-center align-middle justify-content-center mx-auto px-auto'><?= lang("productName") ?></th>
-                            <th class='font-weight-bold text-center align-middle justify-content-center mx-auto px-auto'><?= lang("quantity") ?></th>
-                            <th class='font-weight-bold text-center align-middle justify-content-center mx-auto px-auto'><?= lang("price") ?></th>
+                            <th class='font-weight-bold text-center align-middle justify-content-center mx-auto px-auto'><?= lang("productQuantity") ?></th>
+                            <th class='font-weight-bold text-center align-middle justify-content-center mx-auto px-auto'><?= lang("productPrice") ?></th>
                             <th class='font-weight-bold text-center align-middle justify-content-center mx-auto px-auto'><?= lang("subTotal") ?></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($order_data["cart"] as $cart_key => $cart_value) : ?>
-                            <?php
-
-                            ?>
-                            <?php if (!empty($order_product)) : ?>
+                        <?php if (!empty($order_products)) : ?>
+                            <?php foreach ($order_products as $cart_key => $cart_value) : ?>
                                 <tr>
                                     <td class='text-center align-middle justify-content-center mx-auto px-auto'>
-                                        <img class='img-fluid' src='data:image/webp;base64, <?= base64_encode($order_product->img_url) ?>' style='max-width:150px;max-height:150px;' width="150" height="150">
+                                        <img class='img-fluid' src='data:image/webp;base64,<?= base64_encode($cart_value->img_url) ?>' style='max-width:150px;max-height:150px;' width="150" height="150">
                                     </td>
-                                    <td class='text-center align-middle justify-content-center mx-auto px-auto'><?= stripslashes($cart_value["name"]) ?></td>
-                                    <td class='text-center align-middle justify-content-center mx-auto px-auto'><?= $cart_value["qty"] ?> x</td>
+                                    <td class='text-center align-middle justify-content-center mx-auto px-auto'><?= stripslashes($cart_value->title) ?></td>
+                                    <td class='text-center align-middle justify-content-center mx-auto px-auto'><?= $cart_value->quantity ?> x</td>
                                     <td class='text-center align-middle justify-content-center mx-auto px-auto'>
-                                        <?= $cart_value["price"] ?>
-                                        <?= $symbol ?>
+                                        <?= !empty($cart_value->discounted_price) ? $cart_value->discounted_price : $cart_value->price ?>
+                                        <?= $order_data["symbol"] ?>
                                     </td>
                                     <td class='text-center align-middle justify-content-center mx-auto px-auto'>
-                                        <?= $cart_value["subtotal"] ?>
-                                        <?= $symbol ?>
+                                        <?= $cart_value->sub_total ?>
+                                        <?= $order_data["symbol"] ?>
                                     </td>
                                 </tr>
-                            <?php endif ?>
-                        <?php endforeach ?>
+                            <?php endforeach ?>
+                        <?php endif ?>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="5" class="text-right"><?= lang("subTotal") ?> : <span class="float-right"> <?= $order_data["subTotal"] ?><?= $symbol ?></span></td>
+                            <td colspan="5" class="text-right"><?= lang("subTotal") ?> : <span class="float-right ml-1"> <?= $order_data["sub_total"] ?><?= $symbol ?></span></td>
                         </tr>
                         <?php if ((float)$order_data["vat"] > 0) : ?>
                             <tr>
-                                <td colspan="5" class="text-right"><?= lang("vat") ?> : <span class="float-right"> <?= $order_data["vat"] ?><?= $symbol ?></span></td>
+                                <td colspan="5" class="text-right"><?= lang("vat") ?> : <span class="float-right ml-1"> <?= $order_data["vat"] ?><?= $symbol ?></span></td>
                             </tr>
                         <?php endif ?>
                         <tr>
-                            <td colspan="5" class="text-right"><b><?= lang("total") ?></b> : <span class="float-right"> <?= $order_data["total"] ?><?= $symbol ?></span></td>
+                            <td colspan="5" class="text-right"><b><?= lang("total") ?></b> : <span class="float-right ml-1"> <?= $order_data["total"] ?><?= $symbol ?></span></td>
                         </tr>
                     </tfoot>
                 </table>

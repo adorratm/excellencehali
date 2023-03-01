@@ -106,6 +106,20 @@ $lang["codes_not_found"] = "Cari Kodunuz Mevcut Değil. Lütfen Yetkililerimiz �
 $lang["order_received"] = "Siparişiniz Alındı. Sipariş Numaranız: ";
 $lang["your_order_has_been_received"] = "Siparişiniz Alındı!";
 $lang["new_order_has_been_received"] = "Yeni Bir Siparişiniz Var!";
+$lang["order_successfully_created"] = "Siparişiniz Başarıyla Oluşturuldu.";
+$lang["order_code_not_found"] = "Sipariş Numarası Bulunamadı.";
+$lang["order_code"] = "Sipariş Numarası";
+$lang["order_status"] = "Sipariş Durumu";
+$lang["order_date"] = "Sipariş Tarihi";
+$lang["order_detail"] = "Sipariş Detayları";
+$lang["Siparişiniz Alındı."] = "Siparişiniz Alındı.";
+$lang["Siparişiniz Hazırlanıyor."] = "Siparişiniz Hazırlanıyor.";
+$lang["Siparişiniz Kargoya Verildi."] = "Siparişiniz Kargoya Verildi.";
+$lang["Siparişiniz Tamamlandı."] = "Siparişiniz Tamamlandı.";
+$lang["Siparişiniz İptal Edildi."] = "Siparişiniz İptal Edildi.";
+$lang["loginFirst"] = "Lütfen Önce Giriş Yapınız.";
+$lang["order_cannot_be_canceled"] = "Siparişiniz İptal Edilemez.";
+$lang["order_canceled"] = "Sipariş İptali";
 // #CART
 
 $lang["shareProduct"] = "Ürünü Paylaş";
@@ -320,3 +334,5 @@ $lang['routes_forgot-password-reset'] = 'sifremi-sifirla';
 $lang["routes_account"] = "hesabim";
 $lang["routes_account-update"] = "hesabimi-guncelle";
 $lang["routes_orders"] = "siparislerim";
+$lang["routes-order-detail"] = "siparis-detayi";
+$lang["routes-order-cancel"] = "siparis-iptal-et";

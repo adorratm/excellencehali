@@ -38,7 +38,7 @@ class Payment extends MY_Controller
                 "message" => lang("you_must_login_to_use_the_cart")
             ];
             $this->session->set_flashdata("alert", $alert);
-            redirect(base_url(lang("dealer-login")));
+            redirect(base_url(lang("routes_dealer-login")));
         endif;
         $this->viewData->page_title = clean(strto("lower|ucwords", lang("choose_payment_method")));
         $this->viewData->meta_title = clean(strto("lower|ucwords", lang("choose_payment_method"))) . " - " . $this->viewData->settings->company_name;
@@ -244,7 +244,7 @@ class Payment extends MY_Controller
                                 $this->general_model->insert_batch("order_products", $orderItemDataArray);
                             endif;
                         endforeach;
-                        $order_products = $this->general_model->get_all("order_products", ["order_id" => $order_id]);
+                        $order_products = $this->general_model->get_all("order_products", null, null, ["order_id" => $order_id]);
                         if (!empty($order_products)) :
                             $alert = [
                                 "success" => true,
@@ -255,6 +255,9 @@ class Payment extends MY_Controller
                             /**
                              * Send To User
                              */
+                            $orderData["order_id"] = $order_id;
+                            $this->viewData->order_data = $orderData;
+                            $this->viewData->order_products = $order_products;
                             $this->viewData->subject = $this->viewData->settings->company_name . " - " . lang("your_order_has_been_received");
                             $mailViewData = $this->load->view("includes/mail_template", (array)$this->viewData, true);
                             if (@send_emailv2([$this->viewData->user->email], $this->viewData->subject, $mailViewData)) :
@@ -262,7 +265,7 @@ class Payment extends MY_Controller
                                  * Send To Admin
                                  */
                                 $this->viewData->subject = $this->viewData->settings->company_name . " - " . lang("new_order_has_been_received");
-                                $this->viewData->message = 'Merhaba Sayın Yetkili, "<b>' . $this->viewData->user->full_name . ' (Email: <a href="mailto:' . $this->viewData->user->email . '">' . $this->viewData->user->email . '</a> - Telefon: <a href="tel:' . $this->viewData->user->phone . '">' . $this->viewData->user->phone . '</a>)</b> İsimli Müşteri Websiteniz Üzerinden <b>' . $this->viewData->order->total . " " . $this->viewData->symbol . '</b> Tutarında Sipariş Oluşturdu.';
+                                $this->viewData->message = 'Merhaba Sayın Yetkili, "<b>' . $this->viewData->user->first_name . " " . $this->viewData->user->last_name . ' (Email: <a href="mailto:' . $this->viewData->user->email . '">' . $this->viewData->user->email . '</a> - Telefon: <a href="tel:' . $this->viewData->user->phone . '">' . $this->viewData->user->phone . '</a>)</b> İsimli Müşteri Websiteniz Üzerinden <b>' . $orderData["total"] . " " . $this->viewData->symbol . '</b> Tutarında Sipariş Oluşturdu.';
 
                                 $mailViewData = $this->load->view("includes/mail_template", (array)$this->viewData, true);
                                 @send_emailv2(null, $this->viewData->subject, $mailViewData);
@@ -271,10 +274,10 @@ class Payment extends MY_Controller
                     endif;
                 endif;
             endif;
-            //$this->cart->destroy();
-            //unset($_SESSION["payment_method"]);
-            //unset($_SESSION["choosedAddress"]);
-            //unset($_SESSION["checkout"]);
+            $this->cart->destroy();
+            unset($_SESSION["payment_method"]);
+            unset($_SESSION["choosedAddress"]);
+            unset($_SESSION["checkout"]);
             $this->session->set_flashdata('alert', $alert);
             redirect(base_url(lang("routes_order-success") . "/" . $orderData["order_code"]));
         } catch (Exception $e) {
@@ -282,6 +285,43 @@ class Payment extends MY_Controller
             $this->session->set_flashdata("alert", $alert);
             redirect(base_url(lang("routes_cart")));
         }
+    }
+
+    public function order_success($order_code = null)
+    {
+        if (!get_active_user()) :
+            $alert = [
+                "success" => false,
+                "title" => lang("error"),
+                "message" => lang("you_must_login_to_use_the_cart")
+            ];
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url(lang("routes_dealer-login")));
+        endif;
+        if (!empty($order_code)) :
+            $order = $this->general_model->get("orders", null, ["order_code" => $order_code]);
+            if (empty($order)) :
+                $alert = [
+                    "success" => false,
+                    "title" => lang("error"),
+                    "message" => lang("order_code_not_found")
+                ];
+                $this->session->set_flashdata("alert", $alert);
+                redirect(base_url(lang("routes_cart")));
+            endif;
+        endif;
+        $this->viewData->page_title = clean(strto("lower|ucwords", lang("order_successfully_created")));
+        $this->viewData->meta_title = clean(strto("lower|ucwords", lang("order_successfully_created"))) . " - " . $this->viewData->settings->company_name;
+        $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
+        $this->viewData->order_code = $order_code;
+        $this->viewData->og_url                 = clean(base_url());
+        $this->viewData->og_image           = clean(get_picture("settings_v", $this->viewData->settings->logo));
+        $this->viewData->og_type          = "website";
+        $this->viewData->og_title           = clean(strto("lower|ucwords", lang("order_successfully_created"))) . " - " . $this->viewData->settings->company_name;
+        $this->viewData->og_description           = clean($this->viewData->settings->meta_description);
+        $this->viewFolder = "payment_v/success";
+        $this->render();
+        //$this->output->enable_profiler(TRUE);
     }
 
 

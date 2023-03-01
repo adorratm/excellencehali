@@ -22,7 +22,7 @@
                         <a class="nav-link rounded-0 active" id="pills-account-tab" data-bs-toggle="pill" data-bs-target="#pills-account" type="button" role="tab" aria-controls="pills-account" aria-selected="true" rel="dofollow" title="<?= lang("account") ?>"><i class="fa fa-user-circle me-2"></i> <?= lang("account") ?></a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link rounded-0" id="pills-order-tab" data-bs-toggle="pill" data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order" aria-selected="false" rel="dofollow" title="<?= lang("orders") ?>"><i class="fa fa-boxes-stacked me-2"></i> <?= lang("orders") ?></a>
+                        <a class="nav-link rounded-0" id="pills-order-tab" href="<?=base_url(lang("routes_orders"))?>" type="button" role="tab" aria-controls="pills-order" aria-selected="false" rel="dofollow" title="<?= lang("orders") ?>"><i class="fa fa-boxes-stacked me-2"></i> <?= lang("orders") ?></a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link rounded-0" id="pills-logout-tab" href="<?= base_url(lang("routes_logout")) ?>" type="button" role="button" aria-controls="false" aria-selected="false" rel="dofollow" title="<?= lang("logout") ?>"><i class="fa fa-power-off me-2"></i> <?= lang("logout") ?></a>
@@ -86,9 +86,6 @@
                             </div>
                         </form>
                     </div>
-                    <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab" tabindex="0">
-                        <h3 class="text-center"><?= lang("orders") ?></h3>
-                    </div>
                 </div>
             </div>
         </div>
@@ -99,74 +96,8 @@
 
 <!-- Address Modal -->
 <div id="addressModal"></div>
-<div id="ordersModal"></div>
 
 <script>
     window.addEventListener('DOMContentLoaded', function() {
-        $(document).on("click", ".createAddressBtn", function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            let url = $(this).data("url");
-            $('#addressModal').iziModal('destroy');
-            createModal("#addressModal", "<?= lang("createNewAddress") ?>", "<?= lang("createNewAddress") ?>", 600, true, "20px", 0, "#24b4a5", "#fff", 1040, function() {
-                $.post(url, {
-                    "<?= $this->security->get_csrf_token_name() ?>": "<?= $this->security->get_csrf_hash() ?>"
-                }, function(response) {
-                    $("#addressModal .iziModal-content").html(response);
-                });
-            });
-            openModal("#addressModal");
-        });
-        $(document).on("click", ".editAddressBtn", function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            let url = $(this).data("url");
-            $('#addressModal').iziModal('destroy');
-            createModal("#addressModal", "<?= lang("editAddress") ?>", "<?= lang("editAddress") ?>", 600, true, "20px", 0, "#24b4a5", "#fff", 1040, function() {
-                $.post(url, {
-                    "<?= $this->security->get_csrf_token_name() ?>": "<?= $this->security->get_csrf_hash() ?>"
-                }, function(response) {
-                    $("#addressModal .iziModal-content").html(response);
-
-                });
-            });
-            openModal("#addressModal");
-        });
-        $(document).on('click', '.deleteAddress', function(e) {
-            let url = $(this).data("url");
-            swal.fire({
-                title: '<?= lang("areYouSure") ?>',
-                text: "<?= lang("cannotGetBack") ?>",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: '<?= lang("yesDeleteIt") ?>',
-                cancelButtonText: "<?= lang("noCancelIt") ?>"
-            }).then(function(result) {
-                if (result.value) {
-                    let formData = new FormData();
-                    formData.append("<?= $this->security->get_csrf_token_name() ?>", "<?= $this->security->get_csrf_hash() ?>");
-                    createAjax(url, formData, function() {
-                        $("#addressPull").load("<?= asset_url("home/get_address") ?>");
-                    });
-                }
-            })
-        });
-        $(document).on("click", ".getOrderBtn", function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            $('#ordersModal').iziModal('destroy');
-            let url = $(this).data("url");
-            createModal("#ordersModal", "<?= lang("orderDetail") ?>", "<?= lang("orderDetail") ?>", 600, true, "20px", 0, "#24b4a5", "#fff", 1040, function() {
-                $.post(url, {
-                    "<?= $this->security->get_csrf_token_name() ?>": "<?= $this->security->get_csrf_hash() ?>"
-                }, function(response) {
-                    $("#ordersModal .iziModal-content").html(response);
-                });
-            });
-            openModal("#ordersModal");
-            $("#ordersModal").iziModal("setFullscreen", false);
-        });
     });
 </script>
