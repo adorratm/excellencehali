@@ -153,11 +153,10 @@
     font-size: 18px;
     line-height: 1;
     color: #52586d;
-    display: block;
     position: relative;
 }
 
-.mainMenu ul li.menu-item-has-children>a:after {
+.mainMenu ul li.menu-item-has-children span:after {
     content: '\f107';
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
@@ -243,11 +242,11 @@
     background-image: linear-gradient(to bottom, #9ebbbd 0%, #9ebbbd 98%);
 }
 
-.mainMenu ul li ul li.menu-item-has-children>a:after {
+.mainMenu ul li ul li.menu-item-has-children span {
     display: none;
 }
 
-.mainMenu ul li ul li.menu-item-has-children:after {
+.mainMenu ul li ul li.menu-item-has-children span:after {
     content: '\f105';
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
@@ -261,8 +260,8 @@
     -webkit-transition: all ease 350ms;
 }
 
-.mainMenu ul li ul li.menu-item-has-children:hover:after,
-.mainMenu ul li ul li.menu-item-has-children.active:after {
+.mainMenu ul li ul li.menu-item-has-children:hover span:after,
+.mainMenu ul li ul li.menu-item-has-children.active span:after {
     color: #9ebbbd;
 }
 

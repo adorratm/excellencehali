@@ -755,12 +755,18 @@
     /*--------------------------------------------------------
     /  22. Mobile Menu
     /---------------------------------------------------------*/
-    $('.mainMenu ul li.menu-item-has-children > a').on('click', (e) => {
-        e.preventDefault();
-        if ($(window).width() < 1366) {
-            $(this).siblings('ul, .megaMenu').slideToggle();
-        }
+    $('.mainMenu ul li.menu-item-has-children > a').each(function () {
+        let $this = $(this);
+        $this.after('<span style="cursor:pointer" class="px-2 px-lg-1"></span>');
+        $($this.next()).on('click', (e) => {
+            let $this = $(this);
+            if ($(window).width() < 1366) {
+                $this.parent().find("ul").slideToggle();
+            }
+        });
+
     });
+
     $('.menuToggler').on('click', (e) => {
         e.preventDefault();
         $('.mainMenu').slideToggle();

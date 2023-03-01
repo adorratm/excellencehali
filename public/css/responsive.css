@@ -435,11 +435,11 @@
         line-height: 24px;
     }
 
-    .mainMenu ul li ul li.menu-item-has-children:after {
+    .mainMenu ul li ul li.menu-item-has-children span {
         display: none;
     }
 
-    .mainMenu ul li ul li.menu-item-has-children>a:after {
+    .mainMenu ul li ul li.menu-item-has-children span:after {
         content: '\f107';
         font-family: 'Font Awesome 6 Free';
         font-weight: 900;
