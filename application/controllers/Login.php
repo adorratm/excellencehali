@@ -133,7 +133,7 @@ class Login extends MY_Controller
         $this->form_validation->set_rules("address", lang("address"), "required|trim|min_length[2]|xss_clean");
         $this->form_validation->set_rules("password", lang("password"), "required|trim|min_length[6]|xss_clean");
         $this->form_validation->set_rules("passwordRepeat", lang("passwordRepeat"), "required|trim|min_length[6]|matches[password]|xss_clean");
-        $this->form_validation->set_message(["required"  => lang("required"), "valid_email" => lang("valid_email"), "min_length" => lang("min_length"), "matches" => lang("matches"),"is_unique" => lang("is_unique")]);
+        $this->form_validation->set_message(["required"  => lang("required"), "valid_email" => lang("valid_email"), "min_length" => lang("min_length"), "matches" => lang("matches"), "is_unique" => lang("is_unique")]);
         $this->form_validation->set_error_delimiters('', ',');
         $alert = [
             "title" => lang("error"),
@@ -169,6 +169,12 @@ class Login extends MY_Controller
             unset($data[$this->security->get_csrf_token_name()]);
             if ($this->general_model->add("users", $data)) :
                 $alert = ["success" => true, "title" => lang("success"), "message" => lang("registerSuccessfully")];
+                $addressData = $data;
+                $addressData["title"] = lang("default_address");
+                unset($addressData["token"]);
+                unset($addressData["password"]);
+                $addressData["isActive"] = 1;
+                $this->general_model->add("user_addresses", $addressData);
                 $activationLink = "<a href='" . base_url(lang("routes_activation") . "/?email=" . $data["email"] . "&phone=" . $data["phone"] . "&token=" . $data["token"]) . "' rel='dofollow' target='_blank'>" . lang("activationLinkText") . "</a>";
                 $message = lang("registerEmailMessage") . $activationLink . "<hr>" . $registeredEmailMessage;
                 $message = $this->load->view("includes/simple_mail_template", ["settings" => get_settings(), "subject" => $this->viewData->settings->company_name . " " . lang("registerMailTitle"), "message" => $message, "lang" => $this->viewData->lang], true);

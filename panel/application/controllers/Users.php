@@ -87,6 +87,11 @@ class Users extends MY_Controller
             $data["password"] = mb_substr(sha1(md5($data["password"])), 0, 32, "utf-8");
             $insert = $this->user_model->add($data);
             if ($insert) :
+                $addressData = $data;
+                $addressData["title"] = lang("default_address");
+                unset($addressData["password"]);
+                unset($addressData["role_id"]);
+                $this->general_model->add("user_addresses", $addressData);
                 echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Kullanıcı Başarıyla Eklendi."]);
             else :
                 echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Kullanıcı Eklenirken Hata Oluştu, Lütfen Tekrar Deneyin."]);

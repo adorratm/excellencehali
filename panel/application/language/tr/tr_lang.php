@@ -120,6 +120,9 @@ $lang["Siparişiniz İptal Edildi."] = "Siparişiniz İptal Edildi.";
 $lang["loginFirst"] = "Lütfen Önce Giriş Yapınız.";
 $lang["order_cannot_be_canceled"] = "Siparişiniz İptal Edilemez.";
 $lang["order_canceled"] = "Sipariş İptali";
+$lang["order_updated"] = "Sipariş Güncellendi";
+$lang["order_update"] = "Sipariş Durumu Hakkında Güncelleme";
+$lang["default_address"] = "Varsayılan Adres";
 // #CART
 
 $lang["shareProduct"] = "Ürünü Paylaş";

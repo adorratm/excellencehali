@@ -7,9 +7,9 @@ class Order_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
-        $this->column_order = array('orders.id', 'users.first_name', 'users.last_name', 'users.email', 'orders.phone', 'orders.total', 'orders.status', 'orders.paymentType', 'orders.shippingStatus', 'orders.isActive', 'orders.createdAt', 'orders.updatedAt');
+        $this->column_order = array('orders.id', 'orders.first_name', 'orders.last_name', 'orders.company_name', 'orders.email', 'orders.phone', 'orders.total', 'orders.status', 'orders.createdAt', 'orders.updatedAt');
         // Set searchable column fields
-        $this->column_search = array('orders.id', 'users.first_name', 'users.last_name', 'users.email', 'orders.phone', 'orders.total', 'orders.status', 'orders.paymentType', 'orders.shippingStatus', 'orders.isActive', 'orders.createdAt', 'orders.updatedAt');
+        $this->column_search = array('orders.id', 'orders.first_name', 'orders.last_name', 'orders.company_name', 'orders.email', 'orders.phone', 'orders.total', 'orders.status', 'orders.createdAt', 'orders.updatedAt');
         // Set default order
         $this->order = array('orders.id' => 'DESC');
     }
@@ -49,18 +49,16 @@ class Order_model extends CI_Model
         $this->db->where(["orders.id!=" => null]);
         $this->db->select('
         orders.id id,
-		users.first_name first_name,
-		users.last_name last_name,
-        users.email email,
+		orders.first_name first_name,
+		orders.last_name last_name,
+        orders.company_name company_name,
+        orders.email email,
 		orders.phone phone,
         orders.total total,
         orders.status status,
-        orders.paymentType,
-        orders.shippingStatus,
-		orders.isActive isActive,
+        orders.statusMessage statusMessage,
 		orders.createdAt createdAt,
         orders.updatedAt updatedAt',    false);
-        $this->db->join("users", "users.id = orders.user_id", "left");
         $this->db->from($this->tableName);
         $i = 0;
         // loop searchable columns

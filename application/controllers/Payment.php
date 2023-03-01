@@ -172,6 +172,7 @@ class Payment extends MY_Controller
                 if (!empty($address)) :
                     $orderData["user_id"] = @get_active_user()->id;
                     $orderData["address_title"] = $address->title;
+                    $orderData["email"] = get_active_user()->email;
                     $orderData["first_name"] = $address->first_name;
                     $orderData["last_name"] = $address->last_name;
                     $orderData["phone"] = $address->phone;
