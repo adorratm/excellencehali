@@ -17,7 +17,7 @@ class Cronjob extends MY_Controller
         parent::__construct();
         set_time_limit(0);
         ini_set('memory_limit', '-1');
-        $this->codesConnections = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
+        $this->codesConnections = [];
     }
     /**
      * ---------------------------------------------------------------------------------------------
@@ -35,6 +35,8 @@ class Cronjob extends MY_Controller
      */
     public function index()
     {
+        codesLogin();
+        $this->codesConnections = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
         $responseArr = [];
         $responseStock = $this->getStocks();
         $responseArr["stocks"] = json_decode($responseStock);
@@ -197,7 +199,8 @@ class Cronjob extends MY_Controller
                                 'stock' => clean($returnValue->stok) ?? NULL,
                                 'isActive' => clean($returnValue->Durum) == 1 ? 1 : 0,
                                 'rank' => $rank,
-                                'codes' => clean($codesConnectionsValue->id) ?? NULL
+                                'codes' => clean($codesConnectionsValue->id) ?? NULL,
+                                'dimension_type' => @str_contains(clean($returnValue->Ozelkod4),"XR") ? "ROLL" : "METER",
                             ]);
                             $rank++;
                         }

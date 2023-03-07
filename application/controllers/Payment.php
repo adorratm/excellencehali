@@ -143,7 +143,6 @@ class Payment extends MY_Controller
             /**
              * Stock Checker
              */
-            /*
             foreach ($this->cart->contents() as $cartKey => $cartProduct) :
                 if (!empty($cartProduct["id"]) && !empty($cartProduct["options"]["codes"])) :
                     $stock = @json_decode(getStock($cartProduct["id"], $cartProduct["options"]["codes"]))->data;
@@ -165,7 +164,7 @@ class Payment extends MY_Controller
                     endif;
                 endif;
             endforeach;
-            */
+            
             $orderData = [];
             if ($this->session->userdata("payment_method") == 1) :
                 $address = $this->general_model->get("user_addresses", null, ["user_id" => get_active_user()->id, "id" => $this->session->userdata("choosedAddress")]);
@@ -191,13 +190,12 @@ class Payment extends MY_Controller
                     /**
                      * Stock Checker
                      */
-                    /*
                     if(empty($orderData["codes"])):
                         $alert["message"] = lang("codes_not_found");
                         $this->session->set_flashdata("alert", $alert);
                         redirect(base_url(lang("routes_cart")));
                     endif;
-                    */
+
                     $order_id = $this->general_model->add("orders", $orderData);
                     if (!empty($order_id)) :
                         foreach ($this->cart->contents() as $cartKey => $cartValue) :

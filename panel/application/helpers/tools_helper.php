@@ -937,3 +937,17 @@ function curl_request($url = null, $port = null, $endpoint = null, $data = [], $
 
     return $result;
 }
+
+function codesLogin()
+{
+    $t = &get_instance();
+    $codesConnections = $t->general_model->get_all("codes", null, null, ["isActive" => 1, "lang" => "tr"]);
+    if (!empty($codesConnections)) {
+        foreach ($codesConnections as $codesConnectionKey => $codesConnection) :
+            $data = @curl_request($codesConnection->host, $codesConnection->port, "login", ["email" => $codesConnection->email, "password" => $codesConnection->password], ['Content-Type: application/json', 'Accept: application/json']);
+            if (!empty($data)) {
+                $t->general_model->update("codes", ["id" => $codesConnection->id], ["token" => $data->message]);
+            }
+        endforeach;
+    }
+}

@@ -123,6 +123,7 @@ $lang["order_canceled"] = "Sipariş İptali";
 $lang["order_updated"] = "Sipariş Güncellendi";
 $lang["order_update"] = "Sipariş Durumu Hakkında Güncelleme";
 $lang["default_address"] = "Varsayılan Adres";
+$lang["height"] = "Boy (cm)";
 // #CART
 
 $lang["shareProduct"] = "Ürünü Paylaş";

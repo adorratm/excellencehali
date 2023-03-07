@@ -855,6 +855,9 @@ function in_parent($in_parent = null, $position = null, $lang = null, $store_all
         $result = $t->general_model->get_all("menus", "url,title,id,top_id,page_id,target,showCollections", "rank ASC", ["position" => $position, "top_id" => $in_parent, "isActive" => 1, "lang" => $lang]);
         $html .=  '<ul ' . ($position == "HEADER" && $in_parent == 0 ? null : null) . '>';
         foreach ($result as $key => $value) :
+            if ($value->showCollections) :
+                $product_collections = $t->general_model->get_all("product_collections", "title,seo_url,id,codes", "rank ASC", ["isActive" => 1, "lang" => $lang]);
+            endif;
             $page = $t->general_model->get("pages", "url,title", ["isActive" => 1, "id" => $value->page_id, "lang" => $lang]);
             if ($value->page_id !== 0) :
                 if (!empty($page)) :
@@ -865,7 +868,7 @@ function in_parent($in_parent = null, $position = null, $lang = null, $store_all
             if (!empty($value->url)) :
                 $value->url = (!empty($value->url) ? $value->url : null);
             endif;
-            $html .= '<li ' . (($position == "HEADER") && (in_array($value->id, $store_all_id)) ? ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) || ($t->uri->segment(2) === null && $value->url === '/' || $value->showCollections) ? "class='menu-item-has-children active'" : "class='menu-item-has-children'") : ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || ($t->uri->segment(2) === null && $value->url === '/') || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) ? ($value->showCollections ? "class='menu-item-has-children'" : null) : ($value->showCollections ? "class='menu-item-has-children'" : null))) . '>';
+            $html .= '<li ' . (($position == "HEADER") && (in_array($value->id, $store_all_id)) ? ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) || ($t->uri->segment(2) === null && $value->url === '/' || ($value->showCollections && !empty($product_collections))) ? "class='menu-item-has-children active'" : "class='menu-item-has-children'") : ((!empty($page->url) && ($t->uri->segment(2) == strto("lower", seo($page->url)) || $t->uri->segment(3) == strto("lower", seo($page->url)))) || ($t->uri->segment(2) === null && $value->url === '/') || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($value->title)) ? ($value->showCollections && !empty($product_collections) ? "class='menu-item-has-children'" : null) : ($value->showCollections && !empty($product_collections) ? "class='menu-item-has-children'" : null))) . '>';
             if (empty($value->url)) :
 
                 if (!empty($page->url)) :
@@ -886,16 +889,13 @@ function in_parent($in_parent = null, $position = null, $lang = null, $store_all
                     array_push($t->viewData->page_urls, base_url($value->url));
                 endif;
             endif;
-            if ($value->showCollections) :
+            if (!empty($product_collections)) :
                 $html .= "<ul>";
-                $product_collections = $t->general_model->get_all("product_collections", "title,seo_url,id,codes", "rank ASC", ["isActive" => 1, "lang" => $lang]);
-                if (!empty($product_collections)) :
-                    foreach ($product_collections as $pcKey => $pcValue) :
-                        $html .= '<li>';
-                        $html .= '<a rel="dofollow" ' . (($position == "MOBILE" || $position == "HEADER") && in_array($pcValue->id, $store_all_id) ? ((!empty($pcValue->seo_url) && ($t->uri->segment(2) == strto("lower", seo($pcValue->seo_url)) || $t->uri->segment(3) == strto("lower", seo($pcValue->seo_url)))) || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($pcValue->title)) || ($t->uri->segment(2) === null && $pcValue->seo_url === '/') ? "class='active'" : "class=''") : ((!empty($pcValue->seo_url) && ($t->uri->segment(2) == strto("lower", seo($pcValue->seo_url)) || $t->uri->segment(3) == strto("lower", seo($pcValue->seo_url)))) || ($t->uri->segment(2) === null && $pcValue->seo_url === '/') || $t->uri->segment(2) == strto("lower", seo($pcValue->title)) || $t->uri->segment(3) == strto("lower", seo($pcValue->title)) ? "class='active'" : "class=''")) . ' href="' . base_url(lang("routes_product-collections") . "/" .$pcValue->codes."/". $pcValue->seo_url) . '" target="' . $value->target . '" title="' . $pcValue->title . '">' . strto("lower|ucwords", $pcValue->title) . '</a>';
-                        $html .= '</li>';
-                    endforeach;
-                endif;
+                foreach ($product_collections as $pcKey => $pcValue) :
+                    $html .= '<li>';
+                    $html .= '<a rel="dofollow" ' . (($position == "MOBILE" || $position == "HEADER") && in_array($pcValue->id, $store_all_id) ? ((!empty($pcValue->seo_url) && ($t->uri->segment(2) == strto("lower", seo($pcValue->seo_url)) || $t->uri->segment(3) == strto("lower", seo($pcValue->seo_url)))) || $t->uri->segment(2) == strto("lower", seo($value->title)) || $t->uri->segment(3) == strto("lower", seo($pcValue->title)) || ($t->uri->segment(2) === null && $pcValue->seo_url === '/') ? "class='active'" : "class=''") : ((!empty($pcValue->seo_url) && ($t->uri->segment(2) == strto("lower", seo($pcValue->seo_url)) || $t->uri->segment(3) == strto("lower", seo($pcValue->seo_url)))) || ($t->uri->segment(2) === null && $pcValue->seo_url === '/') || $t->uri->segment(2) == strto("lower", seo($pcValue->title)) || $t->uri->segment(3) == strto("lower", seo($pcValue->title)) ? "class='active'" : "class=''")) . ' href="' . base_url(lang("routes_product-collections") . "/" . $pcValue->codes . "/" . $pcValue->seo_url) . '" target="' . $value->target . '" title="' . $pcValue->title . '">' . strto("lower|ucwords", $pcValue->title) . '</a>';
+                    $html .= '</li>';
+                endforeach;
                 $html .= "</ul>";
             endif;
             $html .= in_parent($value->id, $position, $lang, $store_all_id);
@@ -1009,13 +1009,24 @@ function curl_request($url = null, $port = null, $endpoint = null, $data = [], $
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
     /* Make Request */
     $result = json_decode(curl_exec($curl));
-
     /* Close Curl */
     curl_close($curl);
-
     return $result;
 }
 
+function codesLogin()
+{
+    $t = &get_instance();
+    $codesConnections = $t->general_model->get_all("codes", null, null, ["isActive" => 1, "lang" => "tr"]);
+    if (!empty($codesConnections)) {
+        foreach ($codesConnections as $codesConnectionKey => $codesConnection) :
+            $data = @curl_request($codesConnection->host, $codesConnection->port, "login", ["email" => $codesConnection->email, "password" => $codesConnection->password], ['Content-Type: application/json', 'Accept: application/json']);
+            if (!empty($data)) {
+                $t->general_model->update("codes", ["id" => $codesConnection->id], ["token" => $data->message]);
+            }
+        endforeach;
+    }
+}
 
 function getStock($codes_id = null, $codes = null, $lang = "tr")
 {

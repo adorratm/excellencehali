@@ -138,7 +138,7 @@ class Cart extends MY_Controller
             $groupBy = ["p.codes_id"];
             $product = $this->general_model->get("products p", $select, $wheres, $joins, [], [], $distinct, $groupBy);
             if (!empty($product)) :
-                $price = ($product->discounted_price ? $product->discounted_price : $product->price);
+                $price = ($product->discounted_price ? $product->discounted_price : $product->price) ?? 0;
                 $cartData = ["id" => $product->codes_id, "qty" => $data["quantity"], "price" => $price, "name" => clean(stripslashes(trim($product->title))), "options" => ["codes" => $product->codes]];
                 $rowid = null;
                 if (!empty($this->cart->contents())) :
@@ -149,12 +149,12 @@ class Cart extends MY_Controller
                         endif;
                     endforeach;
                 endif;
-                if (!empty($this->cart->get_item($rowid)["qty"]) && !empty($cartData["qty"]) && (float)$cartData["qty"] > 0 && !empty($product->stock) && (float)$product->stock > 0 && (float)$cartData["qty"] <= (float)$product->stock && !empty($cartData["price"]) && $cartData["price"] > 0) :
+                if (!empty($this->cart->get_item($rowid)["qty"]) && !empty($cartData["qty"]) && (float)$cartData["qty"] > 0 && !empty($product->stock) && (float)$product->stock > 0 && (float)$cartData["qty"] <= (float)$product->stock) : // && !empty($cartData["price"]) && $cartData["price"] > 0
                     $cartData["rowid"] = $rowid;
                     $this->cart->update($cartData);
                     $alert = ["success" => true, "title" => lang("success"), "message" => lang("cartItemUpdated")];
                 endif;
-                if (empty($this->cart->get_item($rowid)["qty"]) && !empty($cartData["qty"]) && (float)$cartData["qty"] > 0 && !empty($product->stock) && (float)$product->stock > 0 && (float)$cartData["qty"] <= (float)$product->stock && !empty($cartData["price"]) && $cartData["price"] > 0) :
+                if (empty($this->cart->get_item($rowid)["qty"]) && !empty($cartData["qty"]) && (float)$cartData["qty"] > 0 && !empty($product->stock) && (float)$product->stock > 0 && (float)$cartData["qty"] <= (float)$product->stock) : // && !empty($cartData["price"]) && $cartData["price"] > 0
                     $this->cart->insert($cartData);
                     $alert = ["success" => true, "title" => lang("success"), "message" => lang("itemAddedToCart")];
                 endif;
@@ -208,11 +208,11 @@ class Cart extends MY_Controller
             $groupBy = ["p.codes_id"];
             $product = $this->general_model->get("products p", $select, $wheres, $joins, [], [], $distinct, $groupBy);
             if (!empty($product)) :
-                $price = ($product->discounted_price ? $product->discounted_price : $product->price);
+                $price = ($product->discounted_price ? $product->discounted_price : $product->price) ?? 0;
                 $cartData = ["id" => $product->codes_id, "qty" => $data["quantity"], "price" => $price, "name" => clean(stripslashes(trim($product->title))), "options" => ["codes" => $product->codes]];
                 $cartData["qty"] = $data["quantity"];
 
-                if (!empty($this->cart->get_item($data["rowid"])["qty"]) && !empty($cartData["qty"]) && (float)$cartData["qty"] > 0 && !empty($product->stock) && (float)$product->stock > 0 && (float)$cartData["qty"] <= (float)$product->stock && !empty($cartData["price"]) && $cartData["price"] > 0) :
+                if (!empty($this->cart->get_item($data["rowid"])["qty"]) && !empty($cartData["qty"]) && (float)$cartData["qty"] > 0 && !empty($product->stock) && (float)$product->stock > 0 && (float)$cartData["qty"] <= (float)$product->stock) : // && !empty($cartData["price"]) && $cartData["price"] > 0
                     $cartData["rowid"] = $data["rowid"];
                     $this->cart->update($cartData);
                     $alert = ["success" => true, "title" => lang("success"), "message" => lang("cartItemUpdated")];

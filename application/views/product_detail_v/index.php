@@ -144,8 +144,20 @@
                         </div>
                     </div>
                     <?php if (get_active_user()) : ?>
+                        <?php if ($product->dimension_type == "ROLL") : ?>
+                            <div class="pcVariation align-items-center align-self-center align-content-center pcv2">
+                                <span><?= lang("height") ?> : </span>
+                                <div class="pcvContainer ms-2">
+                                    <div class="pswItem">
+                                        <input type="number" class="input-text text form-control" name="height" placeholder="<?= lang("height") ?>">
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif ?>
                         <div class="pcBtns align-items-center align-self-center align-content-center">
-                            <?php if (!empty($product->stock) && ($product->price > 0 || $product->discounted_price > 0)) : ?>
+
+                            <?php if (!empty($product->stock)) : //  && ($product->price > 0 || $product->discounted_price > 0) 
+                            ?>
                                 <div class="quantity clearfix">
                                     <button type="button" class="qtyBtn btnMinus"><i class="fa fa-minus"></i></button>
                                     <input type="number" class="carqty input-text qty text" name="quantity" min="1" value="1" max="<?= $product->stock ?>">
@@ -157,7 +169,8 @@
                                     <span><?= lang("availableStock") ?> :</span> <b class="<?= !empty($product->stock) && $product->stock > 15 ? "text-dark" : "text-danger" ?> "><?= !empty($product->stock) ? $product->stock : lang("outOfStock") ?></b>
                                 </div>
                             </div>
-                            <?php if (!empty($product->stock) && ($product->price > 0 || $product->discounted_price > 0)) : ?>
+                            <?php if (!empty($product->stock)) : // && ($product->price > 0 || $product->discounted_price > 0) 
+                            ?>
                                 <button type="button" class="ulinaBTN addToCart" data-quantity="1" data-codes-id="<?= $product->codes_id ?>" data-codes="<?= $product->codes ?>"><span><?= lang("addToCart") ?></span></button>
                             <?php endif ?>
                         </div>

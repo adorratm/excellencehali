@@ -421,8 +421,8 @@ class Home extends MY_Controller
                 xml_add_child($item, 'g:brand', strto("lower|ucwords", stripslashes($settings->company_name)));
                 xml_add_child($item, 'g:condition', 'new');
                 xml_add_child($item, 'g:availability', ($prod->stock > 0 ? 'in stock' : 'out of stock'));
-                xml_add_child($item, 'g:price', @number_format($prod->newPrice, 2) . ' ' . $this->viewData->currency);
-                xml_add_child($item, 'g:sale_price', @number_format($prod->discountedPrice, 2) . ' ' . $this->viewData->currency);
+                xml_add_child($item, 'g:price', @number_format($prod->price, 2) . ' ' . $this->viewData->currency);
+                xml_add_child($item, 'g:sale_price', @number_format($prod->discounted_price, 2) . ' ' . $this->viewData->currency);
                 xml_add_child($item, 'g:mpn', $gtin);
                 xml_add_child($item, 'g:identifier_exists', "no");
                 $shipping = xml_add_child($item, 'g:shipping');

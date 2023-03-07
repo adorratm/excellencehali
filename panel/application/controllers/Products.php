@@ -239,9 +239,9 @@ class Products extends MY_Controller
     public function getStocks()
     {
         set_time_limit(0);
-        ini_set('memory_limit', '-1');
+        ini_set('memory_limit', '-1'); 
+        codesLogin();
         $codesConnections = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
-
         if (!empty($codesConnections)) {
             $rank = 1;
             foreach ($codesConnections as $codesConnectionsKey => $codesConnectionsValue) {
@@ -270,7 +270,8 @@ class Products extends MY_Controller
                             'stock' => clean($returnValue->stok) ?? NULL,
                             'isActive' => clean($returnValue->Durum) == 1 ? 1 : 0,
                             'rank' => $rank,
-                            'codes' => clean($codesConnectionsValue->id) ?? NULL
+                            'codes' => clean($codesConnectionsValue->id) ?? NULL,
+                            'dimension_type' => @str_contains(clean($returnValue->Ozelkod4),"XR") ? "ROLL" : "METER",
                         ]);
                         $rank++;
                     }
