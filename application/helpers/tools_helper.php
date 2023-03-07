@@ -889,7 +889,7 @@ function in_parent($in_parent = null, $position = null, $lang = null, $store_all
                     array_push($t->viewData->page_urls, base_url($value->url));
                 endif;
             endif;
-            if (!empty($product_collections)) :
+            if (!empty($product_collections) && $value->showCollections) :
                 $html .= "<ul>";
                 foreach ($product_collections as $pcKey => $pcValue) :
                     $html .= '<li>';
