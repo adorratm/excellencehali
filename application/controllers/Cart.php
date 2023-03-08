@@ -133,28 +133,30 @@ class Cart extends MY_Controller
             $wheres["p.stock>="]  = 1;
             $joins = ["product_details pd" => ["pd.codes = p.codes_id AND pd.codes = p.codes", "left"], "product_collections pc" => ["p.collection_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
 
-            $select = "p.vat,p.stock,p.codes_id,p.codes,p.price,p.discounted_price,p.id,p.title,p.seo_url,pi.url img_url,p.isActive";
+            $select = "p.dimension_type,p.dimension,p.vat,p.stock,p.codes_id,p.codes,p.price,p.discounted_price,p.id,p.title,p.seo_url,pi.url img_url,p.isActive";
             $distinct = true;
             $groupBy = ["p.codes_id"];
             $product = $this->general_model->get("products p", $select, $wheres, $joins, [], [], $distinct, $groupBy);
             if (!empty($product)) :
+                $dimension = @floatval(@str_replace("XR", "", $product->dimension));
+                $maxStock =  ($product->dimension_type == "ROLL" ? @floatval(($product->stock / ((($dimension / 100) * ($data["height"] ?? 1))))) : $product->stock);
                 $price = ($product->discounted_price ? $product->discounted_price : $product->price) ?? 0;
-                $cartData = ["id" => $product->codes_id, "qty" => $data["quantity"], "price" => $price, "name" => clean(stripslashes(trim($product->title))), "options" => ["codes" => $product->codes]];
+                $cartData = ["id" => $product->codes_id, "qty" => $data["quantity"], "price" => $price, "name" => clean(stripslashes(trim($product->title))), "options" => ["codes" => $product->codes, "height" => (@$data["height"] ?? NULL), "order_note" => (@$data["order_note"] ?? NULL)]];
                 $rowid = null;
                 if (!empty($this->cart->contents())) :
                     foreach ($this->cart->contents() as $itemKey => $itemValue) :
-                        if ($itemValue["id"] == $product->codes_id && $itemValue["options"]["codes"] == $product->codes) :
+                        if ($itemValue["id"] == $product->codes_id && $itemValue["options"]["codes"] == $product->codes && $itemValue["options"]["height"] == @$data["height"]) :
                             $cartData["qty"] = $data["quantity"] + $itemValue["qty"];
                             $rowid = $itemValue["rowid"];
                         endif;
                     endforeach;
                 endif;
-                if (!empty($this->cart->get_item($rowid)["qty"]) && !empty($cartData["qty"]) && (float)$cartData["qty"] > 0 && !empty($product->stock) && (float)$product->stock > 0 && (float)$cartData["qty"] <= (float)$product->stock) : // && !empty($cartData["price"]) && $cartData["price"] > 0
+                if (!empty($this->cart->get_item($rowid)["qty"]) && !empty($cartData["qty"]) && (float)$cartData["qty"] > 0 && !empty($maxStock) && (float)$maxStock > 0 && (float)$cartData["qty"] <= (float)$maxStock) : // && !empty($cartData["price"]) && $cartData["price"] > 0
                     $cartData["rowid"] = $rowid;
                     $this->cart->update($cartData);
                     $alert = ["success" => true, "title" => lang("success"), "message" => lang("cartItemUpdated")];
                 endif;
-                if (empty($this->cart->get_item($rowid)["qty"]) && !empty($cartData["qty"]) && (float)$cartData["qty"] > 0 && !empty($product->stock) && (float)$product->stock > 0 && (float)$cartData["qty"] <= (float)$product->stock) : // && !empty($cartData["price"]) && $cartData["price"] > 0
+                if (empty($this->cart->get_item($rowid)["qty"]) && !empty($cartData["qty"]) && (float)$cartData["qty"] > 0 && !empty($maxStock) && (float)$maxStock > 0 && (float)$cartData["qty"] <= (float)$maxStock) : // && !empty($cartData["price"]) && $cartData["price"] > 0
                     $this->cart->insert($cartData);
                     $alert = ["success" => true, "title" => lang("success"), "message" => lang("itemAddedToCart")];
                 endif;
@@ -203,16 +205,18 @@ class Cart extends MY_Controller
             $wheres["p.stock>="]  = 1;
             $joins = ["product_details pd" => ["pd.codes = p.codes_id AND pd.codes = p.codes", "left"], "product_collections pc" => ["p.collection_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
 
-            $select = "p.vat,p.stock,p.codes_id,p.codes,p.price,p.discounted_price,p.id,p.title,p.seo_url,pi.url img_url,p.isActive";
+            $select = "p.dimension_type,p.dimension,p.vat,p.stock,p.codes_id,p.codes,p.price,p.discounted_price,p.id,p.title,p.seo_url,pi.url img_url,p.isActive";
             $distinct = true;
             $groupBy = ["p.codes_id"];
             $product = $this->general_model->get("products p", $select, $wheres, $joins, [], [], $distinct, $groupBy);
             if (!empty($product)) :
+                $dimension = @floatval(@str_replace("XR", "", $product->dimension));
+                $maxStock =  ($product->dimension_type == "ROLL" ? @floatval(($product->stock / ((($dimension / 100) * ($cartData["options"]["height"] ?? 1))))) : $product->stock);
                 $price = ($product->discounted_price ? $product->discounted_price : $product->price) ?? 0;
-                $cartData = ["id" => $product->codes_id, "qty" => $data["quantity"], "price" => $price, "name" => clean(stripslashes(trim($product->title))), "options" => ["codes" => $product->codes]];
+                $cartData = ["id" => $product->codes_id, "qty" => $data["quantity"], "price" => $price, "name" => clean(stripslashes(trim($product->title))), "options" => ["codes" => $product->codes, "height" => (@$cartData["options"]["height"] ?? NULL), "order_note" => (@$cartData["options"]["order_note"] ?? NULL)]];
                 $cartData["qty"] = $data["quantity"];
 
-                if (!empty($this->cart->get_item($data["rowid"])["qty"]) && !empty($cartData["qty"]) && (float)$cartData["qty"] > 0 && !empty($product->stock) && (float)$product->stock > 0 && (float)$cartData["qty"] <= (float)$product->stock) : // && !empty($cartData["price"]) && $cartData["price"] > 0
+                if (!empty($this->cart->get_item($data["rowid"])["qty"]) && !empty($cartData["qty"]) && (float)$cartData["qty"] > 0 && !empty($maxStock) && (float)$maxStock > 0 && (float)$cartData["qty"] <= (float)$maxStock) : // && !empty($cartData["price"]) && $cartData["price"] > 0
                     $cartData["rowid"] = $data["rowid"];
                     $this->cart->update($cartData);
                     $alert = ["success" => true, "title" => lang("success"), "message" => lang("cartItemUpdated")];

@@ -1,4 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<?php $dimension = ($product->dimension_type == "ROLL" ? @floatval(@str_replace("XR", "", $product->dimension)) : $product->dimension); ?>
+<?php $maxStock =  ($product->dimension_type == "ROLL" ? @floatval(($product->stock / ((($dimension / 100) * 1)))) : $product->stock); ?>
 <!-- BEGIN: Page Banner Section -->
 <section class="pageBannerSection" style="background-image: url(<?= get_picture("settings_v", $settings->product_detail_logo) ?>);">
     <div class="container">
@@ -82,19 +84,20 @@
                     <?php endif ?>
                     <h2><?= $product->title ?></h2>
                     <?php if (get_active_user()) : ?>
-                        <div class="pi01Price">
-                            <?php if (!empty($product->price) || !empty($product->discounted_price)) : ?>
+                        <?php if (!empty($product->price) || !empty($product->discounted_price)) : ?>
+                            <div class="pi01Price">
                                 <ins><?= !empty($product->discounted_price) ? $product->discounted_price : $product->price ?> <?= $symbol ?></ins>
-                            <?php endif ?>
-                            <?php if (!empty($product->discounted_price) && $product->discounted_price > 0) : ?>
-                                <del><?= $product->price ?> <?= $symbol ?></del>
-                            <?php endif ?>
+                                <?php if (!empty($product->discounted_price) && $product->discounted_price > 0) : ?>
+                                    <del><?= $product->price ?> <?= $symbol ?></del>
+                                <?php endif ?>
+                            </div>
+                        <?php endif ?>
+                    <?php endif ?>
+                    <?php if (!empty(clean($product->content))) : ?>
+                        <div class="pcExcerpt">
+                            <?= $product->content ?>
                         </div>
                     <?php endif ?>
-
-                    <div class="pcExcerpt">
-                        <?= $product->content ?>
-                    </div>
                     <div class="pcVariations">
                         <div class="pcVariation align-items-center align-self-center align-content-center pcv2">
                             <span><?= lang("productCollection") ?> : </span>
@@ -149,27 +152,35 @@
                                 <span><?= lang("height") ?> : </span>
                                 <div class="pcvContainer ms-2">
                                     <div class="pswItem">
-                                        <input type="number" class="input-text text form-control" name="height" placeholder="<?= lang("height") ?>">
+                                        <input type="number" class="input-text text form-control" name="height" placeholder="<?= lang("height") ?>" value="1" min="1">
                                     </div>
                                 </div>
                             </div>
                         <?php endif ?>
+                        <div class="pcVariation pcv2 flex-column">
+                            <span><?= lang("orderNote") ?> : </span>
+                            <div class="pcvContainer">
+                                <div class="pswItem">
+                                    <textarea rows="5" cols="30" class="input-text text form-control" name="orderNote" placeholder="<?= lang("orderNoteDetail") ?>"></textarea>
+                                </div>
+                            </div>
+                        </div>
                         <div class="pcBtns align-items-center align-self-center align-content-center">
 
-                            <?php if (!empty($product->stock)) : //  && ($product->price > 0 || $product->discounted_price > 0) 
+                            <?php if (!empty($maxStock)) : //  && ($product->price > 0 || $product->discounted_price > 0) 
                             ?>
                                 <div class="quantity clearfix">
                                     <button type="button" class="qtyBtn btnMinus"><i class="fa fa-minus"></i></button>
-                                    <input type="number" class="carqty input-text qty text" name="quantity" min="1" value="1" max="<?= $product->stock ?>">
-                                    <button type="button" class="qtyBtn btnPlus" data-max="<?= $product->stock ?>"><i class="fa fa-plus"></i></button>
+                                    <input type="number" class="carqty input-text qty text" name="quantity" min="1" value="1" max="<?= $maxStock ?>">
+                                    <button type="button" class="qtyBtn btnPlus" data-max="<?= $maxStock ?>"><i class="fa fa-plus"></i></button>
                                 </div>
                             <?php endif ?>
                             <div class="productRadingsStock clearfix mb-0 me-3">
                                 <div class="productStock float-start">
-                                    <span><?= lang("availableStock") ?> :</span> <b class="<?= !empty($product->stock) && $product->stock > 15 ? "text-dark" : "text-danger" ?> "><?= !empty($product->stock) ? $product->stock : lang("outOfStock") ?></b>
+                                    <span><?= lang("availableStock") ?> :</span> <b class="<?= !empty($maxStock) && $maxStock > 15 ? "text-dark" : "text-danger" ?> "><?= !empty($product->stock) ? $product->stock . ($product->dimension_type == "ROLL" ? " m<sup>2</sup>" : NULL) : lang("outOfStock") ?></b>
                                 </div>
                             </div>
-                            <?php if (!empty($product->stock)) : // && ($product->price > 0 || $product->discounted_price > 0) 
+                            <?php if (!empty($maxStock)) : // && ($product->price > 0 || $product->discounted_price > 0) 
                             ?>
                                 <button type="button" class="ulinaBTN addToCart" data-quantity="1" data-codes-id="<?= $product->codes_id ?>" data-codes="<?= $product->codes ?>"><span><?= lang("addToCart") ?></span></button>
                             <?php endif ?>
@@ -291,10 +302,14 @@
             let codes_id = $this.data("codes-id");
             let codes = $this.data("codes");
             let quantity = $this.data("quantity");
+            let height = $("input[name='height']").val() ?? NULL;
+            let orderNote = $("textarea[name='orderNote']").val() ?? NULL;
             $.post('<?= base_url(lang("routes_cart") . "/" . lang("routes_add-to-cart")) ?>', {
                 "codes_id": codes_id,
                 "codes": codes,
                 "quantity": quantity,
+                "height": height,
+                "order_note": orderNote,
                 "<?= $this->security->get_csrf_token_name() ?>": "<?= $this->security->get_csrf_hash() ?>",
             }, function(response) {
                 if (response.success) {

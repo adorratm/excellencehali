@@ -36,6 +36,7 @@
 					<th>Desen</th>
 					<th>Renk</th>
 					<th>Ebat</th>
+					<th>Stok</th>
 					<th>Codes Sunucusu</th>
 					<th>Durumu</th>
 					<th>Güncelleme Tarihi</th>

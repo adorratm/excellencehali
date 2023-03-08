@@ -1034,9 +1034,9 @@ function getStock($codes_id = null, $codes = null, $lang = "tr")
         $t = &get_instance();
         $codesConnection = $t->general_model->get("codes", null, ["isActive" => 1, "id" => $codes, "lang" => $lang]);
         if (!empty($codesConnection)) {
-            $data = curl_request($codesConnection->host, $codesConnection->port, "stokgetir", ["codes_id" => $codes_id], ['Content-Type: application/json', 'Accept: application/json', 'X-TOKEN: ' . $codesConnection->token])->data;
-            if (!empty($data)) {
-                foreach ($data as $returnKey => $returnValue) {
+            $data = curl_request($codesConnection->host, $codesConnection->port, "stokgetir", ["codes_id" => $codes_id], ['Content-Type: application/json', 'Accept: application/json', 'X-TOKEN: ' . $codesConnection->token]);
+            if (!empty($data->data)) {
+                foreach ($data->data as $returnKey => $returnValue) {
                     $t->general_model->update("products", ["codes" => $codes, "codes_id" => $codes_id, "lang" => $lang], [
                         'price' => clean($returnValue->Fiyat1) ?? NULL,
                         'discounted_price' => clean($returnValue->Fiyat2) ?? NULL,
