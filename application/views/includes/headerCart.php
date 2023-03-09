@@ -13,9 +13,9 @@
         $wheres["p.codes_id"] = $items["id"];
         $wheres["p.codes"] = $items["options"]["codes"];
         $wheres["p.stock>="]  = 1;
-        $joins = ["product_details pd" => ["pd.codes = p.codes_id AND pd.codes = p.codes", "left"], "product_collections pc" => ["p.collection_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
+        $joins = ["product_details pd" => ["pd.codes_id = p.codes_id AND pd.codes = p.codes", "left"], "product_collections pc" => ["p.collection_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
 
-        $select = "p.vat,p.stock,p.codes_id,p.codes,p.price,p.discounted_price,p.id,p.title,p.seo_url,pi.url img_url,p.isActive";
+        $select = "p.dimension_type,p.vat,p.stock,p.codes_id,p.codes,p.price,p.discounted_price,p.id,p.title,p.seo_url,pi.url img_url,p.isActive";
         $distinct = true;
         $groupBy = ["p.codes_id"];
         $product = $this->general_model->get("products p", $select, $wheres, $joins, [], [], $distinct, $groupBy);
@@ -25,12 +25,20 @@
             <?php ($product->vat ? $totalVat +=  ((float)$items["qty"] * ($product->discounted_price ? (float)$product->discounted_price : (float)$product->price) * ((float)$product->vat / 100)) : 0) ?>
             <div class="cartWidgetProduct">
                 <a rel="dofollow" href="<?= base_url(lang("routes_product-collections") . "/" . lang("routes_product") . "/" . $product->codes . "/" . $product->seo_url) ?>" title="<?= stripslashes($items["name"]) ?>"><img width="1000" height="1000" loading="lazy" data-src="<?= get_picture("products_v", $product->img_url) ?>" alt="<?= $items['name']; ?>" class="img-fluid lazyload"></a>
-                <a rel="dofollow" href="<?= base_url(lang("routes_product-collections") . "/" . lang("routes_product") . "/" . $product->codes . "/" . $product->seo_url) ?>" title="<?= stripslashes($items["name"]) ?>"><?= stripslashes($items["name"]) ?></a>
+                <a rel="dofollow" href="<?= base_url(lang("routes_product-collections") . "/" . lang("routes_product") . "/" . $product->codes . "/" . $product->seo_url) ?>" title="<?= stripslashes($items["name"]) ?>"><?= stripslashes($items["name"]) ?>
+                    <?php if (!empty($items["options"]["height"]) && $product->dimension_type == "ROLL") : ?>
+                        <small class="product-dimension my-1 d-block">
+                            <span class="fw-bold"><?= lang("height") ?>: </span>
+                            <span class="ms-2"><?= $items["options"]["height"] ?></span>
+                        </small>
+                    <?php endif ?>
+                </a>
                 <div class="cartProductPrice clearfix">
                     <span class="price"><span><?= $items['qty'] ?> x <?= $this->viewData->symbol . $this->cart->format_number(($product->discounted_price ? (float)$product->discounted_price : (float)$product->price)); ?> <?= ((bool)$product->vat ? ("+" . $this->viewData->symbol . $this->cart->format_number($items["subtotal"] - $vat) . " (KDV)") : null) ?></span><span>= <?= $this->viewData->symbol . $this->cart->format_number($items["subtotal"]); ?></span></span>
                 </div>
                 <button class="cartRemoveProducts" data-rowid="<?= $items['rowid'] ?>" title="<?= stripslashes($items["name"]) ?>"><i class="fa-solid fa-xmark"></i></button>
             </div>
+            <hr>
             <?php $vat = 0 ?>
         <?php endif ?>
     <?php endforeach ?>

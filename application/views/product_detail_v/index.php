@@ -1,6 +1,14 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php $dimension = ($product->dimension_type == "ROLL" ? @floatval(@str_replace("XR", "", $product->dimension)) : $product->dimension); ?>
-<?php $maxStock =  ($product->dimension_type == "ROLL" ? @floatval(($product->stock / ((($dimension / 100) * 1)))) : $product->stock); ?>
+<?php
+$dimensionStock = 0;
+foreach ($this->cart->contents() as $rollItems) :
+    if ($rollItems["id"] == $product->codes_id && $rollItems["options"]["codes"] == $product->codes && $rollItems["options"]["dimension_type"] == "ROLL") {
+        $dimensionStock += (($dimension / 100) * $rollItems["options"]["height"] * $rollItems["qty"]);
+    }
+endforeach;
+?>
+<?php $maxStock =  ($product->dimension_type == "ROLL" ? @floatval((($product->stock - $dimensionStock) / ((($dimension / 100) * 1)))) : $product->stock); ?>
 <!-- BEGIN: Page Banner Section -->
 <section class="pageBannerSection" style="background-image: url(<?= get_picture("settings_v", $settings->product_detail_logo) ?>);">
     <div class="container">
@@ -282,14 +290,27 @@
                 $("input[name='quantity']").trigger("change");
             }
         });
+        if ($("input[name='height']").length) {
+            $("input[name='height']").on("keyup change", function() {
+                let squaremeters = (<?= $dimension ?> / 100) * parseFloat($(this).val()) * parseFloat($("input[name='quantity']").val()) ;
+                let maxStock = parseFloat((<?= floatval($product->stock) ?> - squaremeters));
+                $("input[name='quantity']").attr("max", maxStock);
+                $(".btnPlus").attr("data-max", maxStock);
+                $(".btnPlus").data("max", maxStock);
+                if (parseInt($("input[name='quantity']").val()) > parseInt($("input[name='quantity']").attr("max"))) {
+                    $("input[name='quantity']").val(parseInt($("input[name='quantity']").attr("max")));
+                }
+            });
+        }
         $("input[name='quantity']").on("change", () => {
             if (parseInt($("input[name='quantity']").val()) < 1) {
                 $("input[name='quantity']").val(1);
             }
+            $("input[name='height']").trigger("change");
             if (parseInt($("input[name='quantity']").val()) > parseInt($("input[name='quantity']").attr("max"))) {
-                $("input[name='quantity']").val($("input[name='quantity']").attr("max"));
+                $("input[name='quantity']").val(parseInt($("input[name='quantity']").attr("max")));
             }
-            $(".addToCart").data("quantity", $("input[name='quantity']").val());
+            $(".addToCart").data("quantity", parseInt($("input[name='quantity']").val()));
         });
         /**
          * Add To Cart
@@ -302,8 +323,8 @@
             let codes_id = $this.data("codes-id");
             let codes = $this.data("codes");
             let quantity = $this.data("quantity");
-            let height = $("input[name='height']").val() ?? NULL;
-            let orderNote = $("textarea[name='orderNote']").val() ?? NULL;
+            let height = $("input[name='height']").val() ?? null;
+            let orderNote = $("textarea[name='orderNote']").val() ?? null;
             $.post('<?= base_url(lang("routes_cart") . "/" . lang("routes_add-to-cart")) ?>', {
                 "codes_id": codes_id,
                 "codes": codes,

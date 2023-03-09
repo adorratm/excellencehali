@@ -33,12 +33,21 @@
                             $wheres["p.codes_id"] = $items["id"];
                             $wheres["p.codes"] = $items["options"]["codes"];
                             $wheres["p.stock>="]  = 1;
-                            $joins = ["product_details pd" => ["pd.codes = p.codes_id AND pd.codes = p.codes", "left"], "product_collections pc" => ["p.collection_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
+                            $joins = ["product_details pd" => ["pd.codes_id = p.codes_id AND pd.codes = p.codes", "left"], "product_collections pc" => ["p.collection_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
 
-                            $select = "p.vat,p.stock,p.codes_id,p.codes,p.price,p.discounted_price,p.id,p.title,p.seo_url,pi.url img_url,p.isActive";
+                            $select = "p.dimension_type,p.dimension,p.vat,p.stock,p.codes_id,p.codes,p.price,p.discounted_price,p.id,p.title,p.seo_url,pi.url img_url,p.isActive";
                             $distinct = true;
                             $groupBy = ["p.codes_id"];
                             $product = $this->general_model->get("products p", $select, $wheres, $joins, [], [], $distinct, $groupBy);
+                            $dimension = ($product->dimension_type == "ROLL" ? @floatval(@str_replace("XR", "", $product->dimension)) : $product->dimension);
+                            $dimensionStock = 0;
+                            foreach ($this->cart->contents() as $rollItems):
+                                if($rollItems["id"] == $product->codes_id && $rollItems["options"]["codes"] == $product->codes && $rollItems["options"]["dimension_type"] == "ROLL"){
+                                    $dimensionStock += (($dimension/100) * $rollItems["options"]["height"] * $rollItems["qty"]);
+                                }
+                            endforeach;
+                            $maxStock =  ($product->dimension_type == "ROLL" ? @floatval((($product->stock - $dimensionStock) / ((($dimension / 100) * $items["options"]["height"])))) : $product->stock);
+
                             ?>
                             <?php if (!empty($product)) : ?>
                                 <?php ($product->vat ? $vat =  ((float)$items['price'] * (float)$items["qty"]) - ((float)$items["qty"] * ($product->discounted_price ? (float)$product->discounted_price : (float)$product->price) * ((float)$product->vat / 100)) : 0) ?>
@@ -48,7 +57,14 @@
                                         <a rel="dofollow" href="<?= base_url(lang("routes_product-collections") . "/" . lang("routes_product") . "/" . $product->codes . "/" . $product->seo_url) ?>" title="<?= stripslashes($items["name"]) ?>"><img width="1000" height="1000" loading="lazy" data-src="<?= get_picture("products_v", $product->img_url) ?>" alt="<?= $items['name']; ?>" class="img-fluid lazyload"></a>
                                     </td>
                                     <td class="product-name text-center align-items-center align-self-center align-content-center align-middle justify-content-center">
-                                        <a rel="dofollow" href="<?= base_url(lang("routes_product-collections") . "/" . lang("routes_product") . "/" . $product->codes . "/" . $product->seo_url) ?>" title="<?= stripslashes($items["name"]) ?>"><?= stripslashes($items["name"]) ?></a>
+                                        <a rel="dofollow" href="<?= base_url(lang("routes_product-collections") . "/" . lang("routes_product") . "/" . $product->codes . "/" . $product->seo_url) ?>" title="<?= stripslashes($items["name"]) ?>"><?= stripslashes($items["name"]) ?>
+                                            <?php if (!empty($items["options"]["height"]) && $product->dimension_type == "ROLL") : ?>
+                                                <div class="product-dimension">
+                                                    <span class="fw-bold"><?= lang("height") ?>: </span>
+                                                    <span class="ms-2"><?= $items["options"]["height"] ?></span>
+                                                </div>
+                                            <?php endif ?>
+                                        </a>
                                     </td>
                                     <td class="product-price text-center align-items-center align-self-center align-content-center align-middle justify-content-center">
                                         <div class="pi01Price text-center align-items-center align-self-center align-content-center align-middle justify-content-center">
@@ -63,8 +79,8 @@
                                     <td class="product-quantity text-center align-items-center align-self-center align-content-center align-middle justify-content-center">
                                         <div class="quantity d-flex mx-auto clearfix text-center align-items-center align-self-center align-content-center align-middle justify-content-center">
                                             <button type="button" class="qtyBtn btnMinus"><i class="fa fa-minus"></i></button>
-                                            <input type="number" class="carqty input-text qty text" name="quantity" min="1" value="<?= $items["qty"] ?>" max="<?= $product->stock ?>" data-rowid="<?= $items['rowid'] ?>">
-                                            <button type="button" class="qtyBtn btnPlus" data-max="<?= $product->stock ?>"><i class="fa fa-plus"></i></button>
+                                            <input type="number" class="carqty input-text qty text" name="quantity" min="1" value="<?= $items["qty"] ?>" max="<?= floatval($maxStock) ?>" data-rowid="<?= $items['rowid'] ?>">
+                                            <button type="button" class="qtyBtn btnPlus" data-max="<?= floatval($maxStock) ?>"><i class="fa fa-plus"></i></button>
                                         </div>
                                     </td>
                                     <td class="product-subtotal text-center align-items-center align-self-center align-content-center align-middle justify-content-center">
@@ -192,7 +208,7 @@
                 $this.val(1);
             }
             if (parseInt($this.val()) > parseInt($this.attr("max"))) {
-                $this.val($this.attr("max"));
+                $this.val(parseInt($this.attr("max")));
             }
             if ($this.prop("disabled") == false || $this.prop("disabled") == undefined) {
                 $this.prop("disabled", true);

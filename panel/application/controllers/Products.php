@@ -60,7 +60,7 @@ class Products extends MY_Controller
     public function update_form($codes_id, $codes)
     {
         $viewData = new stdClass();
-        $viewData->item = $this->general_model->get("products p", "p.*,pd.features features, pd.content content,pd.description description", ["p.codes_id" => $codes_id, "p.codes" => $codes], ["product_details pd" => ["pd.codes = p.codes_id AND pd.codes = p.codes", "left"]], [], [], true, "p.codes_id");
+        $viewData->item = $this->general_model->get("products p", "p.*,pd.features features, pd.content content,pd.description description", ["p.codes_id" => $codes_id, "p.codes" => $codes], ["product_details pd" => ["pd.codes_id = p.codes_id AND pd.codes = p.codes", "left"]], [], [], true, "p.codes_id");
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
         $viewData->collections = $this->product_collection_model->get_all();
