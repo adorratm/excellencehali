@@ -8,7 +8,7 @@ foreach ($this->cart->contents() as $rollItems) :
     }
 endforeach;
 ?>
-<?php $maxStock =  ($product->dimension_type == "ROLL" ? @floatval((($product->stock - $dimensionStock) / ((($dimension / 100) * 1)))) : $product->stock); ?>
+<?php $maxStock =  ($product->dimension_type == "ROLL" ? @intval((($product->stock - $dimensionStock) / ((($dimension / 100) * 1)))) : $product->stock); ?>
 <!-- BEGIN: Page Banner Section -->
 <section class="pageBannerSection" style="background-image: url(<?= get_picture("settings_v", $settings->product_detail_logo) ?>);">
     <div class="container">
@@ -292,8 +292,8 @@ endforeach;
         });
         if ($("input[name='height']").length) {
             $("input[name='height']").on("keyup change", function() {
-                let squaremeters = (<?= $dimension ?> / 100) * parseFloat($(this).val()) * parseFloat($("input[name='quantity']").val()) ;
-                let maxStock = parseFloat((<?= floatval($product->stock) ?> - squaremeters));
+                let squaremeters = (<?= $dimension ?> / 100) * parseInt($(this).val()) * parseInt($("input[name='quantity']").val());
+                let maxStock = parseInt((<?= floatval($maxStock * ($dimension / 100)) ?>) / ((<?= $dimension ?> / 100) * parseInt($(this).val())));
                 $("input[name='quantity']").attr("max", maxStock);
                 $(".btnPlus").attr("data-max", maxStock);
                 $(".btnPlus").data("max", maxStock);

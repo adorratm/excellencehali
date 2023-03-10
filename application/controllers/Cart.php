@@ -145,7 +145,7 @@ class Cart extends MY_Controller
                         $dimensionStock += (($dimension / 100) * $rollItems["options"]["height"] * $rollItems["qty"]);
                     }
                 endforeach;
-                $maxStock =  ($product->dimension_type == "ROLL" ? @floatval((($product->stock - $dimensionStock) / ((($dimension / 100) * $data["height"])))) : $product->stock);
+                $maxStock =  ($product->dimension_type == "ROLL" ? @intval((($product->stock - $dimensionStock) / ((($dimension / 100) * $data["height"])))) : $product->stock);
                 $price = ($product->discounted_price ? $product->discounted_price : $product->price) ?? 0;
                 $cartData = ["id" => $product->codes_id, "qty" => $data["quantity"], "price" => $price, "name" => clean(stripslashes(trim($product->title))), "options" => ["codes" => $product->codes, "height" => (@$data["height"] ?? NULL), "order_note" => (@$data["order_note"] ?? NULL), "dimension_type" => $product->dimension_type]];
                 $rowid = null;
@@ -157,12 +157,12 @@ class Cart extends MY_Controller
                         endif;
                     endforeach;
                 endif;
-                if (!empty($this->cart->get_item($rowid)["qty"]) && !empty($cartData["qty"]) && (float)$cartData["qty"] > 0 && !empty($maxStock) && (float)$maxStock > 0 && (float)$cartData["qty"] <= (float)$maxStock) : // && !empty($cartData["price"]) && $cartData["price"] > 0
+                if (!empty($this->cart->get_item($rowid)["qty"]) && !empty($cartData["qty"]) && (int)$cartData["qty"] > 0 && !empty($maxStock) && (int)$maxStock > 0 && (int)$cartData["qty"] <= (int)$maxStock) : // && !empty($cartData["price"]) && $cartData["price"] > 0
                     $cartData["rowid"] = $rowid;
                     $this->cart->update($cartData);
                     $alert = ["success" => true, "title" => lang("success"), "message" => lang("cartItemUpdated")];
                 endif;
-                if (empty($this->cart->get_item($rowid)["qty"]) && !empty($cartData["qty"]) && (float)$cartData["qty"] > 0 && !empty($maxStock) && (float)$maxStock > 0 && (float)$cartData["qty"] <= (float)$maxStock) : // && !empty($cartData["price"]) && $cartData["price"] > 0
+                if (empty($this->cart->get_item($rowid)["qty"]) && !empty($cartData["qty"]) && (int)$cartData["qty"] > 0 && !empty($maxStock) && (int)$maxStock > 0 && (int)$cartData["qty"] <= (int)$maxStock) : // && !empty($cartData["price"]) && $cartData["price"] > 0
                     $this->cart->insert($cartData);
                     $alert = ["success" => true, "title" => lang("success"), "message" => lang("itemAddedToCart")];
                 endif;
@@ -220,14 +220,19 @@ class Cart extends MY_Controller
                 $dimensionStock = 0;
                 foreach ($this->cart->contents() as $rollItems) :
                     if ($rollItems["id"] == $product->codes_id && $rollItems["options"]["codes"] == $product->codes && $rollItems["options"]["dimension_type"] == "ROLL") {
+                        if ($rollItems["rowid"] == $data["rowid"]) :
+                            $rollItems["qty"] = $data["quantity"];
+                        endif;
                         $dimensionStock += (($dimension / 100) * $rollItems["options"]["height"] * $rollItems["qty"]);
                     }
                 endforeach;
-                $maxStock =  ($product->dimension_type == "ROLL" ? @floatval((($product->stock - $dimensionStock) / ((($dimension / 100) * $cartData["options"]["height"])))) : $product->stock);
+                $remainingStock = ($product->dimension_type == "ROLL" ? @floatval(($product->stock - $dimensionStock)) : $product->stock);
+                $maxStock =  ($product->dimension_type == "ROLL" ? @floatval((($product->stock) / ((($dimension / 100) * $cartData["options"]["height"])))) : $product->stock);
+            
                 $price = ($product->discounted_price ? $product->discounted_price : $product->price) ?? 0;
                 $cartData = ["id" => $product->codes_id, "qty" => $data["quantity"], "price" => $price, "name" => clean(stripslashes(trim($product->title))), "options" => ["codes" => $product->codes, "height" => (@$cartData["options"]["height"] ?? NULL), "order_note" => (@$cartData["options"]["order_note"] ?? NULL), "dimension_type" => $product->dimension_type]];
-          
-                if (!empty($this->cart->get_item($data["rowid"])["qty"]) && !empty($cartData["qty"]) && (float)$cartData["qty"] > 0 && !empty($maxStock) && (float)$maxStock > 0 && (float)$cartData["qty"] <= (float)$maxStock) : // && !empty($cartData["price"]) && $cartData["price"] > 0
+
+                if (!empty($this->cart->get_item($data["rowid"])["qty"]) && !empty($cartData["qty"]) && (float)$cartData["qty"] > 0 && !empty($maxStock) && (float)$maxStock > 0 && (float)$cartData["qty"] <= (float)$maxStock && $remainingStock > 0) : // && !empty($cartData["price"]) && $cartData["price"] > 0
                     $cartData["rowid"] = $data["rowid"];
                     $this->cart->update($cartData);
                     $alert = ["success" => true, "title" => lang("success"), "message" => lang("cartItemUpdated")];

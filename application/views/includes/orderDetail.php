@@ -89,11 +89,12 @@
                 <table class="table table-bordered table-striped table-hover w-100">
                     <thead>
                         <tr>
-                            <th class="font-weight-bold text-center align-middle" colspan="5"><?= strto("lower|ucwords", lang("order_detail")) ?></th>
+                            <th class="font-weight-bold text-center align-middle" colspan="6"><?= strto("lower|ucwords", lang("order_detail")) ?></th>
                         </tr>
                         <tr>
                             <th class='font-weight-bold text-center align-middle'><?= lang("productThumbnail") ?></th>
                             <th class='font-weight-bold text-center align-middle'><?= lang("productName") ?></th>
+                            <th class='font-weight-bold text-center align-middle'><?= lang("orderNote") ?></th>
                             <th class='font-weight-bold text-center align-middle'><?= lang("productQuantity") ?></th>
                             <th class='font-weight-bold text-center align-middle'><?= lang("productPrice") ?></th>
                             <th class='font-weight-bold text-center align-middle'><?= lang("subTotal") ?></th>
@@ -105,7 +106,15 @@
                                 <td class='text-center align-middle justify-content-center mx-auto px-auto'>
                                     <img class='img-fluid' src='data:image/webp;base64,<?= base64_encode($cart_value->img_url) ?>' style='max-width:150px;max-height:150px;' width="150" height="150">
                                 </td>
-                                <td class='text-center align-middle justify-content-center mx-auto px-auto'><?= stripslashes($cart_value->title) ?></td>
+                                <td class='text-center align-middle justify-content-center mx-auto px-auto'><?= stripslashes($cart_value->title) ?>
+                                    <?php if (!empty($cart_value->height) && $cart_value->dimension_type == "ROLL") : ?>
+                                        <div class="product-dimension">
+                                            <span class="fw-bold"><?= lang("height") ?>: </span>
+                                            <span class="ms-2"><?= $cart_value->height ?></span>
+                                        </div>
+                                    <?php endif ?>
+                                </td>
+                                <td class='text-center align-middle justify-content-center mx-auto px-auto'><?= $cart_value->order_note ?></td>
                                 <td class='text-center align-middle justify-content-center mx-auto px-auto'><?= $cart_value->quantity ?> x</td>
                                 <td class='text-center align-middle justify-content-center mx-auto px-auto'>
                                     <?= !empty($cart_value->discounted_price) ? $cart_value->discounted_price : $cart_value->price ?>
@@ -120,15 +129,15 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="5" class="text-end"><?= lang("subTotal") ?> : <span class="float-end"> <?= $order->sub_total ?> <?= $order->symbol ?></span></td>
+                            <td colspan="6" class="text-end"><?= lang("subTotal") ?> : <span class="float-end"> <?= $order->sub_total ?> <?= $order->symbol ?></span></td>
                         </tr>
                         <?php if ((float)$order->vat > 0) : ?>
                             <tr>
-                                <td colspan="5" class="text-end"><?= lang("vat") ?> : <span class="float-end"> <?= $order->vat ?> <?= $order->symbol ?></span></td>
+                                <td colspan="6" class="text-end"><?= lang("vat") ?> : <span class="float-end"> <?= $order->vat ?> <?= $order->symbol ?></span></td>
                             </tr>
                         <?php endif ?>
                         <tr>
-                            <td colspan="5" class="text-end"><b><?= lang("total") ?></b> : <span class="float-end"> <?= $order->total ?> <?= $order->symbol ?></span></td>
+                            <td colspan="6" class="text-end"><b><?= lang("total") ?></b> : <span class="float-end"> <?= $order->total ?> <?= $order->symbol ?></span></td>
                         </tr>
                     </tfoot>
                 </table>

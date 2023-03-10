@@ -40,6 +40,16 @@
             <?php endforeach ?>
         </select>
     </div>
+    <?php if (!empty($servers)) : ?>
+        <?php foreach ($servers as $key => $value) : ?>
+            <div class="form-group">
+                <label><?= $value->title ?> - CODES CARİ ID</label>
+                <input class="form-control form-control-sm rounded-0" placeholder="Codes Cari ID" name="codes[<?= $key ?>]" value="<?= isset($form_error) ? set_value("codes[$key]") : ""; ?>" minlength="1" maxlength="255" required>
+            </div>
+        <?php endforeach ?>
+    <?php endif ?>
+
+
     <button role="button" data-url="<?= base_url("users/save") ?>" class="btn btn-sm btn-outline-primary rounded-0 btnSave">Kaydet</button>
     <a href="javascript:void(0)" onclick="closeModal('#userModal')" class="btn btn-sm btn-outline-danger rounded-0n">İptal</a>
 </form>

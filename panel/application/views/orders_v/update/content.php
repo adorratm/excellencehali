@@ -71,7 +71,9 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <hr>
+                        </div>
+                        <hr>
+                        <div class="table-responsive">
                             <table class="table table-hover table-striped table-bordered w-100">
                                 <thead>
                                     <tr>
@@ -96,16 +98,19 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <hr>
-                            <?php if (!empty($order_data)) : ?>
+                        </div>
+                        <hr>
+                        <?php if (!empty($order_data)) : ?>
+                            <div class="table-responsive">
                                 <table class="table table-bordered table-striped table-hover w-100">
                                     <thead>
                                         <tr>
-                                            <th class="font-weight-bold text-center align-middle" colspan="5">SİPARİŞ DETAYI</th>
+                                            <th class="font-weight-bold text-center align-middle" colspan="6">SİPARİŞ DETAYI</th>
                                         </tr>
                                         <tr>
                                             <th class='font-weight-bold text-center align-middle'>Görsel</th>
                                             <th class='font-weight-bold text-center align-middle'>Ürün Adı</th>
+                                            <th class='font-weight-bold text-center align-middle'>Sipariş Notu</th>
                                             <th class='font-weight-bold text-center align-middle'>Adet</th>
                                             <th class='font-weight-bold text-center align-middle'>Fiyat</th>
                                             <th class='font-weight-bold text-center align-middle'>Ara Toplam</th>
@@ -118,7 +123,14 @@
                                                     <img class='img-fluid' src='data:image/webp;base64,<?= base64_encode($cart_value->img_url) ?>' style='max-width:125px;max-height:150px;' width="150" height="150">
                                                 </td>
                                                 <td class='text-center align-middle'><?= $cart_value->title ?>
+                                                    <?php if (!empty($cart_value->height) && $cart_value->dimension_type == "ROLL") : ?>
+                                                        <div class="product-dimension">
+                                                            <span class="fw-bold"><?= lang("height") ?>: </span>
+                                                            <span class="ms-2"><?= $cart_value->height ?></span>
+                                                        </div>
+                                                    <?php endif ?>
                                                 </td>
+                                                <td class='text-center align-middle'><?= $cart_value->order_note ?></td>
                                                 <td class='text-center align-middle'><?= $cart_value->quantity ?> x</td>
                                                 <td class='text-center align-middle'>
                                                     <?= !empty($cart_value->discounted_price) ? $cart_value->discounted_price : $cart_value->price ?>
@@ -133,53 +145,54 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td colspan="5" class="text-right">Ara Toplam : <span class="float-right ml-1"> <?= $item->sub_total ?> <?= $item->symbol ?></span></td>
+                                            <td colspan="6" class="text-right">Ara Toplam : <span class="float-right ml-1"> <?= $item->sub_total ?> <?= $item->symbol ?></span></td>
                                         </tr>
                                         <?php if ((float)$item->vat > 0) : ?>
                                             <tr>
-                                                <td colspan="5" class="text-right">KDV : <span class="float-right ml-1"> <?= $item->vat ?> <?= $item->symbol ?></span></td>
+                                                <td colspan="6" class="text-right">KDV : <span class="float-right ml-1"> <?= $item->vat ?> <?= $item->symbol ?></span></td>
                                             </tr>
                                         <?php endif ?>
                                         <tr>
-                                            <td colspan="5" class="text-right"><b>Toplam</b> : <span class="float-right ml-1"> <?= $item->total ?> <?= $item->symbol ?></span></td>
+                                            <td colspan="6" class="text-right"><b>Toplam</b> : <span class="float-right ml-1"> <?= $item->total ?> <?= $item->symbol ?></span></td>
                                         </tr>
                                     </tfoot>
                                 </table>
-                            <?php endif ?>
-                        </div>
+                            </div>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="form-group">
-            <label>SİPARİŞ DURUMU (Değiştiğinde "SİPARİŞ DURUMU MESAJI" alanı değişir.)</label>
-            <select class="form-control form-control-sm rounded-0" name="status" id="statusTrigger">
-                <option value="1" <?= ($item->status == 1 ? "selected" : null) ?>><?= lang("Siparişiniz Alındı.") ?></option>
-                <option value="2" <?= ($item->status == 2 ? "selected" : null) ?>><?= lang("Siparişiniz Hazırlanıyor.") ?></option>
-                <option value="3" <?= ($item->status == 3 ? "selected" : null) ?>><?= lang("Siparişiniz Kargoya Verildi.") ?></option>
-                <option value="4" <?= ($item->status == 4 ? "selected" : null) ?>><?= lang("Siparişiniz Tamamlandı.") ?></option>
-                <option value="0" <?= ($item->status == 0 ? "selected" : null) ?>><?= lang("Siparişiniz İptal Edildi.") ?></option>
-            </select>
-        </div>
+    <div class="form-group">
+        <label>SİPARİŞ DURUMU (Değiştiğinde "SİPARİŞ DURUMU MESAJI" alanı değişir.)</label>
+        <select class="form-control form-control-sm rounded-0" name="status" id="statusTrigger">
+            <option value="1" <?= ($item->status == 1 ? "selected" : null) ?>><?= lang("Siparişiniz Alındı.") ?></option>
+            <option value="2" <?= ($item->status == 2 ? "selected" : null) ?>><?= lang("Siparişiniz Hazırlanıyor.") ?></option>
+            <option value="3" <?= ($item->status == 3 ? "selected" : null) ?>><?= lang("Siparişiniz Kargoya Verildi.") ?></option>
+            <option value="4" <?= ($item->status == 4 ? "selected" : null) ?>><?= lang("Siparişiniz Tamamlandı.") ?></option>
+            <option value="0" <?= ($item->status == 0 ? "selected" : null) ?>><?= lang("Siparişiniz İptal Edildi.") ?></option>
+        </select>
+    </div>
 
-        <div class="form-group">
-            <label>SİPARİŞ DURUMU MESAJI</label>
-            <textarea name="statusMessage" id="statusMessage" cols="30" rows="5" class="form-control" minlength="2" maxlength="255"><?= $item->statusMessage ?></textarea>
-        </div>
+    <div class="form-group">
+        <label>SİPARİŞ DURUMU MESAJI</label>
+        <textarea name="statusMessage" id="statusMessage" cols="30" rows="5" class="form-control" minlength="2" maxlength="255"><?= $item->statusMessage ?></textarea>
+    </div>
 
-        <button data-url="<?= base_url("orders/update/$item->id"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btnUpdate">Güncelle</button>
-        <a href="javascript:void(0)" onclick="closeModal('#ordersModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
+    <button data-url="<?= base_url("orders/update/$item->id"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btnUpdate">Güncelle</button>
+    <a href="javascript:void(0)" onclick="closeModal('#ordersModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
     </div>
 </form>
 
 
 <script>
-    $(document).on("change","#statusTrigger",function(e){
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            let statusMessage = $(this).find("option:selected").text();
-            console.log(statusMessage);
-            $("#statusMessage").val(statusMessage);
-        });
+    $(document).on("change", "#statusTrigger", function(e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        let statusMessage = $(this).find("option:selected").text();
+        console.log(statusMessage);
+        $("#statusMessage").val(statusMessage);
+    });
 </script>

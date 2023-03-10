@@ -72,6 +72,7 @@ class Users extends MY_Controller
     {
         $viewData = new stdClass();
         $viewData->user_roles = $this->user_role_model->get_all(['isActive' => 1]);
+        $viewData->servers = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "add";
         $this->load->view("{$this->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
@@ -85,12 +86,14 @@ class Users extends MY_Controller
         else :
             $data["isActive"] = 1;
             $data["password"] = mb_substr(sha1(md5($data["password"])), 0, 32, "utf-8");
+            $data["codes"] = json_encode($_POST["codes"]);
             $insert = $this->user_model->add($data);
             if ($insert) :
                 $addressData = $data;
                 $addressData["title"] = lang("default_address");
                 unset($addressData["password"]);
                 unset($addressData["role_id"]);
+                unset($addressData["codes"]);
                 $this->general_model->add("user_addresses", $addressData);
                 echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Kullanıcı Başarıyla Eklendi."]);
             else :
@@ -102,6 +105,7 @@ class Users extends MY_Controller
     {
         $viewData = new stdClass();
         $viewData->user_roles = $this->user_role_model->get_all(['isActive' => 1]);
+        $viewData->servers = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
         $viewData->item = $this->user_model->get(["id" => $id]);
@@ -119,6 +123,7 @@ class Users extends MY_Controller
             else :
                 $data["password"] = mb_substr(sha1(md5($data["password"])), 0, 32, "utf-8");
             endif;
+            $data["codes"] = json_encode($_POST["codes"]);
             $update = $this->user_model->update(["id" => $id], $data);
             if ($update) :
                 echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Kullanıcı Başarıyla Güncellendi."]);

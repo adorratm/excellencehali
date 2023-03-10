@@ -40,6 +40,14 @@
             <?php endforeach; ?>
         </select>
     </div>
+    <?php if (!empty($servers)) : ?>
+        <?php foreach ($servers as $key => $value) : ?>
+            <div class="form-group">
+                <label><?= $value->title ?> - CODES CARİ ID</label>
+                <input class="form-control form-control-sm rounded-0" placeholder="Codes Cari ID" name="codes[<?= $key ?>]" value="<?=@json_decode($item->codes)[$key]?>" minlength="1" maxlength="255" required>
+            </div>
+        <?php endforeach ?>
+    <?php endif ?>
     <button role="button" data-url="<?= base_url("users/update/$item->id"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btnUpdate">Güncelle</button>
     <a href="javascript:void(0)" onclick="closeModal('#userModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
 </form>

@@ -91,7 +91,7 @@ class Orders extends MY_Controller
                 $mailViewData = new stdClass();
                 $mailViewData->order_data = (array)$order;
                 $mailViewData->order_products = $this->general_model->get_all("order_products", null, null, ["order_id" => $order->id]);
-                $mailViewData->message  = "Siparişinizin durumu güncellendi. Sipariş durumunuz: <b>" . $data["statusMessage"]."</b>";
+                $mailViewData->message  = "Siparişinizin durumu güncellendi. Sipariş durumunuz: <b>" . $data["statusMessage"] . "</b>";
                 $subject = get_settings()->company_name . " - " . lang("order_update");
                 $mailViewData->subject = $subject;
                 $mailViewData = $this->load->view("includes/mail_template", (array)$mailViewData, true);
@@ -116,6 +116,33 @@ class Orders extends MY_Controller
             else :
                 echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Sipariş Silinirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
             endif;
+        endif;
+    }
+
+    public function syncOrders()
+    {
+
+        $orders = $this->general_model->get_all("orders", null, null, ["status" => 1]);
+        if (!empty($orders)) :
+            foreach ($orders as $order) :
+                $servers = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
+                if (!empty($servers)) :
+                    $i = 1;
+                    foreach ($servers as $serverKey => $server) :
+                        $order_products = $this->general_model->get_all("order_products", "*,'' as img_url", null, ["order_id" => $order->id, "codes" => $i]);
+                        if (!empty($order_products)) :
+                            $order_data = [];
+                            $order->dealer_id = @json_decode($order->codes)[$serverKey];
+                            $order_data["order_detail"] = $order;
+                            $order_data["order_products"] = $order_products;
+                            if(!empty($order_data)):
+                                $data = curl_request($server->host, $server->port, "siparis-olustur", $order_data, ['Content-Type: application/json', 'Accept: application/json', 'X-TOKEN: ' . $server->token]);
+                            endif;
+                        endif;
+                        $i++;
+                    endforeach;
+                endif;
+            endforeach;
         endif;
     }
 }

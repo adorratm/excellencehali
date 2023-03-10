@@ -11523,6 +11523,7 @@
                         <tr>
                             <th class='font-weight-bold text-center align-middle justify-content-center mx-auto px-auto'><?= lang("productThumbnail") ?></th>
                             <th class='font-weight-bold text-center align-middle justify-content-center mx-auto px-auto'><?= lang("productName") ?></th>
+                            <th class='font-weight-bold text-center align-middle justify-content-center mx-auto px-auto'><?= lang("orderNote") ?></th>
                             <th class='font-weight-bold text-center align-middle justify-content-center mx-auto px-auto'><?= lang("productQuantity") ?></th>
                             <th class='font-weight-bold text-center align-middle justify-content-center mx-auto px-auto'><?= lang("productPrice") ?></th>
                             <th class='font-weight-bold text-center align-middle justify-content-center mx-auto px-auto'><?= lang("subTotal") ?></th>
@@ -11535,7 +11536,15 @@
                                     <td class='text-center align-middle justify-content-center mx-auto px-auto'>
                                         <img class='img-fluid' src='data:image/webp;base64,<?= base64_encode($cart_value->img_url) ?>' style='max-width:150px;max-height:150px;' width="150" height="150">
                                     </td>
-                                    <td class='text-center align-middle justify-content-center mx-auto px-auto'><?= stripslashes($cart_value->title) ?></td>
+                                    <td class='text-center align-middle justify-content-center mx-auto px-auto'><?= stripslashes($cart_value->title) ?>
+                                        <?php if (!empty($cart_value->height) && $cart_value->dimension_type == "ROLL") : ?>
+                                            <div class="product-dimension">
+                                                <span class="fw-bold"><?= lang("height") ?>: </span>
+                                                <span class="ms-2"><?= $cart_value->height ?></span>
+                                            </div>
+                                        <?php endif ?>
+                                    </td>
+                                    <td class="text-center align-middle justify-content-center mx-auto px-auto"><?= $cart_value->order_note ?></td>
                                     <td class='text-center align-middle justify-content-center mx-auto px-auto'><?= $cart_value->quantity ?> x</td>
                                     <td class='text-center align-middle justify-content-center mx-auto px-auto'>
                                         <?= !empty($cart_value->discounted_price) ? $cart_value->discounted_price : $cart_value->price ?>

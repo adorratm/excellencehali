@@ -14,6 +14,7 @@
                     <tr>
                         <th class="product-thumbnail text-center align-items-center align-self-center align-content-center align-middle justify-content-center"><?= lang("productThumbnail") ?></th>
                         <th class="product-name text-center align-items-center align-self-center align-content-center align-middle justify-content-center"><?= lang("productName") ?></th>
+                        <th class="product-name text-center align-items-center align-self-center align-content-center align-middle justify-content-center"><?= lang("orderNote") ?></th>
                         <th class="product-price text-center align-items-center align-self-center align-content-center align-middle justify-content-center"><?= lang("productPrice") ?></th>
                         <th class="product-quantity text-center align-items-center align-self-center align-content-center align-middle justify-content-center"><?= lang("productQuantity") ?></th>
                         <th class="product-subtotal text-center align-items-center align-self-center align-content-center align-middle justify-content-center"><?= lang("subTotal") ?></th>
@@ -41,17 +42,17 @@
                             $product = $this->general_model->get("products p", $select, $wheres, $joins, [], [], $distinct, $groupBy);
                             $dimension = ($product->dimension_type == "ROLL" ? @floatval(@str_replace("XR", "", $product->dimension)) : $product->dimension);
                             $dimensionStock = 0;
-                            foreach ($this->cart->contents() as $rollItems):
-                                if($rollItems["id"] == $product->codes_id && $rollItems["options"]["codes"] == $product->codes && $rollItems["options"]["dimension_type"] == "ROLL"){
-                                    $dimensionStock += (($dimension/100) * $rollItems["options"]["height"] * $rollItems["qty"]);
+                            foreach ($this->cart->contents() as $rollItems) :
+                                if ($rollItems["id"] == $product->codes_id && $rollItems["options"]["codes"] == $product->codes && $rollItems["options"]["dimension_type"] == "ROLL") {
+                                    $dimensionStock += (($dimension / 100) * $rollItems["options"]["height"] * $rollItems["qty"]);
                                 }
                             endforeach;
-                            $maxStock =  ($product->dimension_type == "ROLL" ? @floatval((($product->stock - $dimensionStock) / ((($dimension / 100) * $items["options"]["height"])))) : $product->stock);
+                            $maxStock =  ($product->dimension_type == "ROLL" ? @intval((($product->stock) / ((($dimension / 100) * $items["options"]["height"])))) : $product->stock);
 
                             ?>
                             <?php if (!empty($product)) : ?>
-                                <?php ($product->vat ? $vat =  ((float)$items['price'] * (float)$items["qty"]) - ((float)$items["qty"] * ($product->discounted_price ? (float)$product->discounted_price : (float)$product->price) * ((float)$product->vat / 100)) : 0) ?>
-                                <?php ($product->vat ? $totalVat +=  ((float)$items["qty"] * ($product->discounted_price ? (float)$product->discounted_price : (float)$product->price) * ((float)$product->vat / 100)) : 0) ?>
+                                <?php ($product->vat ? $vat =  ((float)$items['price'] * (int)$items["qty"]) - ((int)$items["qty"] * ($product->discounted_price ? (float)$product->discounted_price : (float)$product->price) * ((float)$product->vat / 100)) : 0) ?>
+                                <?php ($product->vat ? $totalVat +=  ((int)$items["qty"] * ($product->discounted_price ? (float)$product->discounted_price : (float)$product->price) * ((float)$product->vat / 100)) : 0) ?>
                                 <tr>
                                     <td class="product-thumbnail text-center align-items-center align-self-center align-content-center align-middle justify-content-center">
                                         <a rel="dofollow" href="<?= base_url(lang("routes_product-collections") . "/" . lang("routes_product") . "/" . $product->codes . "/" . $product->seo_url) ?>" title="<?= stripslashes($items["name"]) ?>"><img width="1000" height="1000" loading="lazy" data-src="<?= get_picture("products_v", $product->img_url) ?>" alt="<?= $items['name']; ?>" class="img-fluid lazyload"></a>
@@ -66,21 +67,24 @@
                                             <?php endif ?>
                                         </a>
                                     </td>
+                                    <td class="order-note text-center align-items-center align-self-center align-content-center align-middle justify-content-center">
+                                        <?= $items["options"]["order_note"] ?>
+                                    </td>
                                     <td class="product-price text-center align-items-center align-self-center align-content-center align-middle justify-content-center">
-                                        <div class="pi01Price text-center align-items-center align-self-center align-content-center align-middle justify-content-center">
-                                            <?php if (!empty($product->price) || !empty($product->discounted_price)) : ?>
+                                        <?php if (!empty($product->price) || !empty($product->discounted_price)) : ?>
+                                            <div class="pi01Price text-center align-items-center align-self-center align-content-center align-middle justify-content-center">
                                                 <ins><?= !empty($product->discounted_price) ? $product->discounted_price : $product->price ?> <?= $this->viewData->symbol ?></ins>
-                                            <?php endif ?>
-                                            <?php if (!empty($product->discounted_price) && $product->discounted_price > 0) : ?>
-                                                <del><?= $product->price ?> <?= $this->viewData->symbol ?></del>
-                                            <?php endif ?>
-                                        </div>
+                                                <?php if (!empty($product->discounted_price) && $product->discounted_price > 0) : ?>
+                                                    <del><?= $product->price ?> <?= $this->viewData->symbol ?></del>
+                                                <?php endif ?>
+                                            </div>
+                                        <?php endif ?>
                                     </td>
                                     <td class="product-quantity text-center align-items-center align-self-center align-content-center align-middle justify-content-center">
                                         <div class="quantity d-flex mx-auto clearfix text-center align-items-center align-self-center align-content-center align-middle justify-content-center">
                                             <button type="button" class="qtyBtn btnMinus"><i class="fa fa-minus"></i></button>
-                                            <input type="number" class="carqty input-text qty text" name="quantity" min="1" value="<?= $items["qty"] ?>" max="<?= floatval($maxStock) ?>" data-rowid="<?= $items['rowid'] ?>">
-                                            <button type="button" class="qtyBtn btnPlus" data-max="<?= floatval($maxStock) ?>"><i class="fa fa-plus"></i></button>
+                                            <input type="number" class="carqty input-text qty text" name="quantity" min="1" value="<?= $items["qty"] ?>" max="<?= intval($maxStock) ?>" data-rowid="<?= $items['rowid'] ?>">
+                                            <button type="button" class="qtyBtn btnPlus" data-max="<?= intval($maxStock) ?>"><i class="fa fa-plus"></i></button>
                                         </div>
                                     </td>
                                     <td class="product-subtotal text-center align-items-center align-self-center align-content-center align-middle justify-content-center">
@@ -110,7 +114,7 @@
                         <td colspan="2" class="text-start">
                             <a rel="dofollow" href="<?= base_url(lang("routes_product-collections")) ?>" title="<?= lang("continueShopping") ?>" class="ulinaBTN"><span><?= lang("continueShopping") ?></span></a>
                         </td>
-                        <td colspan="4" class="text-end">
+                        <td colspan="5" class="text-end">
                             <a rel="dofollow" href="<?= base_url(lang("routes_cart")) ?>" class="ulinaBTN2 updateCart" onclick="event.preventDefault();event.stopImmediatePropagation();headerCart();" title="<?= lang("updateCart") ?>"><?= lang("updateCart") ?></a>
                             <a rel="dofollow" href="<?= base_url(lang("routes_cart")) ?>" class="ulinaBTN2 emptyCart" title="<?= lang("clearCart") ?>"><?= lang("clearCart") ?></a>
                         </td>
@@ -119,7 +123,7 @@
             </table>
         </div>
     </div>
-    <div class="row cartAccessRow justify-content-end">
+    <div class="row cartAccessRow justify-content-end mt-4">
         <div class="col-lg-4">
             <?php
             $totalPrice = 0;
