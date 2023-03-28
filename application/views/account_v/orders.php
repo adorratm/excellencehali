@@ -84,7 +84,7 @@
             let formData = new FormData();
             formData.append("<?= $this->security->get_csrf_token_name() ?>", "<?= $this->security->get_csrf_hash() ?>");
 
-            createModal("#ordersModal", "<?= lang("order_detail") ?>", "<?= lang("order_detail") ?>", 600, true, "20px", 0, "#1c1833", "#fff", 1040, function() {
+            createModal("#ordersModal", "<?= lang("order_detail") ?>", "<?= lang("order_detail") ?>", 600, true, "20px", 0, "#1c1833", "#fff", 1050, function() {
                 createAjax(url, formData, function(response) {
                     console.log(response);
                     if (response.success) {

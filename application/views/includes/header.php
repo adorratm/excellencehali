@@ -99,11 +99,15 @@
                             <a rel="dofollow" href="<?= base_url(lang("routes_dealer-login")) ?>" title="<?= lang("dealerLogin") ?>"><span><i class="fa-solid fa-lock me-2"></i> <?= lang("dealerLogin") ?></span></a>
                         <?php endif ?>
                     </div>
+                    
                     <div class="anCart">
                         <a href="javascript:void(0);"><i class="fa-solid fa-shopping-cart"></i><span class="totalItemsCount"><?= $total_items ?></span></a>
                         <div class="cartWidgetArea">
                             <?php $this->load->view("includes/headerCart") ?>
                         </div>
+                    </div>
+                    <div>
+                        <a class="btn btn-lg btn-secondary text-white" target="_blank" rel="dofollow" href="https://excellencehalishop.com" title="<?= lang("onlineShop") ?>"><span><?= lang("onlineShop") ?></span></a>
                     </div>
                 </div>
             </div>

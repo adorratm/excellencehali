@@ -136,7 +136,7 @@
 
 .mainMenu>ul>li {
     padding: 51px 0 51px;
-    margin: 0 55px 0 0;
+    margin: 0 25px 0 0;
     position: relative;
 }
 
@@ -606,13 +606,8 @@
     margin-left: 15px;
 }
 
-.anItems>div:last-of-type {
-    margin: 0;
-}
-
 .anItems>div>a {
     font-size: 18px;
-    line-height: 1;
     color: #52586d;
 }
 

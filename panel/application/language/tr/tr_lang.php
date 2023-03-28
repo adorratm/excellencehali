@@ -128,6 +128,7 @@ $lang["orderNote"] = "Sipariş Notu";
 $lang["orderNoteDetail"] = "Overlok Seçimi vs. gibi sipariş notlarınızı buraya yazabilirsiniz.";
 // #CART
 
+$lang["onlineShop"] = "Online Mağaza";
 $lang["shareProduct"] = "Ürünü Paylaş";
 $lang["outOfStock"] = "Stokta Yok";
 $lang["availableStock"] = "Stok";

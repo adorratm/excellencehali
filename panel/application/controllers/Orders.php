@@ -136,7 +136,10 @@ class Orders extends MY_Controller
                             $order_data["order_detail"] = $order;
                             $order_data["order_products"] = $order_products;
                             if(!empty($order_data)):
-                                $data = curl_request($server->host, $server->port, "siparis-olustur", $order_data, ['Content-Type: application/json', 'Accept: application/json', 'X-TOKEN: ' . $server->token]);
+                                echo "<pre>";
+                                print_r($order_data);
+                                echo "</pre>";
+                                //$data = curl_request($server->host, $server->port, "siparis-olustur", $order_data, ['Content-Type: application/json', 'Accept: application/json', 'X-TOKEN: ' . $server->token]);
                             endif;
                         endif;
                         $i++;
