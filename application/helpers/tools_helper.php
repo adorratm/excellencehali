@@ -1004,10 +1004,11 @@ function curl_request($url = null, $port = null, $endpoint = null, $data = [], $
         'headers' => $header,
     ]);
     if (!empty($data)) {
-        $response = $client->post($url);
+        $response = $client->postAsync($url);
     } else {
-        $response = $client->get($url);
+        $response = $client->getAsync($url);
     }
+    $response = $response->wait();
     $json_data = json_decode($response->getBody());
 
     return $json_data;

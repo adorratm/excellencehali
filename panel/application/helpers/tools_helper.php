@@ -2,6 +2,8 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 use GuzzleHttp\Client;
+use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Exception\RequestException;
 
 // Seo
 function seo($str = null, $options = [])
@@ -928,10 +930,11 @@ function curl_request($url = null, $port = null, $endpoint = null, $data = [], $
         'headers' => $header,
     ]);
     if (!empty($data)) {
-        $response = $client->post($url);
+        $response = $client->postAsync($url);
     } else {
-        $response = $client->get($url);
+        $response = $client->getAsync($url);
     }
+    $response = $response->wait();
     $json_data = json_decode($response->getBody());
 
     return $json_data;
