@@ -1,6 +1,7 @@
 {
     "require": {
         "swiftmailer/swiftmailer": "^6.0",
-        "pgrimaud/instagram-user-feed": "^6.16"
+        "pgrimaud/instagram-user-feed": "^6.16",
+        "guzzlehttp/guzzle": "^7.0"
     }
 }

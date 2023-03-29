@@ -135,11 +135,11 @@ class Orders extends MY_Controller
                             $order->dealer_id = @json_decode($order->codes)[$serverKey];
                             $order_data["order_detail"] = $order;
                             $order_data["order_products"] = $order_products;
-                            if(!empty($order_data)):
+                            if (!empty($order_data)) :
                                 echo "<pre>";
                                 print_r($order_data);
                                 echo "</pre>";
-                                //$data = curl_request($server->host, $server->port, "siparis-olustur", $order_data, ['Content-Type: application/json', 'Accept: application/json', 'X-TOKEN: ' . $server->token]);
+                            //$data = curl_request($server->host, $server->port, "siparis-olustur", $order_data, ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $codesConnectionsValue->token]);
                             endif;
                         endif;
                         $i++;

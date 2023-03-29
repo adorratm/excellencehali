@@ -162,7 +162,7 @@ class Product_patterns extends MY_Controller
         try {
             set_time_limit(0);
             ini_set('memory_limit', '-1');
-            codesLogin();
+            //codesLogin();
             $codesConnections = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
             if (!empty($codesConnections)) {
                 $rank = 1;

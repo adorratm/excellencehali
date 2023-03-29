@@ -35,7 +35,7 @@ class Cronjob extends MY_Controller
      */
     public function index()
     {
-        codesLogin();
+        //codesLogin();
         $this->codesConnections = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
         $responseArr = [];
         $responseStock = $this->getStocks();
@@ -174,7 +174,7 @@ class Cronjob extends MY_Controller
             if (!empty($this->codesConnections)) {
                 $rank = 1;
                 foreach ($this->codesConnections as $codesConnectionsKey => $codesConnectionsValue) {
-                    $data = @curl_request($codesConnectionsValue->host, $codesConnectionsValue->port, "stoklistele", [], ['Content-Type: application/json', 'Accept: application/json', 'X-TOKEN: ' . $codesConnectionsValue->token])->data;
+                    $data = @curl_request($codesConnectionsValue->host, $codesConnectionsValue->port, "stoklistele", [], ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $codesConnectionsValue->token])->data;
                     if (!empty($data)) {
                         foreach ($data as $returnKey => $returnValue) {
                             $this->general_model->replace("products", [
@@ -200,7 +200,7 @@ class Cronjob extends MY_Controller
                                 'isActive' => clean($returnValue->Durum) == 1 ? 1 : 0,
                                 'rank' => $rank,
                                 'codes' => clean($codesConnectionsValue->id) ?? NULL,
-                                'dimension_type' => @str_contains(clean($returnValue->Ozelkod4),"XR") ? "ROLL" : "METER",
+                                'dimension_type' => @str_contains(clean($returnValue->Ozelkod4), "XR") ? "ROLL" : "METER",
                             ]);
                             $rank++;
                         }

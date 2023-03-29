@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use GuzzleHttp\Client;
+
 // Seo
 function seo($str = null, $options = [])
 {
@@ -979,8 +981,10 @@ function get_secondary_image($codes_id = null, $codes = null, $cover_url = null,
     return null;
 }
 
-function curl_request($url = null, $port = null, $endpoint = null, $data = [], $header = ['Content-Type: application/json', 'Accept: application/json'])
+function curl_request($url = null, $port = null, $endpoint = null, $data = [], $header = ["Content-Type" => "application/json", "Accept" => "application/json"])
 {
+    set_time_limit(0);
+    ini_set('memory_limit', '-1');
     /* Endpoint */
     if (!empty($port)) {
         $url .= ":" . $port;
@@ -990,28 +994,23 @@ function curl_request($url = null, $port = null, $endpoint = null, $data = [], $
         $url .= "/" . $endpoint;
     }
 
-    /* Create Curl */
-    $curl = curl_init();
+    if (!empty($data)) :
+        $header['json'] = $data;
+    endif;
 
-
-
-    /* Set JSON data to POST */
+    $client = new Client([
+        // Base URI is used with relative requests
+        'base_uri' => $url,
+        'headers' => $header,
+    ]);
     if (!empty($data)) {
-        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+        $response = $client->post($url);
+    } else {
+        $response = $client->get($url);
     }
+    $json_data = json_decode($response->getBody());
 
-    if (!empty($header)) {
-        /* Define content type */
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-    }
-    curl_setopt($curl, CURLOPT_URL, $url);
-    /* Return json */
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-    /* Make Request */
-    $result = json_decode(curl_exec($curl));
-    /* Close Curl */
-    curl_close($curl);
-    return $result;
+    return $json_data;
 }
 
 function codesLogin()
@@ -1020,7 +1019,7 @@ function codesLogin()
     $codesConnections = $t->general_model->get_all("codes", null, null, ["isActive" => 1, "lang" => "tr"]);
     if (!empty($codesConnections)) {
         foreach ($codesConnections as $codesConnectionKey => $codesConnection) :
-            $data = @curl_request($codesConnection->host, $codesConnection->port, "login", ["email" => $codesConnection->email, "password" => $codesConnection->password], ['Content-Type: application/json', 'Accept: application/json']);
+            $data = @curl_request($codesConnection->host, $codesConnection->port, "login", ["email" => $codesConnection->email, "password" => $codesConnection->password], ["Content-Type" => "application/json", "Accept" => "application/json"]);
             if (!empty($data)) {
                 $t->general_model->update("codes", ["id" => $codesConnection->id], ["token" => $data->message]);
             }
@@ -1034,7 +1033,7 @@ function getStock($codes_id = null, $codes = null, $lang = "tr")
         $t = &get_instance();
         $codesConnection = $t->general_model->get("codes", null, ["isActive" => 1, "id" => $codes, "lang" => $lang]);
         if (!empty($codesConnection)) {
-            $data = curl_request($codesConnection->host, $codesConnection->port, "stokgetir", ["codes_id" => $codes_id], ['Content-Type: application/json', 'Accept: application/json', 'X-TOKEN: ' . $codesConnection->token]);
+            $data = curl_request($codesConnection->host, $codesConnection->port, "stokgetir", ["codes_id" => $codes_id], ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $codesConnection->token]);
             if (!empty($data->data)) {
                 foreach ($data->data as $returnKey => $returnValue) {
                     $t->general_model->update("products", ["codes" => $codes, "codes_id" => $codes_id, "lang" => $lang], [
