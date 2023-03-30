@@ -174,12 +174,13 @@ class Cronjob extends MY_Controller
             if (!empty($this->codesConnections)) {
                 $rank = 1;
                 foreach ($this->codesConnections as $codesConnectionsKey => $codesConnectionsValue) {
-                    $data = @curl_request($codesConnectionsValue->host, $codesConnectionsValue->port, "stoklistele", [], ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $codesConnectionsValue->token])->data;
+                    $data = @guzzle_request($codesConnectionsValue->host, $codesConnectionsValue->port, "stoklistele", [], ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $codesConnectionsValue->token])->data;
                     if (!empty($data)) {
                         foreach ($data as $returnKey => $returnValue) {
                             $this->general_model->replace("products", [
                                 'id' => $rank,
                                 'codes_id' => intval(clean($returnValue->Id)) ?? NULL,
+                                'unit_id' => intval(clean($returnValue->BirimId)) ?? NULL,
                                 'title' => clean($returnValue->Baslik) ?? NULL,
                                 'seo_url' => clean(seo($returnValue->Baslik)) ?? NULL,
                                 'barcode' => clean($returnValue->barcode) ?? NULL,

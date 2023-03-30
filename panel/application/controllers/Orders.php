@@ -121,7 +121,6 @@ class Orders extends MY_Controller
 
     public function syncOrders()
     {
-
         $orders = $this->general_model->get_all("orders", null, null, ["status" => 1]);
         if (!empty($orders)) :
             foreach ($orders as $order) :
@@ -131,16 +130,19 @@ class Orders extends MY_Controller
                     foreach ($servers as $serverKey => $server) :
                         $order_products = $this->general_model->get_all("order_products", "*,'' as img_url", null, ["order_id" => $order->id, "codes" => $i]);
                         if (!empty($order_products)) :
-                            $order_data = [];
                             $order->dealer_id = @json_decode($order->codes)[$serverKey];
-                            $order_data["order_detail"] = $order;
-                            $order_data["order_products"] = $order_products;
-                            if (!empty($order_data)) :
-                                echo "<pre>";
-                                print_r($order_data);
-                                echo "</pre>";
-                            //$data = curl_request($server->host, $server->port, "siparis-olustur", $order_data, ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $codesConnectionsValue->token]);
-                            endif;
+                            $faturaHareket = [];
+                            $faturaHareket["Tarih"] = date("Y-m-d H:i");
+                            $faturaHareket["BelgeNo"] = $order->order_code;
+                            $faturaHareket["CariId"] = $order->dealer_id;
+                            $faturaHareket["Aciklama"] = $order->address;
+                            $faturaHareket["OlusturmaTarihi"] = date("Y-m-d H:i");
+                            $faturaHareket["Vade"] = date("Y-m-d H:i");
+                            echo "<pre>";
+                            print_r($order);
+                            print_r($order_products);
+                            echo "</pre>";
+                        //$data = guzzle_request($server->host, $server->port, "faturabaslik", $order_data, ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $codesConnectionsValue->token]);
                         endif;
                         $i++;
                     endforeach;

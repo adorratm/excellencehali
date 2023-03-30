@@ -203,7 +203,7 @@ class Payment extends MY_Controller
                             $wheres["pi.isCover"] = 1;
                             $wheres["p.lang"] = $this->viewData->lang;
                             $joins = ["product_collections pc" => ["p.collection_id = pc.codes_id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"], "product_details pd" => ["pd.codes_id = p.codes_id AND pd.codes = p.codes", "left"]];
-                            $select = "p.dimension_type,p.pattern_id,p.pattern,p.color_id,p.color,p.dimension_id,p.dimension,p.brand_id,p.brand,p.collection_id,p.collection,p.barcode,p.stock,pc.title collection_title,pc.codes_id collection_codes,pc.seo_url collection_seo_url,p.price,p.discounted_price,p.codes_id,p.codes,p.id,p.title,p.seo_url,pi.url img_url,pd.description,pd.content,pd.features,p.isActive";
+                            $select = "p.unit_id,p.dimension_type,p.pattern_id,p.pattern,p.color_id,p.color,p.dimension_id,p.dimension,p.brand_id,p.brand,p.collection_id,p.collection,p.barcode,p.stock,pc.title collection_title,pc.codes_id collection_codes,pc.seo_url collection_seo_url,p.price,p.discounted_price,p.codes_id,p.codes,p.id,p.title,p.seo_url,pi.url img_url,pd.description,pd.content,pd.features,p.isActive";
                             $distinct = true;
                             $groupBy = ["p.id"];
                             $wheres['p.codes_id'] =  $cartValue["id"];
@@ -217,6 +217,7 @@ class Payment extends MY_Controller
                                 $orderItemData = [];
                                 $orderItemData["order_id"] = $order_id;
                                 $orderItemData["codes_id"] = $product->codes_id;
+                                $orderItemData["unit_id"] = $product->unit_id;
                                 $orderItemData["title"] = $product->title;
                                 $orderItemData["seo_url"] = $product->seo_url;
                                 $orderItemData["barcode"] = $product->barcode;

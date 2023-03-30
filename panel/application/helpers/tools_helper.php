@@ -906,7 +906,7 @@ function rWebp2($dir)
     endif;
 }
 
-function curl_request($url = null, $port = null, $endpoint = null, $data = [], $header = ["Content-Type" => "application/json", "Accept" => "application/json"])
+function guzzle_request($url = null, $port = null, $endpoint = null, $data = [], $header = ["Content-Type" => "application/json", "Accept" => "application/json"])
 {
     set_time_limit(0);
     ini_set('memory_limit', '-1');
@@ -946,7 +946,7 @@ function codesLogin()
     $codesConnections = $t->general_model->get_all("codes", null, null, ["isActive" => 1, "lang" => "tr"]);
     if (!empty($codesConnections)) {
         foreach ($codesConnections as $codesConnectionKey => $codesConnection) :
-            $data = @curl_request($codesConnection->host, $codesConnection->port, "login", ["email" => $codesConnection->email, "password" => $codesConnection->password], ["Content-Type" => "application/json", "Accept" => "application/json"]);
+            $data = @guzzle_request($codesConnection->host, $codesConnection->port, "login", ["email" => $codesConnection->email, "password" => $codesConnection->password], ["Content-Type" => "application/json", "Accept" => "application/json"]);
             if (!empty($data)) {
                 $t->general_model->update("codes", ["id" => $codesConnection->id], ["token" => $data->message]);
             }
