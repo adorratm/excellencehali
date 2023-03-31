@@ -217,7 +217,7 @@ class Cronjob extends MY_Controller
     public function syncOrders()
     {
         try {
-            $orders = $this->general_model->get_all("orders", null, null, ["status" => 1, "createdAt + INTERVAL 30 MINUTE <= " => date("Y-m-d H:i:s")]);
+            $orders = $this->general_model->get_all("orders", null, null, ["status" => 1, "date_add(createdAt, INTERVAL 30 MINUTE) <= " => date("Y-m-d H:i:s")]);
             if (!empty($orders)) :
                 foreach ($orders as $order) :
                     $servers = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
@@ -241,7 +241,7 @@ class Cronjob extends MY_Controller
                                         $faturaHareket["BaslikId"] = $data->id;
                                         $faturaHareket["BirimId"] = $value->unit_id;
                                         $faturaHareket["StokAdi"] = $value->title;
-                                        $faturaHareket["Miktar"] = ($value->dimension_type == "ROLL" ? (($value->dimension / 100) * $value->quantity * $value->height)  : $value->quantity);
+                                        $faturaHareket["Miktar"] = ($value->dimension_type == "ROLL" ? ((@floatval($value->dimension) / 100) * @floatval($value->quantity) * @floatval($value->height))  : @$value->quantity);
                                         $faturaHareket["Termin"] = date("Y-m-d H:i");
                                         $faturaHareket["Aciklama"] = $value->order_note;
                                         $data = guzzle_request($server->host, $server->port, "faturahareket", $faturaHareket, ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $server->token]);

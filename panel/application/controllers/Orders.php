@@ -122,7 +122,7 @@ class Orders extends MY_Controller
     public function syncOrders()
     {
         try {
-            $orders = $this->general_model->get_all("orders", null, null, ["status" => 1, "createdAt + INTERVAL 30 MINUTE <= " => date("Y-m-d H:i:s")]);
+            $orders = $this->general_model->get_all("orders", null, null, ["status" => 1, "date_add(createdAt, INTERVAL 30 MINUTE) <= " => date("Y-m-d H:i:s")]);
             if (!empty($orders)) :
                 foreach ($orders as $order) :
                     $servers = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
