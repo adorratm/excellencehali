@@ -995,7 +995,7 @@ function guzzle_request($url = null, $port = null, $endpoint = null, $data = [],
     }
 
     if (!empty($data)) :
-        $header['json'] = $data;
+        $header['body'] = json_encode($data);
     endif;
 
     $client = new Client([

@@ -131,18 +131,16 @@ class Orders extends MY_Controller
                         $order_products = $this->general_model->get_all("order_products", "*,'' as img_url", null, ["order_id" => $order->id, "codes" => $i]);
                         if (!empty($order_products)) :
                             $order->dealer_id = @json_decode($order->codes)[$serverKey];
-                            $faturaHareket = [];
-                            $faturaHareket["Tarih"] = date("Y-m-d H:i");
-                            $faturaHareket["BelgeNo"] = $order->order_code;
-                            $faturaHareket["CariId"] = $order->dealer_id;
-                            $faturaHareket["Aciklama"] = $order->address;
-                            $faturaHareket["OlusturmaTarihi"] = date("Y-m-d H:i");
-                            $faturaHareket["Vade"] = date("Y-m-d H:i");
-                            echo "<pre>";
-                            print_r($order);
-                            print_r($order_products);
-                            echo "</pre>";
-                        //$data = guzzle_request($server->host, $server->port, "faturabaslik", $order_data, ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $codesConnectionsValue->token]);
+                            $faturaBaslik = [];
+                            $faturaBaslik["Tarih"] = date("Y-m-d H:i");
+                            $faturaBaslik["BelgeNo"] = $order->order_code;
+                            $faturaBaslik["CariId"] = $order->dealer_id;
+                            $faturaBaslik["Aciklama"] = $order->address;
+                            $faturaBaslik["OlusturmaTarihi"] = date("Y-m-d H:i");
+                            $faturaBaslik["Vade"] = date("Y-m-d H:i");
+                            print_r($faturaBaslik);
+                            $data = guzzle_request($server->host, $server->port, "faturabaslik", $faturaBaslik, ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $server->token]);
+                            print_r($data);
                         endif;
                         $i++;
                     endforeach;

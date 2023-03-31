@@ -919,9 +919,8 @@ function guzzle_request($url = null, $port = null, $endpoint = null, $data = [],
         $url .= "/" . $endpoint;
     }
 
-
     if (!empty($data)) :
-        $header['json'] = $data;
+        $header['body'] = json_encode($data);
     endif;
 
     $client = new Client([
@@ -930,7 +929,7 @@ function guzzle_request($url = null, $port = null, $endpoint = null, $data = [],
         'headers' => $header,
     ]);
     if (!empty($data)) {
-        $response = $client->postAsync($url);
+        $response = $client->postAsync($url, $header);
     } else {
         $response = $client->getAsync($url);
     }
