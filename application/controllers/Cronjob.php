@@ -213,4 +213,50 @@ class Cronjob extends MY_Controller
             return json_encode(["success" => false, "title" => "Hata!", "message" => $e->getMessage()]);
         }
     }
+
+    public function syncOrders()
+    {
+        try {
+            $orders = $this->general_model->get_all("orders", null, null, ["status" => 1, "createdAt + INTERVAL 30 MINUTE <= " => date("Y-m-d H:i:s")]);
+            if (!empty($orders)) :
+                foreach ($orders as $order) :
+                    $servers = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
+                    if (!empty($servers)) :
+                        $i = 1;
+                        foreach ($servers as $serverKey => $server) :
+                            $order_products = $this->general_model->get_all("order_products", "*,'' as img_url", null, ["order_id" => $order->id, "codes" => $i]);
+                            if (!empty($order_products)) :
+                                $order->dealer_id = @json_decode($order->codes)[$serverKey];
+                                $faturaBaslik = [];
+                                $faturaBaslik["Tarih"] = date("Y-m-d H:i");
+                                $faturaBaslik["BelgeNo"] = $order->order_code;
+                                $faturaBaslik["CariId"] = $order->dealer_id;
+                                $faturaBaslik["Aciklama"] = $order->address;
+                                $faturaBaslik["OlusturmaTarihi"] = date("Y-m-d H:i");
+                                $faturaBaslik["Vade"] = date("Y-m-d H:i");
+                                $data = guzzle_request($server->host, $server->port, "faturabaslik", $faturaBaslik, ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $server->token]);
+                                if (!empty($data->id)) :
+                                    foreach ($order_products as $key => $value) :
+                                        $faturaHareket = [];
+                                        $faturaHareket["BaslikId"] = $data->id;
+                                        $faturaHareket["BirimId"] = $value->unit_id;
+                                        $faturaHareket["StokAdi"] = $value->title;
+                                        $faturaHareket["Miktar"] = ($value->dimension_type == "ROLL" ? (($value->dimension / 100) * $value->quantity * $value->height)  : $value->quantity);
+                                        $faturaHareket["Termin"] = date("Y-m-d H:i");
+                                        $faturaHareket["Aciklama"] = $value->order_note;
+                                        $data = guzzle_request($server->host, $server->port, "faturahareket", $faturaHareket, ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $server->token]);
+                                    endforeach;
+                                    $this->general_model->update("orders", ["id" => $order->id], ["status" => 2, "statusMessage" => lang("Siparişiniz Hazırlanıyor.")]);
+                                endif;
+                            endif;
+                            $i++;
+                        endforeach;
+                    endif;
+                endforeach;
+            endif;
+            echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Siparişler Codes İle Başarıyla Eşitlendi."]);
+        } catch (Exception $e) {
+            echo json_encode(["success" => false, "title" => "Hata!", "message" => $e->getMessage()]);
+        }
+    }
 }

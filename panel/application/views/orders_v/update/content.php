@@ -192,7 +192,6 @@
         e.preventDefault();
         e.stopImmediatePropagation();
         let statusMessage = $(this).find("option:selected").text();
-        console.log(statusMessage);
         $("#statusMessage").val(statusMessage);
     });
 </script>
