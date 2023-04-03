@@ -2,8 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 use GuzzleHttp\Client;
-use Psr\Http\Message\ResponseInterface;
-use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Request;
 
 // Seo
 function seo($str = null, $options = [])
@@ -919,21 +918,13 @@ function guzzle_request($url = null, $port = null, $endpoint = null, $data = [],
         $url .= "/" . $endpoint;
     }
 
-    if (!empty($data)) :
-        $header['body'] = json_encode($data);
-    endif;
-
-    $client = new Client([
-        // Base URI is used with relative requests
-        'base_uri' => $url,
-        'headers' => $header,
-    ]);
+    $client = new Client();
     if (!empty($data)) {
-        $response = $client->postAsync($url, $header);
+		$request = new Request('POST',$url,$header,json_encode($data));
     } else {
-        $response = $client->getAsync($url);
+		$request = new Request('GET',$url,$header);
     }
-    $response = $response->wait();
+    $response = $client->sendAsync($request)->wait();
     $json_data = json_decode($response->getBody());
 
     return $json_data;

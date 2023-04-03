@@ -166,15 +166,16 @@ class Orders extends MY_Controller
                                 if (!empty($data->id)) :
                                     foreach ($order_products as $key => $value) :
                                         $faturaHareket = [];
+                                        $qty = ($value->dimension_type == "ROLL" ? ((@floatval($value->dimension) / 100) * @floatval($value->quantity) * @floatval($value->height))  : @$value->quantity);
                                         $faturaHareket["Durum"] = "0";
-                                        $faturaHareket["BaslikId"] = $data->id ?? "0";
-                                        $faturaHareket["BirimId"] = $value->unit_id ?? "0";
+                                        $faturaHareket["BaslikId"] = !empty($data->id) ? $data->id : "0";
+                                        $faturaHareket["BirimId"] = !empty($value->unit_id) ? $value->unit_id : "0";
                                         $faturaHareket["BarkodId"] = "0";
-                                        $faturaHareket["StokAdi"] = $value->title ?? "0";
+                                        $faturaHareket["StokAdi"] = !empty($value->title) ? $value->title : "0";
                                         $faturaHareket["Fiyat"] = "0";
                                         $faturaHareket["ParaBirimi"] = "0";
                                         $faturaHareket["Kur"] = "0";
-                                        $faturaHareket["Miktar"] = ($value->dimension_type == "ROLL" ? ((@floatval($value->dimension) / 100) * @floatval($value->quantity) * @floatval($value->height))  : @$value->quantity) ?? "0";
+                                        $faturaHareket["Miktar"] = !empty($qty) ? $qty : "0";
                                         $faturaHareket["KDV"] = "0";
                                         $faturaHareket["EkVergi"] = "0";
                                         $faturaHareket["Bandrol"] = "0";
@@ -193,7 +194,7 @@ class Orders extends MY_Controller
                                         $faturaHareket["SeriMalId"] = "0";
                                         $faturaHareket["SonKullaniciId"] = "0";
                                         $faturaHareket["AnaHareketId"] = "0";
-                                        $faturaHareket["Aciklama"] = $value->order_note ?? "0";
+                                        $faturaHareket["Aciklama"] = !empty($value->order_note) ? $value->order_note : "0";
                                         $faturaHareket["EskiId"] = "0";
                                         $faturaHareket["Olcu"] = "0";
                                         $data = guzzle_request($server->host, $server->port, "faturahareket", $faturaHareket, ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $server->token]);
