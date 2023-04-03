@@ -170,7 +170,7 @@ class Orders extends MY_Controller
                                         $faturaHareket["BaslikId"] = $data->id ?? "0";
                                         $faturaHareket["BirimId"] = $value->unit_id ?? "0";
                                         $faturaHareket["BarkodId"] = "0";
-                                        $faturaHareket["StokAdi"] = $value->title ?? "";
+                                        $faturaHareket["StokAdi"] = $value->title ?? "0";
                                         $faturaHareket["Fiyat"] = "0";
                                         $faturaHareket["ParaBirimi"] = "0";
                                         $faturaHareket["Kur"] = "0";
@@ -193,7 +193,7 @@ class Orders extends MY_Controller
                                         $faturaHareket["SeriMalId"] = "0";
                                         $faturaHareket["SonKullaniciId"] = "0";
                                         $faturaHareket["AnaHareketId"] = "0";
-                                        $faturaHareket["Aciklama"] = $value->order_note ?? "";
+                                        $faturaHareket["Aciklama"] = $value->order_note ?? "0";
                                         $faturaHareket["EskiId"] = "0";
                                         $faturaHareket["Olcu"] = "0";
                                         $data = guzzle_request($server->host, $server->port, "faturahareket", $faturaHareket, ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $server->token]);
