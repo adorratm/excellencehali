@@ -139,8 +139,8 @@ class Orders extends MY_Controller
                                 $faturaBaslik["KDVDahil"] = "False";
                                 $faturaBaslik["Tarih"] = date("Y-m-d H:i");
                                 $faturaBaslik["SubeId"] = "0";
-                                $faturaBaslik["CariId"] = $order->dealer_id ?? 0;
-                                $faturaBaslik["BelgeNo"] = $order->order_code ?? 0;
+                                $faturaBaslik["CariId"] = $order->dealer_id ?? "0";
+                                $faturaBaslik["BelgeNo"] = $order->order_code ?? "0";
                                 $faturaBaslik["Kur"] = "0";
                                 $faturaBaslik["PB"] = "";
                                 $faturaBaslik["Aciklama"] = $order->address ?? "";
@@ -167,14 +167,14 @@ class Orders extends MY_Controller
                                     foreach ($order_products as $key => $value) :
                                         $faturaHareket = [];
                                         $faturaHareket["Durum"] = "0";
-                                        $faturaHareket["BaslikId"] = $data->id ?? 0;
-                                        $faturaHareket["BirimId"] = $value->unit_id ?? 0;
+                                        $faturaHareket["BaslikId"] = $data->id ?? "0";
+                                        $faturaHareket["BirimId"] = $value->unit_id ?? "0";
                                         $faturaHareket["BarkodId"] = "0";
                                         $faturaHareket["StokAdi"] = $value->title ?? "";
                                         $faturaHareket["Fiyat"] = "0";
                                         $faturaHareket["ParaBirimi"] = "0";
                                         $faturaHareket["Kur"] = "0";
-                                        $faturaHareket["Miktar"] = ($value->dimension_type == "ROLL" ? ((@floatval($value->dimension) / 100) * @floatval($value->quantity) * @floatval($value->height))  : @$value->quantity) ?? 0;
+                                        $faturaHareket["Miktar"] = ($value->dimension_type == "ROLL" ? ((@floatval($value->dimension) / 100) * @floatval($value->quantity) * @floatval($value->height))  : @$value->quantity) ?? "0";
                                         $faturaHareket["KDV"] = "0";
                                         $faturaHareket["EkVergi"] = "0";
                                         $faturaHareket["Bandrol"] = "0";
