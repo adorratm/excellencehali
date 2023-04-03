@@ -228,25 +228,24 @@ class Cronjob extends MY_Controller
                             if (!empty($order_products)) :
                                 $order->dealer_id = @json_decode($order->codes)[$serverKey];
                                 $faturaBaslik = [];
-                                $faturaBaslik["Tarih"] = date("Y-m-d H:i");
-                                $faturaBaslik["BelgeNo"] = $order->order_code;
-                                $faturaBaslik["CariId"] = $order->dealer_id;
-                                $faturaBaslik["Aciklama"] = $order->address;
-                                $faturaBaslik["OlusturmaTarihi"] = date("Y-m-d H:i");
-                                $faturaBaslik["Vade"] = date("Y-m-d H:i");
                                 $faturaBaslik["Durum"] = "0";
                                 $faturaBaslik["KasaId"] = "0";
                                 $faturaBaslik["BelgeTipi"] = "0";
                                 $faturaBaslik["KDVDahil"] = "False";
+                                $faturaBaslik["Tarih"] = date("Y-m-d H:i");
                                 $faturaBaslik["SubeId"] = "0";
+                                $faturaBaslik["CariId"] = $order->dealer_id ?? 0;
+                                $faturaBaslik["BelgeNo"] = $order->order_code ?? 0;
                                 $faturaBaslik["Kur"] = "0";
                                 $faturaBaslik["PB"] = "";
+                                $faturaBaslik["Aciklama"] = $order->address ?? "";
                                 $faturaBaslik["Aciklama2"] = "";
                                 $faturaBaslik["KullaniciId"] = "0";
                                 $faturaBaslik["Iskonto1"] = "0";
                                 $faturaBaslik["Iskonto2"] = "0";
                                 $faturaBaslik["OzelKod1"] = "0";
                                 $faturaBaslik["OzelKod2"] = "0";
+                                $faturaBaslik["OlusturmaTarihi"] = date("Y-m-d H:i");
                                 $faturaBaslik["SonKullaniciId"] = "0";
                                 $faturaBaslik["SonBelgeDurum"] = "0";
                                 $faturaBaslik["AlinanPara"] = "0";
@@ -257,21 +256,20 @@ class Cronjob extends MY_Controller
                                 $faturaBaslik["Mustahsil_StopajOrani"] = "0";
                                 $faturaBaslik["Mustahsil_MeraOrani"] = "0";
                                 $faturaBaslik["Mustahsil_SSDFOrani"] = "0";
+                                $faturaBaslik["Vade"] = date("Y-m-d H:i");
                                 $data = guzzle_request($server->host, $server->port, "faturabaslik", $faturaBaslik, ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $server->token]);
                                 if (!empty($data->id)) :
                                     foreach ($order_products as $key => $value) :
                                         $faturaHareket = [];
-                                        $faturaHareket["BaslikId"] = $data->id;
-                                        $faturaHareket["BirimId"] = $value->unit_id;
-                                        $faturaHareket["StokAdi"] = $value->title;
-                                        $faturaHareket["Miktar"] = ($value->dimension_type == "ROLL" ? ((@floatval($value->dimension) / 100) * @floatval($value->quantity) * @floatval($value->height))  : @$value->quantity);
-                                        $faturaHareket["Termin"] = date("Y-m-d H:i");
-                                        $faturaHareket["Aciklama"] = $value->order_note;
                                         $faturaHareket["Durum"] = "0";
+                                        $faturaHareket["BaslikId"] = $data->id ?? 0;
+                                        $faturaHareket["BirimId"] = $value->unit_id ?? 0;
                                         $faturaHareket["BarkodId"] = "0";
+                                        $faturaHareket["StokAdi"] = $value->title ?? "";
                                         $faturaHareket["Fiyat"] = "0";
                                         $faturaHareket["ParaBirimi"] = "0";
                                         $faturaHareket["Kur"] = "0";
+                                        $faturaHareket["Miktar"] = ($value->dimension_type == "ROLL" ? ((@floatval($value->dimension) / 100) * @floatval($value->quantity) * @floatval($value->height))  : @$value->quantity) ?? 0;
                                         $faturaHareket["KDV"] = "0";
                                         $faturaHareket["EkVergi"] = "0";
                                         $faturaHareket["Bandrol"] = "0";
@@ -279,6 +277,7 @@ class Cronjob extends MY_Controller
                                         $faturaHareket["Iskonto2"] = "0";
                                         $faturaHareket["Iskonto3"] = "0";
                                         $faturaHareket["Iskonto4"] = "0";
+                                        $faturaHareket["Termin"] = date("Y-m-d H:i");
                                         $faturaHareket["Opsiyon"] = "0";
                                         $faturaHareket["Personel"] = "0";
                                         $faturaHareket["TransferMiktari"] = "0";
@@ -289,6 +288,7 @@ class Cronjob extends MY_Controller
                                         $faturaHareket["SeriMalId"] = "0";
                                         $faturaHareket["SonKullaniciId"] = "0";
                                         $faturaHareket["AnaHareketId"] = "0";
+                                        $faturaHareket["Aciklama"] = $value->order_note ?? "";
                                         $faturaHareket["EskiId"] = "0";
                                         $faturaHareket["Olcu"] = "0";
                                         $data = guzzle_request($server->host, $server->port, "faturahareket", $faturaHareket, ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $server->token]);
