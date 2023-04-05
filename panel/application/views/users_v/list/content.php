@@ -27,8 +27,6 @@
 					<th>Ad</th>
 					<th>Soyad</th>
 					<th>Firma</th>
-					<th>Vergi Dairesi</th>
-					<th>Vergi No</th>
 					<th>Telefon</th>
 					<th>E-Posta</th>
 					<th>Durum</th>

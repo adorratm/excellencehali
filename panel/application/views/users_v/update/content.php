@@ -13,14 +13,6 @@
         <input class="form-control form-control-sm rounded-0" placeholder="Firma Adı" name="company_name" value="<?= isset($form_error) ? set_value("company_name") : $item->company_name; ?>" minlength="2" maxlength="255" required>
     </div>
     <div class="form-group">
-        <label>Vergi Dairesi</label>
-        <input class="form-control form-control-sm rounded-0" placeholder="Vergi Dairesi" name="tax_administration" value="<?= isset($form_error) ? set_value("tax_administration") : $item->tax_administration; ?>" minlength="2" maxlength="255" required>
-    </div>
-    <div class="form-group">
-        <label>Vergi Numarası</label>
-        <input class="form-control form-control-sm rounded-0" placeholder="Vergi Numarası" name="tax_number" value="<?= isset($form_error) ? set_value("tax_number") : $item->tax_number; ?>" minlength="10" maxlength="11" required>
-    </div>
-    <div class="form-group">
         <label>Telefon</label>
         <input class="form-control form-control-sm rounded-0" placeholder="Telefon" name="phone" value="<?= isset($form_error) ? set_value("phone") : $item->phone; ?>" minlength="11" maxlength="20" required>
     </div>

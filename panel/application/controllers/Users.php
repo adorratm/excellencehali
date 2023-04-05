@@ -42,7 +42,7 @@ class Users extends MY_Controller
                     </div>
                 </div>';
                 $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->id . '" data-url="' . base_url("users/isActiveSetter/{$item->id}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch' . $i . '"></label></div>';
-                $data[] = [$item->id, $item->first_name, $item->last_name, $item->company_name, $item->tax_administration, $item->tax_number, $item->phone,  $item->email, $checkbox, turkishDate("d F Y, l H:i:s", $item->createdAt), turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing];
+                $data[] = [$item->id, $item->first_name, $item->last_name, $item->company_name, $item->phone,  $item->email, $checkbox, turkishDate("d F Y, l H:i:s", $item->createdAt), turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing];
             endforeach;
         endif;
         $output = [
@@ -87,10 +87,16 @@ class Users extends MY_Controller
             $data["isActive"] = 1;
             $data["password"] = mb_substr(sha1(md5($data["password"])), 0, 32, "utf-8");
             $data["codes"] = json_encode($_POST["codes"]);
-            $insert = $this->user_model->add($data);
+            $userData = $data;
+            unset($userData["tax_number"]);
+            unset($userData["tax_administration"]);
+            unset($userData["address"]);
+            $insert = $this->user_model->add($userData);
             if ($insert) :
                 $addressData = $data;
+                $addressData["user_id"] = $insert;
                 $addressData["title"] = lang("default_address");
+                unset($addressData["email"]);
                 unset($addressData["password"]);
                 unset($addressData["role_id"]);
                 unset($addressData["codes"]);

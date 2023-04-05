@@ -35,6 +35,7 @@ endforeach;
                     <div id="carouselExample" class="carousel slide" data-bs-ride="true">
                         <div class="carousel-inner lightgallery productGallery">
                             <?php $i = 0 ?>
+                            <?php $product_own_images = $this->general_model->get_all("product_images", null, "isCover DESC,rank ASC", ["isActive" => 1, "codes_id" => $this->viewData->product->codes_id, "codes" => $this->viewData->product->codes, "lang" => $this->viewData->lang]);?>
                             <?php if (!empty($product_own_images)) : ?>
                                 <?php foreach ($product_own_images as $k => $v) : ?>
                                     <?php if ($v->codes_id == $product->codes_id && $v->codes == $product->codes) : ?>
@@ -138,10 +139,16 @@ endforeach;
                         <div class="pcVariation align-items-center align-self-center align-content-center pcv2">
                             <span><?= lang("productDimension") ?> : </span>
                             <div class="pcvContainer ms-2">
-                                <div class="pswItem">
-                                    <input checked type="radio" name="dimension" value="<?= $product->dimension_id ?>" id="<?= seo($product->dimension) ?>-<?= $product->dimension_id ?>">
-                                    <label for="<?= seo($product->dimension) ?>-<?= $product->dimension_id ?>"><?= $product->dimension ?></label>
-                                </div>
+                                <?php if (!empty($sameVariants)) : ?>
+                                    <?php $SV = 0 ?>
+                                    <?php foreach ($sameVariants as $sKey => $sValue) : ?>
+                                        <div class="pswItem">
+                                            <input <?= $SV == 0 ? "checked" : NULL ?> type="radio" name="dimension" value="<?= $sValue->dimension_id ?>" id="<?= seo($sValue->dimension) ?>-<?= $sValue->dimension_id ?>">
+                                            <label for="<?= seo($sValue->dimension) ?>-<?= $sValue->dimension_id ?>"><?= $sValue->dimension ?></label>
+                                        </div>
+                                        <?php $SV++ ?>
+                                    <?php endforeach ?>
+                                <?php endif ?>
                             </div>
                         </div>
                         <div class="pcVariation align-items-center align-self-center align-content-center pcv2">

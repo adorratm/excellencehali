@@ -114,9 +114,9 @@ class Products extends MY_Controller
         $wheres["p.lang"] = $this->viewData->lang;
         $joins = ["product_details pd" => ["pd.codes_id = p.codes_id AND pd.codes = p.codes", "left"], "product_collections pc" => ["p.collection_id = pc.id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"]];
 
-        $select = "p.codes_id,p.codes,p.price,p.discounted_price,p.id,p.title,p.seo_url,pi.url img_url,p.isActive";
+        $select = "p.title,p.codes_id,p.codes,p.price,p.discounted_price,p.id, p.seo_url,pi.url img_url,p.isActive";
         $distinct = true;
-        $groupBy = ["p.id"];
+        $groupBy = ["p.pattern_id", "p.dimension_type"];
         /**
          * Pagination
          */
@@ -216,7 +216,7 @@ class Products extends MY_Controller
         $joins = ["product_collections pc" => ["p.collection_id = pc.codes_id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"], "product_details pd" => ["pd.codes_id = p.codes_id AND pd.codes = p.codes", "left"]];
         $select = "p.dimension_type,p.pattern_id,p.pattern,p.color_id,p.color,p.dimension_id,p.dimension,p.brand_id,p.brand,p.collection_id,p.collection,p.barcode,p.stock,pc.title collection_title,pc.codes_id collection_codes,pc.seo_url collection_seo_url,p.price,p.discounted_price,p.codes_id,p.codes,p.id,p.title,p.seo_url,pi.url img_url,pd.description,pd.content,pd.features,p.isActive";
         $distinct = true;
-        $groupBy = ["p.id"];
+        $groupBy = ["p.pattern_id", "p.dimension_type"];
         $wheres['p.seo_url'] =  $seo_url;
         $wheres['p.codes'] =  $codes;
         /**
@@ -259,6 +259,8 @@ class Products extends MY_Controller
                 $wheres["p.codes_id !="] = $this->viewData->product->codes_id;
                 $wheres["p.codes"] = $this->viewData->product->codes;
                 $this->viewData->same_products = $this->general_model->get_all("products p", $select, "rand()", $wheres, [], $joins, [12], [], $distinct, $groupBy);
+                $wheres = ['p.seo_url' => $seo_url];
+                $this->viewData->sameVariants = $this->general_model->get_all("products p", $select, "dimension ASC", $wheres, [], $joins, [], [], $distinct,"dimension_id");
             endif;
             /**
              * Meta

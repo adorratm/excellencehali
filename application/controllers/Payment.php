@@ -255,10 +255,11 @@ class Payment extends MY_Controller
                                 "message" => lang("order_success")
                             ];
                             // TODO : Send Codes Data To Api
+                            $orderData["order_id"] = $order_id;
+                            sendOrder((object)$orderData, $order_products);
                             /**
                              * Send To User
                              */
-                            $orderData["order_id"] = $order_id;
                             $this->viewData->order_data = $orderData;
                             $this->viewData->order_products = $order_products;
                             $this->viewData->subject = $this->viewData->settings->company_name . " - " . lang("your_order_has_been_received");

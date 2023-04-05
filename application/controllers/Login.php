@@ -167,10 +167,15 @@ class Login extends MY_Controller
             $data["token"] = random_string('alnum', 255);
             $data["phone"] = str_replace(" ", "", $data["phone"]);
             unset($data[$this->security->get_csrf_token_name()]);
-            if ($this->general_model->add("users", $data)) :
+            $userData = $data;
+            unset($userData["address"]);
+            unset($userData["tax_number"]);
+            unset($userData["tax_administration"]);
+            if ($this->general_model->add("users", $userData)) :
                 $alert = ["success" => true, "title" => lang("success"), "message" => lang("registerSuccessfully")];
                 $addressData = $data;
                 $addressData["title"] = lang("default_address");
+                unset($addressData["email"]);
                 unset($addressData["token"]);
                 unset($addressData["password"]);
                 $addressData["isActive"] = 1;
