@@ -907,8 +907,6 @@ function rWebp2($dir)
 
 function guzzle_request($url = null, $port = null, $endpoint = null, $data = [], $header = ["Content-Type" => "application/json", "Accept" => "application/json"])
 {
-    set_time_limit(0);
-    ini_set('memory_limit', '-1');
     /* Endpoint */
     if (!empty($port)) {
         $url .= ":" . $port;

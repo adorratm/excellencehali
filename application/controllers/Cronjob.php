@@ -15,8 +15,6 @@ class Cronjob extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        set_time_limit(0);
-        ini_set('memory_limit', '-1');
         $this->codesConnections = [];
     }
     /**
@@ -182,6 +180,7 @@ class Cronjob extends MY_Controller
                                 'codes_id' => intval(clean($returnValue->Id)) ?? NULL,
                                 'unit_id' => intval(clean($returnValue->BirimId)) ?? NULL,
                                 'title' => ((clean($returnValue->Ozelkod1) ?? NULL) . " " . (clean($returnValue->Ozelkod2) ?? NULL) . " " . (clean($returnValue->Ozelkod3) ?? NULL) . (@str_contains(clean($returnValue->Ozelkod4), "XR") ? " RULO" : NULL)),
+                                'api_title' => clean($returnValue->Baslik) ?? NULL,
                                 'seo_url' => seo((clean($returnValue->Ozelkod1) ?? NULL) . " " . (clean($returnValue->Ozelkod2) ?? NULL) . " " . (clean($returnValue->Ozelkod3) ?? NULL) . (@str_contains(clean($returnValue->Ozelkod4), "XR") ? " RULO" : NULL)),
                                 'barcode' => clean($returnValue->barcode) ?? NULL,
                                 'collection_id' => clean($returnValue->Ok1Id) ?? NULL,

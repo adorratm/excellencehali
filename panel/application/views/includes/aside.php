@@ -167,6 +167,14 @@
                         </a>
                     </li>
                 <?php } ?>
+                <?php if (isAllowedViewModule("cuts")) { ?>
+                    <li class="nav-item <?= ($this->uri->segment(1) == "cuts") ? "active" : "" ?> ">
+                        <a class="nav-link" href="<?= base_url("cuts"); ?>">
+                            <i class="fa fa-scissors"></i>
+                            <span class="nav-link-text">Kesim Türleri</span>
+                        </a>
+                    </li>
+                <?php } ?>
             </ul>
             <hr class="nav-separator">
             <div class="nav-header">

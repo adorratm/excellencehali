@@ -99,6 +99,16 @@ $lang["payment_method_2"] = "Yalçınkaya Halı Online Ödeme";
 $lang["chooseThisPaymentMethod"] = "Bu Ödeme Yöntemini Seç";
 $lang["payment_method_changed"] = "Ödeme Yöntemi Değiştirildi";
 $lang["payment_method_not_found"] = "Ödeme Yöntemi Bulunamadı";
+$lang["choose_delivery_method"] = "Teslimat Yöntemi Seçimi";
+$lang["delivery_methods"] = "Teslimat Yöntemleri";
+$lang["choose_delivery_method_text"] = "Lütfen Teslimat Yönteminizi Seçiniz.";
+$lang["delivery_method_1"] = "Ambar İle Teslimat";
+$lang["delivery_method_2"] = "Kargo İle Teslimat";
+$lang["delivery_method_3"] = "Araç İle Teslimat";
+$lang["delivery_method_4"] = "Depodan Teslimat";
+$lang["chooseThisDeliveryMethod"] = "Bu Teslimat Yöntemini Seç";
+$lang["delivery_method_changed"] = "Teslimat Yöntemi Değiştirildi";
+$lang["delivery_method_not_found"] = "Teslimat Yöntemi Bulunamadı";
 $lang["an_error_occured_while_creating_order"] = "Sipariş Oluşturulurken Bir Hata Oluştu. Lütfen Tekrar Deneyin.";
 $lang["product_not_in_stock_and_removed_from_cart"] = "İsimli Ürün Stoğumuzda Tükendi ve Sepetinizden Kaldırıldı.";
 $lang["product_not_in_stock_and_removed_from_cart"] = "İsimli Ürünün Maximum Stok Sınırı Aşıldığı İçin Tekrar Sepetinize Yönlendirildiniz. Alışverişinize Bu Ürünün Maximum Stoğu İle Devam Edebilirsiniz.";
@@ -125,7 +135,7 @@ $lang["order_update"] = "Sipariş Durumu Hakkında Güncelleme";
 $lang["default_address"] = "Varsayılan Adres";
 $lang["height"] = "Boy (m)";
 $lang["orderNote"] = "Sipariş Notu";
-$lang["orderNoteDetail"] = "Overlok Seçimi vs. gibi sipariş notlarınızı buraya yazabilirsiniz.";
+$lang["orderNoteDetail"] = "Sipariş notunuzu buraya yazabilirsiniz.";
 // #CART
 
 $lang["onlineShop"] = "Online Mağaza";
@@ -289,10 +299,12 @@ $lang['errorEmailMessageText'] = 'İletişim Formu E-Maili Gönderilirken Hata O
 $lang['products'] = 'Ürünler';
 $lang['product_collections'] = 'Koleksiyonlar';
 $lang['product'] = 'ÜRÜN';
+$lang["cutType"] = "Kesim Türü";
 
 // ROUTES
 $lang['routes_product-collections'] = 'koleksiyonlar';
 $lang['routes_product'] = 'urun';
+$lang['routes_product-detail'] = 'urun-detay';
 $lang['routes_page'] = 'sayfa';
 $lang['routes_blog'] = 'blog';
 $lang['routes_blog_detail'] = 'detay';
@@ -321,6 +333,8 @@ $lang["routes_order-address-delete"] = "siparis-adresi-sil";
 $lang["routes_order-address-change"] = "siparis-adresi-degistir";
 $lang["routes_choose-payment-method"] = "odeme-yontemi-secimi";
 $lang["routes_payment-method-change"] = "odeme-yontemi-degistir";
+$lang["routes_choose-delivery-method"] = "teslimat-yontemi-secimi";
+$lang["routes_delivery-method-change"] = "teslimat-yontemi-degistir";
 $lang["routes_create-order"] = "siparis-olustur";
 $lang["routes_order-success"] = "siparis-basarili";
 $lang["routes_order-fail"] = "siparis-basarisiz";

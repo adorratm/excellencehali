@@ -160,8 +160,6 @@ class Product_dimensions extends MY_Controller
     public function getDimensions()
     {
         try {
-            set_time_limit(0);
-            ini_set('memory_limit', '-1');
             //codesLogin();
             $codesConnections = $this->general_model->get_all("codes", null, null, ["isActive" => 1]);
             if (!empty($codesConnections)) {

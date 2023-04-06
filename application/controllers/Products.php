@@ -210,6 +210,18 @@ class Products extends MY_Controller
      */
     public function product_detail($codes, $seo_url)
     {
+        $result =  $this->product_detail_ajax($codes, $seo_url);
+
+        if (!$result) :
+            $this->viewFolder = "404_v/index";
+        else :
+            $this->viewFolder = "product_detail_v/index";
+        endif;
+        $this->render();
+    }
+
+    public function product_detail_ajax($codes = null, $seo_url = null)
+    {
         $wheres["p.isActive"] = 1;
         $wheres["pi.isCover"] = 1;
         $wheres["p.lang"] = $this->viewData->lang;
@@ -219,6 +231,9 @@ class Products extends MY_Controller
         $groupBy = ["p.pattern_id", "p.dimension_type"];
         $wheres['p.seo_url'] =  $seo_url;
         $wheres['p.codes'] =  $codes;
+        if (!empty(clean($this->input->post("codes_id", true)))) :
+            $wheres['p.codes_id'] = clean($this->input->post("codes_id", true));
+        endif;
         /**
          * Get Product Detail
          */
@@ -258,9 +273,11 @@ class Products extends MY_Controller
                 $wheres["p.collection_id"] = $this->viewData->product->collection_id;
                 $wheres["p.codes_id !="] = $this->viewData->product->codes_id;
                 $wheres["p.codes"] = $this->viewData->product->codes;
+                unset($wheres["p.codes_id"]);
                 $this->viewData->same_products = $this->general_model->get_all("products p", $select, "rand()", $wheres, [], $joins, [12], [], $distinct, $groupBy);
                 $wheres = ['p.seo_url' => $seo_url];
-                $this->viewData->sameVariants = $this->general_model->get_all("products p", $select, "dimension ASC", $wheres, [], $joins, [], [], $distinct,"dimension_id");
+                $this->viewData->sameVariants = $this->general_model->get_all("products p", $select, "CAST(REPLACE(dimension,'XR','') AS DECIMAL(10,2)) ASC", $wheres, [], $joins, [], [], $distinct, "dimension_id");
+                $this->viewData->cuts = $this->general_model->get_all("cuts", null, "rank ASC", ["isActive" => 1]);
             endif;
             /**
              * Meta
@@ -273,11 +290,14 @@ class Products extends MY_Controller
             $this->viewData->og_type          = "product.item";
             $this->viewData->og_title           = strto("lower|ucwords", $this->viewData->product->title) . " - " . $this->viewData->settings->company_name;
             $this->viewData->og_description           = clean(str_replace("”", "\"", @stripslashes($this->viewData->product->content)));
-            $this->viewFolder = "product_detail_v/index";
+            if (!empty($this->input->post("codes_id"))) :
+                echo $this->load->view("product_detail_v/detail", $this->viewData, true);
+            else :
+                return $this->viewData;
+            endif;
         else :
-            $this->viewFolder = "404_v/index";
+            return false;
         endif;
-        $this->render();
     }
     /**
      * -----------------------------------------------------------------------------------------------

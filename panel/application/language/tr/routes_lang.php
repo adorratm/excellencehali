@@ -20,6 +20,8 @@ $lang["(:any)/koleksiyonlar/(:num)"] = "product_collections/index/$2";
 $lang["(:any)/koleksiyonlar/(:num)/(:any)"] = "products/index/$2/$3";
 $lang["(:any)/koleksiyonlar/(:num)/(:any)/(:num)"] = "products/index/$2/$3/$4";
 $lang["(:any)/koleksiyonlar/urun/(:num)/(:any)"] = "products/product_detail/$2/$3";
+$lang["(:any)/koleksiyonlar/urun-detay/(:num)/(:any)"] = "products/product_detail_ajax/$2/$3";
+
 
 $lang["(:any)/galeriler"] = "galleries/index";
 $lang["(:any)/galeriler/(:num)"] = "galleries/index/$2";
@@ -53,6 +55,8 @@ $lang['(:any)/sepet/siparis-adresi-degistir'] = 'cart/change_order_address';
 
 $lang['(:any)/odeme-yontemi-secimi'] = 'payment/index';
 $lang['(:any)/odeme-yontemi-degistir'] = 'payment/payment_method_change';
+$lang['(:any)/teslimat-yontemi-secimi'] = 'payment/delivery';
+$lang['(:any)/teslimat-yontemi-degistir'] = 'payment/delivery_method_change';
 
 $lang['(:any)/siparis-olustur'] = 'payment/order';
 $lang['(:any)/siparis-basarili/(:any)'] = 'payment/order_success/$2';

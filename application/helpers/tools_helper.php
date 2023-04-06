@@ -984,8 +984,6 @@ function get_secondary_image($codes_id = null, $codes = null, $cover_url = null,
 
 function guzzle_request($url = null, $port = null, $endpoint = null, $data = [], $header = ["Content-Type" => "application/json", "Accept" => "application/json"])
 {
-    set_time_limit(0);
-    ini_set('memory_limit', '-1');
     /* Endpoint */
     if (!empty($port)) {
         $url .= ":" . $port;
@@ -1057,75 +1055,80 @@ function sendOrder($order = null, $order_products = [])
                 $i = 1;
                 foreach ($servers as $serverKey => $server) :
                     if (!empty($order_products)) :
-                        $order->dealer_id = @json_decode($order->codes)[$serverKey];
-                        $faturaBaslik = [];
-                        $faturaBaslik["Durum"] = "0";
-                        $faturaBaslik["KasaId"] = "0";
-                        $faturaBaslik["BelgeTipi"] = "0";
-                        $faturaBaslik["KDVDahil"] = "False";
-                        $faturaBaslik["Tarih"] = date("Y-m-d H:i");
-                        $faturaBaslik["SubeId"] = "0";
-                        $faturaBaslik["CariId"] = $order->dealer_id ?? "0";
-                        $faturaBaslik["BelgeNo"] = $order->order_code ?? "0";
-                        $faturaBaslik["Kur"] = "0";
-                        $faturaBaslik["PB"] = "";
-                        $faturaBaslik["Aciklama"] = $order->address ?? "";
-                        $faturaBaslik["Aciklama2"] = "";
-                        $faturaBaslik["KullaniciId"] = "0";
-                        $faturaBaslik["Iskonto1"] = "0";
-                        $faturaBaslik["Iskonto2"] = "0";
-                        $faturaBaslik["OzelKod1"] = "0";
-                        $faturaBaslik["OzelKod2"] = "0";
-                        $faturaBaslik["OlusturmaTarihi"] = date("Y-m-d H:i");
-                        $faturaBaslik["SonKullaniciId"] = "0";
-                        $faturaBaslik["SonBelgeDurum"] = "0";
-                        $faturaBaslik["AlinanPara"] = "0";
-                        $faturaBaslik["SevkCariId"] = "0";
-                        $faturaBaslik["AnaKayitId"] = "0";
-                        $faturaBaslik["Mustahsil_BorsaOrani"] = "0";
-                        $faturaBaslik["Mustahsil_BagkurOrani"] = "0";
-                        $faturaBaslik["Mustahsil_StopajOrani"] = "0";
-                        $faturaBaslik["Mustahsil_MeraOrani"] = "0";
-                        $faturaBaslik["Mustahsil_SSDFOrani"] = "0";
-                        $faturaBaslik["Vade"] = date("Y-m-d H:i");
-                        $data = guzzle_request($server->host, $server->port, "faturabaslik", $faturaBaslik, ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $server->token]);
-                        if (!empty($data->id)) :
-                            foreach ($order_products as $key => $value) :
-                                $faturaHareket = [];
-                                $qty = ($value->dimension_type == "ROLL" ? ((@floatval($value->dimension) / 100) * @floatval($value->quantity) * @floatval($value->height))  : @$value->quantity);
-                                $faturaHareket["Durum"] = "0";
-                                $faturaHareket["BaslikId"] = !empty($data->id) ? $data->id : "0";
-                                $faturaHareket["BirimId"] = !empty($value->unit_id) ? $value->unit_id : "0";
-                                $faturaHareket["BarkodId"] = "0";
-                                $faturaHareket["StokAdi"] = !empty($value->title) ? $value->title : "0";
-                                $faturaHareket["Fiyat"] = "0";
-                                $faturaHareket["ParaBirimi"] = "0";
-                                $faturaHareket["Kur"] = "0";
-                                $faturaHareket["Miktar"] = !empty($qty) ? $qty : "0";
-                                $faturaHareket["KDV"] = "0";
-                                $faturaHareket["EkVergi"] = "0";
-                                $faturaHareket["Bandrol"] = "0";
-                                $faturaHareket["Iskonto1"] = "0";
-                                $faturaHareket["Iskonto2"] = "0";
-                                $faturaHareket["Iskonto3"] = "0";
-                                $faturaHareket["Iskonto4"] = "0";
-                                $faturaHareket["Termin"] = date("Y-m-d H:i");
-                                $faturaHareket["Opsiyon"] = "0";
-                                $faturaHareket["Personel"] = "0";
-                                $faturaHareket["TransferMiktari"] = "0";
-                                $faturaHareket["SevkDeposu"] = "0";
-                                $faturaHareket["Prim"] = "0";
-                                $faturaHareket["SatisSekli"] = "0";
-                                $faturaHareket["ProtokolId"] = "0";
-                                $faturaHareket["SeriMalId"] = "0";
-                                $faturaHareket["SonKullaniciId"] = "0";
-                                $faturaHareket["AnaHareketId"] = "0";
-                                $faturaHareket["Aciklama"] = !empty($value->order_note) ? $value->order_note : "0";
-                                $faturaHareket["EskiId"] = "0";
-                                $faturaHareket["Olcu"] = "0";
-                                $data = guzzle_request($server->host, $server->port, "faturahareket", $faturaHareket, ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $server->token]);
-                            endforeach;
-                            $t->general_model->update("orders", ["id" => $order->order_id], ["status" => 2, "statusMessage" => lang("Siparişiniz Hazırlanıyor.")]);
+                        $serverIncludes = array_search($server->id, array_column($order_products, 'codes'));
+                        if($serverIncludes !== false) :
+                            $order->dealer_id = @json_decode($order->codes)[$serverKey];
+                            $faturaBaslik = [];
+                            $faturaBaslik["Durum"] = "0";
+                            $faturaBaslik["KasaId"] = "0";
+                            $faturaBaslik["BelgeTipi"] = "0";
+                            $faturaBaslik["KDVDahil"] = "False";
+                            $faturaBaslik["Tarih"] = date("Y-m-d H:i");
+                            $faturaBaslik["SubeId"] = "0";
+                            $faturaBaslik["CariId"] = $order->dealer_id ?? "0";
+                            $faturaBaslik["BelgeNo"] = $order->order_code ?? "0";
+                            $faturaBaslik["Kur"] = "0";
+                            $faturaBaslik["PB"] = "";
+                            $faturaBaslik["Aciklama"] = $order->address ?? "";
+                            $faturaBaslik["Aciklama2"] = $order->delivery_method ?? "";
+                            $faturaBaslik["KullaniciId"] = "0";
+                            $faturaBaslik["Iskonto1"] = "0";
+                            $faturaBaslik["Iskonto2"] = "0";
+                            $faturaBaslik["OzelKod1"] = "0";
+                            $faturaBaslik["OzelKod2"] = "0";
+                            $faturaBaslik["OlusturmaTarihi"] = date("Y-m-d H:i");
+                            $faturaBaslik["SonKullaniciId"] = "0";
+                            $faturaBaslik["SonBelgeDurum"] = "0";
+                            $faturaBaslik["AlinanPara"] = "0";
+                            $faturaBaslik["SevkCariId"] = "0";
+                            $faturaBaslik["AnaKayitId"] = "0";
+                            $faturaBaslik["Mustahsil_BorsaOrani"] = "0";
+                            $faturaBaslik["Mustahsil_BagkurOrani"] = "0";
+                            $faturaBaslik["Mustahsil_StopajOrani"] = "0";
+                            $faturaBaslik["Mustahsil_MeraOrani"] = "0";
+                            $faturaBaslik["Mustahsil_SSDFOrani"] = "0";
+                            $faturaBaslik["Vade"] = date("Y-m-d H:i");
+                            $data = guzzle_request($server->host, $server->port, "faturabaslik", $faturaBaslik, ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $server->token]);
+                            if (!empty($data->id)) :
+                                foreach ($order_products as $key => $value) :
+                                    if ($value->codes == $server->id) :
+                                        $faturaHareket = [];
+                                        $qty = ($value->dimension_type == "ROLL" ? ((@floatval($value->dimension) / 100) * @floatval($value->quantity) * @floatval($value->height))  : @$value->quantity);
+                                        $faturaHareket["Durum"] = "0";
+                                        $faturaHareket["BaslikId"] = !empty($data->id) ? $data->id : "0";
+                                        $faturaHareket["BirimId"] = !empty($value->unit_id) ? $value->unit_id : "0";
+                                        $faturaHareket["BarkodId"] = "0";
+                                        $faturaHareket["StokAdi"] = !empty($value->title) ? $value->title : "0";
+                                        $faturaHareket["Fiyat"] = "0";
+                                        $faturaHareket["ParaBirimi"] = "0";
+                                        $faturaHareket["Kur"] = "0";
+                                        $faturaHareket["Miktar"] = !empty($qty) ? $qty : "0";
+                                        $faturaHareket["KDV"] = "0";
+                                        $faturaHareket["EkVergi"] = "0";
+                                        $faturaHareket["Bandrol"] = "0";
+                                        $faturaHareket["Iskonto1"] = "0";
+                                        $faturaHareket["Iskonto2"] = "0";
+                                        $faturaHareket["Iskonto3"] = "0";
+                                        $faturaHareket["Iskonto4"] = "0";
+                                        $faturaHareket["Termin"] = date("Y-m-d H:i");
+                                        $faturaHareket["Opsiyon"] = "0";
+                                        $faturaHareket["Personel"] = "0";
+                                        $faturaHareket["TransferMiktari"] = "0";
+                                        $faturaHareket["SevkDeposu"] = "0";
+                                        $faturaHareket["Prim"] = "0";
+                                        $faturaHareket["SatisSekli"] = "0";
+                                        $faturaHareket["ProtokolId"] = "0";
+                                        $faturaHareket["SeriMalId"] = "0";
+                                        $faturaHareket["SonKullaniciId"] = "0";
+                                        $faturaHareket["AnaHareketId"] = "0";
+                                        $faturaHareket["Aciklama"] = !empty($value->order_note) ? $value->order_note : "0";
+                                        $faturaHareket["EskiId"] = "0";
+                                        $faturaHareket["Olcu"] = "0";
+                                        $data = guzzle_request($server->host, $server->port, "faturahareket", $faturaHareket, ["Content-Type" => "application/json", "Accept" => "application/json", "X-TOKEN" => $server->token]);
+                                    endif;
+                                endforeach;
+                                $t->general_model->update("orders", ["id" => $order->order_id], ["status" => 2, "statusMessage" => lang("Siparişiniz Hazırlanıyor.")]);
+                            endif;
                         endif;
                     endif;
                     $i++;

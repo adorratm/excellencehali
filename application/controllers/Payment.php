@@ -90,6 +90,73 @@ class Payment extends MY_Controller
 
     /**
      * -----------------------------------------------------------------------------------------------
+     * ...:::!!! ================================== DELIVERY ================================== !!!:::...
+     * -----------------------------------------------------------------------------------------------
+     */
+    /**
+     * Delivery
+     */
+    public function delivery()
+    {
+        if (!get_active_user()) :
+            $alert = [
+                "success" => false,
+                "title" => lang("error"),
+                "message" => lang("you_must_login_to_use_the_cart")
+            ];
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url(lang("routes_dealer-login")));
+        endif;
+        $this->viewData->page_title = clean(strto("lower|ucwords", lang("choose_delivery_method")));
+        $this->viewData->meta_title = clean(strto("lower|ucwords", lang("choose_delivery_method"))) . " - " . $this->viewData->settings->company_name;
+        $this->viewData->meta_desc  = str_replace("”", "\"", @stripslashes($this->viewData->settings->meta_description));
+
+        $this->viewData->og_url                 = clean(base_url());
+        $this->viewData->og_image           = clean(get_picture("settings_v", $this->viewData->settings->logo));
+        $this->viewData->og_type          = "website";
+        $this->viewData->og_title           = clean(strto("lower|ucwords", lang("choose_delivery_method"))) . " - " . $this->viewData->settings->company_name;
+        $this->viewData->og_description           = clean($this->viewData->settings->meta_description);
+        $this->viewFolder = "payment_v/delivery";
+        $this->render();
+        //$this->output->enable_profiler(TRUE);
+    }
+    /**
+     * -----------------------------------------------------------------------------------------------
+     * ...:::!!! ================================== INDEX ================================== !!!:::...
+     * -----------------------------------------------------------------------------------------------
+     */
+
+    public function delivery_method_change()
+    {
+        if (!get_active_user()) :
+            echo json_encode([
+                "success" => false,
+                "title" => lang("error"),
+                "message" => lang("you_must_login_to_use_the_cart")
+            ]);
+            return;
+        endif;
+        if (empty($this->cart->contents())) :
+            echo json_encode([
+                "success" => false,
+                "title" => lang("error"),
+                "message" => lang("emptyCart")
+            ]);
+            return;
+        endif;
+        if ($this->input->post("delivery_method", true)) :
+            $this->session->set_userdata("delivery_method", $this->input->post("delivery_method", true));
+            echo json_encode([
+                "success" => true,
+                "title" => lang("success"),
+                "message" => lang("delivery_method_changed")
+            ]);
+            return;
+        endif;
+    }
+
+    /**
+     * -----------------------------------------------------------------------------------------------
      * ...:::!!! ================================== ORDER ================================== !!!:::...
      * -----------------------------------------------------------------------------------------------
      */
@@ -134,6 +201,15 @@ class Payment extends MY_Controller
                 $this->session->set_flashdata("alert", $alert);
                 redirect(base_url(lang("routes_choose-payment-method")));
             endif;
+            if (!$this->session->userdata("delivery_method")) :
+                $alert = [
+                    "success" => false,
+                    "title" => lang("error"),
+                    "message" => lang("delivery_method_not_found")
+                ];
+                $this->session->set_flashdata("alert", $alert);
+                redirect(base_url(lang("routes_choose-delivery-method")));
+            endif;
 
             $alert = [
                 "success" => false,
@@ -151,20 +227,20 @@ class Payment extends MY_Controller
                             "rowid" => $cartProduct["rowid"],
                             "qty" => $stock->stock
                         ]);
-                        $alert["message"] = "<b>".$stock->title."</b> ".lang("product_not_in_stock_and_updated_from_cart");
+                        $alert["message"] = "<b>" . $stock->title . "</b> " . lang("product_not_in_stock_and_updated_from_cart");
                         $this->session->set_flashdata("alert", $alert);
                         redirect(base_url(lang("routes_cart")));
                     endif;
 
                     if (empty($stock) || $stock->stock <= 0) :
                         $this->cart->remove($cartProduct["rowid"]);
-                        $alert["message"] = "<b>".$stock->title."</b> ".lang("product_not_in_stock_and_removed_from_cart");
+                        $alert["message"] = "<b>" . $stock->title . "</b> " . lang("product_not_in_stock_and_removed_from_cart");
                         $this->session->set_flashdata("alert", $alert);
                         redirect(base_url(lang("routes_cart")));
                     endif;
                 endif;
             endforeach;
-            
+
             $orderData = [];
             if ($this->session->userdata("payment_method") == 1) :
                 $address = $this->general_model->get("user_addresses", null, ["user_id" => get_active_user()->id, "id" => $this->session->userdata("choosedAddress")]);
@@ -187,10 +263,11 @@ class Payment extends MY_Controller
                     $orderData["codes"] = @get_active_user()->codes;
                     $orderData["status"] = 1;
                     $orderData["order_code"] = "ORD-" . random_string('alnum', 28);
+                    $orderData["delivery_method"] = @$this->session->userdata("delivery_method");
                     /**
                      * Stock Checker
                      */
-                    if(empty($orderData["codes"])):
+                    if (empty($orderData["codes"])) :
                         $alert["message"] = lang("codes_not_found");
                         $this->session->set_flashdata("alert", $alert);
                         redirect(base_url(lang("routes_cart")));
@@ -203,7 +280,7 @@ class Payment extends MY_Controller
                             $wheres["pi.isCover"] = 1;
                             $wheres["p.lang"] = $this->viewData->lang;
                             $joins = ["product_collections pc" => ["p.collection_id = pc.codes_id", "left"], "product_images pi" => ["pi.codes_id = p.codes_id AND pi.codes = p.codes", "left"], "product_details pd" => ["pd.codes_id = p.codes_id AND pd.codes = p.codes", "left"]];
-                            $select = "p.unit_id,p.dimension_type,p.pattern_id,p.pattern,p.color_id,p.color,p.dimension_id,p.dimension,p.brand_id,p.brand,p.collection_id,p.collection,p.barcode,p.stock,pc.title collection_title,pc.codes_id collection_codes,pc.seo_url collection_seo_url,p.price,p.discounted_price,p.codes_id,p.codes,p.id,p.title,p.seo_url,pi.url img_url,pd.description,pd.content,pd.features,p.isActive";
+                            $select = "p.api_title,p.unit_id,p.dimension_type,p.pattern_id,p.pattern,p.color_id,p.color,p.dimension_id,p.dimension,p.brand_id,p.brand,p.collection_id,p.collection,p.barcode,p.stock,pc.title collection_title,pc.codes_id collection_codes,pc.seo_url collection_seo_url,p.price,p.discounted_price,p.codes_id,p.codes,p.id,p.title,p.seo_url,pi.url img_url,pd.description,pd.content,pd.features,p.isActive";
                             $distinct = true;
                             $groupBy = ["p.id"];
                             $wheres['p.codes_id'] =  $cartValue["id"];
@@ -218,7 +295,7 @@ class Payment extends MY_Controller
                                 $orderItemData["order_id"] = $order_id;
                                 $orderItemData["codes_id"] = $product->codes_id;
                                 $orderItemData["unit_id"] = $product->unit_id;
-                                $orderItemData["title"] = $product->title;
+                                $orderItemData["title"] = $product->api_title;
                                 $orderItemData["seo_url"] = $product->seo_url;
                                 $orderItemData["barcode"] = $product->barcode;
                                 $orderItemData["collection_id"] = $product->collection_id;
@@ -252,7 +329,7 @@ class Payment extends MY_Controller
                             $alert = [
                                 "success" => true,
                                 "title" => lang("success"),
-                                "message" => lang("order_success")
+                                "message" => lang("order_successfully_created")
                             ];
                             // TODO : Send Codes Data To Api
                             $orderData["order_id"] = $order_id;
