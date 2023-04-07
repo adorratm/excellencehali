@@ -21,6 +21,10 @@
         <input class="form-control form-control-sm rounded-0" placeholder="Vergi Numarası" name="tax_number" value="<?= isset($form_error) ? set_value("tax_number") : ""; ?>" minlength="10" maxlength="11" required>
     </div>
     <div class="form-group">
+        <label>Adres</label>
+        <textarea class="form-control form-control-sm rounded-0" rows="5" placeholder="Adres" name="address" required><?= isset($form_error) ? set_value("address") : ""; ?></textarea>
+    </div>
+    <div class="form-group">
         <label>Telefon</label>
         <input class="form-control form-control-sm rounded-0" placeholder="Telefon" name="phone" value="<?= isset($form_error) ? set_value("phone") : ""; ?>" minlength="11" maxlength="20" required>
     </div>

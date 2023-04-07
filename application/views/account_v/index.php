@@ -25,6 +25,9 @@
                         <a class="nav-link rounded-0" id="pills-order-tab" href="<?=base_url(lang("routes_orders"))?>" type="button" role="tab" aria-controls="pills-order" aria-selected="false" rel="dofollow" title="<?= lang("orders") ?>"><i class="fa fa-boxes-stacked me-2"></i> <?= lang("orders") ?></a>
                     </li>
                     <li class="nav-item" role="presentation">
+                        <a class="nav-link rounded-0" id="pills-address-tab" href="<?= base_url(lang("routes_address")) ?>" type="button" role="tab" aria-controls="pills-address" aria-selected="false" rel="dofollow" title="<?= lang("my_addresses") ?>"><i class="fa fa-map-marker me-2"></i> <?= lang("my_addresses") ?></a>
+                    </li>
+                    <li class="nav-item" role="presentation">
                         <a class="nav-link rounded-0" id="pills-logout-tab" href="<?= base_url(lang("routes_logout")) ?>" type="button" role="button" aria-controls="false" aria-selected="false" rel="dofollow" title="<?= lang("logout") ?>"><i class="fa fa-power-off me-2"></i> <?= lang("logout") ?></a>
                     </li>
                 </ul>

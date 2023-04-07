@@ -300,6 +300,7 @@ $lang['products'] = 'Ürünler';
 $lang['product_collections'] = 'Koleksiyonlar';
 $lang['product'] = 'ÜRÜN';
 $lang["cutType"] = "Kesim Türü";
+$lang["my_addresses"] = "Adreslerim";
 
 // ROUTES
 $lang['routes_product-collections'] = 'koleksiyonlar';
@@ -357,3 +358,4 @@ $lang["routes_account-update"] = "hesabimi-guncelle";
 $lang["routes_orders"] = "siparislerim";
 $lang["routes-order-detail"] = "siparis-detayi";
 $lang["routes-order-cancel"] = "siparis-iptal-et";
+$lang["routes_address"] = "adreslerim";
